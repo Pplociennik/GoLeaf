@@ -1,4 +1,4 @@
-package com.goaleaf.engine.GoaLeaf;
+package com.goaleaf.engine;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
