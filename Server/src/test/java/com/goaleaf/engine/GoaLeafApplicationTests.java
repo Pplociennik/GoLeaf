@@ -1,4 +1,4 @@
-package com.goaleaf.engine.GoaLeaf;
+package com.goaleaf.engine;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
