@@ -9,11 +9,11 @@ import Dashboard from './Dashboard/Dashboard';
 function Main() {
   return (
     <main className={styles.Main}>
-    <Switch>
-        <Route exact path='/' component={Dashboard}/>
-        <Route path='/login' component={LogIn}/>
-        <Route path='/signin' component={SignIn}/>
-    </Switch>
+        <Switch>
+            <Route exact path='/' component={Dashboard}/>
+            <Route path='/login' component={LogIn}/>
+            <Route path='/signin' component={SignIn}/>
+        </Switch>
     </main>
   )
 }
