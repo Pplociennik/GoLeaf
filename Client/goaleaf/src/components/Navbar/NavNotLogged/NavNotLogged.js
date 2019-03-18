@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import styles from './NavNotLogged.module.scss'
 
 class NavNotLogged extends Component {
@@ -18,8 +18,8 @@ class NavNotLogged extends Component {
 
     return (
         <ul className={styles.NavNotLogged} style={ navStyle }>
-            <li onClick = { this.props.handleNavElementClicked } ><Link to='/login'>log in</Link></li>
-            <li onClick = { this.props.handleNavElementClicked } ><Link to='/signin'>sign in</Link></li>
+            <li onClick = { this.props.handleNavElementClicked } ><NavLink to='/login' activeStyle={{color: '#5DAD1D' }}>log in</NavLink></li>
+            <li onClick = { this.props.handleNavElementClicked } ><NavLink to='/signin' activeStyle={{color: '#5DAD1D' }}>sign in</NavLink></li>
         </ul>
     )
   }
