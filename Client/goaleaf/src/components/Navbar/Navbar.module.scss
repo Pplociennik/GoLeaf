@@ -3,5 +3,47 @@
 .Navbar {
     width: 100%;
     height: $navbar-height;
+    background-color: $primary-color;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .LogoMobile {
+        margin: 0 0 0 1em;
+        display: flex;
+        align-items: center;
+    }
+    .LogoWeb {
+        display: none;
+        color: $secondary-color;
+        margin-left: 1em;
+        font-size: 1.3em;
+        font-weight: 400;
+        letter-spacing: 1px;
+        text-decoration: none;
+        position: relative;
+    }
+    .LogoWeb::after {
+        content: url('./../../assets/logo.png');
+        position: absolute;
+        top: -10px;
+        left: 88px;
+        
+    }
+    @include md {
+        .LogoMobile {
+            display: none;
+        }
+        .LogoWeb {
+            display: block;
+        }
+    }
+    .Hamburger {
+        margin-right: 1em;
+        @include md {
+            display: none;
+        }
+
+    }
 
 }

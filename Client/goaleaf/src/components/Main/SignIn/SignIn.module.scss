@@ -1,0 +1,10 @@
+@import './../../../global-styles.scss';
+
+.SignIn {
+    background-color: $primary-color;
+    width: 100%;
+    min-height: calc(100vh - #{$navbar-height});
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
