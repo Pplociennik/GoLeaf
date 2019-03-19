@@ -1,4 +1,4 @@
-package com.goaleaf.engine;
+package com.goaleaf;
 
 public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
 
