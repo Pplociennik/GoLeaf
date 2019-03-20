@@ -4,6 +4,7 @@ package com.goaleaf;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -18,6 +19,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @SpringBootApplication
 public class GoaLeafApplication extends SpringBootServletInitializer {
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(GoaLeafApplication.class);
+    }
 
     @Bean
     public Docket productApi() {
@@ -26,7 +31,7 @@ public class GoaLeafApplication extends SpringBootServletInitializer {
                 .build();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         ExceptionHandler exceptionHandler = new ExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(exceptionHandler);
 
