@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
         property = "refId", scope = User.class)
@@ -28,6 +29,9 @@ public class User {
 
     @Column
     private String emailAddress;
+
+    @ManyToMany
+    private Set<Role> roles;
 
     public User() {
     }
@@ -65,8 +69,8 @@ public class User {
         this.userName = userName;
     }
 
-    public String getLogin() {
-        return login;
+    public String getLogin(String login) {
+        return this.login;
     }
 
     public void setLogin(String login) {
@@ -87,5 +91,13 @@ public class User {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
