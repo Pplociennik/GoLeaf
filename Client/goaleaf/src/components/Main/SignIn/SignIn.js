@@ -37,8 +37,8 @@ class SignIn extends Component {
           <input className={styles.InputField} type="password" id="password" onChange={ this.handleChange } />
         </label>
           <div className={styles.Buttons}>
-            <input type="submit" value="sign in" />
-            <Link to='/login'><input type="button" value="log in" /></Link>
+            <input type="submit" value="Sign in" />
+            <Link to='/login'><input type="button" value="Log in" /></Link>
           </div>
       </form>
       </div>
