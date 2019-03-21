@@ -58,14 +58,14 @@ public class UserServiceImpl implements UserService {
     public User registerNewUserAccount(UserDto accountDto)
             throws EmailExistsException {
 
-        if (emailExists(accountDto.getEmailAddress())) {
-            throw new EmailExistsException("Istnieje już konto o takim adresie email!:" + accountDto.getEmailAddress());
+        if (emailExists(accountDto.emailAddress)) {
+            throw new EmailExistsException("Istnieje już konto o takim adresie email!:" + accountDto.emailAddress);
         }
         User user = new User();
-        user.setLogin(accountDto.getLogin());
-        user.setUserName(accountDto.getUserName());
-        user.setPassword(accountDto.getPassword());
-        user.setEmailAddress(accountDto.getEmailAddress());
+        user.setLogin(accountDto.login);
+        user.setUserName(accountDto.userName);
+        user.setPassword(accountDto.password);
+        user.setEmailAddress(accountDto.emailAddress);
         return userRepository.save(user);
     }
 

@@ -79,7 +79,7 @@ public class UserController {
             BindingResult result,
             WebRequest request,
             Errors errors) {
-        accountDto.setPassword(bCryptPasswordEncoder.encode(accountDto.getPassword()));
+        accountDto.password = (bCryptPasswordEncoder.encode(accountDto.password));
 
         User registered = new User();
         if (!result.hasErrors()) {
