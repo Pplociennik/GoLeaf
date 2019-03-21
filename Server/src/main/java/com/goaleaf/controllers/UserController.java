@@ -2,6 +2,7 @@ package com.goaleaf.controllers;
 
 import com.goaleaf.DTO.UserDto;
 import com.goaleaf.entities.User;
+import com.goaleaf.repositories.UserRepository;
 import com.goaleaf.services.UserService;
 import com.goaleaf.validators.UserValidator;
 import com.goaleaf.validators.exceptions.EmailExistsException;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
@@ -31,6 +34,10 @@ public class UserController {
     private UserService userService;
     @Autowired
     private UserValidator userValidator;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     //to listing all users
     @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -57,6 +64,7 @@ public class UserController {
 //    }
 
     //to creating registration form
+    @PermitAll
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String showRegistrationForm(WebRequest request, Model model) {
         UserDto userDTO = new UserDto();
@@ -64,12 +72,14 @@ public class UserController {
         return "registration";
     }
 
+    @PermitAll
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView registerUserAccount(
             @ModelAttribute("user") @Valid UserDto accountDto,
             BindingResult result,
             WebRequest request,
             Errors errors) {
+        accountDto.setPassword(bCryptPasswordEncoder.encode(accountDto.getPassword()));
 
         User registered = new User();
         if (!result.hasErrors()) {

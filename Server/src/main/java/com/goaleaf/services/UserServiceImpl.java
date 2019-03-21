@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
             throw new EmailExistsException("Istnieje już konto o takim adresie email!:" + accountDto.getEmailAddress());
         }
         User user = new User();
-        user.getLogin(accountDto.getLogin());
+        user.setLogin(accountDto.getLogin());
         user.setUserName(accountDto.getUserName());
         user.setPassword(accountDto.getPassword());
         user.setEmailAddress(accountDto.getEmailAddress());

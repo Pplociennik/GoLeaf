@@ -69,8 +69,8 @@ public class User {
         this.userName = userName;
     }
 
-    public String getLogin(String login) {
-        return this.login;
+    public String getLogin() {
+        return login;
     }
 
     public void setLogin(String login) {

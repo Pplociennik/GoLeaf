@@ -1,18 +1,23 @@
 package com.goaleaf;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.Collections;
 
 
 @EnableJpaRepositories("com.goaleaf.repositories")
@@ -24,6 +29,12 @@ public class GoaLeafApplication extends SpringBootServletInitializer {
         return application.sources(GoaLeafApplication.class);
     }
 
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     @Bean
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -31,7 +42,8 @@ public class GoaLeafApplication extends SpringBootServletInitializer {
                 .build();
     }
 
-    public static void main(String[] args) throws Exception{
+
+    public static void main(String[] args) throws Exception {
         ExceptionHandler exceptionHandler = new ExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(exceptionHandler);
 
