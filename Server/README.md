@@ -5,7 +5,7 @@ http://localhost:8080/login -> logowanie. Obsługuję TYLKO requesty POST i przy
   
 Przyklad:  
   
-{
+{  
 "login": "def",  
 "password": "def"  
 }  
