@@ -10,17 +10,17 @@ Przyklad:
 "password": "def"  
 }  
   
-http://localhost:8080/api/users/register -> rejestracja. TYLKO POST i TYLKO JSON (login, password, matchingPassword, email, userName) (POST)  
+http://localhost:8080/api/users/register -> rejestracja. TYLKO POST i TYLKO JSON (Token (PUSTY! bo przeciez przy rejestracji ie mamy tokenu), login, password, matchingPassword, email, userName) (POST)  
   
   Przyklad:  
     
   {  
-  "Token": "string",  
+  "Token": "",  
   "emailAddress": "string",  
   "login": "string",  
   "matchingPassword": "string",  
   "password": "string",  
-  "userName": "string"  
+  "userName": "string@string.com"  
 }    
     
   
