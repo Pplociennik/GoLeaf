@@ -12,15 +12,17 @@ Przyklad:
   
 http://localhost:8080/api/users/register -> rejestracja. TYLKO POST i TYLKO JSON (login, password, matchingPassword, email, userName) (POST)  
   
-  {
-  "Token": "string",
-  "emailAddress": "string",
-  "login": "string",
-  "matchingPassword": "string",
-  "password": "string",
-  "userName": "string"
-}  
-  
+  Przyklad:  
+    
+  {  
+  "Token": "string",  
+  "emailAddress": "string",  
+  "login": "string",  
+  "matchingPassword": "string",  
+  "password": "string",  
+  "userName": "string"  
+}    
+    
   
 http://localhost:8080/api/users/all?token={wartosc_tokenu} -> zwraca liste zarejestrowanych uzytkownikow, wymaga waznego tokenu w linku!!! (GET)  
   
