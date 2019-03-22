@@ -10,12 +10,16 @@ Przyklad:
 "password": "def"  
 }  
   
-http://localhost:8080/api/users/register -> rejestracja. (login, password, matchingPassword) (POST)  
+http://localhost:8080/api/users/register -> rejestracja. TYLKO POST i TYLKO JSON (login, password, matchingPassword, email, userName) (POST)  
   
-http://localhost:8080/api/users/all -> zwraca liste zarejestrowanych uzytkownikow (GET)  
+http://localhost:8080/api/users/all?token={wartosc_tokenu} -> zwraca liste zarejestrowanych uzytkownikow, wymaga waznego tokenu w linku!!! (GET)  
   
 http://localhost:8080/swagger-ui.html#/ -> swagger  
   
 http://localhost:8080/api/users/{page} -> zwraca liste zarejestrowanych uzytkownikow podzielona na strony (argumenty: pageNr, size) (GET)  
   
-http://localhost:8080/api/users/user/{id} -> zwraca uzytkownika po id (GET)  
+http://localhost:8080/api/users/user/{id} -> zwraca uzytkownika po id (GET)    
+
+  
+    
+WSZYSTKIE ARGUMENTY I SZKIELETY METOD SPRAWDZAJCIE W SWAGGERZE!!!    

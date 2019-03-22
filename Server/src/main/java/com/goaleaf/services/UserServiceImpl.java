@@ -1,15 +1,14 @@
 package com.goaleaf.services;
 
-import com.goaleaf.DTO.UserDto;
 import com.goaleaf.entities.User;
 import com.goaleaf.repositories.RoleRepository;
 import com.goaleaf.validators.exceptions.EmailExistsException;
+import com.goaleaf.viewModels.RegisterViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import com.goaleaf.repositories.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.HashSet;
 
 
 @Service
@@ -55,24 +54,24 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User registerNewUserAccount(UserDto accountDto)
+    public User registerNewUserAccount(RegisterViewModel register)
             throws EmailExistsException {
 
-        if (emailExists(accountDto.emailAddress)) {
-            throw new EmailExistsException("Istnieje już konto o takim adresie email!:" + accountDto.emailAddress);
+        if (emailExists(register.emailAddress)) {
+            throw new EmailExistsException("Istnieje już konto o takim adresie email!:" + register.emailAddress);
         }
         User user = new User();
-        user.setLogin(accountDto.login);
-        user.setUserName(accountDto.userName);
-        user.setPassword(accountDto.password);
-        user.setEmailAddress(accountDto.emailAddress);
+        user.setLogin(register.login);
+        user.setUserName(register.userName);
+        user.setPassword(register.password);
+        user.setEmailAddress(register.emailAddress);
         return userRepository.save(user);
     }
 
-    @Override
-    public User findByUserName(String username) {
-        return userRepository.findByUserName(username);
-    }
+//    @Override
+//    public User findByUserName(String username) {
+//        return userRepository.findByUserName(username);
+//    }
 
     private boolean emailExists(String email) {
         User user = userRepository.findByEmailAddress(email);
@@ -80,5 +79,10 @@ public class UserServiceImpl implements UserService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public User findByLogin(String login) {
+        return userRepository.findByLogin(login);
     }
 }

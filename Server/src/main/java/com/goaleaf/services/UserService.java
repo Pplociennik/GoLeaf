@@ -1,9 +1,9 @@
 package com.goaleaf.services;
 
-import com.goaleaf.DTO.UserDto;
 import com.goaleaf.entities.User;
 
 import com.goaleaf.validators.exceptions.EmailExistsException;
+import com.goaleaf.viewModels.RegisterViewModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,8 +21,10 @@ public interface UserService {
 
     Iterable<User> listAllUsersPaging(Integer pageNr, Integer howManyOnPage);
 
-    User registerNewUserAccount(UserDto accountDto) throws EmailExistsException;
+    User registerNewUserAccount(RegisterViewModel register) throws EmailExistsException;
 
-    User findByUserName(String username);
+   // User findByUserName(String username);
+
+    User findByLogin(String user);
 
     }

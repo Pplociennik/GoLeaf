@@ -3,6 +3,7 @@ package com.goaleaf.controllers;
 import com.goaleaf.DTO.UserDto;
 import com.goaleaf.entities.User;
 import com.goaleaf.repositories.UserRepository;
+import com.goaleaf.services.JwtService;
 import com.goaleaf.services.UserService;
 import com.goaleaf.validators.UserValidator;
 import com.goaleaf.validators.exceptions.EmailExistsException;
@@ -28,10 +29,13 @@ import java.util.Optional;
 @RequestMapping("/api/users")
 @CrossOrigin(origins = "http://localhost:3000")
 @Component
+@PermitAll
 public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private JwtService jwtService;
     @Autowired
     private UserValidator userValidator;
     @Autowired
@@ -40,8 +44,11 @@ public class UserController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     //to listing all users
+    @PermitAll
     @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Iterable<User> list(Model model) {
+    public Iterable<User> list(String token) {
+        jwtService.Validate(token);
+        userService.saveUser(new User(1, "defaultUser", "DefaultUser", "def", "def", "def@default.com"));
         return userService.listAllUsers();
     }
 
@@ -63,47 +70,6 @@ public class UserController {
 //        return userService.getUserById(publicId);
 //    }
 
-    //to creating registration form
-    @PermitAll
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String showRegistrationForm(WebRequest request, Model model) {
-        UserDto userDTO = new UserDto();
-        model.addAttribute("user", userDTO);
-        return "registration";
-    }
-
-    @PermitAll
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ModelAndView registerUserAccount(
-            @ModelAttribute("user") @Valid UserDto accountDto,
-            BindingResult result,
-            WebRequest request,
-            Errors errors) {
-        accountDto.password = (bCryptPasswordEncoder.encode(accountDto.password));
-
-        User registered = new User();
-        if (!result.hasErrors()) {
-            registered = createUserAccount(accountDto, result);
-        }
-        if (registered == null) {
-            result.rejectValue("email", "message.regError");
-        }
-        if (result.hasErrors()) {
-            return new ModelAndView("registration", "user", accountDto);
-        } else {
-            return new ModelAndView("successRegister", "user", accountDto);
-        }
-    }
-
-    private User createUserAccount(UserDto accountDto, BindingResult result) {
-        User registered = null;
-        try {
-            registered = userService.registerNewUserAccount(accountDto);
-        } catch (EmailExistsException e) {
-            e.printStackTrace();
-        }
-        return registered;
-    }
 
     //to editing user in database
     @RequestMapping(value = "/user", method = RequestMethod.PUT)

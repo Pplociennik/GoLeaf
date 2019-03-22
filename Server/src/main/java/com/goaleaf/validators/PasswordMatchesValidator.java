@@ -1,6 +1,6 @@
 package com.goaleaf.validators;
 
-import com.goaleaf.DTO.UserDto;
+import com.goaleaf.viewModels.RegisterViewModel;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -14,7 +14,7 @@ public class PasswordMatchesValidator
 
     @Override
     public boolean isValid(Object obj, ConstraintValidatorContext context) {
-        UserDto user = (UserDto) obj;
+        RegisterViewModel user = (RegisterViewModel) obj;
         return user.password.equals(user.matchingPassword);
     }
 }
