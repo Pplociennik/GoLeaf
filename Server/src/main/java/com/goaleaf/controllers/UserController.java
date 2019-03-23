@@ -46,9 +46,9 @@ public class UserController {
     //to listing all users
     @PermitAll
     @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Iterable<User> list(String token) {
-        jwtService.Validate(token);
-        userService.saveUser(new User(1, "defaultUser", "DefaultUser", "def", "def", "def@default.com"));
+    public Iterable<User> list(/*String token*/) {
+//        jwtService.Validate(token);
+//        userService.saveUser(new User(1, "defaultUser", "DefaultUser", "def", "def", "def@default.com"));
         return userService.listAllUsers();
     }
 
