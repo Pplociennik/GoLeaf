@@ -22,8 +22,17 @@ class LogIn extends Component {
       "login": this.state.login,
       "password": this.state.password
     })
-    .then(res => console.log("User succesfully logged in", res)).catch(err => console.log(err))
-}
+    .then(res => {console.log("User succesfully logged in", res);
+
+    if(res.status === 200){
+      localStorage.setItem('token', res.data);
+      this.props.history.push('/');
+    } else {
+      const error = new Error(res.error);
+      throw error;
+    }}
+    )
+  }
   render() {
     return (
       <div className={styles.LogIn}>

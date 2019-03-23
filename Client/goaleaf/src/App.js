@@ -5,7 +5,12 @@ import Main from './components/Main/Main';
 import { BrowserRouter } from 'react-router-dom';
 
 class App extends Component {
+  state = {
+    logged: false
+  }
+
   render() {
+    console.log("dupa")
     return (
       <BrowserRouter>
         <div className={styles.App}>

@@ -17,7 +17,6 @@ class SignIn extends Component {
     })
   }
   handleSubmit = e => {
-    e.preventDefault();
     axios.post(`http://localhost:8080/register`, {
         "Token": "",
         "emailAddress": this.state.email,
@@ -26,7 +25,9 @@ class SignIn extends Component {
         "password": this.state.password,
         "userName": ""
       })
-      .then(res => console.log("User succesfully signed in", res)).catch(err => console.log(err))
+      .then(res => {console.log("User succesfully signed in", res);
+                    this.props.history.push('/login');
+       }).catch(err => console.log(err))
   }
   render() {
     return (
