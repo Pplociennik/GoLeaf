@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styles from './SignIn.module.scss'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 class SignIn extends Component {
 
@@ -17,7 +18,15 @@ class SignIn extends Component {
   }
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state)
+    axios.post(`http://localhost:8080/register`, {
+        "Token": "",
+        "emailAddress": this.state.email,
+        "login": this.state.login,
+        "matchingPassword": this.state.password,
+        "password": this.state.password,
+        "userName": ""
+      })
+      .then(res => console.log("User succesfully signed in", res)).catch(err => console.log(err))
   }
   render() {
     return (
