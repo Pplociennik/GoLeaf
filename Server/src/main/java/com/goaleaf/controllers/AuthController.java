@@ -22,6 +22,7 @@ import static com.goaleaf.security.SecurityConstants.EXPIRATION_TIME;
 import static com.goaleaf.security.SecurityConstants.SECRET;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
 
     @Autowired
@@ -51,7 +52,8 @@ public class AuthController {
         if (userService.findByLogin(userModel.login) == null) {
             throw new AccountExistsException("Konto o podanym loginie nie istnieje!");
         }
-        if (userService.findByLogin(userModel.login).getPassword() != userModel.password) {
+
+        if (userService.findByLogin(userModel.login).getPassword().matches(bCryptPasswordEncoder.encode(userModel.password))) {
             throw new BadCredentialsException("Złe dane logowania!");
         }
         String token = JWT.create()
