@@ -131,6 +131,11 @@
             <artifactId>spring-security-oauth2-core</artifactId>
             <version>5.0.0.M5</version>
         </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <build>
