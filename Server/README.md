@@ -10,12 +10,11 @@ Przyklad:
 "password": "def"  
 }  
   
-http://localhost:8080/api/users/register -> rejestracja. TYLKO POST i TYLKO JSON (Token (PUSTY! bo przeciez przy rejestracji ie mamy tokenu), login, password, matchingPassword, email, userName) (POST)  
+http://localhost:8080/register -> rejestracja. TYLKO POST i TYLKO JSON (login, password, matchingPassword, email, userName) (POST)  
   
   Przyklad:  
     
   {  
-  "Token": "",  
   "emailAddress": "string",  
   "login": "string",  
   "matchingPassword": "string",  
@@ -24,14 +23,21 @@ http://localhost:8080/api/users/register -> rejestracja. TYLKO POST i TYLKO JSON
 }    
     
   
-http://localhost:8080/api/users/all?token={wartosc_tokenu} -> zwraca liste zarejestrowanych uzytkownikow, wymaga waznego tokenu w linku!!! (GET)  
+http://localhost:8080/api/users/all -> zwraca liste zarejestrowanych uzytkownikow (GET)  
   
 http://localhost:8080/swagger-ui.html#/ -> swagger  
   
 http://localhost:8080/api/users/{page} -> zwraca liste zarejestrowanych uzytkownikow podzielona na strony (argumenty: pageNr, size) (GET)  
   
 http://localhost:8080/api/users/user/{id} -> zwraca uzytkownika po id (GET)    
-
+  
+  
+    
+UWAGA! Po pierwszym uruchomieniu serwera i utworzeniu bazy danych warto wejsc w plik application.properties (znajdujący się w katalogu resources) i zmienic wartosc :  
+  
+spring.jpa.hibernate.ddl-auto (create -> update)  
+  
+Inaczej przy kazdym uruchomieniu baza będzie usuwać tabele i tworzyć je od nowa!
   
     
 WSZYSTKIE ARGUMENTY I SZKIELETY METOD SPRAWDZAJCIE W SWAGGERZE!!!    
