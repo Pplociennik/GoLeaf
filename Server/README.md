@@ -10,7 +10,7 @@ Przyklad:
 "password": "def"  
 }  
   
-http://localhost:8080/register -> rejestracja. TYLKO POST i TYLKO JSON (Token (PUSTY! bo przeciez przy rejestracji ie mamy tokenu), login, password, matchingPassword, email, userName) (POST)  
+http://localhost:8080/register -> rejestracja. TYLKO POST i TYLKO JSON (login, password, matchingPassword, email, userName) (POST)  
   
   Przyklad:  
     
@@ -23,7 +23,7 @@ http://localhost:8080/register -> rejestracja. TYLKO POST i TYLKO JSON (Token (P
 }    
     
   
-http://localhost:8080/api/users/all -> zwraca liste zarejestrowanych uzytkownikow, wymaga waznego tokenu w linku!!! (GET)  
+http://localhost:8080/api/users/all -> zwraca liste zarejestrowanych uzytkownikow (GET)  
   
 http://localhost:8080/swagger-ui.html#/ -> swagger  
   
@@ -33,7 +33,7 @@ http://localhost:8080/api/users/user/{id} -> zwraca uzytkownika po id (GET)
   
   
     
-UWAGA! Po pierwszym uruchomieniu serwera i utworzeniu bazy danych warto wejsc w plik application.properties (znajdujący się w katalogu resources) i zmienicwartosc :  
+UWAGA! Po pierwszym uruchomieniu serwera i utworzeniu bazy danych warto wejsc w plik application.properties (znajdujący się w katalogu resources) i zmienic wartosc :  
   
 spring.jpa.hibernate.ddl-auto (create -> update)  
   
