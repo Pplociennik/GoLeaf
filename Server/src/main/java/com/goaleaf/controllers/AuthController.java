@@ -1,15 +1,15 @@
 package com.goaleaf.controllers;
 
 import com.auth0.jwt.JWT;
-import com.goaleaf.DTO.UserDto;
+import com.goaleaf.entities.DTO.UserDto;
 import com.goaleaf.entities.User;
 import com.goaleaf.services.UserService;
 import com.goaleaf.validators.exceptions.AccountExistsException;
 import com.goaleaf.validators.exceptions.BadCredentialsException;
 import com.goaleaf.validators.exceptions.EmailExistsException;
 import com.goaleaf.validators.exceptions.LoginExistsException;
-import com.goaleaf.viewModels.LoginViewModel;
-import com.goaleaf.viewModels.RegisterViewModel;
+import com.goaleaf.entities.viewModels.LoginViewModel;
+import com.goaleaf.entities.viewModels.RegisterViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package com.goaleaf.viewModels;
+package com.goaleaf.entities.viewModels;
 
 public class LoginViewModel extends AuthorizeViewModel {
 

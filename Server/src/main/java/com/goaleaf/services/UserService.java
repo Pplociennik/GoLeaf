@@ -4,7 +4,7 @@ import com.goaleaf.entities.User;
 
 import com.goaleaf.validators.exceptions.EmailExistsException;
 import com.goaleaf.validators.exceptions.LoginExistsException;
-import com.goaleaf.viewModels.RegisterViewModel;
+import com.goaleaf.entities.viewModels.RegisterViewModel;
 import org.springframework.stereotype.Service;
 
 @Service

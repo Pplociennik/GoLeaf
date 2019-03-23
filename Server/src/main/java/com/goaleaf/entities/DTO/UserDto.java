@@ -1,4 +1,4 @@
-package com.goaleaf.DTO;
+package com.goaleaf.entities.DTO;
 
 public class UserDto {
 

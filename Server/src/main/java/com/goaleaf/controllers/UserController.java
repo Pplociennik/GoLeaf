@@ -1,24 +1,17 @@
 package com.goaleaf.controllers;
 
-import com.goaleaf.DTO.UserDto;
 import com.goaleaf.entities.User;
 import com.goaleaf.repositories.UserRepository;
 import com.goaleaf.services.JwtService;
 import com.goaleaf.services.UserService;
 import com.goaleaf.validators.UserValidator;
-import com.goaleaf.validators.exceptions.EmailExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
