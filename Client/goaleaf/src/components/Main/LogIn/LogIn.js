@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styles from './LogIn.module.scss'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 class LogIn extends Component {
 
@@ -16,8 +17,13 @@ class LogIn extends Component {
   }
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state)
-  }
+    axios.post(`http://localhost:8080/login`, {
+      "Token": "",
+      "login": this.state.login,
+      "password": this.state.password
+    })
+    .then(res => console.log("User succesfully logged in", res)).catch(err => console.log(err))
+}
   render() {
     return (
       <div className={styles.LogIn}>
