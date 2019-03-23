@@ -3,6 +3,7 @@ package com.goaleaf.services;
 import com.goaleaf.entities.User;
 import com.goaleaf.repositories.RoleRepository;
 import com.goaleaf.validators.exceptions.EmailExistsException;
+import com.goaleaf.validators.exceptions.LoginExistsException;
 import com.goaleaf.viewModels.RegisterViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -55,11 +56,15 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public User registerNewUserAccount(RegisterViewModel register)
-            throws EmailExistsException {
+            throws EmailExistsException, LoginExistsException {
 
         if (emailExists(register.emailAddress)) {
             throw new EmailExistsException("Istnieje już konto o takim adresie email!:" + register.emailAddress);
         }
+        if (loginExists(register.login)) {
+            throw new LoginExistsException("Istnieje już konto o takim loginie!: " + register.login);
+        }
+
         User user = new User();
         user.setLogin(register.login);
         user.setUserName(register.userName);
@@ -75,6 +80,14 @@ public class UserServiceImpl implements UserService {
 
     private boolean emailExists(String email) {
         User user = userRepository.findByEmailAddress(email);
+        if (user != null) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean loginExists(String login) {
+        User user = userRepository.findByLogin(login);
         if (user != null) {
             return true;
         }

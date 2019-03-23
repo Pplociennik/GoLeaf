@@ -4,7 +4,10 @@ import com.auth0.jwt.JWT;
 import com.goaleaf.DTO.UserDto;
 import com.goaleaf.entities.User;
 import com.goaleaf.services.UserService;
+import com.goaleaf.validators.exceptions.AccountExistsException;
+import com.goaleaf.validators.exceptions.BadCredentialsException;
 import com.goaleaf.validators.exceptions.EmailExistsException;
+import com.goaleaf.validators.exceptions.LoginExistsException;
 import com.goaleaf.viewModels.LoginViewModel;
 import com.goaleaf.viewModels.RegisterViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +31,7 @@ public class AuthController {
 
     @PermitAll
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public UserDto registerUserAccount(@RequestBody RegisterViewModel register) throws EmailExistsException {
+    public UserDto registerUserAccount(@RequestBody RegisterViewModel register) throws EmailExistsException, LoginExistsException {
         register.password = (bCryptPasswordEncoder.encode(register.password));
         User user = userService.registerNewUserAccount(register);
         UserDto userDto = new UserDto();
@@ -43,7 +46,14 @@ public class AuthController {
 
     @PermitAll
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@RequestBody LoginViewModel userModel) {
+    public String login(@RequestBody LoginViewModel userModel) throws AccountExistsException, BadCredentialsException {
+
+        if (userService.findByLogin(userModel.login) == null) {
+            throw new AccountExistsException("Konto o podanym loginie nie istnieje!");
+        }
+        if (userService.findByLogin(userModel.login).getPassword() != userModel.password) {
+            throw new BadCredentialsException("Złe dane logowania!");
+        }
         String token = JWT.create()
                 .withSubject(userService.findByLogin(userModel.login).getLogin())
                 .withClaim("Email", userService.findByLogin(userModel.login).getEmailAddress())

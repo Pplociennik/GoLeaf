@@ -3,6 +3,7 @@ package com.goaleaf.services;
 import com.goaleaf.entities.User;
 
 import com.goaleaf.validators.exceptions.EmailExistsException;
+import com.goaleaf.validators.exceptions.LoginExistsException;
 import com.goaleaf.viewModels.RegisterViewModel;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public interface UserService {
 
     Iterable<User> listAllUsersPaging(Integer pageNr, Integer howManyOnPage);
 
-    User registerNewUserAccount(RegisterViewModel register) throws EmailExistsException;
+    User registerNewUserAccount(RegisterViewModel register) throws EmailExistsException, LoginExistsException;
 
    // User findByUserName(String username);
 
