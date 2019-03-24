@@ -27,6 +27,7 @@ class LogIn extends Component {
     if(res.status === 200){
       localStorage.setItem('token', res.data);
       this.props.history.push('/');
+      window.location.reload();
     } else {
       const error = new Error(res.error);
       throw error;
