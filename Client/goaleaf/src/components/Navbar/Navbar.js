@@ -6,6 +6,7 @@ import NavLogged from './NavLogged/NavLogged';
 import Logo from './../../assets/mobile-logo.png';
 import Hamburger from './../../assets/hamburger.png';
 import Close from './../../assets/close.png';
+import { connect } from 'react-redux';
 
 class Navbar extends Component {
 
@@ -28,7 +29,7 @@ class Navbar extends Component {
     }
 
     let navigation = <NavNotLogged show={ this.state.showNav } handleNavElementClicked = { this.handleNavElementClicked } />
-    if(localStorage.getItem('token')){
+    if(this.props.authenticated){
         navigation = <NavLogged show={ this.state.showNav } handleNavElementClicked = { this.handleNavElementClicked } />
     }
     return (
@@ -42,4 +43,10 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+const mapStateToProps = state => {
+  return {
+    authenticated: state.authenticated
+  }
+}
+
+export default connect(mapStateToProps)(Navbar);

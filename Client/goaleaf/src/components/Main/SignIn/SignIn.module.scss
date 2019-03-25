@@ -29,7 +29,7 @@
             font-weight: lighter;
         }
         .InputField {
-            height: 50px;
+            height: 46px;
             font-size: 0.9em; 
             font-family: 'Poppins', sans-serif;
             font-weight: 300;
@@ -68,5 +68,15 @@
                 color: $text-color;
             }
         }
+    }
+}
+.LoggedMsg {
+    display: flex;
+    justify-content: center;
+
+    h1 {
+        font-size: 1.2em;
+        font-weight: 400;
+        margin-top: 8em;
     }
 }

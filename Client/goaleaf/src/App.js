@@ -5,9 +5,6 @@ import Main from './components/Main/Main';
 import { BrowserRouter } from 'react-router-dom';
 
 class App extends Component {
-  state = {
-    logged: false
-  }
 
   render() {
     return (
@@ -20,5 +17,6 @@ class App extends Component {
     );
   }
 }
+
 
 export default App;

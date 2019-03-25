@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styles from './SignIn.module.scss'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { connect } from 'react-redux' 
+import { connect } from 'react-redux'
 
 class SignIn extends Component {
 
@@ -32,6 +32,13 @@ class SignIn extends Component {
 
 
   render() {
+    if(this.props.authenticated){
+      return (
+        <div className={styles.LoggedMsg}>
+          <h1>user already logged in</h1>
+        </div>
+      )
+    }
     let errorMsg = null
     if (this.state.error) {
       errorMsg = <div className={styles.Error}>Sign in unsuccessful, please try again</div>
@@ -63,4 +70,14 @@ class SignIn extends Component {
   }
 }
 
-export default SignIn;
+const mapStateToProps = state => {
+  return {
+    authenticated: state.authenticated
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

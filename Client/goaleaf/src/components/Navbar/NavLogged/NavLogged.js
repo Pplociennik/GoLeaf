@@ -7,6 +7,7 @@ class NavLogged extends Component {
     handleLogOut = () => {
         localStorage.removeItem('token');
         this.props.handleNavElementClicked();
+        window.location.reload();
     }
   render() {
     let navState = this.props.show;

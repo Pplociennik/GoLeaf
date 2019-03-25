@@ -13,6 +13,7 @@ function Main() {
             <Route exact path='/' component={Dashboard}/>
             <Route path='/login' component={LogIn}/>
             <Route path='/signin' component={SignIn}/>
+            <Route path="*" component={Dashboard} />
         </Switch>
     </main>
   )
