@@ -7,7 +7,8 @@ class LogIn extends Component {
 
   state = {
     login: null,
-    password: null
+    password: null,
+    errorMsg: null
   }
 
   handleChange = e => {
@@ -22,19 +23,17 @@ class LogIn extends Component {
       "login": this.state.login,
       "password": this.state.password
     })
-    .then(res => {console.log("User succesfully logged in", res);
-
-    if(res.status === 200){
-      localStorage.setItem('token', res.data);
-      this.props.history.push('/');
-      window.location.reload();
-    } else {
-      const error = new Error(res.error);
-      throw error;
-    }}
-    )
+    .then(res => {console.log("User succesfully logged in")
+                  localStorage.setItem('token', res.data);
+                  window.location.reload();
+                  this.props.history.push('/');}
+    ).catch(err => this.setState({error: true}))
   }
   render() {
+    let errorMsg = null
+    if (this.state.error) {
+      errorMsg = <div className={styles.Error}>Log In unsuccessful, please try again</div>
+    }
     return (
       <div className={styles.LogIn}>
       <form onSubmit={ this.handleSubmit } autoComplete="off">
@@ -47,6 +46,7 @@ class LogIn extends Component {
           password 
           <input className={styles.InputField} type="password" id="password" onChange={ this.handleChange } />
         </label>
+        { errorMsg }
           <div className={styles.Buttons}>
             <input type="submit" value="Log in" />
             <Link to='/signin'><input type="button" value="Sign in" /></Link>
