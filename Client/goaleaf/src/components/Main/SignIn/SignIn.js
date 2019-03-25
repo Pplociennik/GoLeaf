@@ -2,21 +2,21 @@ import React, { Component } from 'react'
 import styles from './SignIn.module.scss'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import { connect } from 'react-redux' 
 
 class SignIn extends Component {
 
   state = {
-    email: null,
     login: null,
-    password: null
+    email: null,
+    password: null,
+    error: false
   }
-
   handleChange = e => {
-    this.setState({
-      [e.target.id]: e.target.value
-    })
+    this.setState({[e.target.id]: e.target.value})
   }
   handleSubmit = e => {
+    e.preventDefault();
     axios.post(`http://localhost:8080/register`, {
         "Token": "",
         "emailAddress": this.state.email,
@@ -27,12 +27,18 @@ class SignIn extends Component {
       })
       .then(res => {console.log("User succesfully signed in", res);
                     this.props.history.push('/login');
-       }).catch(err => console.log(err))
+       }).catch(err => this.setState({error: true}));
   }
+
+
   render() {
+    let errorMsg = null
+    if (this.state.error) {
+      errorMsg = <div className={styles.Error}>Sign in unsuccessful, please try again</div>
+    }
     return (
       <div className={styles.SignIn}>
-      <form onSubmit={ this.handleSubmit }>
+      <form onSubmit={ this.handleSubmit } autoComplete="off">
         <h1> Sign In </h1>
         <label>
           email 
@@ -46,6 +52,7 @@ class SignIn extends Component {
           password 
           <input className={styles.InputField} type="password" id="password" onChange={ this.handleChange } />
         </label>
+        { errorMsg }
           <div className={styles.Buttons}>
             <input type="submit" value="Sign in" />
             <Link to='/login'><input type="button" value="Log in" /></Link>

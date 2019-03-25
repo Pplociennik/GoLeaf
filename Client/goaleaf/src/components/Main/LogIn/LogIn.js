@@ -37,7 +37,7 @@ class LogIn extends Component {
   render() {
     return (
       <div className={styles.LogIn}>
-      <form onSubmit={ this.handleSubmit }>
+      <form onSubmit={ this.handleSubmit } autoComplete="off">
         <h1> Log In </h1>
         <label>
           login 

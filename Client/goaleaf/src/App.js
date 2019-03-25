@@ -10,7 +10,6 @@ class App extends Component {
   }
 
   render() {
-    console.log("dupa")
     return (
       <BrowserRouter>
         <div className={styles.App}>
