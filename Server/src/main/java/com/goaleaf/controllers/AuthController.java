@@ -53,7 +53,7 @@ public class AuthController {
             throw new AccountExistsException("Konto o podanym loginie nie istnieje!");
         }
 
-        if (userService.findByLogin(userModel.login).getPassword().matches(bCryptPasswordEncoder.encode(userModel.password))) {
+        if (!bCryptPasswordEncoder.matches(userModel.password, userService.findByLogin(userModel.login).getPassword())) {
             throw new BadCredentialsException("Złe dane logowania!");
         }
         String token = JWT.create()
