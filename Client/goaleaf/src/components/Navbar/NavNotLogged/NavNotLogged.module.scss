@@ -10,6 +10,7 @@
     top: $navbar-height;
     left: -100vw;
     list-style-type: none;
+    z-index: 1;
     transition: left 0.3s;
     transition-timing-function: ease-in;
     display: flex;

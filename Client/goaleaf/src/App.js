@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styles from './App.module.scss';
 import Navbar from './components/Navbar/Navbar';
-import Main from './components/Main/Main';
+import Main from './components/containers/Main/Main';
 import { BrowserRouter } from 'react-router-dom';
 
 class App extends Component {

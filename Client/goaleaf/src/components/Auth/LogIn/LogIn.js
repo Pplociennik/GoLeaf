@@ -60,6 +60,7 @@ class LogIn extends Component {
             <input type="submit" value="Log in" />
             <Link to='/signin'><input type="button" value="Sign in" /></Link>
           </div>
+          <Link to='/reset-password' className={styles.ForgotPassword}>Forgot password?</Link>
       </form>
       </div>
     )
