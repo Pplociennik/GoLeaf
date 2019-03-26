@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link, NavLink, withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import styles from './NavLogged.module.scss'
 
 class NavLogged extends Component {
