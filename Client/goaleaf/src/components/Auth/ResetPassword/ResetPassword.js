@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './ResetPassword.scss'
+import  LogoBg from './../../../assets/leaf-bg.png'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
@@ -37,6 +38,8 @@ class ResetPassword extends Component {
             <input type="submit" value="Submit" />
           </div>
       </form>
+      <img className="LogoBg1"src={LogoBg} alt="logo"></img>
+      <img className="LogoBg2" src={LogoBg} alt="logo"></img>
       </div>
     )
   }
