@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import styles from './LogIn.module.scss'
+import  LogoBg from './../../../assets/leaf-bg.png'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { connect } from 'react-redux'
 
 class LogIn extends Component {
 
@@ -26,19 +26,12 @@ class LogIn extends Component {
     })
     .then(res => {console.log("User succesfully logged in");
                   localStorage.setItem('token', res.data);
-                  window.location.reload();
                   this.props.history.push('/');
+                  window.location.reload();
                 }
     ).catch(err => {this.setState({error: true}); console.log(err)})
   }
   render() {
-    if(this.props.authenticated){
-      return (
-        <div className={styles.LoggedMsg}>
-          <h1>user already logged in</h1>
-        </div>
-      )
-    }
     let errorMsg = null
     if (this.state.error) {
       errorMsg = <div className={styles.Error}>Log In unsuccessful, please try again</div>
@@ -62,19 +55,11 @@ class LogIn extends Component {
           </div>
           <Link to='/reset-password' className={styles.ForgotPassword}>Forgot password?</Link>
       </form>
+      <img className={styles.LogoBg1}src={LogoBg} alt="logo"></img>
+      <img className={styles.LogoBg2} src={LogoBg} alt="logo"></img>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    authenticated: state.authenticated
-  }
-}
-const mapDispatchToProps = dispatch => {
-  return {
-    
-  }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(LogIn);
+export default LogIn;

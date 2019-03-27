@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import styles from './SignIn.module.scss'
+import  LogoBg from './../../../assets/leaf-bg.png'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { connect } from 'react-redux'
 
 class SignIn extends Component {
 
@@ -32,13 +32,6 @@ class SignIn extends Component {
 
 
   render() {
-    if(this.props.authenticated){
-      return (
-        <div className={styles.LoggedMsg}>
-          <h1>user already logged in</h1>
-        </div>
-      )
-    }
     let errorMsg = null
     if (this.state.error) {
       errorMsg = <div className={styles.Error}>Sign in unsuccessful, please try again</div>
@@ -65,19 +58,11 @@ class SignIn extends Component {
             <Link to='/login'><input type="button" value="Log in" /></Link>
           </div>
       </form>
+      <img className={styles.LogoBg1}src={LogoBg} alt="logo"></img>
+      <img className={styles.LogoBg2} src={LogoBg} alt="logo"></img>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    authenticated: state.authenticated
-  }
-}
-const mapDispatchToProps = dispatch => {
-  return {
-    
-  }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default SignIn;

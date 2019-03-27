@@ -1,7 +1,10 @@
 @import './../../../global-styles.scss';
 
 .SignIn {
-    width: 100%;
+    max-width: 100%;
+    min-height: calc(100vh - #{$navbar-height});
+    position: relative;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -18,7 +21,7 @@
         min-height: 500px;
         max-width: 90%;
         width: 300px;
-        margin-top: 4em;
+        z-index: 2;
         display: flex;
         flex-direction: column;
 
@@ -51,8 +54,8 @@
             margin-top: 2em;
             
             input {
-                height: 42px;
-                width: 110px;
+                height: 40px;
+                width: 106px;
                 font-size: 1.2em;
                 letter-spacing: 1px;
                 outline: 0;
@@ -71,15 +74,37 @@
                 opacity: 0.9;
             }
         }
+        .LoggedMsg {
+            display: flex;
+            justify-content: center;
+        
+            h1 {
+                font-size: 1.2em;
+                font-weight: 400;
+                margin-top: 8em;
+            }
+        }
     }
+        .LogoBg1, .LogoBg2 {
+            display: none;
+            z-index: 1;
+            opacity: 0.9;
+    
+            @include lg {
+                display: block;
+            }
+        }
+        .LogoBg1 {
+            position: absolute;
+            bottom: 50px;
+            right: -200px;
+            
+        }
+        .LogoBg2 {
+            position: absolute;
+            bottom: -220px;
+            right: 0;
+            transform: rotate(-40deg);
+        }
 }
-.LoggedMsg {
-    display: flex;
-    justify-content: center;
 
-    h1 {
-        font-size: 1.2em;
-        font-weight: 400;
-        margin-top: 8em;
-    }
-}
