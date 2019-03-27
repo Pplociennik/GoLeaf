@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import styles from './LogIn.module.scss'
+import './LogIn.scss'
 import  LogoBg from './../../../assets/leaf-bg.png'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
@@ -34,29 +34,29 @@ class LogIn extends Component {
   render() {
     let errorMsg = null
     if (this.state.error) {
-      errorMsg = <div className={styles.Error}>Log In unsuccessful, please try again</div>
+      errorMsg = <div className="Error">Log In unsuccessful, please try again</div>
     }
     return (
-      <div className={styles.LogIn}>
+      <div className="LogIn">
       <form onSubmit={ this.handleSubmit } autoComplete="off">
         <h1> Log In </h1>
         <label>
           login 
-          <input className={styles.InputField} type="text" id="login" onChange={ this.handleChange } />
+          <input className="InputField" type="text" id="login" onChange={ this.handleChange } />
         </label>
         <label>
           password 
-          <input className={styles.InputField} type="password" id="password" onChange={ this.handleChange } />
+          <input className="InputField" type="password" id="password" onChange={ this.handleChange } />
         </label>
         { errorMsg }
-          <div className={styles.Buttons}>
+          <div className="Buttons">
             <input type="submit" value="Log in" />
             <Link to='/signin'><input type="button" value="Sign in" /></Link>
           </div>
-          <Link to='/reset-password' className={styles.ForgotPassword}>Forgot password?</Link>
+          <Link to='/reset-password' className="ForgotPassword">Forgot password?</Link>
       </form>
-      <img className={styles.LogoBg1}src={LogoBg} alt="logo"></img>
-      <img className={styles.LogoBg2} src={LogoBg} alt="logo"></img>
+      <img className="LogoBg1"src={LogoBg} alt="logo"></img>
+      <img className="LogoBg2" src={LogoBg} alt="logo"></img>
       </div>
     )
   }

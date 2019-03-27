@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './Main.module.scss'
+import './Main.scss'
 import { Switch, Route } from 'react-router-dom'
 import LogIn from './../../Auth/LogIn/LogIn';
 import SignIn from './../../Auth/SignIn/SignIn';
@@ -9,7 +9,7 @@ import Dashboard from './../../Dashboard/Dashboard';
 
 function Main() {
   return (
-    <main className={styles.Main}>
+    <main className="Main">
         <Switch>
             <Route exact path='/' component={Dashboard}/>
             <Route path='/login' component={LogIn}/>

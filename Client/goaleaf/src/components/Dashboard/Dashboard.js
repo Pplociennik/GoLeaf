@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import styles from './Dashboard.module.scss'
+import './Dashboard.scss'
 import { connect } from 'react-redux'
 
 class Dashboard extends Component {
@@ -9,7 +9,7 @@ class Dashboard extends Component {
       user = <div>hello { this.props.userLogged }</div>
     }
     return (
-      <div className={styles.Dashboard}>
+      <div className="Dashboard">
         { user }
       </div>
     )

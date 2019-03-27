@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import styles from './SignIn.module.scss'
+import './SignIn.scss'
 import  LogoBg from './../../../assets/leaf-bg.png'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
@@ -34,32 +34,32 @@ class SignIn extends Component {
   render() {
     let errorMsg = null
     if (this.state.error) {
-      errorMsg = <div className={styles.Error}>Sign in unsuccessful, please try again</div>
+      errorMsg = <div className="Error">Sign in unsuccessful, please try again</div>
     }
     return (
-      <div className={styles.SignIn}>
+      <div className="SignIn">
       <form onSubmit={ this.handleSubmit } autoComplete="off">
         <h1> Sign In </h1>
         <label>
           email 
-          <input className={styles.InputField} type="email" id="email" onChange={ this.handleChange } />
+          <input className="InputField" type="email" id="email" onChange={ this.handleChange } />
         </label>
         <label>
           login 
-          <input className={styles.InputField} type="text" id="login" onChange={ this.handleChange } />
+          <input className="InputField" type="text" id="login" onChange={ this.handleChange } />
         </label>
         <label>
           password 
-          <input className={styles.InputField} type="password" id="password" onChange={ this.handleChange } />
+          <input className="InputField" type="password" id="password" onChange={ this.handleChange } />
         </label>
         { errorMsg }
-          <div className={styles.Buttons}>
+          <div className="Buttons">
             <input type="submit" value="Sign in" />
             <Link to='/login'><input type="button" value="Log in" /></Link>
           </div>
       </form>
-      <img className={styles.LogoBg1}src={LogoBg} alt="logo"></img>
-      <img className={styles.LogoBg2} src={LogoBg} alt="logo"></img>
+      <img className="LogoBg1"src={LogoBg} alt="logo"></img>
+      <img className="LogoBg2" src={LogoBg} alt="logo"></img>
       </div>
     )
   }
