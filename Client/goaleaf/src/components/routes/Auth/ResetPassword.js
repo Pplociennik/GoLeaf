@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './ResetPassword.scss'
+import './Auth.scss'
 import  LogoBg from './../../../assets/leaf-bg.png'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
@@ -23,7 +23,7 @@ class ResetPassword extends Component {
   render() {
     let errorMsg = null
     if (this.state.error) {
-      errorMsg = <div className="Error">no user with such email</div>
+      errorMsg = <div className="ErrorMsg">no user with such email</div>
     }
     return (
       <div className="ResetPassword">

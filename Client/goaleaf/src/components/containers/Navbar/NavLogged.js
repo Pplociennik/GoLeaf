@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
-import styles from './NavLogged.module.scss'
+import './Nav.scss'
 
 class NavLogged extends Component {
 
@@ -22,7 +22,7 @@ class NavLogged extends Component {
     }
 
     return (
-        <ul className={styles.NavNotLogged} style={ navStyle }>
+        <ul className="NavLogged" style={ navStyle }>
             <li onClick = { this.handleLogOut } ><Link to='/'>log out</Link></li>
         </ul>
     )

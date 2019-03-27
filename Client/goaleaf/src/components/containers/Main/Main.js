@@ -1,10 +1,10 @@
 import React from 'react'
 import './Main.scss'
 import { Switch, Route } from 'react-router-dom'
-import LogIn from './../../Auth/LogIn/LogIn';
-import SignIn from './../../Auth/SignIn/SignIn';
-import ResetPassword from './../../Auth/ResetPassword/ResetPassword';
-import Dashboard from './../../Dashboard/Dashboard';
+import LogIn from './../../routes/Auth/LogIn';
+import SignIn from './../../routes/Auth/SignIn';
+import ResetPassword from './../../routes/Auth/ResetPassword';
+import Dashboard from './../../routes/Dashboard/Dashboard';
 
 
 function Main() {

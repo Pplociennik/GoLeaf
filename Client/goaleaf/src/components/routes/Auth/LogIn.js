@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './LogIn.scss'
+import './Auth.scss'
 import  LogoBg from './../../../assets/leaf-bg.png'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
@@ -34,7 +34,7 @@ class LogIn extends Component {
   render() {
     let errorMsg = null
     if (this.state.error) {
-      errorMsg = <div className="Error">Log In unsuccessful, please try again</div>
+      errorMsg = <div className="ErrorMsg">Log In unsuccessful, please try again</div>
     }
     return (
       <div className="LogIn">

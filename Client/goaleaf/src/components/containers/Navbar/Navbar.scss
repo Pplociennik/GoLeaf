@@ -1,4 +1,4 @@
-@import './../../global-styles.scss';
+@import './../../../global-styles.scss';
 
 .Navbar {
     width: 100%;
@@ -25,7 +25,7 @@
         position: relative;
     }
     .LogoWeb::after {
-        content: url('./../../assets/logo.png');
+        content: url('./../../../assets/logo.png');
         position: absolute;
         top: -10px;
         left: 88px;
