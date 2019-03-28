@@ -54,6 +54,7 @@
         .ErrorMsg {
             color: $error-color;
             font-size: 0.8em;
+            letter-spacing: 0.5px;
         }
         .Buttons {
             display: flex;
@@ -99,7 +100,7 @@
         display: none;
         opacity: 0.9;
 
-        @include lg {
+        @include md {
             display: block;
         }
     }

@@ -7,16 +7,28 @@ import axios from 'axios'
 class SignIn extends Component {
 
   state = {
-    login: null,
-    email: null,
-    password: null,
-    error: false
+    login: '',
+    email: '',
+    password: '',
+    error: {
+      SERVER_ERROR: false,
+      PASSWORD_ERROR: false,
+      LOGIN_ERROR: false,
+      EMAIL_ERROR: false,
+      EMPTY_ERROR: false
+    }
   }
   handleChange = e => {
     this.setState({[e.target.id]: e.target.value})
   }
   handleSubmit = e => {
     e.preventDefault();
+
+    if (this.state.login.trim() === '' || this.state.email.trim() === '' || this.state.password === ''){
+      this.setState({error: {...this.state.error, EMPTY_ERROR: true}});
+      return;
+    }
+
     axios.post(`http://localhost:8080/register`, {
         "Token": "",
         "emailAddress": this.state.email,
@@ -25,16 +37,26 @@ class SignIn extends Component {
         "password": this.state.password,
         "userName": ""
       })
-      .then(res => {console.log("User succesfully signed in", res);
-                    this.props.history.push('/login');
-       }).catch(err => this.setState({error: true}));
+      .then(res => this.props.history.push('/login')
+     ).catch(err => this.setState({error: {...this.state.error, SERVER_ERROR: true}}));
   }
-
 
   render() {
     let errorMsg = null
-    if (this.state.error) {
+    if (this.state.error.SERVER_ERROR) {
       errorMsg = <div className="ErrorMsg">Sign in unsuccessful, please try again</div>
+    }
+    if (this.state.error.PASSWORD_ERROR) {
+      errorMsg = <div className="ErrorMsg">Password at least 6 characters</div>
+    }
+    if (this.state.error.LOGIN_ERROR) {
+      errorMsg = <div className="ErrorMsg">Login already exist</div>
+    }
+    if (this.state.error.EMAIL_ERROR) {
+      errorMsg = <div className="ErrorMsg">Account with that email already exist</div>
+    }
+    if (this.state.error.EMPTY_ERROR) {
+      errorMsg = <div className="ErrorMsg">Please complete the form</div>
     }
     return (
       <div className="SignIn">

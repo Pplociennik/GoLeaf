@@ -7,9 +7,14 @@ import axios from 'axios'
 class LogIn extends Component {
 
   state = {
-    login: null,
-    password: null,
-    errorMsg: null
+    login: '',
+    password: '',
+    error: {
+      SERVER_ERROR: false,
+      PASSWORD_ERROR: false,
+      LOGIN_ERROR: false,
+      EMPTY_ERROR: false
+    }
   }
 
   handleChange = e => {
@@ -19,22 +24,38 @@ class LogIn extends Component {
   }
   handleSubmit = e => {
     e.preventDefault();
+
+    if (this.state.login.trim() === '' || this.state.password === ''){
+      this.setState({error: {...this.state.error, EMPTY_ERROR: true}});
+      return;
+    }
+
     axios.post(`http://localhost:8080/login`, {
       "Token": "",
       "login": this.state.login,
       "password": this.state.password
     })
-    .then(res => {console.log("User succesfully logged in");
+    .then(res => {
                   localStorage.setItem('token', res.data);
                   this.props.history.push('/');
                   window.location.reload();
-                }
-    ).catch(err => {this.setState({error: true}); console.log(err)})
+                 }
+                // TODO -- more errors handling
+    ).catch(err => this.setState({error: {...this.state.error, SERVER_ERROR: true}}))
   }
   render() {
     let errorMsg = null
-    if (this.state.error) {
-      errorMsg = <div className="ErrorMsg">Log In unsuccessful, please try again</div>
+    if (this.state.error.SERVER_ERROR) {
+      errorMsg = <div className="ErrorMsg">Sign in unsuccessful, please try again</div>
+    }
+    if (this.state.error.PASSWORD_ERROR) {
+      errorMsg = <div className="ErrorMsg">Password must contains at least 6 characters</div>
+    }
+    if (this.state.error.LOGIN_ERROR) {
+      errorMsg = <div className="ErrorMsg">Login already exist</div>
+    } 
+    if (this.state.error.EMPTY_ERROR) {
+      errorMsg = <div className="ErrorMsg">Please complete the form</div>
     }
     return (
       <div className="LogIn">

@@ -16,6 +16,7 @@ if (token) {
   store.dispatch({ type: 'AUTH_USER' , token: token });
 }
 
+
 ReactDOM.render(<Provider store={ store }><App /></Provider>, document.getElementById('root'));
 
 

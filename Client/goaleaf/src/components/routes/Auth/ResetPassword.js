@@ -7,7 +7,12 @@ import axios from 'axios'
 class ResetPassword extends Component {
 
   state = {
-    email: null,
+    email: '',
+    error: {
+      SERVER_ERROR: false,
+      EMAIL_ERROR: false,
+      EMPTY_ERROR: false
+    }
   }
 
   handleChange = e => {
@@ -17,13 +22,24 @@ class ResetPassword extends Component {
   }
   handleSubmit = e => {
     e.preventDefault();
-    // TODO
+    if (this.state.email.trim() === ''){
+      this.setState({error: {...this.state.error, EMPTY_ERROR: true}});
+      return;
+    }
+
+    // TODO  -- handle server req and res
   }
 
   render() {
     let errorMsg = null
-    if (this.state.error) {
-      errorMsg = <div className="ErrorMsg">no user with such email</div>
+    if (this.state.error.SERVER_ERROR) {
+      errorMsg = <div className="ErrorMsg">Sign in unsuccessful, please try again</div>
+    }
+    if (this.state.error.EMAIL_ERROR) {
+      errorMsg = <div className="ErrorMsg">Account with that email doesn't exist</div>
+    }
+    if (this.state.error.EMPTY_ERROR) {
+      errorMsg = <div className="ErrorMsg">Please complete the form</div>
     }
     return (
       <div className="ResetPassword">
@@ -35,7 +51,7 @@ class ResetPassword extends Component {
         </label>
         { errorMsg }
           <div className="Buttons">
-            <input type="submit" value="Submit" />
+            <input className="ResetPasswordBtn" type="submit" value="Submit" />
           </div>
       </form>
       <img className="LogoBg1"src={LogoBg} alt="logo"></img>
