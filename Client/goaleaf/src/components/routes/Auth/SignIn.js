@@ -10,6 +10,7 @@ class SignIn extends Component {
     login: '',
     email: '',
     password: '',
+    repeat_password: '',
     error: {
       SERVER_ERROR: false,
       PASSWORD_ERROR: false,
@@ -24,7 +25,7 @@ class SignIn extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    if (this.state.login.trim() === '' || this.state.email.trim() === '' || this.state.password === ''){
+    if (this.state.login.trim() === '' || this.state.email.trim() === '' || this.state.password === '' || this.state.repeat_password === ''){
       this.setState({error: {...this.state.error, EMPTY_ERROR: true}});
       return;
     }
@@ -33,7 +34,7 @@ class SignIn extends Component {
         "Token": "",
         "emailAddress": this.state.email,
         "login": this.state.login,
-        "matchingPassword": this.state.password,
+        "matchingPassword": this.state.repeat_password,
         "password": this.state.password,
         "userName": ""
       })
@@ -63,16 +64,20 @@ class SignIn extends Component {
       <form onSubmit={ this.handleSubmit } autoComplete="off">
         <h1> Sign In </h1>
         <label>
-          email 
-          <input className="InputField" type="email" id="email" onChange={ this.handleChange } />
-        </label>
-        <label>
           login 
           <input className="InputField" type="text" id="login" onChange={ this.handleChange } />
         </label>
         <label>
+          email 
+          <input className="InputField" type="email" id="email" onChange={ this.handleChange } />
+        </label>
+        <label>
           password 
           <input className="InputField" type="password" id="password" onChange={ this.handleChange } />
+        </label>
+        <label>
+          repeat password 
+          <input className="InputField" type="password" id="repeat_password" onChange={ this.handleChange } />
         </label>
         { errorMsg }
           <div className="Buttons">

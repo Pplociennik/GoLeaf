@@ -13,14 +13,15 @@
     h1 {
         align-self: flex-start;
         color: $secondary-color;
-        font-size: 2em;
+        margin: 0 0 1em 0;
+        font-size: 1.8em;
         font-weight:  500;
         letter-spacing: 1px;
     }
     form {
         background-color: $primary-color;
         height: auto;
-        max-width: 90%;
+        max-width: 86%;
         width: 300px;
         z-index: 2;
         display: flex;
@@ -34,13 +35,13 @@
         label {
             display: flex;
             flex-direction: column;
-            font-size: 1.1em;
+            font-size: 1em;
             font-weight: 200;
             opacity: 0.8;
         }
         .InputField {
             background-color: $primary-color;
-            height: 44px;
+            height: 40px;
             font-family: 'Poppins', sans-serif;
             font-size: 1.2em;
             font-weight: 300;         
@@ -62,9 +63,9 @@
             margin-top: 2em;
             
             input {
-                height: 40px;
-                width: 106px;
-                font-size: 1.2em;
+                height: 38px;
+                width: 96px;
+                font-size: 1.1em;
                 letter-spacing: 1px;
                 outline: 0;
                 border: none;
