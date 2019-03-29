@@ -7,10 +7,12 @@ import axios from 'axios'
 class ResetPassword extends Component {
 
   state = {
-    email: '',
+    code: '',
+    password: '',
+    repeat_password: '',
     error: {
       SERVER_ERROR: false,
-      EMAIL_ERROR: false,
+      CODE_ERROR: false,
       EMPTY_ERROR: false
     }
   }
@@ -22,14 +24,12 @@ class ResetPassword extends Component {
   }
   handleSubmit = e => {
     e.preventDefault();
-    if (this.state.email.trim() === ''){
+    if (this.state.code.trim() === '' || this.state.password === '' || this.state.repeat_password === ''){
       this.setState({error: {...this.state.error, EMPTY_ERROR: true}});
       return;
     }
 
     // TODO  -- handle server req and res
-    // redirect to NewPassword when server return 200
-    // throw error when email invalid
   }
 
   render() {
@@ -37,8 +37,8 @@ class ResetPassword extends Component {
     if (this.state.error.SERVER_ERROR) {
       errorMsg = <div className="ErrorMsg">Sign in unsuccessful, please try again</div>
     }
-    if (this.state.error.EMAIL_ERROR) {
-      errorMsg = <div className="ErrorMsg">Account with that email doesn't exist</div>
+    if (this.state.error.CODE_ERROR) {
+      errorMsg = <div className="ErrorMsg">Invalid code</div>
     }
     if (this.state.error.EMPTY_ERROR) {
       errorMsg = <div className="ErrorMsg">Please complete the form</div>
@@ -46,10 +46,18 @@ class ResetPassword extends Component {
     return (
       <div className="ResetPassword">
       <form onSubmit={ this.handleSubmit } autoComplete="off">
-        <h1> Reset password </h1>
+        <h1> New password </h1>
         <label>
-          email 
-          <input className="InputField" type="email" id="email" onChange={ this.handleChange } />
+          code
+          <input className="InputField" type="text" id="code" onChange={ this.handleChange } />
+        </label>
+        <label>
+          new password
+          <input className="InputField" type="password" id="password" onChange={ this.handleChange } />
+        </label>
+        <label>
+          repeat password
+          <input className="InputField" type="password" id="repeat_password" onChange={ this.handleChange } />
         </label>
         { errorMsg }
           <div className="Buttons">

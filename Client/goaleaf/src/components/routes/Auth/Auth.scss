@@ -1,6 +1,6 @@
 @import './../../../global-styles.scss';
 
-.LogIn, .SignIn, .ResetPassword {
+.LogIn, .SignIn, .ResetPassword, .NewPassword {
     max-width: 100%;
     min-height: calc(100vh - #{$navbar-height});
     position: relative;
