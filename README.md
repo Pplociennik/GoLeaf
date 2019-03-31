@@ -1,9 +1,15 @@
-
-# GoLeaf
-
-------------------------------------------------------
-
-server -> localhost:8080  
-client -> localhost:3000
-
-
+# Goaleaf
+>Social habit tracker with gamification elements
+## Installation
+Backend
+```sh
+mvn install
+mvn spring-boot:run
+```
+Frontend
+```sh
+npm install
+npm start
+```
+## Progress
+[x] Log in / Sign in
