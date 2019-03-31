@@ -65,8 +65,8 @@ class LogIn extends Component {
           <input className="InputField" type="password" id="password" placeholder="password" onChange={ this.handleChange } />
         { errorMsg }
           <div className="Buttons">
-            <input type="submit" value="log in" />
-            <Link to='/signin'><input type="button" value="sign in" /></Link>
+            <input type="submit" value="Log in" />
+            <Link to='/signin'><input type="button" value="Sign in" /></Link>
           </div>
           <Link to='/reset-password' className="ForgotPassword">Forgot password?</Link>
       </form>

@@ -50,7 +50,7 @@ class ResetPassword extends Component {
           <input className="InputField" type="email" id="email" placeholder="email" onChange={ this.handleChange } />
         { errorMsg }
           <div className="Buttons">
-            <input type="submit" value="submit" />
+            <input type="submit" value="Submit" />
           </div>
       </form>
       <img className="LogoBg1"src={LogoBg} alt="logo"></img>

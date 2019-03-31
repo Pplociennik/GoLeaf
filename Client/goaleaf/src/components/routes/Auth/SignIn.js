@@ -69,8 +69,8 @@ class SignIn extends Component {
           <input className="InputField" type="password" id="repeat_password" placeholder="repeat password" onChange={ this.handleChange } />
         { errorMsg }
           <div className="Buttons">
-            <input type="submit" value="sign in" />
-            <Link to='/login'><input type="button" value="log in" /></Link>
+            <input type="submit" value="Sign in" />
+            <Link to='/login'><input type="button" value="Log in" /></Link>
           </div>
       </form>
       <img className="LogoBg1"src={LogoBg} alt="logo"></img>

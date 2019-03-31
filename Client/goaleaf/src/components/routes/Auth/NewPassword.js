@@ -52,7 +52,7 @@ class ResetPassword extends Component {
           <input className="InputField" type="password" id="repeat_password" placeholder="repeat password" onChange={ this.handleChange } />
         { errorMsg }
           <div className="Buttons">
-            <input type="submit" value="submit" />
+            <input type="submit" value="Submit" />
           </div>
       </form>
       <img className="LogoBg1"src={LogoBg} alt="logo"></img>
