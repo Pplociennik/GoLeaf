@@ -13,6 +13,8 @@ npm start
 ```
 ## Progress
 Log in / Sign in
+
+
 ![alt text](# Goaleaf
 >Social habit tracker with gamification elements
 ## Installation
@@ -30,4 +32,4 @@ npm start
 Log in / Sign in
 
 
-![alt text](https://i.ibb.co/q7NJwbY/goaleaf-login.png))
+![Login View](https://i.ibb.co/q7NJwbY/goaleaf-login.png)
