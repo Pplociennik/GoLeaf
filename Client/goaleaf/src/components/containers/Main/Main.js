@@ -1,6 +1,8 @@
-import React from 'react'
-import './Main.scss'
-import { Switch, Route } from 'react-router-dom'
+import React, { Component } from 'react'
+import './Main.scss';
+import { Switch, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PrivateRoute from './../../hoc/PrivateRoute';
 import LogIn from './../../routes/Auth/LogIn';
 import SignIn from './../../routes/Auth/SignIn';
 import ResetPassword from './../../routes/Auth/ResetPassword';
@@ -8,7 +10,8 @@ import NewPassword from './../../routes/Auth/NewPassword';
 import Dashboard from './../Dashboard/Dashboard';
 
 
-function Main() {
+class Main extends Component {
+  render(){
   return (
     <main className="Main">
         <Switch>
@@ -21,6 +24,9 @@ function Main() {
         </Switch>
     </main>
   )
+  }
 }
 
-export default Main;
+const mapStateToProps = state => ({ authenticated: state.authenticated })
+
+export default connect(mapStateToProps)(Main);
