@@ -12,4 +12,4 @@ npm install
 npm start
 ```
 ## Progress
-#### [x] Log in / Sign in
+[x] Log in / Sign in
