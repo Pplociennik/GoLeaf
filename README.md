@@ -13,4 +13,4 @@ npm start
 ```
 ## Progress
 Log in / Sign in
-![alt text](http://GoaLeaf/README_files/goaleaf_login.PNG)
+![alt text](https://i.ibb.co/q7NJwbY/goaleaf-login.png)
