@@ -19,7 +19,7 @@
         color: $secondary-color;
         margin-left: 1em;
         font-size: 1.3em;
-        font-weight: 300;
+        font-weight: 400;
         letter-spacing: 1px;
         text-decoration: none;
         position: relative;
@@ -28,7 +28,7 @@
         content: url('./../../../assets/logo.png');
         position: absolute;
         top: -10px;
-        left: 88px;
+        left: 80px;
         
     }
     @include md {
