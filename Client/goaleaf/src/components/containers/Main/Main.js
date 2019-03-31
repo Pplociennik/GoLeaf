@@ -5,7 +5,7 @@ import LogIn from './../../routes/Auth/LogIn';
 import SignIn from './../../routes/Auth/SignIn';
 import ResetPassword from './../../routes/Auth/ResetPassword';
 import NewPassword from './../../routes/Auth/NewPassword';
-import Dashboard from './../../routes/Dashboard/Dashboard';
+import Dashboard from './../Dashboard/Dashboard';
 
 
 function Main() {

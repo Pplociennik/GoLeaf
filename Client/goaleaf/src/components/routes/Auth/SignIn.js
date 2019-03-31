@@ -63,26 +63,14 @@ class SignIn extends Component {
       <div className="SignIn">
       <form onSubmit={ this.handleSubmit } autoComplete="off">
         <h1> Sign In </h1>
-        <label>
-          login 
-          <input className="InputField" type="text" id="login" onChange={ this.handleChange } />
-        </label>
-        <label>
-          email 
-          <input className="InputField" type="email" id="email" onChange={ this.handleChange } />
-        </label>
-        <label>
-          password 
-          <input className="InputField" type="password" id="password" onChange={ this.handleChange } />
-        </label>
-        <label>
-          repeat password 
-          <input className="InputField" type="password" id="repeat_password" onChange={ this.handleChange } />
-        </label>
+          <input className="InputField" type="text" id="login" placeholder="login" onChange={ this.handleChange } /> 
+          <input className="InputField" type="email" id="email" placeholder="email" onChange={ this.handleChange } />
+          <input className="InputField" type="password" id="password" placeholder="password" onChange={ this.handleChange } />
+          <input className="InputField" type="password" id="repeat_password" placeholder="repeat password" onChange={ this.handleChange } />
         { errorMsg }
           <div className="Buttons">
-            <input type="submit" value="Sign in" />
-            <Link to='/login'><input type="button" value="Log in" /></Link>
+            <input type="submit" value="sign in" />
+            <Link to='/login'><input type="button" value="log in" /></Link>
           </div>
       </form>
       <img className="LogoBg1"src={LogoBg} alt="logo"></img>

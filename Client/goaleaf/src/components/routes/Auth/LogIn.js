@@ -60,19 +60,13 @@ class LogIn extends Component {
     return (
       <div className="LogIn">
       <form onSubmit={ this.handleSubmit } autoComplete="off">
-        <h1> Log In </h1>
-        <label>
-          login 
-          <input className="InputField" type="text" id="login" onChange={ this.handleChange } />
-        </label>
-        <label>
-          password 
-          <input className="InputField" type="password" id="password" onChange={ this.handleChange } />
-        </label>
+        <h1> Log In </h1> 
+          <input className="InputField" type="text" id="login" placeholder="login" onChange={ this.handleChange } />
+          <input className="InputField" type="password" id="password" placeholder="password" onChange={ this.handleChange } />
         { errorMsg }
           <div className="Buttons">
-            <input type="submit" value="Log in" />
-            <Link to='/signin'><input type="button" value="Sign in" /></Link>
+            <input type="submit" value="log in" />
+            <Link to='/signin'><input type="button" value="sign in" /></Link>
           </div>
           <Link to='/reset-password' className="ForgotPassword">Forgot password?</Link>
       </form>

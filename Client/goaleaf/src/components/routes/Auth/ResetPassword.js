@@ -47,13 +47,10 @@ class ResetPassword extends Component {
       <div className="ResetPassword">
       <form onSubmit={ this.handleSubmit } autoComplete="off">
         <h1> Reset password </h1>
-        <label>
-          email 
-          <input className="InputField" type="email" id="email" onChange={ this.handleChange } />
-        </label>
+          <input className="InputField" type="email" id="email" placeholder="email" onChange={ this.handleChange } />
         { errorMsg }
           <div className="Buttons">
-            <input type="submit" value="Submit" />
+            <input type="submit" value="submit" />
           </div>
       </form>
       <img className="LogoBg1"src={LogoBg} alt="logo"></img>

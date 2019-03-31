@@ -47,21 +47,12 @@ class ResetPassword extends Component {
       <div className="ResetPassword">
       <form onSubmit={ this.handleSubmit } autoComplete="off">
         <h1> New password </h1>
-        <label>
-          code
-          <input className="InputField" type="text" id="code" onChange={ this.handleChange } />
-        </label>
-        <label>
-          new password
-          <input className="InputField" type="password" id="password" onChange={ this.handleChange } />
-        </label>
-        <label>
-          repeat password
-          <input className="InputField" type="password" id="repeat_password" onChange={ this.handleChange } />
-        </label>
+          <input className="InputField" type="text" id="code" placeholder="code" onChange={ this.handleChange } />
+          <input className="InputField" type="password" id="password" placeholder="password" onChange={ this.handleChange } />
+          <input className="InputField" type="password" id="repeat_password" placeholder="repeat password" onChange={ this.handleChange } />
         { errorMsg }
           <div className="Buttons">
-            <input type="submit" value="Submit" />
+            <input type="submit" value="submit" />
           </div>
       </form>
       <img className="LogoBg1"src={LogoBg} alt="logo"></img>
