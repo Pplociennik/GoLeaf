@@ -12,4 +12,6 @@ npm install
 npm start
 ```
 ## Progress
-[x] Log in / Sign in
+Log in / Sign in
+![alt text](http://GoaLeaf/README_files/goaleaf_login.PNG)
+      
