@@ -12,4 +12,6 @@ npm install
 npm start
 ```
 ## Progress
-[x] Log in / Sign in
+Log in / Sign in
+
+![Login View](https://i.ibb.co/q7NJwbY/goaleaf-login.png)
