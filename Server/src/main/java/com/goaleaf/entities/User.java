@@ -17,9 +17,6 @@ public class User {
     private Integer id;
 
     @Column
-    private String userID;
-
-    @Column
     private String userName;
 
     @Column
@@ -37,9 +34,8 @@ public class User {
     public User() {
     }
 
-    public User(Integer id, String userID, String userName, String login, String password, String emailAddress) {
+    public User(Integer id, String userName, String login, String password, String emailAddress) {
         this.id = id;
-        this.userID = userID;
         this.userName = userName;
         this.login = login;
         this.password = password;
@@ -52,14 +48,6 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
     }
 
     public String getUserName() {

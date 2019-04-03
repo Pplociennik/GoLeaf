@@ -64,16 +64,10 @@ public class UserController {
 //    }
 
 
-    //to editing user in database
-    @RequestMapping(value = "/user", method = RequestMethod.PUT)
-    public ResponseEntity<Void> edit(@RequestBody @Valid @NotNull User user) {
-        if (!userService.checkIfExists(user.getId()))
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        else {
-            userService.saveUser(user);
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        }
-    }
+@RequestMapping(method = RequestMethod.PUT, value = "/user/{id}")
+    public void updateUser(@RequestBody User user, @PathVariable("id") Integer publicId) {
+        userService.updateUser(publicId, user);
+}
 
     //to removing user from database
 //    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)

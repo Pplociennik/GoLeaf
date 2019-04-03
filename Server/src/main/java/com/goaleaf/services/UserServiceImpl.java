@@ -73,6 +73,17 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+    public void updateUser(Integer id, User user) {
+        if (findById(id) != null) {
+            User updatedUser = findById(id);
+            updatedUser.setUserName(user.getUserName());
+            updatedUser.setEmailAddress(user.getEmailAddress());
+            updatedUser.setPassword(user.getPassword());
+
+            userRepository.save(updatedUser);
+        }
+    }
+
 //    @Override
 //    public User findByUserName(String username) {
 //        return userRepository.findByUserName(username);
@@ -97,5 +108,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByLogin(String login) {
         return userRepository.findByLogin(login);
+    }
+
+    @Override
+    public User findById(Integer id) {
+        return userRepository.findById(id);
     }
 }
