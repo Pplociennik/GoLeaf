@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.xml.bind.DatatypeConverter;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 import static com.goaleaf.security.SecurityConstants.SECRET;
@@ -19,17 +20,18 @@ import static com.goaleaf.security.SecurityConstants.SECRET;
 @Service
 public class JwtService {
     public boolean Validate(String token) {
-//        Claims claims = Jwts.parser()
-//                .setSigningKey(SECRET)
-//                .parseClaimsJws(token).getBody();
+        Claims claims = Jwts.parser()
+                .setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8))
+                .parseClaimsJws(token).getBody();
         Algorithm algorithm = Algorithm.HMAC512(SECRET);
         JWTVerifier verifier = JWT.require(algorithm)
                 .build(); //Reusable verifier instance
         DecodedJWT jwt = verifier.verify(token);
 
-        JWTParser parser = new JWTParser();
-        Payload jwtInfo = parser.parsePayload(jwt.getPayload());
-        Date expDate = jwtInfo.getExpiresAt();
+//        JWTParser parser = new JWTParser();
+//        Payload jwtInfo = parser.parsePayload(jwt.getPayload());
+        Date expDate = claims.getExpiration();
+        System.out.println(expDate);
 
         if (!new Date().before(expDate))
             return false;
