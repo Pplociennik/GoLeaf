@@ -3,8 +3,10 @@ package com.goaleaf.controllers;
 import com.auth0.jwt.JWT;
 import com.goaleaf.entities.DTO.UserDto;
 import com.goaleaf.entities.User;
+import com.goaleaf.services.JwtService;
 import com.goaleaf.services.UserService;
-import com.goaleaf.validators.exceptions.AccountExistsException;
+import com.goaleaf.validators.UserCredentialsValidator;
+import com.goaleaf.validators.exceptions.AccountNotExistsException;
 import com.goaleaf.validators.exceptions.BadCredentialsException;
 import com.goaleaf.validators.exceptions.EmailExistsException;
 import com.goaleaf.validators.exceptions.LoginExistsException;
@@ -29,11 +31,19 @@ public class AuthController {
     private UserService userService;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private UserCredentialsValidator userCredentialsValidator;
+    @Autowired
+    private JwtService jwtService;
 
     @PermitAll
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public UserDto registerUserAccount(@RequestBody RegisterViewModel register) throws EmailExistsException, LoginExistsException {
+    public UserDto registerUserAccount(@RequestBody RegisterViewModel register) throws EmailExistsException, LoginExistsException, BadCredentialsException {
         register.password = (bCryptPasswordEncoder.encode(register.password));
+
+//        if (!userCredentialsValidator.isValidEmailAndPasswords(register))
+//            throw new BadCredentialsException("Wrong email format!");
+
         User user = userService.registerNewUserAccount(register);
         UserDto userDto = new UserDto();
         userDto.login = user.getLogin();
@@ -47,20 +57,22 @@ public class AuthController {
 
     @PermitAll
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@RequestBody LoginViewModel userModel) throws AccountExistsException, BadCredentialsException {
+    public String login(@RequestBody LoginViewModel userModel) throws AccountNotExistsException, BadCredentialsException {
 
         if (userService.findByLogin(userModel.login) == null) {
-            throw new AccountExistsException("Konto o podanym loginie nie istnieje!");
+            throw new AccountNotExistsException("Account with this login not exists!");
         }
 
         if (!bCryptPasswordEncoder.matches(userModel.password, userService.findByLogin(userModel.login).getPassword())) {
-            throw new BadCredentialsException("Złe dane logowania!");
+            throw new BadCredentialsException("Wrong Password!!");
         }
         String token = JWT.create()
+                .withSubject(String.valueOf(userService.findByLogin(userModel.login).getId()))
                 .withSubject(userService.findByLogin(userModel.login).getLogin())
                 .withClaim("Email", userService.findByLogin(userModel.login).getEmailAddress())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(HMAC512(SECRET.getBytes()));
+        jwtService.Validate(token);
 
         return token;
     }

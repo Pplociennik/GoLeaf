@@ -13,6 +13,7 @@
     <version>0.0.2-SNAPSHOT</version>
     <name>GoaLeaf</name>
     <description>GoaLeaf</description>
+    <packaging>war</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

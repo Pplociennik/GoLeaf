@@ -9,6 +9,7 @@ import java.util.Set;
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
         property = "refId", scope = User.class)
 @Entity
+@Table(name ="users")
 public class User {
 
     @Id

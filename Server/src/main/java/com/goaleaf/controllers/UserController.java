@@ -4,7 +4,7 @@ import com.goaleaf.entities.User;
 import com.goaleaf.repositories.UserRepository;
 import com.goaleaf.services.JwtService;
 import com.goaleaf.services.UserService;
-import com.goaleaf.validators.UserValidator;
+import com.goaleaf.validators.UserCredentialsValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,7 +30,7 @@ public class UserController {
     @Autowired
     private JwtService jwtService;
     @Autowired
-    private UserValidator userValidator;
+    private UserCredentialsValidator userCredentialsValidator;
     @Autowired
     private UserRepository userRepository;
     @Autowired
