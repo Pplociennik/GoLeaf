@@ -74,8 +74,8 @@ public class AuthController {
         }
         String token = JWT.create()
                 .withSubject(String.valueOf(userService.findByLogin(userModel.login).getId()))
-                .withSubject(userService.findByLogin(userModel.login).getLogin())
-                .withClaim("Email", userService.findByLogin(userModel.login).getEmailAddress())
+//                .withSubject(userService.findByLogin(userModel.login).getLogin())
+                .withClaim("Login", userService.findByLogin(userModel.login).getLogin())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(HMAC512(SECRET.getBytes()));
         jwtService.Validate(token);
