@@ -39,11 +39,16 @@ public class AuthController {
     @PermitAll
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public UserDto registerUserAccount(@RequestBody RegisterViewModel register) throws EmailExistsException, LoginExistsException, BadCredentialsException {
+
+
+        if (!userCredentialsValidator.isValidEmail(register))
+            throw new BadCredentialsException("Wrong email format!");
+        if (!userCredentialsValidator.isPasswordFormatValid(register))
+            throw new BadCredentialsException("Password must be at least 6 characters long and cannot contain spaces!");
+        if (!userCredentialsValidator.isValidPassword(register))
+            throw new BadCredentialsException("Passwords are not equal!");
+
         register.password = (bCryptPasswordEncoder.encode(register.password));
-
-//        if (!userCredentialsValidator.isValidEmailAndPasswords(register))
-//            throw new BadCredentialsException("Wrong email format!");
-
         User user = userService.registerNewUserAccount(register);
         UserDto userDto = new UserDto();
         userDto.login = user.getLogin();
