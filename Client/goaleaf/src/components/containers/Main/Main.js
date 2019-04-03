@@ -8,6 +8,7 @@ import SignIn from './../../routes/Auth/SignIn';
 import ResetPassword from './../../routes/Auth/ResetPassword';
 import NewPassword from './../../routes/Auth/NewPassword';
 import Dashboard from './../Dashboard/Dashboard';
+import NewHabit from './../../routes/NewHabit/NewHabit'
 
 
 class Main extends Component {
@@ -16,10 +17,11 @@ class Main extends Component {
     <main className="Main">
         <Switch>
             <Route exact path='/' component={Dashboard}/>
-            <Route path='/login' component={LogIn}/>
-            <Route path='/signin' component={SignIn}/>
-            <Route path='/reset-password' component={ResetPassword}/>
-            <Route path='/new-password' component={NewPassword}/>
+            <Route exact path='/new-habit' component={NewHabit}/>
+            <Route exact path='/login' component={LogIn}/>
+            <Route exact path='/signin' component={SignIn}/>
+            <Route exact path='/reset-password' component={ResetPassword}/>
+            <Route exact path='/new-password' component={NewPassword}/>
             <Route path="*" component={Dashboard} />
         </Switch>
     </main>
