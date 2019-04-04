@@ -37,12 +37,12 @@ http://localhost:8080/api/users/requestpasswordvalidate?token={token} -> przyjmu
   
 http://localhost:8080/api/users/setnewpassword -> przyjmuje JSON:
   
-{
-  "matchingPassword": "string",
-  "password": "string",
-  "token": "string"
-}
-  
+  {
+    "matchingPassword": "string",
+    "password": "string",
+    "token": "string"
+  }
+    
 ustawia nowe hasło dla użytkownika
   
   
