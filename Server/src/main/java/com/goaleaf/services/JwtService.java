@@ -19,11 +19,11 @@ import static com.goaleaf.security.SecurityConstants.SECRET;
 
 @Service
 public class JwtService {
-    public boolean Validate(String token) {
+    public boolean Validate(String token, String secret) {
         Claims claims = Jwts.parser()
-                .setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8))
+                .setSigningKey(secret.getBytes(StandardCharsets.UTF_8))
                 .parseClaimsJws(token).getBody();
-        Algorithm algorithm = Algorithm.HMAC512(SECRET);
+        Algorithm algorithm = Algorithm.HMAC512(secret);
         JWTVerifier verifier = JWT.require(algorithm)
                 .build(); //Reusable verifier instance
         DecodedJWT jwt = verifier.verify(token);
@@ -31,7 +31,6 @@ public class JwtService {
 //        JWTParser parser = new JWTParser();
 //        Payload jwtInfo = parser.parsePayload(jwt.getPayload());
         Date expDate = claims.getExpiration();
-        System.out.println(expDate);
 
         if (!new Date().before(expDate))
             return false;

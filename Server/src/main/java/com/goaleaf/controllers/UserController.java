@@ -1,10 +1,19 @@
 package com.goaleaf.controllers;
 
+import com.auth0.jwt.JWT;
 import com.goaleaf.entities.User;
+import com.goaleaf.entities.viewModels.EmailViewModel;
+import com.goaleaf.entities.viewModels.PasswordViewModel;
 import com.goaleaf.repositories.UserRepository;
+import com.goaleaf.security.EmailSender;
 import com.goaleaf.services.JwtService;
 import com.goaleaf.services.UserService;
 import com.goaleaf.validators.UserCredentialsValidator;
+import com.goaleaf.validators.exceptions.AccountNotExistsException;
+import com.goaleaf.validators.exceptions.BadCredentialsException;
+import com.sun.deploy.net.HttpResponse;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,9 +23,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
 import java.util.Optional;
+
+import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
+import static com.goaleaf.security.SecurityConstants.*;
 
 @RestController
 @RequestMapping("/api/users")
@@ -64,10 +79,62 @@ public class UserController {
 //    }
 
 
-@RequestMapping(method = RequestMethod.PUT, value = "/user/{id}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/user/{id}")
     public void updateUser(@RequestBody User user, @PathVariable("id") Integer publicId) {
         userService.updateUser(publicId, user);
-}
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/resetpassword")
+    public void resetPassword(@RequestBody EmailViewModel model) throws AccountNotExistsException, MessagingException {
+        if (userService.findByEmailAddress(model.emailAddress) == null)
+            throw new AccountNotExistsException("Account with this email address does not exist!");
+
+        String resetPasswordToken = JWT.create()
+                .withSubject(String.valueOf(userService.findByEmailAddress(model.emailAddress).getId()))
+                .withClaim("Email", model.emailAddress)
+                .withExpiresAt(new Date(System.currentTimeMillis() + PASSWORD_RECOVERY_SECRET_EXPIRATION_TIME))
+                .sign(HMAC512(PASSWORD_RECOVERY_SECRET.getBytes()));
+        jwtService.Validate(resetPasswordToken, PASSWORD_RECOVERY_SECRET);
+
+        EmailSender sender = new EmailSender();
+        sender.setSender("goaleaf@gmail.com", "spaghettiCode");
+        sender.addRecipient(model.emailAddress);
+        sender.setSubject("GoaLeaf Password Reset Request");
+        sender.setBody("Hello " + userService.findByEmailAddress(model.emailAddress).getLogin() + "!\n\n" +
+                "Here's your confirmation link: http://localhost:3000/resetpassword/" + resetPasswordToken + "\n\n" +
+                "If you have not requested a password reset, ignore this message.\n\n" +
+                "Thank you and have a nice day! :)\n\n" +
+                "GoaLeaf group");
+//        sender.addAttachment("TestFile.txt");
+        sender.send();
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/requestpasswordvalidate")
+    public HttpStatus validateRequestPasswordToken(String token) throws BadCredentialsException {
+        Date currentDate = new Date();
+
+        if (!jwtService.Validate(token, PASSWORD_RECOVERY_SECRET))
+            throw new BadCredentialsException("Account not exists!");
+        else
+            return HttpStatus.OK;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/setnewpassword")
+    public void setNewUserPassword(@RequestBody PasswordViewModel newPasswords) throws BadCredentialsException {
+        Claims claims = Jwts.parser()
+                .setSigningKey(PASSWORD_RECOVERY_SECRET.getBytes(StandardCharsets.UTF_8))
+                .parseClaimsJws(newPasswords.token).getBody();
+
+        User user = userService.findById(Integer.parseInt(claims.getSubject()));
+
+        if (!userCredentialsValidator.isPasswordFormatValid(newPasswords.password))
+            throw new BadCredentialsException("Password must be at least 6 characters long and cannot contain spaces!");
+        if (!(newPasswords.password == newPasswords.matchingPassword))
+            throw new BadCredentialsException("Passwords are not equal!");
+
+        user.setPassword(bCryptPasswordEncoder.encode(newPasswords.password));
+        userService.saveUser(user);
+    }
 
     //to removing user from database
 //    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)

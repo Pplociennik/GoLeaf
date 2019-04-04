@@ -13,14 +13,14 @@ public class UserCredentialsValidator {
         return emailValidator.isValid(model.emailAddress);
     }
 
-    public boolean isValidPassword(RegisterViewModel model) {
+    public boolean arePasswordsEquals(RegisterViewModel model) {
         return passwordMatchesValidator.isValid(model);
     }
 
-    public boolean isPasswordFormatValid(RegisterViewModel model) {
-        if (model.password.length() < 6)
+    public boolean isPasswordFormatValid(String password) {
+        if (password.length() < 6)
             return false;
-        if (model.password.contains(" "))
+        if (password.contains(" "))
             return false;
 
         return true;
@@ -40,7 +40,7 @@ public class UserCredentialsValidator {
 //    public boolean isValidEmailAndPasswords(RegisterViewModel model) throws BadCredentialsException {
 //        if (!isValidEmail(model))
 //            throw new BadCredentialsException("Wrong email address!");
-//        if (!isValidPassword(model))
+//        if (!arePasswordsEquals(model))
 //            throw new BadCredentialsException("Passwords are not equals!");
 //        else
 //            return true;

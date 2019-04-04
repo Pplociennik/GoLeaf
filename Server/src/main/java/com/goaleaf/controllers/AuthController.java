@@ -43,9 +43,9 @@ public class AuthController {
 
         if (!userCredentialsValidator.isValidEmail(register))
             throw new BadCredentialsException("Wrong email format!");
-        if (!userCredentialsValidator.isPasswordFormatValid(register))
+        if (!userCredentialsValidator.isPasswordFormatValid(register.password))
             throw new BadCredentialsException("Password must be at least 6 characters long and cannot contain spaces!");
-        if (!userCredentialsValidator.isValidPassword(register))
+        if (!userCredentialsValidator.arePasswordsEquals(register))
             throw new BadCredentialsException("Passwords are not equal!");
 
         register.password = (bCryptPasswordEncoder.encode(register.password));
@@ -76,7 +76,7 @@ public class AuthController {
                 .withClaim("Login", userService.findByLogin(userModel.login).getLogin())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(HMAC512(SECRET.getBytes()));
-        jwtService.Validate(token);
+        jwtService.Validate(token, SECRET);
 
         return token;
     }

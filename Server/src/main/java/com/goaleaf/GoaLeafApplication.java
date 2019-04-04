@@ -1,6 +1,7 @@
 package com.goaleaf;
 
 
+import com.goaleaf.security.EmailSender;
 import com.goaleaf.validators.UserCredentialsValidator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;

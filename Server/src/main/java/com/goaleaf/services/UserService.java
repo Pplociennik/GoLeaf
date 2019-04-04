@@ -32,4 +32,6 @@ public interface UserService {
 
     void updateUser(Integer id, User user);
 
+    User findByEmailAddress(String email);
+
     }
