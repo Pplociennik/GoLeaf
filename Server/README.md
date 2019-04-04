@@ -43,7 +43,7 @@ http://localhost:8080/api/users/setnewpassword -> przyjmuje JSON:
     "token": "string"    
   }    
     
-ustawia nowe hasło dla użytkownika
+ustawia nowe hasło dla użytkownika. Wyrzuca wyjątek jeśli hasła są różne lub jeśli hasło jest niepoprawne (hasło musi mieć co najmniej 6 znaków i nie może zawierać spacji)
   
   
   
