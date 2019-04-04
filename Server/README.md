@@ -14,13 +14,13 @@ http://localhost:8080/register -> rejestracja. TYLKO POST i TYLKO JSON (login, p
   
   Przyklad:  
     
-  {  
-  "emailAddress": "string",  
-  "login": "string",  
-  "matchingPassword": "string",  
-  "password": "string",  
-  "userName": "string@string.com"  
-}    
+  {    
+  "emailAddress": "string",    
+  "login": "string",    
+  "matchingPassword": "string",    
+  "password": "string",    
+  "userName": "string@string.com"    
+}      
     
   
 http://localhost:8080/api/users/all -> zwraca liste zarejestrowanych uzytkownikow (GET)  
