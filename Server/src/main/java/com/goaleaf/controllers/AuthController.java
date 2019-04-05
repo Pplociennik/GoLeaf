@@ -43,6 +43,8 @@ public class AuthController {
 
         if (!userCredentialsValidator.isValidEmail(register))
             throw new BadCredentialsException("Wrong email format!");
+        if (userService.findByEmailAddress(register.emailAddress) != null)
+            throw new BadCredentialsException("Account with this email address already exists!");
         if (!userCredentialsValidator.isPasswordFormatValid(register.password))
             throw new BadCredentialsException("Password must be at least 6 characters long and cannot contain spaces!");
         if (!userCredentialsValidator.arePasswordsEquals(register))
@@ -66,7 +68,6 @@ public class AuthController {
         if (userService.findByLogin(userModel.login) == null) {
             throw new AccountNotExistsException("Account with this login not exists!");
         }
-
         if (!bCryptPasswordEncoder.matches(userModel.password, userService.findByLogin(userModel.login).getPassword())) {
             throw new BadCredentialsException("Wrong Password!!");
         }
