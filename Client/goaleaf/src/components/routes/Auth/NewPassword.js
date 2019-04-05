@@ -10,11 +10,7 @@ class ResetPassword extends Component {
     code: '',
     password: '',
     repeat_password: '',
-    error: {
-      SERVER_ERROR: false,
-      CODE_ERROR: false,
-      EMPTY_ERROR: false
-    }
+    errorMsg: ''
   }
 
   handleChange = e => {
@@ -25,7 +21,7 @@ class ResetPassword extends Component {
   handleSubmit = e => {
     e.preventDefault();
     if (this.state.code.trim() === '' || this.state.password === '' || this.state.repeat_password === ''){
-      this.setState({error: {...this.state.error, EMPTY_ERROR: true}});
+      this.setState({errorMsg: 'Please complete the form'});
       return;
     }
 
@@ -33,21 +29,12 @@ class ResetPassword extends Component {
   }
 
   render() {
-    let errorMsg = null
-    if (this.state.error.SERVER_ERROR) {
-      errorMsg = <div className="ErrorMsg">Sign in unsuccessful, please try again</div>
-    }
-    if (this.state.error.CODE_ERROR) {
-      errorMsg = <div className="ErrorMsg">Invalid code</div>
-    }
-    if (this.state.error.EMPTY_ERROR) {
-      errorMsg = <div className="ErrorMsg">Please complete the form</div>
-    }
+    let errorMsg = <div className="ErrorMsg">{ this.state.errorMsg }</div>
+
     return (
       <div className="ResetPassword">
       <form onSubmit={ this.handleSubmit } autoComplete="off">
         <h1> New password </h1>
-          <input className="InputField" type="text" id="code" placeholder="code" onChange={ this.handleChange } />
           <input className="InputField" type="password" id="password" placeholder="password" onChange={ this.handleChange } />
           <input className="InputField" type="password" id="repeat_password" placeholder="repeat password" onChange={ this.handleChange } />
         { errorMsg }
@@ -63,3 +50,4 @@ class ResetPassword extends Component {
 }
 
 export default ResetPassword;
+  
