@@ -11,7 +11,6 @@ import com.goaleaf.services.UserService;
 import com.goaleaf.validators.UserCredentialsValidator;
 import com.goaleaf.validators.exceptions.AccountNotExistsException;
 import com.goaleaf.validators.exceptions.BadCredentialsException;
-import com.sun.deploy.net.HttpResponse;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
