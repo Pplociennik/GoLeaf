@@ -6,9 +6,10 @@ import PrivateRoute from './../../hoc/PrivateRoute';
 import LogIn from './../../routes/Auth/LogIn';
 import SignIn from './../../routes/Auth/SignIn';
 import ResetPassword from './../../routes/Auth/ResetPassword';
+import ResetPasswordValidate from './../../routes/Auth/ResetPasswordValidate';
 import NewPassword from './../../routes/Auth/NewPassword';
 import Dashboard from './../Dashboard/Dashboard';
-import NewHabit from './../../routes/NewHabit/NewHabit'
+import NewHabit from './../../routes/NewHabit/NewHabit' 
 
 
 class Main extends Component {
@@ -21,6 +22,7 @@ class Main extends Component {
             <Route exact path='/login' component={LogIn}/>
             <Route exact path='/signin' component={SignIn}/>
             <Route exact path='/reset-password' component={ResetPassword}/>
+            <Route exact path='/resetpassword/:token' component={ResetPasswordValidate}/>
             <Route exact path='/new-password' component={NewPassword}/>
             <Route path="*" component={Dashboard} />
         </Switch>

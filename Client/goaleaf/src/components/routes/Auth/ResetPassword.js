@@ -23,14 +23,21 @@ class ResetPassword extends Component {
       return;
     }
 
-    // TODO  -- handle server req and res
-    // redirect to NewPassword when server return 200
-    // throw error when email invalid
+    axios.post('/api/users/resetpassword', {
+      
+        "emailAddress": this.state.email
+    })
+    .then(res => {
+                  this.setState({errorMsg: 'Please check your email'})
+                 }
+    ).catch(err => this.setState({errorMsg: err.response.data.message}))
   }
 
   render() {
-
-      let errorMsg = <div className="ErrorMsg">{ this.state.errorMsg}</div>
+    let errorMsg = <div className="ErrorMsg">{ this.state.errorMsg}</div>
+      if (this.state.errorMsg === 'Please check your email') {
+        errorMsg = <div className="SuccessMsg">{ this.state.errorMsg}</div>
+      }
 
     return (
       <div className="ResetPassword">

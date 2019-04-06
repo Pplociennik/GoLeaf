@@ -7,9 +7,9 @@ import axios from 'axios'
 class ResetPassword extends Component {
 
   state = {
-    code: '',
     password: '',
     repeat_password: '',
+    token: this.props.location.token,
     errorMsg: ''
   }
 
@@ -20,16 +20,28 @@ class ResetPassword extends Component {
   }
   handleSubmit = e => {
     e.preventDefault();
-    if (this.state.code.trim() === '' || this.state.password === '' || this.state.repeat_password === ''){
+    if (this.state.password === '' || this.state.repeat_password === ''){
       this.setState({errorMsg: 'Please complete the form'});
       return;
     }
 
-    // TODO  -- handle server req and res
+    axios.post('/api/users/setnewpassword', {
+      
+      "matchingPassword": this.state.password,
+      "password": this.state.repeat_password, 
+      "token": this.state.token
+  })
+  .then(res => {
+                this.setState({errorMsg: 'Password changed'})
+               }
+  ).catch(err => this.setState({errorMsg: err.response.data.message}))
   }
 
   render() {
     let errorMsg = <div className="ErrorMsg">{ this.state.errorMsg }</div>
+    if (this.state.errorMsg === 'Password successfully changed') {
+      errorMsg = <div className="SuccessMsg">{ this.state.errorMsg}</div>
+    }
 
     return (
       <div className="ResetPassword">
