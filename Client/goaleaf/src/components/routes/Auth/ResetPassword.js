@@ -47,6 +47,7 @@ class ResetPassword extends Component {
         { errorMsg }
           <div className="Buttons">
             <input type="submit" value="Submit" />
+            <Link to='/login'><input type="button" value="Log in" /></Link>
           </div>
       </form>
       <img className="LogoBg1"src={LogoBg} alt="logo"></img>
