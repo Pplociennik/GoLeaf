@@ -1,6 +1,9 @@
+import axios from 'axios'
+
 const initState = {
     authenticated: false,
-    userLogged: null
+    userLogged: null,
+    users: []
 }
 
 const rootReducer = (state = initState, action) => {
@@ -19,7 +22,20 @@ const rootReducer = (state = initState, action) => {
             userLogged: tokenData.sub
         }
     }
+
+    if(action.type === 'GET_USERS'){
+
+        axios.get(`/api/users/all`)
+          .then(res => {
+              return {
+                ...state,
+                users: res.data
+              }
+        }
+         ).catch(err => console.log(err))
+
+    }
     return state;
-}
+}   
 
 export default rootReducer;
