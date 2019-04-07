@@ -3,8 +3,10 @@ package com.goaleaf.controllers;
 import com.auth0.jwt.JWT;
 import com.goaleaf.entities.DTO.UserDto;
 import com.goaleaf.entities.User;
+import com.goaleaf.services.JwtService;
 import com.goaleaf.services.UserService;
-import com.goaleaf.validators.exceptions.AccountExistsException;
+import com.goaleaf.validators.UserCredentialsValidator;
+import com.goaleaf.validators.exceptions.AccountNotExistsException;
 import com.goaleaf.validators.exceptions.BadCredentialsException;
 import com.goaleaf.validators.exceptions.EmailExistsException;
 import com.goaleaf.validators.exceptions.LoginExistsException;
@@ -22,17 +24,32 @@ import static com.goaleaf.security.SecurityConstants.EXPIRATION_TIME;
 import static com.goaleaf.security.SecurityConstants.SECRET;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(maxAge = 3600)
 public class AuthController {
 
     @Autowired
     private UserService userService;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private UserCredentialsValidator userCredentialsValidator;
+    @Autowired
+    private JwtService jwtService;
 
     @PermitAll
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public UserDto registerUserAccount(@RequestBody RegisterViewModel register) throws EmailExistsException, LoginExistsException {
+    public UserDto registerUserAccount(@RequestBody RegisterViewModel register) throws EmailExistsException, LoginExistsException, BadCredentialsException {
+
+
+        if (!userCredentialsValidator.isValidEmail(register))
+            throw new BadCredentialsException("Wrong email format!");
+        if (userService.findByEmailAddress(register.emailAddress) != null)
+            throw new BadCredentialsException("Account with this email address already exists!");
+        if (!userCredentialsValidator.isPasswordFormatValid(register.password))
+            throw new BadCredentialsException("Password must be at least 6 characters long and cannot contain spaces!");
+        if (!userCredentialsValidator.arePasswordsEquals(register))
+            throw new BadCredentialsException("Passwords are not equal!");
+
         register.password = (bCryptPasswordEncoder.encode(register.password));
         User user = userService.registerNewUserAccount(register);
         UserDto userDto = new UserDto();
@@ -40,27 +57,27 @@ public class AuthController {
         userDto.emailAddress = user.getEmailAddress();
         userDto.password = user.getPassword();
         userDto.userName = user.getUserName();
-        userDto.userId = user.getUserID();
         return userDto;
 
     }
 
     @PermitAll
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@RequestBody LoginViewModel userModel) throws AccountExistsException, BadCredentialsException {
+    public String login(@RequestBody LoginViewModel userModel) throws AccountNotExistsException, BadCredentialsException {
 
         if (userService.findByLogin(userModel.login) == null) {
-            throw new AccountExistsException("Konto o podanym loginie nie istnieje!");
+            throw new AccountNotExistsException("Account with this login not exists!");
         }
-
         if (!bCryptPasswordEncoder.matches(userModel.password, userService.findByLogin(userModel.login).getPassword())) {
-            throw new BadCredentialsException("Złe dane logowania!");
+            throw new BadCredentialsException("Wrong Password!!");
         }
         String token = JWT.create()
-                .withSubject(userService.findByLogin(userModel.login).getLogin())
-                .withClaim("Email", userService.findByLogin(userModel.login).getEmailAddress())
+                .withSubject(String.valueOf(userService.findByLogin(userModel.login).getId()))
+//                .withSubject(userService.findByLogin(userModel.login).getLogin())
+                .withClaim("Login", userService.findByLogin(userModel.login).getLogin())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(HMAC512(SECRET.getBytes()));
+        jwtService.Validate(token, SECRET);
 
         return token;
     }

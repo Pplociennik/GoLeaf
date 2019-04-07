@@ -1,6 +1,8 @@
 package com.goaleaf;
 
 
+import com.goaleaf.security.EmailSender;
+import com.goaleaf.validators.UserCredentialsValidator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -33,6 +35,11 @@ public class GoaLeafApplication extends SpringBootServletInitializer {
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public UserCredentialsValidator userCredentialsValidator() {
+        return new UserCredentialsValidator();
     }
 
     @Bean

@@ -9,12 +9,7 @@ class LogIn extends Component {
   state = {
     login: '',
     password: '',
-    error: {
-      SERVER_ERROR: false,
-      PASSWORD_ERROR: false,
-      LOGIN_ERROR: false,
-      EMPTY_ERROR: false
-    }
+    errorMsg: ''
   }
 
   handleChange = e => {
@@ -26,11 +21,11 @@ class LogIn extends Component {
     e.preventDefault();
 
     if (this.state.login.trim() === '' || this.state.password === ''){
-      this.setState({error: {...this.state.error, EMPTY_ERROR: true}});
+      this.setState({errorMsg: 'Please complete the form'});
       return;
     }
 
-    axios.post(`http://localhost:8080/login`, {
+    axios.post('/login', {
       "Token": "",
       "login": this.state.login,
       "password": this.state.password
@@ -41,22 +36,11 @@ class LogIn extends Component {
                   window.location.reload();
                  }
                 // TODO -- more errors handling
-    ).catch(err => this.setState({error: {...this.state.error, SERVER_ERROR: true}}))
+    ).catch(err => this.setState({errorMsg: err.response.data.message}))
   }
   render() {
-    let errorMsg = null
-    if (this.state.error.SERVER_ERROR) {
-      errorMsg = <div className="ErrorMsg">Sign in unsuccessful, please try again</div>
-    }
-    if (this.state.error.PASSWORD_ERROR) {
-      errorMsg = <div className="ErrorMsg">Password must contains at least 6 characters</div>
-    }
-    if (this.state.error.LOGIN_ERROR) {
-      errorMsg = <div className="ErrorMsg">Login already exist</div>
-    } 
-    if (this.state.error.EMPTY_ERROR) {
-      errorMsg = <div className="ErrorMsg">Please complete the form</div>
-    }
+      let errorMsg = <div className="ErrorMsg">{ this.state.errorMsg }</div>
+
     return (
       <div className="LogIn">
       <form onSubmit={ this.handleSubmit } autoComplete="off">

@@ -28,4 +28,10 @@ public interface UserService {
 
     User findByLogin(String user);
 
+    User findById(Integer id);
+
+    void updateUser(Integer id, User user);
+
+    User findByEmailAddress(String email);
+
     }

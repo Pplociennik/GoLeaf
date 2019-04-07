@@ -1,6 +1,8 @@
 package com.goaleaf.validators.exceptions;
 
-public class BadCredentialsException extends Throwable {
+import javax.security.sasl.AuthenticationException;
+
+public class BadCredentialsException extends AuthenticationException {
     public BadCredentialsException(final String message) {
         super(message);
     }

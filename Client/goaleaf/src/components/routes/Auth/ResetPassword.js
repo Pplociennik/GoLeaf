@@ -8,11 +8,7 @@ class ResetPassword extends Component {
 
   state = {
     email: '',
-    error: {
-      SERVER_ERROR: false,
-      EMAIL_ERROR: false,
-      EMPTY_ERROR: false
-    }
+    errorMsg: ''
   }
 
   handleChange = e => {
@@ -23,26 +19,26 @@ class ResetPassword extends Component {
   handleSubmit = e => {
     e.preventDefault();
     if (this.state.email.trim() === ''){
-      this.setState({error: {...this.state.error, EMPTY_ERROR: true}});
+      this.setState({errorMsg: 'Please complete the form'});
       return;
     }
 
-    // TODO  -- handle server req and res
-    // redirect to NewPassword when server return 200
-    // throw error when email invalid
+    axios.post('/api/users/resetpassword', {
+      
+        "emailAddress": this.state.email
+    })
+    .then(res => {
+                  this.setState({errorMsg: 'Please check your email'})
+                 }
+    ).catch(err => this.setState({errorMsg: err.response.data.message}))
   }
 
   render() {
-    let errorMsg = null
-    if (this.state.error.SERVER_ERROR) {
-      errorMsg = <div className="ErrorMsg">Sign in unsuccessful, please try again</div>
-    }
-    if (this.state.error.EMAIL_ERROR) {
-      errorMsg = <div className="ErrorMsg">Account with that email doesn't exist</div>
-    }
-    if (this.state.error.EMPTY_ERROR) {
-      errorMsg = <div className="ErrorMsg">Please complete the form</div>
-    }
+    let errorMsg = <div className="ErrorMsg">{ this.state.errorMsg}</div>
+      if (this.state.errorMsg === 'Please check your email') {
+        errorMsg = <div className="SuccessMsg">{ this.state.errorMsg}</div>
+      }
+
     return (
       <div className="ResetPassword">
       <form onSubmit={ this.handleSubmit } autoComplete="off">
@@ -51,6 +47,7 @@ class ResetPassword extends Component {
         { errorMsg }
           <div className="Buttons">
             <input type="submit" value="Submit" />
+            <Link to='/login'><input type="button" value="Log in" /></Link>
           </div>
       </form>
       <img className="LogoBg1"src={LogoBg} alt="logo"></img>

@@ -6,7 +6,7 @@ class Dashboard extends Component {
   render() {
     let user = <div>user not logged</div>
     if(this.props.authenticated) {
-      user = <div>hello { this.props.userLogged }</div>
+      user = <div>user logged!</div>
     }
     return (
       <div className="Dashboard">

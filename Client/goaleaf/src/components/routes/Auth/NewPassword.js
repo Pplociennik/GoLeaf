@@ -7,14 +7,10 @@ import axios from 'axios'
 class ResetPassword extends Component {
 
   state = {
-    code: '',
     password: '',
     repeat_password: '',
-    error: {
-      SERVER_ERROR: false,
-      CODE_ERROR: false,
-      EMPTY_ERROR: false
-    }
+    token: this.props.location.token,
+    errorMsg: ''
   }
 
   handleChange = e => {
@@ -24,35 +20,39 @@ class ResetPassword extends Component {
   }
   handleSubmit = e => {
     e.preventDefault();
-    if (this.state.code.trim() === '' || this.state.password === '' || this.state.repeat_password === ''){
-      this.setState({error: {...this.state.error, EMPTY_ERROR: true}});
+    if (this.state.password === '' || this.state.repeat_password === ''){
+      this.setState({errorMsg: 'Please complete the form'});
       return;
     }
 
-    // TODO  -- handle server req and res
+    axios.post('/api/users/setnewpassword', {
+      
+      "matchingPassword": this.state.password,
+      "password": this.state.repeat_password, 
+      "token": this.state.token
+  })
+  .then(res => {
+                this.setState({errorMsg: 'Password changed'})
+               }
+  ).catch(err => this.setState({errorMsg: err.response.data.message}))
   }
 
   render() {
-    let errorMsg = null
-    if (this.state.error.SERVER_ERROR) {
-      errorMsg = <div className="ErrorMsg">Sign in unsuccessful, please try again</div>
+    let errorMsg = <div className="ErrorMsg">{ this.state.errorMsg }</div>
+    if (this.state.errorMsg === 'Password successfully changed') {
+      errorMsg = <div className="SuccessMsg">{ this.state.errorMsg}</div>
     }
-    if (this.state.error.CODE_ERROR) {
-      errorMsg = <div className="ErrorMsg">Invalid code</div>
-    }
-    if (this.state.error.EMPTY_ERROR) {
-      errorMsg = <div className="ErrorMsg">Please complete the form</div>
-    }
+
     return (
       <div className="ResetPassword">
       <form onSubmit={ this.handleSubmit } autoComplete="off">
         <h1> New password </h1>
-          <input className="InputField" type="text" id="code" placeholder="code" onChange={ this.handleChange } />
           <input className="InputField" type="password" id="password" placeholder="password" onChange={ this.handleChange } />
           <input className="InputField" type="password" id="repeat_password" placeholder="repeat password" onChange={ this.handleChange } />
         { errorMsg }
           <div className="Buttons">
             <input type="submit" value="Submit" />
+            <Link to='/login'><input type="button" value="Log in" /></Link>
           </div>
       </form>
       <img className="LogoBg1"src={LogoBg} alt="logo"></img>
@@ -63,3 +63,4 @@ class ResetPassword extends Component {
 }
 
 export default ResetPassword;
+  

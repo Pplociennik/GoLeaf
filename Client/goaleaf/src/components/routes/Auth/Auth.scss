@@ -24,6 +24,7 @@
         max-height: 90%;
         max-width: 86%;
         width: 300px;
+        border-radius: 8px;
         z-index: 2;
         display: flex;
         flex-direction: column;
@@ -52,6 +53,11 @@
         }
         .ErrorMsg {
             color: $error-color;
+            font-size: 0.8em;
+            letter-spacing: 0.5px;
+        }
+        .SuccessMsg {
+            color: $secondary-color;
             font-size: 0.8em;
             letter-spacing: 0.5px;
         }

@@ -6,8 +6,11 @@ import PrivateRoute from './../../hoc/PrivateRoute';
 import LogIn from './../../routes/Auth/LogIn';
 import SignIn from './../../routes/Auth/SignIn';
 import ResetPassword from './../../routes/Auth/ResetPassword';
+import ResetPasswordValidate from './../../routes/Auth/ResetPasswordValidate';
 import NewPassword from './../../routes/Auth/NewPassword';
 import Dashboard from './../Dashboard/Dashboard';
+import NewHabit from './../../routes/NewHabit/NewHabit' 
+import Profile from './../../routes/Profile/Profile'
 
 
 class Main extends Component {
@@ -16,10 +19,13 @@ class Main extends Component {
     <main className="Main">
         <Switch>
             <Route exact path='/' component={Dashboard}/>
-            <Route path='/login' component={LogIn}/>
-            <Route path='/signin' component={SignIn}/>
-            <Route path='/reset-password' component={ResetPassword}/>
-            <Route path='/new-password' component={NewPassword}/>
+            <Route exact path='/new-habit' component={NewHabit}/>
+            <Route exact path='/profile' component={Profile}/>
+            <Route exact path='/login' component={LogIn}/>
+            <Route exact path='/signin' component={SignIn}/>
+            <Route exact path='/reset-password' component={ResetPassword}/>
+            <Route exact path='/resetpassword/:token' component={ResetPasswordValidate}/>
+            <Route exact path='/new-password' component={NewPassword}/>
             <Route path="*" component={Dashboard} />
         </Switch>
     </main>
