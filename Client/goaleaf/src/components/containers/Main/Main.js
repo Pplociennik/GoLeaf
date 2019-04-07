@@ -25,7 +25,7 @@ class Main extends Component {
             <Route exact path='/resetpassword/:token' component={ResetPasswordValidate}/>
             <Route exact path='/new-password' component={NewPassword}/>
 
-            <Route exact path='/new-habit' component={NewHabit}/>
+            <PrivateRoute exact path='/new-habit' authenticated={this.props.authenticated} component={NewHabit}/>
 
             <Route path="*" component={Dashboard} />
         </Switch>

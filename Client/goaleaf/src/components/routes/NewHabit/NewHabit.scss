@@ -2,26 +2,27 @@
 
 .NewHabit {
     min-height: calc(100vh - #{$navbar-height});
-    overflow: hidden;
+    max-width: 100%;
     display: flex;
     justify-content: center;
-
     form {
         max-width: 86%;
-        width: 500px;
+        width: 600px;
         display: flex;
         flex-direction: column;
 
         h1 {
+            font-size: 2.4em;
+            letter-spacing: 1px;
             color: $secondary-color;
         }
         .TitleInput {
             background-color: $primary-color;
-            height: 40px;
+            height: 46px;
             font-family: 'Nunito', sans-serif;          
-            font-size: 1.4em;
+            font-size: 2em;
             font-weight: 100;   
-            letter-spacing: 1px;      
+            letter-spacing: 2px;      
             color: #333;
             caret-color: $text-color;
             margin: 0.8em 0;
@@ -30,7 +31,9 @@
             outline: 0;
         }
         h2 {
+            font-size: 1.2em;
             font-weight: 300;
+            margin: 1em 0 0.8em 0;
         }
         .Category {
             display: flex;
@@ -91,6 +94,7 @@
             }
         }
         .Privacy {
+            margin-bottom: 1em;
             input {
                 height: 34px;
                 width: 90px;
@@ -112,7 +116,6 @@
         }
         .Friends {
             display: flex;
-            justify-content: center;
 
             .friend {
                 background-color: $primary-color;
@@ -146,9 +149,10 @@
         }
 
         .submit {
+            align-self: center;
             background-color: $secondary-color;
-            height: 37px;
-            width: 96px;
+            height: 42px;
+            width: 110px;
             margin: 2em 0;
             color: #fff;
             font-family: 'Nunito', sans-serif;          
@@ -160,7 +164,6 @@
             border-radius: 20px;
             cursor: pointer;
 
-            align-self: center;
         }
         .submit:hover {
             box-shadow: 2px 2px 10px 0px rgba(51,51,51,0.3);                
