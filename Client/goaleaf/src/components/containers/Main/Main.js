@@ -10,6 +10,8 @@ import ResetPasswordValidate from './../../routes/Auth/ResetPasswordValidate';
 import NewPassword from './../../routes/Auth/NewPassword';
 import Dashboard from './../Dashboard/Dashboard';
 import NewHabit from './../../routes/NewHabit/NewHabit' 
+import Profile from './../../routes/Profile/Profile'
+
 
 
 class Main extends Component {
@@ -18,7 +20,7 @@ class Main extends Component {
     <main className="Main">
         <Switch>
             <Route exact path='/' component={Dashboard}/>
-            
+
             <Route exact path='/login' component={LogIn}/>
             <Route exact path='/signin' component={SignIn}/>
             <Route exact path='/reset-password' component={ResetPassword}/>
@@ -26,6 +28,7 @@ class Main extends Component {
             <Route exact path='/new-password' component={NewPassword}/>
 
             <PrivateRoute exact path='/new-habit' authenticated={this.props.authenticated} component={NewHabit}/>
+            <PrivateRoute exact path='/profile' authenticated={this.props.authenticated} component={Profile}/>
 
             <Route path="*" component={Dashboard} />
         </Switch>
