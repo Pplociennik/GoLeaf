@@ -32,7 +32,7 @@ class NewHabit extends Component {
 
     return (
       <div className="NewHabit">
-        <form onSubmit={ this.handleSubmit }>
+        <form onSubmit={ this.handleSubmit } autoComplete="off" >
           <h1>New Habit</h1>
           <input className="TitleInput" type="text" id="title" placeholder="title" onChange={ this.handleChange } />
           <h2>Category</h2>
@@ -48,12 +48,12 @@ class NewHabit extends Component {
           <input className={this.state.private === false ? 'privacyChosen' : ''} type="button" value="public" onClick={ this.handleChangePrivacy } />
           <input className={this.state.private === true ? 'privacyChosen' : ''} type="button" value="private" onClick={ this.handleChangePrivacy } />
           </div>
-              <h2>Add friends</h2>
+              <h2>Invite others</h2>
           <div className="Friends">
               <input className="friend" type="text" placeholder="username" />
               <input className="addFriend" type="button" value="+" />
           </div>
-          <input className="submit" type="submit" value="submit" />
+          <input className="submit" type="submit" value="Create habit" />
         </form>
       </div>
     )

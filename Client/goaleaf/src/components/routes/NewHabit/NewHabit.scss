@@ -1,18 +1,25 @@
 @import './../../../global-styles.scss';
 
 .NewHabit {
-    min-height: calc(100vh - #{$navbar-height});
+  //  min-height: calc(100vh - #{$navbar-height});
     max-width: 100%;
     display: flex;
     justify-content: center;
     form {
         max-width: 86%;
         width: 600px;
+        margin: 1em 0;
+        height: auto;
         display: flex;
         flex-direction: column;
-
+        
+        @include md {
+            padding: 30px;
+            box-shadow: 2px 2px 10px 0px rgba(51,51,51,0.2);        
+        }
         h1 {
-            font-size: 2.4em;
+            margin: 0.2em 0;
+            font-size: 2.2em;
             letter-spacing: 1px;
             color: $secondary-color;
         }
@@ -31,9 +38,9 @@
             outline: 0;
         }
         h2 {
-            font-size: 1.2em;
+            font-size: 1.1em;
             font-weight: 300;
-            margin: 1em 0 0.8em 0;
+            margin: 1.2em 0 0.8em 0;
         }
         .Category {
             display: flex;
@@ -98,20 +105,20 @@
             input {
                 height: 34px;
                 width: 90px;
+                background-color: $primary-color;
                 color: $text-color;
                 font-size: 1em;
                 font-family: 'Nunito', sans-serif;
                 letter-spacing: 1px; 
                 font-weight: 400;               
-                background-color: $primary-color;
                 border: none;
                 border-radius: 20px;
                 outline: 0;
                 cursor: pointer;
             }
             .privacyChosen {
-                background-color: $none-color;
-                color: #fff;
+                background-color: #dae1e7;                
+               // color: #fff;
             }
         }
         .Friends {
@@ -151,17 +158,17 @@
         .submit {
             align-self: center;
             background-color: $secondary-color;
-            height: 42px;
-            width: 110px;
-            margin: 2em 0;
+            height: 38px;
+            width: 150px;
+            margin-top: 3em;
             color: #fff;
             font-family: 'Nunito', sans-serif;          
-            font-size: 1.05em;
+            font-size: 1em;
             font-weight: 400;
-            letter-spacing: 1.5px;
-            outline: 0;
+            letter-spacing: 2px;
             border: none;
             border-radius: 20px;
+            outline: 0;
             cursor: pointer;
 
         }

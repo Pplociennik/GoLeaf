@@ -23,6 +23,8 @@ class ResetPassword extends Component {
       return;
     }
 
+    this.setState({errorMsg: 'waiting'})
+
     axios.post('/api/users/resetpassword', {
       
         "emailAddress": this.state.email
@@ -34,11 +36,13 @@ class ResetPassword extends Component {
   }
 
   render() {
-    let errorMsg = <div className="ErrorMsg">{ this.state.errorMsg}</div>
+    let errorMsg = <div className="ErrorMsg">{ this.state.errorMsg }</div>
       if (this.state.errorMsg === 'Please check your email') {
         errorMsg = <div className="SuccessMsg">{ this.state.errorMsg}</div>
       }
-
+      if (this.state.errorMsg === 'waiting') {
+        errorMsg = <div className="WaitingMsg"></div>
+      }
     return (
       <div className="ResetPassword">
       <form onSubmit={ this.handleSubmit } autoComplete="off">
