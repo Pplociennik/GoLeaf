@@ -128,7 +128,7 @@ public class UserController {
 
         if (!userCredentialsValidator.isPasswordFormatValid(newPasswords.password))
             throw new BadCredentialsException("Password must be at least 6 characters long and cannot contain spaces!");
-        if (!(newPasswords.password == newPasswords.matchingPassword))
+        if (!(newPasswords.password.equals(newPasswords.matchingPassword)))
             throw new BadCredentialsException("Passwords are not equal!");
 
         user.setPassword(bCryptPasswordEncoder.encode(newPasswords.password));
