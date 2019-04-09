@@ -136,11 +136,10 @@ public class UserController {
         userService.saveUser(user);
     }
 
-    //to removing user from database
-//    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
-//    public ResponseEntity<User> delete(@PathVariable Integer id) {
-//        userService.removeUser(id);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
+    public HttpStatus removeUserFromDatabase(@PathVariable Integer id) {
+        userService.removeUser(id);
+        return HttpStatus.OK;
+    }
 
 }
