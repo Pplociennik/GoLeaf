@@ -89,7 +89,7 @@ public class AuthController {
     public HttpStatus validateToken(@RequestBody AuthorizeViewModel model) throws TimeoutException {
         String token = model.Token;
 
-        if (jwtService.Validate(token, SECRET))
+        if (!jwtService.Validate(token, SECRET))
             throw new TimeoutException("Token expired!");
 
         return HttpStatus.OK;

@@ -1,12 +1,15 @@
 package com.goaleaf.services;
 
 import com.goaleaf.entities.User;
+import com.goaleaf.entities.viewModels.EditUserViewModel;
 import com.goaleaf.repositories.RoleRepository;
+import com.goaleaf.validators.exceptions.BadCredentialsException;
 import com.goaleaf.validators.exceptions.EmailExistsException;
 import com.goaleaf.validators.exceptions.LoginExistsException;
 import com.goaleaf.entities.viewModels.RegisterViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.goaleaf.repositories.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +22,9 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public Iterable<User> listAllUsersPaging(Integer pageNr, Integer howManyOnPage) {
@@ -73,12 +79,20 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-    public void updateUser(Integer id, User user) {
-        if (findById(id) != null) {
-            User updatedUser = findById(id);
-            updatedUser.setUserName(user.getUserName());
-            updatedUser.setEmailAddress(user.getEmailAddress());
-            updatedUser.setPassword(user.getPassword());
+    public void updateUser(EditUserViewModel model) throws BadCredentialsException {
+        if (findById(model.id) != null) {
+            User updatedUser = findById(model.id);
+            updatedUser.setUserName(model.userName);
+
+            if (bCryptPasswordEncoder.matches(model.oldPassword, userRepository.findById(model.id).getPassword())) {
+                updatedUser.setEmailAddress(model.emailAddress);
+                if (model.newPassword.equals(model.matchingNewPassword))
+                    updatedUser.setPassword(model.newPassword);
+                else
+                    throw new BadCredentialsException("Passwords are not equal!");
+            } else {
+                throw new BadCredentialsException("Wrong Password!");
+            }
 
             userRepository.save(updatedUser);
         }
@@ -116,5 +130,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmailAddress(String email) {return userRepository.findByEmailAddress(email);}
+    public User findByEmailAddress(String email) {
+        return userRepository.findByEmailAddress(email);
+    }
 }

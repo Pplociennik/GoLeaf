@@ -2,6 +2,7 @@ package com.goaleaf.controllers;
 
 import com.auth0.jwt.JWT;
 import com.goaleaf.entities.User;
+import com.goaleaf.entities.viewModels.EditUserViewModel;
 import com.goaleaf.entities.viewModels.EmailViewModel;
 import com.goaleaf.entities.viewModels.PasswordViewModel;
 import com.goaleaf.repositories.UserRepository;
@@ -79,8 +80,8 @@ public class UserController {
 
 
     @RequestMapping(method = RequestMethod.PUT, value = "/user/{id}")
-    public void updateUser(@RequestBody User user, @PathVariable("id") Integer publicId) {
-        userService.updateUser(publicId, user);
+    public void updateUser(@RequestBody EditUserViewModel model) throws BadCredentialsException {
+        userService.updateUser(model);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/resetpassword")
