@@ -3,6 +3,7 @@ package com.goaleaf.controllers;
 import com.auth0.jwt.JWT;
 import com.goaleaf.entities.DTO.UserDto;
 import com.goaleaf.entities.User;
+import com.goaleaf.entities.viewModels.AuthorizeViewModel;
 import com.goaleaf.services.JwtService;
 import com.goaleaf.services.UserService;
 import com.goaleaf.validators.UserCredentialsValidator;
@@ -13,11 +14,13 @@ import com.goaleaf.validators.exceptions.LoginExistsException;
 import com.goaleaf.entities.viewModels.LoginViewModel;
 import com.goaleaf.entities.viewModels.RegisterViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
 import java.util.Date;
+import java.util.concurrent.TimeoutException;
 
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 import static com.goaleaf.security.SecurityConstants.EXPIRATION_TIME;
@@ -80,5 +83,15 @@ public class AuthController {
         jwtService.Validate(token, SECRET);
 
         return token;
+    }
+
+    @RequestMapping(value = "/validatetoken", method = RequestMethod.POST)
+    public HttpStatus validateToken(@RequestBody AuthorizeViewModel model) throws TimeoutException {
+        String token = model.Token;
+
+        if (jwtService.Validate(token, SECRET))
+            throw new TimeoutException("Token expired!");
+
+        return HttpStatus.OK;
     }
 }
