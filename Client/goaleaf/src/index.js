@@ -11,15 +11,13 @@ import axios from 'axios';
 const store = createStore(rootReducer);
 
 const token = localStorage.getItem('token');
-// If we have a token, consider the user to be signed in
+
 axios.post('/validatetoken', {
-      
   "Token": token
-})
-.then(res => {
-      store.dispatch({ type: 'AUTH_USER' , token: token })
+}).then(res => {
+      store.dispatch({ type: 'VALIDATE_USER', token: token})
            }
-).catch(err => console.log(err))
+).catch(err => store.dispatch({ type: 'INVALIDATE_USER'}))
 
 
 // GET USER REQUEST

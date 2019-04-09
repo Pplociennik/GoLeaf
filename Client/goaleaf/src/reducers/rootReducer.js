@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 const initState = {
     authenticated: false,
     userLogged: null,
@@ -15,11 +13,18 @@ const rootReducer = (state = initState, action) => {
     }
     const tokenData = parseJwt(action.token)
 
-    if(action.type === 'AUTH_USER'){
+    if(action.type === 'VALIDATE_USER'){
         return {
             ...state,
             authenticated: true,
             userLogged: tokenData.sub
+        }
+    }
+    if(action.type === 'INVALIDATE_USER'){
+        return {
+            ...state,
+            authenticated: false,
+            userLogged: null
         }
     }
 

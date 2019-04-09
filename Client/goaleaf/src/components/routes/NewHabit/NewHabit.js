@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './NewHabit.scss'
+import { connect } from 'react-redux';
 
 class NewHabit extends Component {
 
@@ -29,7 +30,6 @@ class NewHabit extends Component {
   }
 
   render() {
-
     return (
       <div className="NewHabit">
         <form onSubmit={ this.handleSubmit } autoComplete="off" >
@@ -50,7 +50,9 @@ class NewHabit extends Component {
           </div>
               <h2>Invite others</h2>
           <div className="Friends">
-              <input className="friend" type="text" placeholder="username" />
+          <select className="friend" value={this.state.value} onChange={this.handleChange}>
+            {/* TODO */}
+          </select>
               <input className="addFriend" type="button" value="+" />
           </div>
           <input className="submit" type="submit" value="Create habit" />
@@ -60,4 +62,10 @@ class NewHabit extends Component {
   } 
 }
 
-export default NewHabit;
+const mapStateToProps = state => {
+  return {
+    users: state.users
+  }
+}
+
+export default connect(mapStateToProps)(NewHabit);
