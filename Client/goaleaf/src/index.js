@@ -21,7 +21,15 @@ axios.post('/validatetoken', {
            }
 ).catch(err => console.log(err))
 
-store.dispatch({ type: 'GET_USERS'});
+
+// GET USER REQUEST
+axios.get(`/api/users/all`)
+.then(res => {
+  store.dispatch({ type: 'GET_USERS', payload: res.data}); 
+} 
+).catch(err => console.log(err))
+
+
 
 ReactDOM.render(<Provider store={ store }><App /></Provider>, document.getElementById('root'));
 

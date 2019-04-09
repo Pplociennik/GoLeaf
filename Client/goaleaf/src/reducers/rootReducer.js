@@ -24,16 +24,10 @@ const rootReducer = (state = initState, action) => {
     }
 
     if(action.type === 'GET_USERS'){
-
-        axios.get(`/api/users/all`)
-          .then(res => {
-              return {
+            return {
                 ...state,
-                users: res.data
+                users: action.payload
               }
-        }
-         ).catch(err => console.log(err))
-
     }
     return state;
 }   
