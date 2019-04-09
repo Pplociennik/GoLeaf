@@ -79,7 +79,7 @@ public class UserController {
 //    }
 
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/user/{id}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/edit")
     public void updateUser(@RequestBody EditUserViewModel model) throws BadCredentialsException {
         userService.updateUser(model);
     }
