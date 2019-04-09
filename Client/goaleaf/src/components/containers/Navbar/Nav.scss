@@ -2,7 +2,7 @@
 
 .NavNotLogged, .NavLogged {
     height: 100%;
-    width: 100%;
+    width: 100vw;
     background-color: $primary-color;
     margin: 0;
     padding: 0;
@@ -10,7 +10,7 @@
     top: $navbar-height;
     left: -100vw;
     list-style-type: none;
-    z-index: 3;
+    z-index: 30;
     transition: left 0.3s;
     transition-timing-function: ease-in;
     display: flex;
