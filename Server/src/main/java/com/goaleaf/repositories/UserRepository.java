@@ -15,7 +15,7 @@ public interface UserRepository extends CrudRepository<User, Integer>, PagingAnd
     @Query("select count(*) from User p where p.id = ?1")
     Integer checkIfExists(Integer id);
 
-   // @Query("select * from User u where u.emailAddress = ?1")
+    // @Query("select * from User u where u.emailAddress = ?1")
     User findByEmailAddress(String emailAddress);
 
     User findByUserName(String userName);

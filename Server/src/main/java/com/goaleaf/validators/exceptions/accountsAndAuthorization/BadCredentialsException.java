@@ -1,4 +1,4 @@
-package com.goaleaf.validators.exceptions;
+package com.goaleaf.validators.exceptions.accountsAndAuthorization;
 
 import javax.security.sasl.AuthenticationException;
 

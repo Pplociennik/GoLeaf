@@ -1,9 +1,6 @@
 package com.goaleaf.validators;
 
-import com.goaleaf.entities.viewModels.RegisterViewModel;
-
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.RegisterViewModel;
 
 public class PasswordMatchesValidator {
 

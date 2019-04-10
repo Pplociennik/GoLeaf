@@ -1,12 +1,12 @@
 package com.goaleaf.services;
 
 import com.goaleaf.entities.User;
-import com.goaleaf.entities.viewModels.EditUserViewModel;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditUserViewModel;
 import com.goaleaf.repositories.RoleRepository;
-import com.goaleaf.validators.exceptions.BadCredentialsException;
-import com.goaleaf.validators.exceptions.EmailExistsException;
-import com.goaleaf.validators.exceptions.LoginExistsException;
-import com.goaleaf.entities.viewModels.RegisterViewModel;
+import com.goaleaf.validators.exceptions.accountsAndAuthorization.BadCredentialsException;
+import com.goaleaf.validators.exceptions.accountsAndAuthorization.EmailExistsException;
+import com.goaleaf.validators.exceptions.accountsAndAuthorization.LoginExistsException;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.RegisterViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

@@ -1,4 +1,6 @@
-package com.goaleaf.entities.viewModels;
+package com.goaleaf.entities.viewModels.accountsAndAuthorization;
+
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.AuthorizeViewModel;
 
 public class RegisterViewModel extends AuthorizeViewModel {
 

@@ -1,7 +1,7 @@
 package com.goaleaf.validators;
 
 
-import com.goaleaf.entities.viewModels.RegisterViewModel;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.RegisterViewModel;
 
 
 public class UserCredentialsValidator {

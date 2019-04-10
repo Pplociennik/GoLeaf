@@ -1,4 +1,4 @@
-package com.goaleaf.entities.viewModels;
+package com.goaleaf.entities.viewModels.accountsAndAuthorization;
 
 public class PasswordViewModel {
 

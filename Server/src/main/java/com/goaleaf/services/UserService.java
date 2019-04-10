@@ -2,11 +2,11 @@ package com.goaleaf.services;
 
 import com.goaleaf.entities.User;
 
-import com.goaleaf.entities.viewModels.EditUserViewModel;
-import com.goaleaf.validators.exceptions.BadCredentialsException;
-import com.goaleaf.validators.exceptions.EmailExistsException;
-import com.goaleaf.validators.exceptions.LoginExistsException;
-import com.goaleaf.entities.viewModels.RegisterViewModel;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditUserViewModel;
+import com.goaleaf.validators.exceptions.accountsAndAuthorization.BadCredentialsException;
+import com.goaleaf.validators.exceptions.accountsAndAuthorization.EmailExistsException;
+import com.goaleaf.validators.exceptions.accountsAndAuthorization.LoginExistsException;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.RegisterViewModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,8 +25,6 @@ public interface UserService {
     Iterable<User> listAllUsersPaging(Integer pageNr, Integer howManyOnPage);
 
     User registerNewUserAccount(RegisterViewModel register) throws EmailExistsException, LoginExistsException;
-
-   // User findByUserName(String username);
 
     User findByLogin(String user);
 
