@@ -48,13 +48,6 @@ class NewHabit extends Component {
           <input className={this.state.private === false ? 'privacyChosen' : ''} type="button" value="public" onClick={ this.handleChangePrivacy } />
           <input className={this.state.private === true ? 'privacyChosen' : ''} type="button" value="private" onClick={ this.handleChangePrivacy } />
           </div>
-              <h2>Invite others</h2>
-          <div className="Friends">
-          <select className="friend" value={this.state.value} onChange={this.handleChange}>
-            {/* TODO */}
-          </select>
-              <input className="addFriend" type="button" value="+" />
-          </div>
           <input className="submit" type="submit" value="Create habit" />
         </form>
       </div>
