@@ -7,7 +7,7 @@ import com.goaleaf.entities.viewModels.accountsAndAuthorization.EmailViewModel;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.PasswordViewModel;
 import com.goaleaf.repositories.UserRepository;
 import com.goaleaf.security.EmailSender;
-import com.goaleaf.services.JwtService;
+import com.goaleaf.services.servicesImpl.JwtServiceImpl;
 import com.goaleaf.services.UserService;
 import com.goaleaf.validators.UserCredentialsValidator;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.AccountNotExistsException;
@@ -40,7 +40,7 @@ public class UserController {
     @Autowired
     private UserService userService;
     @Autowired
-    private JwtService jwtService;
+    private JwtServiceImpl jwtService;
     @Autowired
     private UserCredentialsValidator userCredentialsValidator;
     @Autowired

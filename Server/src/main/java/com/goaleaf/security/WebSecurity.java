@@ -1,22 +1,15 @@
 package com.goaleaf.security;
 
-import com.goaleaf.services.UserDetailsServiceImpl;
-import org.springframework.http.HttpMethod;
+import com.goaleaf.services.servicesImpl.UserDetailsServiceImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.context.annotation.Bean;
-
-import javax.swing.*;
-
-import static com.goaleaf.security.SecurityConstants.SIGN_UP_URL;
-import static com.goaleaf.security.SecurityConstants.SWAGGER_URL;
 
 
 @EnableWebSecurity

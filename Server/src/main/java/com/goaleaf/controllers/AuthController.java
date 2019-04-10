@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.goaleaf.entities.DTO.UserDto;
 import com.goaleaf.entities.User;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.AuthorizeViewModel;
-import com.goaleaf.services.JwtService;
+import com.goaleaf.services.servicesImpl.JwtServiceImpl;
 import com.goaleaf.services.UserService;
 import com.goaleaf.validators.UserCredentialsValidator;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.AccountNotExistsException;
@@ -37,7 +37,7 @@ public class AuthController {
     @Autowired
     private UserCredentialsValidator userCredentialsValidator;
     @Autowired
-    private JwtService jwtService;
+    private JwtServiceImpl jwtService;
 
     @PermitAll
     @RequestMapping(value = "/register", method = RequestMethod.POST)

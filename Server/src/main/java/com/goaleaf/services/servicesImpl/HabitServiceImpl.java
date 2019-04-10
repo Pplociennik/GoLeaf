@@ -1,11 +1,10 @@
-package com.goaleaf.services;
+package com.goaleaf.services.servicesImpl;
 
 import com.goaleaf.entities.Habit;
 import com.goaleaf.entities.Member;
-import com.goaleaf.entities.viewModels.habitsCreating.EditHabitViewModel;
 import com.goaleaf.entities.viewModels.habitsCreating.HabitViewModel;
 import com.goaleaf.repositories.HabitRepository;
-import com.goaleaf.validators.HabitNameValidator;
+import com.goaleaf.services.HabitService;
 import com.goaleaf.validators.exceptions.habitsCreating.WrongTitleException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -95,11 +94,6 @@ public class HabitServiceImpl implements HabitService {
     @Override
     public Habit findById(Integer id) {
         return null;
-    }
-
-    @Override
-    public void updateHabit(EditHabitViewModel model) {
-
     }
 
     @Override

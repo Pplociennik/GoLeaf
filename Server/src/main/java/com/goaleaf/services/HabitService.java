@@ -1,7 +1,6 @@
 package com.goaleaf.services;
 
 import com.goaleaf.entities.Habit;
-import com.goaleaf.entities.viewModels.habitsCreating.EditHabitViewModel;
 import com.goaleaf.entities.viewModels.habitsCreating.HabitViewModel;
 import com.goaleaf.validators.exceptions.habitsCreating.WrongTitleException;
 import org.springframework.stereotype.Service;
@@ -28,8 +27,6 @@ public interface HabitService {
     Habit findByTitle(String title);
 
     Habit findById(Integer id);
-
-    void updateHabit(EditHabitViewModel model);
 
     Habit findByOwnerName(String ownerName);
 }

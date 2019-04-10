@@ -1,24 +1,19 @@
-package com.goaleaf.services;
+package com.goaleaf.services.servicesImpl;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.impl.JWTParser;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.auth0.jwt.interfaces.Payload;
+import com.goaleaf.services.servicesImpl.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Service;
 
-import javax.xml.bind.DatatypeConverter;
-
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
-import static com.goaleaf.security.SecurityConstants.SECRET;
-
 @Service
-public class JwtService {
+public class JwtServiceImpl implements JwtService {
     public boolean Validate(String token, String secret) {
         Claims claims = Jwts.parser()
                 .setSigningKey(secret.getBytes(StandardCharsets.UTF_8))
