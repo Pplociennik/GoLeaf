@@ -27,7 +27,7 @@ public class HabitController {
     public HabitDTO createNewHabit(@RequestBody HabitViewModel model) throws WrongTitleException, NoStatusException, NoFrequencyException, NoCategoryException {
 
         if (!habitNameValidator.isValid(model.title))
-            throw new WrongTitleException("Habit's title must be at least 15 and no more than 250 characters long!");
+            throw new WrongTitleException("Habit's title must be at least 5 and no more than 50 characters long!");
         if (model.category == null)
             throw new NoCategoryException("You have to choose category!");
         if (model.frequency == null)
