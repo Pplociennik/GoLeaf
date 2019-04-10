@@ -30,20 +30,21 @@ class NewHabit extends Component {
   }
 
   render() {
+    
     return (
       <div className="NewHabit">
         <form onSubmit={ this.handleSubmit } autoComplete="off" >
           <h1>New Habit</h1>
-          <input className="TitleInput" type="text" id="title" placeholder="title" onChange={ this.handleChange } />
-          <h2>Category</h2>
-          <div className="Category">
-            <input className={this.state.category === 'NONE' ? 'noneChosen none' : 'none'} type="button" value="NONE" onClick={ this.handleChangeCategory } />
-            <input className={this.state.category === 'HEALTH' ? 'healthChosen health' : 'health'} type="button" value="HEALTH" onClick={ this.handleChangeCategory }/>
-            <input className={this.state.category === 'DIET' ? 'dietChosen diet' : 'diet'} type="button" value="DIET" onClick={ this.handleChangeCategory }/>
-            <input className={this.state.category === 'STUDY' ? 'studyChosen study' : 'study'} type="button" value="STUDY" onClick={ this.handleChangeCategory }/>
-            <input className={this.state.category === 'WORK' ? 'workChosen work' : 'work'} type="button" value="WORK" onClick={ this.handleChangeCategory }/>
+          <input className="TitleInput" type="text" id="title" placeholder="what will be your next challenge?" onChange={ this.handleChange } autoFocus />
+          <h2>Be sure to add a category..</h2>
+          <div className="Categories">
+            <input className={this.state.category === 'NONE' ? 'category noneChosen none' : ' category none'} type="button" value="NONE" onClick={ this.handleChangeCategory } />
+            <input className={this.state.category === 'HEALTH' ? 'category healthChosen health' : 'category health'} type="button" value="HEALTH" onClick={ this.handleChangeCategory }/>
+            <input className={this.state.category === 'DIET' ? 'category dietChosen diet' : 'category diet'} type="button" value="DIET" onClick={ this.handleChangeCategory }/>
+            <input className={this.state.category === 'STUDY' ? 'category studyChosen study' : 'category study'} type="button" value="STUDY" onClick={ this.handleChangeCategory }/>
+            <input className={this.state.category === 'WORK' ? 'category workChosen work' : 'category work'} type="button" value="WORK" onClick={ this.handleChangeCategory }/>
           </div>
-          <h2>Privacy</h2>
+          <h2>Want to stay incognito? Set habit as private</h2>
           <div className="Privacy">
           <input className={this.state.private === false ? 'privacyChosen' : ''} type="button" value="public" onClick={ this.handleChangePrivacy } />
           <input className={this.state.private === true ? 'privacyChosen' : ''} type="button" value="private" onClick={ this.handleChangePrivacy } />
