@@ -35,7 +35,6 @@ class LogIn extends Component {
                   this.props.history.push('/');
                   window.location.reload();
                  }
-                // TODO -- more errors handling
     ).catch(err => this.setState({errorMsg: err.response.data.message}))
   }
   render() {

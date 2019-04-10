@@ -16,6 +16,7 @@ import Profile from './../../routes/Profile/Profile'
 
 class Main extends Component {
   render(){
+
   return (
     <main className="Main">
         <Switch>
@@ -27,8 +28,8 @@ class Main extends Component {
             <Route exact path='/resetpassword/:token' component={ResetPasswordValidate}/>
             <Route exact path='/new-password' component={NewPassword}/>
 
-            <PrivateRoute exact path='/new-habit' authenticated={this.props.authenticated} component={NewHabit}/>
-            <PrivateRoute exact path='/profile' authenticated={this.props.authenticated} component={Profile}/>
+            <PrivateRoute exact path='/new-habit' component={NewHabit}/>
+            <PrivateRoute exact path='/profile' component={Profile}/>
 
             <Route path="*" component={Dashboard} />
         </Switch>

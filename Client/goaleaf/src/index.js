@@ -5,20 +5,32 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import rootReducer from './reducers/rootReducer'
+import rootReducer from './reducers/rootReducer';
+import axios from 'axios';
 
 const store = createStore(rootReducer);
 
 const token = localStorage.getItem('token');
-// If we have a token, consider the user to be signed in
-if (token) {
-  // we need to update application state
-  store.dispatch({ type: 'AUTH_USER' , token: token });
-}
 
-store.dispatch({ type: 'GET_USERS'});
+axios.post('/validatetoken', {
+  "Token": token
+}).then(res => {
+      store.dispatch({ type: 'VALIDATE_USER', token: token})
+           }
+).catch(err => store.dispatch({ type: 'INVALIDATE_USER'}))
+
+
+// GET USER REQUEST
+axios.get(`/api/users/all`)
+.then(res => {
+  store.dispatch({ type: 'GET_USERS', payload: res.data}); 
+} 
+).catch(err => console.log(err))
+
+
 
 ReactDOM.render(<Provider store={ store }><App /></Provider>, document.getElementById('root'));
 
 
 serviceWorker.unregister();
+

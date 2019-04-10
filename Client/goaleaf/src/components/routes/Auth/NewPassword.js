@@ -38,8 +38,9 @@ class ResetPassword extends Component {
   }
 
   render() {
+
     let errorMsg = <div className="ErrorMsg">{ this.state.errorMsg }</div>
-    if (this.state.errorMsg === 'Password successfully changed') {
+    if (this.state.errorMsg === 'Password changed') {
       errorMsg = <div className="SuccessMsg">{ this.state.errorMsg}</div>
     }
 
