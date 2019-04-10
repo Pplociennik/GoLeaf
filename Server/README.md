@@ -46,8 +46,49 @@ http://localhost:8080/api/users/setnewpassword -> przyjmuje JSON:
 -> ustawia nowe hasło dla użytkownika. Wyrzuca wyjątek jeśli hasła są różne lub jeśli hasło jest niepoprawne (hasło musi mieć co najmniej 6 znaków i nie może zawierać spacji) (POST)
   
 http://localhost:8080/api/users/user/{id} (PUT) -> edycja użytkownika
+  
+    
       
-      
+Habits
+======
+    
+http://localhost:8080/api/habits/new-habit -> 
+  
+  
+  {    
+    "category": "None",    
+    "frequency": "Daily",    
+    "members": [    
+      {    
+        "doneDates": [    
+          {}    
+        ],    
+        "habits": [    
+          {    
+            "category": "None",    
+            "frequency": "Daily",    
+            "habitStartDate": "2019-04-10T19:27:25.278Z",    
+            "habitTitle": "string",    
+            "id": 0,    
+            "members": [    
+              {}    
+            ],    
+            "status": "Public"    
+          }    
+        ],    
+        "id": 0,    
+        "userID": 0    
+      }    
+    ],    
+    "startDate": "2019-04-10T19:27:25.279Z",    
+    "status": "Public",    
+    "title": "string"    
+  }    
+        
+   
+http://localhost:8080/api/habits/all -> zwraca wszystkie habity
+  
+  
 ----------------------------------------------------------------------------------------------
 UWAGA! Po pierwszym uruchomieniu serwera i utworzeniu bazy danych warto wejsc w plik application.properties (znajdujący się w katalogu resources) i zmienic wartosc :  
   
