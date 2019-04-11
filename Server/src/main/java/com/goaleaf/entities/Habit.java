@@ -26,14 +26,14 @@ public class Habit {
     private Category category;
 
     @Column
-    private Status status;
-
-    @Column
     private Frequency frequency;
 
     @Column
     @OneToMany(mappedBy = "habits")
     private Set<Member> members;
+
+    @Column
+    private Boolean isPrivate;
 
     public Integer getId() {
         return id;
@@ -67,14 +67,6 @@ public class Habit {
         this.category = category;
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
     public Frequency getFrequency() {
         return frequency;
     }
@@ -89,5 +81,13 @@ public class Habit {
 
     public void setMembers(Set<Member> members) {
         this.members = members;
+    }
+
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
+    public void setPrivate(boolean aPrivate) {
+        isPrivate = aPrivate;
     }
 }
