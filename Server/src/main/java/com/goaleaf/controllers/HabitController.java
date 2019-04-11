@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
+
 import static com.goaleaf.security.SecurityConstants.*;
 
 
@@ -58,6 +60,7 @@ public class HabitController {
         return habitDTO;
     }
 
+    @PermitAll
     @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Iterable<Habit> list(/*String token*/) {
 

@@ -1,5 +1,8 @@
 package com.goaleaf.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -16,11 +19,22 @@ public class Member {
 
     @ManyToMany
     @Column
+    @JsonBackReference
     private Set<Habit> habits;
 
     @OneToMany(mappedBy = "members")
     @Column
+    @JsonManagedReference
     private Set<LeafDate> doneDates;
+
+    public Member(Integer userID, Set<Habit> habits, Set<LeafDate> doneDates) {
+        this.userID = userID;
+        this.habits = habits;
+        this.doneDates = doneDates;
+    }
+
+    public Member() {
+    }
 
     public Integer getId() {
         return id;

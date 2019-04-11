@@ -19,8 +19,6 @@ public class HabitServiceImpl implements HabitService {
 
     @Autowired
     private HabitRepository habitRepository;
-    @Autowired
-    private HabitService habitService;
 
 
     @Override

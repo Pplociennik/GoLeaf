@@ -1,6 +1,8 @@
 package com.goaleaf;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.goaleaf.security.EmailSender;
 import com.goaleaf.validators.UserCredentialsValidator;
 import org.springframework.beans.factory.annotation.Value;
@@ -53,6 +55,8 @@ public class GoaLeafApplication extends SpringBootServletInitializer {
     public static void main(String[] args) throws Exception {
         ExceptionHandler exceptionHandler = new ExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(exceptionHandler);
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
         SpringApplication.run(GoaLeafApplication.class, args);
     }
