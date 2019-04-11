@@ -6,7 +6,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "done_dates")
-public class Dates {
+public class LeafDate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

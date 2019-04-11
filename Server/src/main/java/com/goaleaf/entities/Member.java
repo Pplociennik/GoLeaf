@@ -20,7 +20,7 @@ public class Member {
 
     @OneToMany(mappedBy = "members")
     @Column
-    private Set<Dates> doneDates;
+    private Set<LeafDate> doneDates;
 
     public Integer getId() {
         return id;
@@ -46,11 +46,11 @@ public class Member {
         this.habits = habits;
     }
 
-    public Set<Dates> getDoneDates() {
+    public Set<LeafDate> getDoneDates() {
         return doneDates;
     }
 
-    public void setDoneDates(Set<Dates> doneDates) {
+    public void setDoneDates(Set<LeafDate> doneDates) {
         this.doneDates = doneDates;
     }
 }
