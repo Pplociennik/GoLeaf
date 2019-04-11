@@ -31,7 +31,19 @@ class SignIn extends Component {
         "password": this.state.password,
         "userName": ""
       })
-      .then(res => this.props.history.push('/login')
+      .then(res => {
+        axios.post('/login', {
+          "Token": "",
+          "login": this.state.login,
+          "password": this.state.password
+        })
+        .then(res => {
+                      localStorage.setItem('token', res.data);
+                      this.props.history.push('/');
+                      window.location.reload();
+                     }
+        ).catch(err => this.setState({errorMsg: err.response.data.message}))
+    }
      ).catch(err => this.setState({errorMsg: err.response.data.message}));
   }
 
