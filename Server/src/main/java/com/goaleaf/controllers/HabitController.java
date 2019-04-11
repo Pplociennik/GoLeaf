@@ -42,7 +42,7 @@ public class HabitController {
             throw new NoFrequencyException("You have to choose frequency!");
         if (model.isPrivate == null)
             throw new NoPrivacyException("You have to choose privacy!");
-        if (jwtService.Validate(model.token, SECRET))
+        if (!jwtService.Validate(model.token, SECRET))
             throw new TokenExpiredException("You have to be logged in to create a habit!");
 
         HabitDTO habitDTO = new HabitDTO();
