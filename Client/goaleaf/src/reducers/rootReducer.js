@@ -21,6 +21,7 @@ const rootReducer = (state = initState, action) => {
         }
     }
     if(action.type === 'INVALIDATE_USER'){
+        localStorage.removeItem('token');
         return {
             ...state,
             authenticated: false,
