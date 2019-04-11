@@ -5,5 +5,9 @@ public enum Category {
     HEALTH(),
     DIET(),
     STUDY(),
-    WORK()
+    WORK(),
+    SPORT(),
+    SOCIAL(),
+    FAMILY(),
+    MONEY()
 }
