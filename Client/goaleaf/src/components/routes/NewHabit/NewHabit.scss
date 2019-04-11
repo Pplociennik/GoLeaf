@@ -1,7 +1,7 @@
 @import './../../../global-styles.scss';
 
 .NewHabit {
-  //  min-height: calc(100vh - #{$navbar-height});
+    // max-height: calc(100vh - #{$navbar-height});
     max-width: 100%;
     display: flex;
     justify-content: center;
@@ -38,7 +38,7 @@
             color: lighten($text-color, 50%);
             font-size: 0.8em;
             font-weight: 300;
-            margin-left: 1em;
+            margin: 0 0 1em 1em;
         }
 
         .Categories {
@@ -79,6 +79,18 @@
             .work {
                 border: 4px solid $work-color;
             }
+            .sport {
+                border: 4px solid $sport-color;
+            }
+            .social {
+                border: 4px solid $social-color;
+            }
+            .money {
+                border: 4px solid $money-color;
+            }
+            .family {
+                border: 4px solid $family-color;
+            }
             .noneChosen {
                 background-color: $none-color;
                 color: #fff;
@@ -97,6 +109,22 @@
             }
             .workChosen {
                 background-color: $work-color;
+                color: #fff;
+            }
+            .sportChosen {
+                background-color: $sport-color;
+                color: #fff;
+            }
+            .socialChosen {
+                background-color: $social-color;
+                color: #fff;
+            }
+            .moneyChosen {
+                background-color: $money-color;
+                color: #fff;
+            }
+            .familyChosen {
+                background-color: $family-color;
                 color: #fff;
             }
         }
@@ -124,8 +152,8 @@
             align-self: center;
             background-color: $secondary-color;
             height: 64px;
-            width: 260px;
-            margin-top: 3em;
+            width: 280px;
+            margin-top: 1em;
             color: #fff;
             font-family: 'Nunito', sans-serif;          
             font-size: 1.5em;
@@ -135,37 +163,49 @@
             border-radius: 30px;
             outline: 0;
             cursor: pointer;
-
         }
         .submit:hover {
             box-shadow: 2px 2px 10px 0px rgba(51,51,51,0.3);                
         }
+        .ErrorMsg {
+            align-self: center;
+            color: $error-color;
+            margin-top: 0.4em;
+            font-size: 1em;
+            letter-spacing: 1px;
+        }
     }
-    @include lg {
+    @include md {
         justify-content: flex-start;
 
         form {
-            width: 74%;
-            margin-left: 8%;
+            width: 100%;
+            margin: 2% 10% 0 10%;
 
             h1 {
                 font-size: 3.6em;
             }
             .TitleInput {
                 height: 80px;
-                font-size: 3em;
+                font-size: 2em;
                 letter-spacing: 2px;
                 margin: 0.4em 0;
             }
+            @include lg {
+                .TitleInput {
+                    font-size: 3em;
+                }
+            }
+
             h2 {
                 font-size: 1em;
                 margin-bottom: 1em;
             }
             .Categories {
                 .category {
-                    height: 50px;
-                    width: 156px;
-                    font-size: 1.4em;
+                    height: 44px;
+                    width: 132px;
+                    font-size: 1.2em;
                 }
             }
             .Privacy {
