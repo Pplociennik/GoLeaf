@@ -14,11 +14,13 @@ public class HabitViewModel {
 
     public Category category;
 
-    public Status status;
+    public Boolean isPrivate;
 
     public Set<Member> members;
 
     public Frequency frequency;
 
     public Date startDate;
+
+    public String token;
 }

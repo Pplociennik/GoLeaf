@@ -1,4 +1,4 @@
-package com.goaleaf.services.servicesImpl;
+package com.goaleaf.services;
 
 public interface JwtService {
 

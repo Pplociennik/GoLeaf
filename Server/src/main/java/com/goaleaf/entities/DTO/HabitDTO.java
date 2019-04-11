@@ -14,7 +14,7 @@ public class HabitDTO {
 
     public Category category;
 
-    public Status status;
+    public Boolean isPrivate;
 
     public Set<Member> members;
 

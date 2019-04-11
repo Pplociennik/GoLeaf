@@ -81,7 +81,7 @@ public class HabitServiceImpl implements HabitService {
         newHabit.setHabitTitle(model.title);
         newHabit.setCategory(model.category);
         newHabit.setMembers(model.members);
-        newHabit.setStatus(model.status);
+        newHabit.setPrivate(model.isPrivate);
 
         return habitRepository.save(newHabit);
     }
