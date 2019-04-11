@@ -3,7 +3,6 @@ package com.goaleaf.entities;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.goaleaf.entities.enums.Category;
 import com.goaleaf.entities.enums.Frequency;
-import com.goaleaf.entities.enums.Status;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -31,7 +30,6 @@ public class Habit {
     private Frequency frequency;
 
     @Column
-    @JsonManagedReference
     @OneToMany(mappedBy = "habits")
     private Set<Member> members;
 

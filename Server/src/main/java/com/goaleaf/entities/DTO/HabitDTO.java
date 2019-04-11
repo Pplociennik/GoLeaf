@@ -3,10 +3,8 @@ package com.goaleaf.entities.DTO;
 import com.goaleaf.entities.Member;
 import com.goaleaf.entities.enums.Category;
 import com.goaleaf.entities.enums.Frequency;
-import com.goaleaf.entities.enums.Status;
 
 import java.util.Date;
-import java.util.Set;
 
 public class HabitDTO {
 
@@ -16,7 +14,7 @@ public class HabitDTO {
 
     public Boolean isPrivate;
 
-    public Set<Member> members;
+//    public Set<Member> members;
 
     public Frequency frequency;
 

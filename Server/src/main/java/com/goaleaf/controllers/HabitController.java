@@ -6,7 +6,7 @@ import com.goaleaf.entities.Habit;
 import com.goaleaf.entities.viewModels.habitsCreating.HabitViewModel;
 import com.goaleaf.services.HabitService;
 import com.goaleaf.services.JwtService;
-import com.goaleaf.validators.HabitNameValidator;
+import com.goaleaf.validators.HabitTitleValidator;
 import com.goaleaf.validators.exceptions.habitsCreating.NoCategoryException;
 import com.goaleaf.validators.exceptions.habitsCreating.NoFrequencyException;
 import com.goaleaf.validators.exceptions.habitsCreating.NoPrivacyException;
@@ -30,13 +30,13 @@ public class HabitController {
     @Autowired
     private JwtService jwtService;
 
-    private HabitNameValidator habitNameValidator = new HabitNameValidator();
+    private HabitTitleValidator habitTitleValidator = new HabitTitleValidator();
 
 
     @RequestMapping(method = RequestMethod.POST, value = "/new-habit")
     public HabitDTO createNewHabit(@RequestBody HabitViewModel model) throws WrongTitleException, NoPrivacyException, NoFrequencyException, NoCategoryException {
 
-        if (!habitNameValidator.isValid(model.title))
+        if (!habitTitleValidator.isValid(model.title))
             throw new WrongTitleException("Habit's title must be at least 5 and no more than 50 characters long!");
         if (model.category == null)
             throw new NoCategoryException("You have to choose category!");
@@ -50,7 +50,7 @@ public class HabitController {
         HabitDTO habitDTO = new HabitDTO();
         habitDTO.category = model.category;
         habitDTO.frequency = model.frequency;
-        habitDTO.members = model.members;
+//        habitDTO.members = model.members;
         habitDTO.startDate = model.startDate;
         habitDTO.isPrivate = model.isPrivate;
         habitDTO.title = model.title;

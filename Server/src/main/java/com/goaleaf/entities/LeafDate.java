@@ -25,7 +25,6 @@ public class LeafDate {
 
     @Column
     @ManyToMany
-    @JsonBackReference
     private Set<Member> members;
 
     public LeafDate(Integer userID, Integer habitID, Date dateValue, Set<Member> members) {

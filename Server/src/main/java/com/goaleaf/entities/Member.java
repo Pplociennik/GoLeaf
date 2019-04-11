@@ -19,12 +19,10 @@ public class Member {
 
     @ManyToMany
     @Column
-    @JsonBackReference
     private Set<Habit> habits;
 
     @OneToMany(mappedBy = "members")
     @Column
-    @JsonManagedReference
     private Set<LeafDate> doneDates;
 
     public Member(Integer userID, Set<Habit> habits, Set<LeafDate> doneDates) {
