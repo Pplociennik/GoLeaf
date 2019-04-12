@@ -75,7 +75,7 @@ public class UserController {
 //        return userService.getUserById(publicId);
 //    }
 
-
+    @PermitAll
     @RequestMapping(method = RequestMethod.PUT, value = "/edit")
     public void updateUser(@RequestBody EditUserViewModel model) throws BadCredentialsException {
         userService.updateUser(model);
