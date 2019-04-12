@@ -55,6 +55,7 @@ class Profile extends Component {
     }
 
     componentDidMount() {
+        console.log(this.props.userLogged)
         axios.get(`/api/users/user/${this.props.userLogged}`)
             .then(res => {
                 console.log(res.data)

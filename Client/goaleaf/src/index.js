@@ -12,13 +12,6 @@ const store = createStore(rootReducer);
 
 const token = localStorage.getItem('token');
 
-axios.post('/validatetoken', {
-  "Token": token
-}).then(res => {
-      store.dispatch({ type: 'VALIDATE_USER', token: token})
-           }
-).catch(err => store.dispatch({ type: 'INVALIDATE_USER'}))
-
 
 // GET USER REQUEST
 axios.get(`/api/users/all`)
@@ -28,9 +21,21 @@ axios.get(`/api/users/all`)
 ).catch(err => console.log(err))
 
 
+axios.post('/validatetoken', {
+  "Token": token
+}).then(res => {
+      store.dispatch({ type: 'VALIDATE_USER', token: token})
+      renderApp();
 
-ReactDOM.render(<Provider store={ store }><App /></Provider>, document.getElementById('root'));
+           }
+).catch(err => {store.dispatch({ type: 'INVALIDATE_USER'})
+            renderApp();
+})
 
+
+const renderApp = () => {
+  ReactDOM.render(<Provider store={ store }><App /></Provider>, document.getElementById('root'));
+}
 
 serviceWorker.unregister();
 

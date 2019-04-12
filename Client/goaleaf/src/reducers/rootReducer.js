@@ -11,7 +11,9 @@ const rootReducer = (state = initState, action) => {
         const base64 = base64Url.replace('-', '+').replace('_', '/');
         return JSON.parse(window.atob(base64));
     }
-    const tokenData = parseJwt(action.token)
+    const tokenData = parseJwt(action.token);
+
+    console.log(action)
 
     if(action.type === 'VALIDATE_USER'){
         return {
