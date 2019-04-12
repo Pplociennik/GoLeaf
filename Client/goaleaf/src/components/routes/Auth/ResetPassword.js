@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './Auth.scss'
 import  LogoBg from './../../../assets/leaf-bg.png'
-import { Link } from 'react-router-dom'
+import { Link, Redirect} from 'react-router-dom'
 import axios from 'axios'
 
 class ResetPassword extends Component {
@@ -43,7 +43,9 @@ class ResetPassword extends Component {
       if (this.state.errorMsg === 'waiting') {
         errorMsg = <div className="WaitingMsg"></div>
       }
-    return (
+
+      if (!localStorage.getItem('token')){    
+      return (
       <div className="ResetPassword">
       <form onSubmit={ this.handleSubmit } autoComplete="off">
         <h1> Reset password </h1>
@@ -57,7 +59,9 @@ class ResetPassword extends Component {
       <img className="LogoBg1"src={LogoBg} alt="logo"></img>
       <img className="LogoBg2" src={LogoBg} alt="logo"></img>
       </div>
-    )
+    )} else {
+      return <Redirect  to='/'/>
+    }
   }
 }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './Auth.scss'
 import  LogoBg from './../../../assets/leaf-bg.png'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios'
 
 class SignIn extends Component {
@@ -50,6 +50,7 @@ class SignIn extends Component {
   render() {
       let errorMsg = <div className="ErrorMsg">{ this.state.errorMsg }</div>
 
+    if (!localStorage.getItem('token')){
     return (
       <div className="SignIn">
       <form onSubmit={ this.handleSubmit } autoComplete="off">
@@ -67,7 +68,9 @@ class SignIn extends Component {
       <img className="LogoBg1"src={LogoBg} alt="logo"></img>
       <img className="LogoBg2" src={LogoBg} alt="logo"></img>
       </div>
-    )
+    )} else {
+      return <Redirect  to='/'/>
+    }
   }
 }
 
