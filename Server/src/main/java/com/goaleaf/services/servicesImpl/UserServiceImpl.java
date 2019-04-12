@@ -65,12 +65,6 @@ public class UserServiceImpl implements UserService {
     public User registerNewUserAccount(RegisterViewModel register)
             throws EmailExistsException, LoginExistsException {
 
-        if (emailExists(register.emailAddress)) {
-            throw new EmailExistsException("Istnieje już konto o takim adresie email!:" + register.emailAddress);
-        }
-        if (loginExists(register.login)) {
-            throw new LoginExistsException("Istnieje już konto o takim loginie!: " + register.login);
-        }
 
         User user = new User();
         user.setLogin(register.login);
@@ -97,27 +91,6 @@ public class UserServiceImpl implements UserService {
 
             userRepository.save(updatedUser);
         }
-    }
-
-//    @Override
-//    public User findByUserName(String username) {
-//        return userRepository.findByUserName(username);
-//    }
-
-    private boolean emailExists(String email) {
-        User user = userRepository.findByEmailAddress(email);
-        if (user != null) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean loginExists(String login) {
-        User user = userRepository.findByLogin(login);
-        if (user != null) {
-            return true;
-        }
-        return false;
     }
 
     @Override

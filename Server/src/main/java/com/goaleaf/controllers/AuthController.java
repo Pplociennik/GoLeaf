@@ -47,7 +47,9 @@ public class AuthController {
         if (!userCredentialsValidator.isValidEmail(register))
             throw new BadCredentialsException("Wrong email format!");
         if (userService.findByEmailAddress(register.emailAddress) != null)
-            throw new BadCredentialsException("Account with this email address already exists!");
+            throw new BadCredentialsException("Account with email " + register.emailAddress + " address already exists!");
+        if (userService.findByLogin(register.login) != null)
+            throw new LoginExistsException("Account with login " + register.emailAddress + " already exists!");
         if (!userCredentialsValidator.isPasswordFormatValid(register.password))
             throw new BadCredentialsException("Password must be at least 6 characters long and cannot contain spaces!");
         if (!userCredentialsValidator.arePasswordsEquals(register))

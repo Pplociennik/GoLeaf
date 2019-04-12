@@ -1,10 +1,11 @@
 package com.goaleaf.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.goaleaf.entities.enums.Category;
 import com.goaleaf.entities.enums.Frequency;
-import com.goaleaf.entities.enums.Status;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Set;
 
@@ -34,6 +35,18 @@ public class Habit {
 
     @Column
     private Boolean isPrivate;
+
+    public Habit(String habitTitle, Date habitStartDate, Category category, Frequency frequency, Set<Member> members, Boolean isPrivate) {
+        this.habitTitle = habitTitle;
+        this.habitStartDate = habitStartDate;
+        this.category = category;
+        this.frequency = frequency;
+        this.members = members;
+        this.isPrivate = isPrivate;
+    }
+
+    public Habit() {
+    }
 
     public Integer getId() {
         return id;
@@ -83,11 +96,11 @@ public class Habit {
         this.members = members;
     }
 
-    public boolean isPrivate() {
+    public Boolean getPrivate() {
         return isPrivate;
     }
 
-    public void setPrivate(boolean aPrivate) {
+    public void setPrivate(Boolean aPrivate) {
         isPrivate = aPrivate;
     }
 }
