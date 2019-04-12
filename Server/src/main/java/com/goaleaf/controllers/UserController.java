@@ -81,7 +81,7 @@ public class UserController {
 
         if (!jwtService.Validate(model.token, SECRET))
             throw new TokenExpiredException("You have to be logged in!");
-        
+
         userService.updateUser(model);
     }
 
