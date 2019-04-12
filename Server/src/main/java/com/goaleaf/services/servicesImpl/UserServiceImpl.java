@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
             if (bCryptPasswordEncoder.matches(model.oldPassword, userRepository.findById(model.id).getPassword())) {
                 updatedUser.setEmailAddress(model.emailAddress);
                 if (model.newPassword.equals(model.matchingNewPassword))
-                    updatedUser.setPassword(model.newPassword);
+                    updatedUser.setPassword(bCryptPasswordEncoder.encode(model.newPassword));
                 else
                     throw new BadCredentialsException("Passwords are not equal!");
             } else {
