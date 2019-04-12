@@ -1,10 +1,11 @@
 @import './../../../global-styles.scss';
 
 .NewHabit {
-    // max-height: calc(100vh - #{$navbar-height});
+    min-height: calc(100vh - #{$navbar-height});
     max-width: 100%;
     display: flex;
     justify-content: center;
+
     form {
         background-color: $primary-color;
         width: 86%;
@@ -13,6 +14,7 @@
         z-index: 2;
         display: flex;
         flex-direction: column;
+        justify-content: center;
         
         h1 {
             margin: 0.2em 0;
