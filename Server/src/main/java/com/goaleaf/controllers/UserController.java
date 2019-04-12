@@ -1,6 +1,7 @@
 package com.goaleaf.controllers;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.goaleaf.entities.User;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditUserViewModel;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.EmailViewModel;
@@ -75,9 +76,12 @@ public class UserController {
 //        return userService.getUserById(publicId);
 //    }
 
-    @PermitAll
     @RequestMapping(method = RequestMethod.PUT, value = "/edit")
     public void updateUser(@RequestBody EditUserViewModel model) throws BadCredentialsException {
+
+        if (!jwtService.Validate(model.token, SECRET))
+            throw new TokenExpiredException("You have to be logged in!");
+        
         userService.updateUser(model);
     }
 

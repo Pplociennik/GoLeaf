@@ -4,6 +4,8 @@ public class EditUserViewModel {
 
     public Integer id;
 
+    public String token;
+
     public String userName;
 
     public String oldPassword;
