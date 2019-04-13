@@ -1,17 +1,15 @@
 package com.goaleaf.controllers;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.goaleaf.entities.User;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditImageViewModel;
-import com.goaleaf.security.filesUploading.FileStorageProperties;
-import com.goaleaf.security.filesUploading.UploadFileResponse;
+import com.goaleaf.security.uploadingFiles.FileStorageProperties;
+import com.goaleaf.security.uploadingFiles.UploadFileResponse;
 import com.goaleaf.services.JwtService;
 import com.goaleaf.services.UserService;
 import com.goaleaf.services.servicesImpl.FileStorageService;
 import com.goaleaf.validators.exceptions.FilesStorage.FormatNotAllowedException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -27,11 +24,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.goaleaf.security.SecurityConstants.SECRET;
 

@@ -1,4 +1,4 @@
-package com.goaleaf.security.filesUploading;
+package com.goaleaf.security.uploadingFiles;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

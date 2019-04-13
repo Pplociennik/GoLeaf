@@ -1,4 +1,4 @@
-package com.goaleaf.security.filesUploading;
+package com.goaleaf.security.uploadingFiles;
 
 public class UploadFileResponse {
     private String fileName;

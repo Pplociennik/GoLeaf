@@ -1,6 +1,6 @@
 package com.goaleaf.services.servicesImpl;
 
-import com.goaleaf.security.filesUploading.FileStorageProperties;
+import com.goaleaf.security.uploadingFiles.FileStorageProperties;
 import com.goaleaf.validators.exceptions.FilesStorage.FileStorageException;
 import com.goaleaf.validators.exceptions.FilesStorage.MyFileNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
