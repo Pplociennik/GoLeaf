@@ -34,7 +34,6 @@ import static com.goaleaf.security.SecurityConstants.*;
 @RestController
 @RequestMapping("/api/users")
 @CrossOrigin(origins = "http://localhost:3000")
-@PermitAll
 public class UserController {
 
     @Autowired
@@ -75,6 +74,7 @@ public class UserController {
 //        return userService.getUserById(publicId);
 //    }
 
+    @CrossOrigin("http://localhost:3000")
     @RequestMapping(method = RequestMethod.PUT, value = "/edit")
     public void updateUser(@RequestBody EditUserViewModel model) throws BadCredentialsException {
 
@@ -136,6 +136,7 @@ public class UserController {
         userService.saveUser(user);
     }
 
+    @CrossOrigin("http://localhost:3000")
     @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
     public HttpStatus removeUserFromDatabase(@PathVariable Integer id) {
         userService.removeUser(id);
