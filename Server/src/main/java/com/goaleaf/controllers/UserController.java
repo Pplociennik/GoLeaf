@@ -34,7 +34,6 @@ import static com.goaleaf.security.SecurityConstants.*;
 @RestController
 @RequestMapping("/api/users")
 @CrossOrigin(origins = "http://localhost:3000")
-@Component
 @PermitAll
 public class UserController {
 
