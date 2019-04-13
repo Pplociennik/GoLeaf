@@ -50,6 +50,7 @@ class NewHabit extends Component {
 
     })
     .then(res => {
+                  console.log(res)
                   this.props.history.push('/');
                  }
     ).catch(err => {

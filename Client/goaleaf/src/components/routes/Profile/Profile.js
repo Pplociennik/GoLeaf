@@ -20,7 +20,8 @@ class Profile extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        axios.put('/api/users/edit', {
+        axios.post('/api/users/edit', {
+            "token": localStorage.getItem("token"),
             "emailAddress": '',
             "id": this.state.id,
             "matchingNewPassword": this.state.matchingNewPassword,
@@ -28,10 +29,10 @@ class Profile extends Component {
             "oldPassword": this.state.oldPassword,
             "userName": ''
         })
-            .then(res => {
+        .then(res => {
                 this.setState({ errorMsg: 'Edit successful!' })
             }
-            ).catch(err => this.setState({ errorMsg: err.response.data.message }))
+            ).catch(err => this.setState({errorMsg: err.response.data.message}))
     }
 
     handleChange = e => {
