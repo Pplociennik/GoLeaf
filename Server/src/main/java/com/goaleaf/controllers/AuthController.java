@@ -62,6 +62,7 @@ public class AuthController {
         userDto.emailAddress = user.getEmailAddress();
         userDto.password = user.getPassword();
         userDto.userName = user.getUserName();
+        userDto.imageName = user.getImageName();
         return userDto;
 
     }

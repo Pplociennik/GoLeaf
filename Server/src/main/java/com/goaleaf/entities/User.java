@@ -28,18 +28,30 @@ public class User {
     @Column
     private String emailAddress;
 
+    @Column
+    private String imageName;
+
     @ManyToMany
     private Set<Role> roles;
 
     public User() {
     }
 
-    public User(Integer id, String userName, String login, String password, String emailAddress) {
+    public User(Integer id, String userName, String login, String password, String emailAddress, String imageName) {
         this.id = id;
         this.userName = userName;
         this.login = login;
         this.password = password;
         this.emailAddress = emailAddress;
+        this.imageName = imageName;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
     public Integer getId() {

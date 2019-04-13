@@ -2,6 +2,7 @@ package com.goaleaf.services;
 
 import com.goaleaf.entities.User;
 
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditImageViewModel;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditUserViewModel;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.BadCredentialsException;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.EmailExistsException;
@@ -31,6 +32,8 @@ public interface UserService {
     User findById(Integer id);
 
     void updateUser(EditUserViewModel model) throws BadCredentialsException;
+
+    void updateUserImage(EditImageViewModel model);
 
     User findByEmailAddress(String email);
 

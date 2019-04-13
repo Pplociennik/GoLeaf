@@ -1,6 +1,7 @@
 package com.goaleaf.services.servicesImpl;
 
 import com.goaleaf.entities.User;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditImageViewModel;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditUserViewModel;
 import com.goaleaf.repositories.RoleRepository;
 import com.goaleaf.services.UserService;
@@ -71,6 +72,7 @@ public class UserServiceImpl implements UserService {
         user.setUserName(register.userName);
         user.setPassword(register.password);
         user.setEmailAddress(register.emailAddress);
+        user.setImageName("def_goaleaf_avatar.png");
         return userRepository.save(user);
     }
 
@@ -91,6 +93,14 @@ public class UserServiceImpl implements UserService {
 
             userRepository.save(updatedUser);
         }
+    }
+
+    public void updateUserImage(EditImageViewModel model) {
+        User updatedUser = findById(model.id);
+
+        updatedUser.setImageName(model.imageName);
+
+        saveUser(updatedUser);
     }
 
     @Override

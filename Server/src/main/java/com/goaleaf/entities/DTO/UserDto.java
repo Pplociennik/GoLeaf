@@ -10,4 +10,6 @@ public class UserDto {
 
     public String emailAddress;
 
+    public String imageName;
+
 }

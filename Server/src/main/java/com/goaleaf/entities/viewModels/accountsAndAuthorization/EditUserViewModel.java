@@ -15,4 +15,6 @@ public class EditUserViewModel {
     public String newPassword;
 
     public String matchingNewPassword;
+
+    public String imageName;
 }
