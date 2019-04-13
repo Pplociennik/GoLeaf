@@ -75,7 +75,7 @@ public class UserController {
 //        return userService.getUserById(publicId);
 //    }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/edit")
+    @RequestMapping(method = RequestMethod.PUT, value = "/edit")
     public void updateUser(@RequestBody EditUserViewModel model) throws BadCredentialsException {
 
         if (!jwtService.Validate(model.token, SECRET))

@@ -20,7 +20,7 @@ class Profile extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        axios.post('/api/users/edit', {
+        axios.put('/api/users/edit', {
             "token": localStorage.getItem("token"),
             "emailAddress": '',
             "id": this.state.id,
