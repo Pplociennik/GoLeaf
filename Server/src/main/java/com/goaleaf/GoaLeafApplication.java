@@ -1,16 +1,15 @@
 package com.goaleaf;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.goaleaf.security.EmailSender;
+import com.goaleaf.security.uploadingFiles.FileStorageProperties;
+import com.goaleaf.services.MemberService;
+import com.goaleaf.services.servicesImpl.MemberServiceImpl;
 import com.goaleaf.validators.UserCredentialsValidator;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -19,20 +18,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 
 @EnableJpaRepositories("com.goaleaf.repositories")
 @EnableSwagger2
+@EnableConfigurationProperties({
+        FileStorageProperties.class
+})
 @SpringBootApplication
 public class GoaLeafApplication extends SpringBootServletInitializer {
     @Override
@@ -49,6 +47,11 @@ public class GoaLeafApplication extends SpringBootServletInitializer {
     @Bean
     public UserCredentialsValidator userCredentialsValidator() {
         return new UserCredentialsValidator();
+    }
+
+    @Bean
+    public MemberService memberService() {
+        return new MemberServiceImpl();
     }
 
     @Bean
@@ -72,7 +75,7 @@ public class GoaLeafApplication extends SpringBootServletInitializer {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST","DELETE","PUT","OPTIONS"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT", "OPTIONS"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

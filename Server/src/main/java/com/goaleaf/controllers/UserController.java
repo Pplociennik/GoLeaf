@@ -2,6 +2,7 @@ package com.goaleaf.controllers;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.goaleaf.entities.DTO.UserDto;
 import com.goaleaf.entities.User;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditUserViewModel;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.EmailViewModel;
@@ -134,6 +135,19 @@ public class UserController {
 
         user.setPassword(bCryptPasswordEncoder.encode(newPasswords.password));
         userService.saveUser(user);
+    }
+
+    @RequestMapping(value = "/user/{login}", method = RequestMethod.GET)
+    public UserDto getUserByLogin(String login) {
+        User user = userService.findByLogin(login);
+
+        UserDto userDto = new UserDto();
+        userDto.userID = user.getId();
+        userDto.emailAddress = user.getEmailAddress();
+        userDto.login = user.getLogin();
+        userDto.userName = user.getUserName();
+
+        return userDto;
     }
 
     @CrossOrigin("http://localhost:3000")

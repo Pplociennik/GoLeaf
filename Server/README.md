@@ -77,7 +77,7 @@ http://localhost:8080/api/habits/new-habit ->
           }    
         ],    
         "id": 0,    
-        "userID": 0    
+        "memberID": 0    
       }    
     ],    
     "startDate": "2019-04-10T19:27:25.279Z",    

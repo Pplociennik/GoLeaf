@@ -1,9 +1,7 @@
 package com.goaleaf.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -17,21 +15,28 @@ public class Member {
     @Column
     private Integer userID;
 
-    @ManyToMany
     @Column
-    private Set<Habit> habits;
+    private Integer habitID;
 
-    @OneToMany(mappedBy = "members")
-    @Column
-    private Set<LeafDate> doneDates;
+//    @Column
+//    @ManyToMany
+//    private Set<Habit> habits;
 
-    public Member(Integer userID, Set<Habit> habits, Set<LeafDate> doneDates) {
+//    @OneToMany(mappedBy = "members")
+//    @Column
+//    private Set<LeafDate> doneDates;
+
+    public Member(Integer userID /*, Set<LeafDate> doneDates*/) {
         this.userID = userID;
-        this.habits = habits;
-        this.doneDates = doneDates;
+//        this.doneDates = doneDates;
     }
 
     public Member() {
+    }
+
+    public Member(Integer userID, Integer habitID) {
+        this.userID = userID;
+        this.habitID = habitID;
     }
 
     public Integer getId() {
@@ -50,19 +55,23 @@ public class Member {
         this.userID = userID;
     }
 
-    public Set<Habit> getHabits() {
-        return habits;
+    public Integer getHabitID() {
+        return habitID;
     }
 
-    public void setHabits(Set<Habit> habits) {
-        this.habits = habits;
+    public void setHabitID(Integer habitID) {
+        this.habitID = habitID;
     }
 
-    public Set<LeafDate> getDoneDates() {
-        return doneDates;
-    }
-
-    public void setDoneDates(Set<LeafDate> doneDates) {
-        this.doneDates = doneDates;
-    }
+    //    public Set<LeafDate> getDoneDates() {
+//        return doneDates;
+//    }
+//
+//    public void setDoneDates(Set<LeafDate> doneDates) {
+//        this.doneDates = doneDates;
+//    }
+//
+//    public void addDate(Date date) {
+//        this.doneDates.add(new LeafDate(id, new Date()));
+//    }
 }

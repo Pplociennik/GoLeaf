@@ -29,19 +29,19 @@ public class Habit {
     @Column
     private Frequency frequency;
 
-    @Column
-    @OneToMany(mappedBy = "habits")
-    private Set<Member> members;
+//    @Column
+//    @OneToMany(mappedBy = "habits")
+//    private Set<Member> members;
 
     @Column
     private Boolean isPrivate;
 
-    public Habit(String habitTitle, Date habitStartDate, Category category, Frequency frequency, Set<Member> members, Boolean isPrivate) {
+    public Habit(String habitTitle, Date habitStartDate, Category category, Frequency frequency, Boolean isPrivate) {
         this.habitTitle = habitTitle;
         this.habitStartDate = habitStartDate;
         this.category = category;
         this.frequency = frequency;
-        this.members = members;
+//        this.members = members;
         this.isPrivate = isPrivate;
     }
 
@@ -88,13 +88,13 @@ public class Habit {
         this.frequency = frequency;
     }
 
-    public Set<Member> getMembers() {
-        return members;
-    }
-
-    public void setMembers(Set<Member> members) {
-        this.members = members;
-    }
+//    public Set<Member> getMembers() {
+//        return members;
+//    }
+//
+//    public void setMembers(Set<Member> members) {
+//        this.members = members;
+//    }
 
     public Boolean getPrivate() {
         return isPrivate;
@@ -103,4 +103,8 @@ public class Habit {
     public void setPrivate(Boolean aPrivate) {
         isPrivate = aPrivate;
     }
+
+//    public void addMember(Member newMember) {
+//        this.members.add(newMember);
+//    }
 }
