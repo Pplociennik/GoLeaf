@@ -15,10 +15,32 @@ class Profile extends Component {
         emailAddress: '',
         errorMsg: '',
         picture: null,
-        delete: false
+        picPreview: null,
+        
+        confirmDelete: false
     };
+    
+    handleChangeAvatar = e => {
+        e.preventDefault();
 
-    handleSubmit = e => {
+        const blob = new Blob([this.state.picture], {type: "image/png"});
+
+
+        const formData = new FormData();
+        formData.append('file', blob); 
+
+        axios.post(`/uploadImage?token=${localStorage.getItem("token")}`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then(res => {
+                this.setState({ errorMsg: 'Edit successful!' })
+            }
+            ).catch(err => this.setState({errorMsg: err.response.data.message}))
+    }
+
+    handlePasswordChange = e => {
         e.preventDefault();
         axios.put('/api/users/edit', {
             "token": localStorage.getItem("token"),
@@ -41,9 +63,11 @@ class Profile extends Component {
         })
     }
 
-    handlePicture = event => {
+    handlePicture = e => {
+        console.log(e.target)
         this.setState({
-            picture: URL.createObjectURL(event.target.files[0])
+            picPreview: URL.createObjectURL(e.target.files[0]),
+            picture: e.target.files[0]
         })
     }
 
@@ -56,7 +80,6 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.userLogged)
         axios.get(`/api/users/user/${this.props.userLogged}`)
             .then(res => {
                 console.log(res.data)
@@ -68,10 +91,24 @@ class Profile extends Component {
                 })
             }
             ).catch(err => this.setState({ errorMsg: err.response.data.message }))
+
+        axios.get(`/downloadFile/${this.props.userLogged}`, { responseType: 'arraybuffer' })
+        .then(res => {
+            const base64 = btoa(
+              new Uint8Array(res.data).reduce(
+                (data, byte) => data + String.fromCharCode(byte),
+                '',
+              ),
+            );
+            this.setState({ picture: res.data, picPreview: "data:;base64," + base64 });
+          })
+            
+            .catch(err => this.setState({ errorMsg: err.response.data.message })) 
     }
 
 
     render() {
+        console.log(this.state)
         let deleteAccount = ''
         if (this.state.delete === true) {
             deleteAccount =  <div>
@@ -81,34 +118,26 @@ class Profile extends Component {
         }
         let errorMsg = <div>{this.state.errorMsg}</div>
         return (
-            <div>
-                <section>
-                    <h1> Login: {this.state.login} </h1>
-                    <h1> Email: {this.state.emailAddress} </h1>
+            <div className="Profile">
+                <section className="profile-info">
+                    <h1>{this.state.login} </h1>
+                    <h1>{this.state.emailAddress} </h1>
                 </section>
-                <section>
-                    <form onSubmit={this.handleSubmit} autoComplete="off">
-                        <div>
-                            <h1> Avatar: </h1>
-                            <input type="file" onChange={this.handlePicture} />
-                            <img src={this.state.picture} />
-                            <input type="submit" value="Change picture" />
-                        </div>
-                        <div>
-                            <h1> Password: </h1>
-                            <input className="InputField" type="password" id="oldPassword" placeholder="old password" onChange={this.handleChange} />
-                            <input className="InputField" type="password" id="newPassword" placeholder="password" onChange={this.handleChange} />
-                            <input className="InputField" type="password" id="matchingNewPassword" placeholder="repeat password" onChange={this.handleChange} />
-                            <div>
-                                <input type="submit" value="Change password" />
-                                {errorMsg}
-                            </div>
-                        </div>
-
+                <section className="profile-photo">
+                    <img src={this.state.picPreview} alt="user avatar"/>
+                    <input type="file" accept="image/x-png,image/gif,image/jpeg" onChange={this.handlePicture} />
+                    <input type="button" value="Change avatar" onClick={ this.handleChangeAvatar } />
+                </section>
+                <section className="new-password">
+                    <form onSubmit={this.handlePasswordChange} autoComplete="off">
+                            <h2>Change password</h2>
+                            <input className="password-input" type="password" id="oldPassword" placeholder="old password" onChange={this.handleChange} />
+                            <input className="password-input" type="password" id="newPassword" placeholder="new password" onChange={this.handleChange} />
+                            <input className="password-input" type="password" id="matchingNewPassword" placeholder="repeat new password" onChange={this.handleChange} />
+                            <input type="submit" value="Change password" />
+                            {errorMsg}
                     </form>
-                    <input type="button" value="Delete account" onClick={e => this.setState({
-                        delete: true
-                    })}/>
+                    <input type="button" value="Delete account" onClick={e => this.setState({confirmDelete: true })}/>
                     {deleteAccount}
 
                 </section>
