@@ -2,6 +2,8 @@ package com.goaleaf;
 
 
 import com.goaleaf.security.uploadingFiles.FileStorageProperties;
+import com.goaleaf.services.MemberService;
+import com.goaleaf.services.servicesImpl.MemberServiceImpl;
 import com.goaleaf.validators.UserCredentialsValidator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -45,6 +47,11 @@ public class GoaLeafApplication extends SpringBootServletInitializer {
     @Bean
     public UserCredentialsValidator userCredentialsValidator() {
         return new UserCredentialsValidator();
+    }
+
+    @Bean
+    public MemberService memberService() {
+        return new MemberServiceImpl();
     }
 
     @Bean

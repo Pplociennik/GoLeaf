@@ -3,19 +3,30 @@ package com.goaleaf.controllers;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.goaleaf.entities.DTO.HabitDTO;
 import com.goaleaf.entities.Habit;
+import com.goaleaf.entities.Member;
+import com.goaleaf.entities.User;
+import com.goaleaf.entities.viewModels.habitsCreating.AddMemberViewModel;
 import com.goaleaf.entities.viewModels.habitsCreating.HabitViewModel;
 import com.goaleaf.services.HabitService;
 import com.goaleaf.services.JwtService;
+import com.goaleaf.services.MemberService;
+import com.goaleaf.services.UserService;
 import com.goaleaf.validators.HabitTitleValidator;
-import com.goaleaf.validators.exceptions.habitsCreating.NoCategoryException;
-import com.goaleaf.validators.exceptions.habitsCreating.NoFrequencyException;
-import com.goaleaf.validators.exceptions.habitsCreating.NoPrivacyException;
-import com.goaleaf.validators.exceptions.habitsCreating.WrongTitleException;
+import com.goaleaf.validators.exceptions.accountsAndAuthorization.AccountNotExistsException;
+import com.goaleaf.validators.exceptions.habitsCreating.*;
+import com.goaleaf.validators.exceptions.habitsProcessing.HabitNotExistsException;
+import com.goaleaf.validators.exceptions.habitsProcessing.UserAlreadyInHabitException;
+import com.goaleaf.validators.exceptions.habitsProcessing.UserNotInHabitException;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
+
+import java.nio.charset.StandardCharsets;
 
 import static com.goaleaf.security.SecurityConstants.*;
 
@@ -29,6 +40,10 @@ public class HabitController {
     private HabitService habitService;
     @Autowired
     private JwtService jwtService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private MemberService memberService;
 
     private HabitTitleValidator habitTitleValidator = new HabitTitleValidator();
 
@@ -47,6 +62,10 @@ public class HabitController {
         if (!jwtService.Validate(model.token, SECRET))
             throw new TokenExpiredException("You have to be logged in to create a habit!");
 
+        Claims claims = Jwts.parser()
+                .setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8))
+                .parseClaimsJws(model.token).getBody();
+
         HabitDTO habitDTO = new HabitDTO();
         habitDTO.category = model.category;
         habitDTO.frequency = model.frequency;
@@ -55,7 +74,7 @@ public class HabitController {
         habitDTO.isPrivate = model.isPrivate;
         habitDTO.title = model.title;
 
-        habitService.registerNewHabit(model);
+        habitService.registerNewHabit(model, Integer.parseInt(claims.getSubject()));
 
         return habitDTO;
     }
@@ -65,6 +84,45 @@ public class HabitController {
     public Iterable<Habit> list(/*String token*/) {
 
         return habitService.listAllHabits();
+    }
+
+    @RequestMapping(value = "/addmember", method = RequestMethod.POST)
+    public HttpStatus addMemberByLogin(@RequestBody AddMemberViewModel model) throws AccountNotExistsException {
+        Claims claims = Jwts.parser()
+                .setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8))
+                .parseClaimsJws(model.token).getBody();
+
+        if (!jwtService.Validate(model.token, SECRET)) {
+            throw new TokenExpiredException("You have to be logged in to invite users!");
+        }
+        if (!memberService.checkIfExist(new Member(Integer.parseInt(claims.getSubject()), model.habitID)))
+            throw new UserNotInHabitException("You are only allowed to invite users to habits you are involved in!");
+
+
+        if (habitService.findById(model.habitID) == null)
+            throw new HabitNotExistsException("Habit with this id does not exist!");
+        if (userService.findByLogin(model.userLogin) == null)
+            throw new AccountNotExistsException("User with this login does not exist!");
+
+        User searchingUser = userService.findByLogin(model.userLogin);
+
+        Member newMember = new Member();
+        newMember.setUserID(searchingUser.getId());
+        newMember.setHabitID(model.habitID);
+
+        if (memberService.checkIfExist(newMember))
+            throw new UserAlreadyInHabitException("User already participate!");
+
+        memberService.saveMember(newMember);
+        return HttpStatus.OK;
+    }
+
+    @RequestMapping(value = "/habit/members", method = RequestMethod.GET)
+    public Iterable<Member> getAllHabitMembers(Integer habitID) {
+        if (!habitService.checkIfExists(habitID))
+            throw new HabitNotExistsException("Habit does not exist!");
+
+        return memberService.getAllByHabitID(habitID);
     }
 
 }

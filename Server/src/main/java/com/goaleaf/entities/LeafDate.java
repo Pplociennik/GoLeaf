@@ -1,7 +1,5 @@
 package com.goaleaf.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
@@ -15,23 +13,19 @@ public class LeafDate {
     private Integer id;
 
     @Column
-    private Integer userID;
-
-    @Column
-    private Integer habitID;
+    private Integer memberID;
 
     @Column
     private Date dateValue;
 
-    @Column
-    @ManyToMany
-    private Set<Member> members;
+//    @Column
+//    @ManyToMany
+//    private Set<Member> members;
 
-    public LeafDate(Integer userID, Integer habitID, Date dateValue, Set<Member> members) {
-        this.userID = userID;
-        this.habitID = habitID;
+    public LeafDate(Integer memberID, Date dateValue/*, Set<Member> members*/) {
+        this.memberID = memberID;
         this.dateValue = dateValue;
-        this.members = members;
+//        this.members = members;
     }
 
     public LeafDate() {

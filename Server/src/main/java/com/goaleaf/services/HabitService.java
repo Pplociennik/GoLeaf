@@ -10,7 +10,7 @@ public interface HabitService {
 
     Iterable<Habit> listAllHabits();
 
-    Iterable<Habit> listAllUsersHabits(Integer userID);
+//    Iterable<Habit> listAllUsersHabits(Integer userID);
 
     Habit getHabitById(Integer id);
 
@@ -22,7 +22,7 @@ public interface HabitService {
 
     Iterable<Habit> listAllHabitsPaging(Integer pageNr, Integer howManyOnPage);
 
-    Habit registerNewHabit(HabitViewModel model) throws WrongTitleException;
+    Habit registerNewHabit(HabitViewModel model, Integer id) throws WrongTitleException;
 
     Habit findByTitle(String title);
 
