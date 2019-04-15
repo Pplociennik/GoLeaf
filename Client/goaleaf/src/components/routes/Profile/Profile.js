@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import './Profile.scss'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import axios from 'axios'
@@ -23,9 +24,9 @@ class Profile extends Component {
     handleChangeAvatar = e => {
         e.preventDefault();
 
-        const blob = new Blob([this.state.picture], {type: "image/png"});
+        if (e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)){
 
-
+        const blob = new Blob([e.target.files[0]], {type: "image/png"});
         const formData = new FormData();
         formData.append('file', blob); 
 
@@ -35,9 +36,21 @@ class Profile extends Component {
             }
         })
         .then(res => {
-                this.setState({ errorMsg: 'Edit successful!' })
+            axios.get(`/downloadFile/${this.props.userLogged}`, { responseType: 'arraybuffer' })
+            .then(res => {
+                const base64 = btoa(
+                  new Uint8Array(res.data).reduce(
+                    (data, byte) => data + String.fromCharCode(byte),
+                    '',
+                  ),
+                );
+                this.setState({ picture: res.data, picPreview: "data:;base64," + base64 });
+              })
+                
+                .catch(err => {}) 
             }
-            ).catch(err => this.setState({errorMsg: err.response.data.message}))
+            ).catch(err => {})
+        }
     }
 
     handlePasswordChange = e => {
@@ -60,14 +73,6 @@ class Profile extends Component {
     handleChange = e => {
         this.setState({
             [e.target.id]: e.target.value
-        })
-    }
-
-    handlePicture = e => {
-        console.log(e.target)
-        this.setState({
-            picPreview: URL.createObjectURL(e.target.files[0]),
-            picture: e.target.files[0]
         })
     }
 
@@ -108,38 +113,39 @@ class Profile extends Component {
 
 
     render() {
-        console.log(this.state)
         let deleteAccount = ''
-        if (this.state.delete === true) {
-            deleteAccount =  <div>
-                <span>Are you sure you want to delete account?</span>
+        if (this.state.confirmDelete === true) {
+
+            deleteAccount =  <div className="confirm-delete-profile">
+                <span>Are you sure you want to delete your account?</span>
                 <input type="button" value="Delete my account" onClick={this.handleDelete}></input>
             </div>
         }
-        let errorMsg = <div>{this.state.errorMsg}</div>
+        let errorMsg = <div className="errorMsg">{this.state.errorMsg}</div>
         return (
             <div className="Profile">
-                <section className="profile-info">
-                    <h1>{this.state.login} </h1>
-                    <h1>{this.state.emailAddress} </h1>
-                </section>
                 <section className="profile-photo">
                     <img src={this.state.picPreview} alt="user avatar"/>
-                    <input type="file" accept="image/x-png,image/gif,image/jpeg" onChange={this.handlePicture} />
-                    <input type="button" value="Change avatar" onClick={ this.handleChangeAvatar } />
+                    <input type="file" accept="image/x-png,image/gif,image/jpeg" onChange={this.handleChangeAvatar} ref="uploadPhoto" style={{display: "none"}} />
+                    <input className="upload-photo-btn" type="button" value="change photo" onClick={() => this.refs.uploadPhoto.click()}  />
                 </section>
-                <section className="new-password">
+                <section className="profile-info">
+                    <h1>{this.state.login} </h1>
+                    <h2>{this.state.emailAddress} </h2>
+                </section>
+                <section className="change-password">
                     <form onSubmit={this.handlePasswordChange} autoComplete="off">
                             <h2>Change password</h2>
                             <input className="password-input" type="password" id="oldPassword" placeholder="old password" onChange={this.handleChange} />
                             <input className="password-input" type="password" id="newPassword" placeholder="new password" onChange={this.handleChange} />
                             <input className="password-input" type="password" id="matchingNewPassword" placeholder="repeat new password" onChange={this.handleChange} />
-                            <input type="submit" value="Change password" />
+                            <input className="change-password-btn" type="submit" value="submit" />
                             {errorMsg}
                     </form>
-                    <input type="button" value="Delete account" onClick={e => this.setState({confirmDelete: true })}/>
+                </section>
+                <section className="delete-profile">
+                    <input className="delete-profile-btn" type="button" value="Delete account" onClick={e => this.setState({confirmDelete: true })}/>
                     {deleteAccount}
-
                 </section>
             </div>
         )
