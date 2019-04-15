@@ -18,8 +18,8 @@ Log in / Sign in
 
 Profile
 
-![Profile page](https://ibb.co/stZ2dXb)
+![Profile page](https://i.ibb.co/pnSxBkb/Untitled1.png)
 
 Profile
 
-![New Habit](https://ibb.co/T0DrNHV)
+![New Habit](https://i.ibb.co/JpWCSzf/Untitled.png)
