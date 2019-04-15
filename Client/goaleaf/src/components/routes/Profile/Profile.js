@@ -78,10 +78,8 @@ class Profile extends Component {
 
     handleDelete = event => {
         axios.delete(`/api/users/user/${this.props.userLogged}`)
-            .then(res => {
-                console.log(res.data)
-            }
-            ).catch(err => this.setState({ errorMsg: err.response.data.message }))
+            .then(res => window.location.reload()
+            ).catch(err => {})
     }
 
     componentDidMount() {
@@ -125,9 +123,8 @@ class Profile extends Component {
         return (
             <div className="Profile">
                 <section className="profile-photo">
-                    <img src={this.state.picPreview} alt="user avatar"/>
+                    <img src={this.state.picPreview} alt="user avatar" title="Change avatar" onClick={() => this.refs.uploadPhoto.click()}/>
                     <input type="file" accept="image/x-png,image/gif,image/jpeg" onChange={this.handleChangeAvatar} ref="uploadPhoto" style={{display: "none"}} />
-                    <input className="upload-photo-btn" type="button" value="change photo" onClick={() => this.refs.uploadPhoto.click()}  />
                 </section>
                 <section className="profile-info">
                     <h1>{this.state.login} </h1>
