@@ -1,7 +1,8 @@
 const initState = {
     authenticated: false,
     userLogged: null,
-    users: []
+    users: [],
+    habits: []
 }
 
 const rootReducer = (state = initState, action) => {
@@ -35,6 +36,13 @@ const rootReducer = (state = initState, action) => {
             return {
                 ...state,
                 users: action.payload
+              }
+    }
+
+    if(action.type === 'GET_HABITS'){
+            return {
+                ...state,
+                habits: action.payload
               }
     }
     return state;

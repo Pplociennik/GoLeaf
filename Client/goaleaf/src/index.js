@@ -3,23 +3,36 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from "redux-thunk";
 import { Provider } from 'react-redux';
 import rootReducer from './reducers/rootReducer';
 import axios from 'axios';
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const token = localStorage.getItem('token');
 
-
-// GET USER REQUEST
+// GET USERS
+export function fetchUsers() {
 axios.get(`/api/users/all`)
-.then(res => {
-  store.dispatch({ type: 'GET_USERS', payload: res.data}); 
-} 
-).catch(err => console.log(err))
+      .then(res => {
+      store.dispatch({ type: 'GET_USERS', payload: res.data});
+     } 
+      ).catch(err => console.log(err))
+    }
 
+// GET HABITS
+export function fetchHabits(){
+ return function(dispatch){ 
+    axios.get(`/api/habits/all`)
+        .then(res => {
+          dispatch({ type: 'GET_HABITS', payload: res.data});
+          renderApp(); 
+        } 
+      ).catch(err => console.log(err))
+      }
+    };
 
 axios.post('/validatetoken', {
   "Token": token
@@ -32,10 +45,11 @@ axios.post('/validatetoken', {
             renderApp();
 })
 
-
 const renderApp = () => {
   ReactDOM.render(<Provider store={ store }><App /></Provider>, document.getElementById('root'));
 }
 
 serviceWorker.unregister();
+
+export default store;
 

@@ -50,8 +50,9 @@ class NewHabit extends Component {
 
     })
     .then(res => {
-                  console.log(res)
+                  console.log(res);
                   this.props.history.push('/');
+                  window.location.reload();
                  }
     ).catch(err => {
                     this.setState({errorMsg: err.response.data.message});

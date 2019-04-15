@@ -3,9 +3,14 @@ import './App.scss';
 import Navbar from './components/containers/Navbar/Navbar';
 import Main from './components/containers/Main/Main';
 import { BrowserRouter } from 'react-router-dom';
+import {fetchHabits} from './index';
+import store from './index'
 
 class App extends Component {
 
+  componentWillMount() {
+    store.dispatch(fetchHabits());
+  }
   render() {
     return (
       <BrowserRouter>
@@ -17,6 +22,5 @@ class App extends Component {
     );
   }
 }
-
 
 export default App;

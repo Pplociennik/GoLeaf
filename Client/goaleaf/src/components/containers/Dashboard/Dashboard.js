@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
 import './Dashboard.scss'
 import { connect } from 'react-redux'
+import BrowseHabits from './../BrowseHabits/BrowseHabits'
 
 class Dashboard extends Component {
   render() {
-    let user = <div>user not logged</div>
-    if(this.props.authenticated) {
-      user = <div>user logged!</div>
-    }
+
     return (
       <div className="Dashboard">
-        { user }
+        <BrowseHabits />
       </div>
     )
   }
