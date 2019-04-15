@@ -36,6 +36,9 @@ public class Habit {
     @Column
     private Boolean isPrivate;
 
+    @Column
+    private Integer creatorID;
+
     public Habit(String habitTitle, Date habitStartDate, Category category, Frequency frequency, Boolean isPrivate) {
         this.habitTitle = habitTitle;
         this.habitStartDate = habitStartDate;
@@ -107,4 +110,13 @@ public class Habit {
 //    public void addMember(Member newMember) {
 //        this.members.add(newMember);
 //    }
+
+
+    public Integer getCreatorID() {
+        return creatorID;
+    }
+
+    public void setCreatorID(Integer creatorID) {
+        this.creatorID = creatorID;
+    }
 }

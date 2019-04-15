@@ -19,4 +19,6 @@ public class HabitDTO {
     public Frequency frequency;
 
     public Date startDate;
+
+    public Integer creatorID;
 }

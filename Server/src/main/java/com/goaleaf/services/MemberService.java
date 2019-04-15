@@ -16,4 +16,6 @@ public interface MemberService {
     Iterable<Member> getAllByHabitID(Integer habitID);
 
     Iterable<Member> getAll();
+
+    Integer countAllHabitMembers(Integer habitID);
 }

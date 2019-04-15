@@ -73,6 +73,7 @@ public class HabitController {
         habitDTO.startDate = model.startDate;
         habitDTO.isPrivate = model.isPrivate;
         habitDTO.title = model.title;
+        habitDTO.creatorID = Integer.parseInt(claims.getSubject());
 
         habitService.registerNewHabit(model, Integer.parseInt(claims.getSubject()));
 
@@ -123,6 +124,14 @@ public class HabitController {
             throw new HabitNotExistsException("Habit does not exist!");
 
         return memberService.getAllByHabitID(habitID);
+    }
+
+    @RequestMapping(value = "/habit/countmembers", method = RequestMethod.GET)
+    public Integer countAllHabitMembers(Integer habitID) {
+        if (habitService.findById(habitID) == null)
+            throw new HabitNotExistsException("Habit with given id does not exist!");
+
+        return memberService.countAllHabitMembers(habitID);
     }
 
 }
