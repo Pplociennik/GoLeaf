@@ -14,4 +14,6 @@ public interface MemberRepository extends CrudRepository<Member, Integer> {
     Iterable<Habit> findAllByUserID(Integer userID);
 
     Boolean existsByHabitIDAndAndUserID(Integer habitID, Integer userID);
+
+    Integer countAllByHabitID(Integer habitID);
 }

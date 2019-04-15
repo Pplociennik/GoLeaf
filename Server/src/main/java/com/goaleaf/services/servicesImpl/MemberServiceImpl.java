@@ -34,5 +34,10 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findAll();
     }
 
+    @Override
+    public Integer countAllHabitMembers(Integer habitID) {
+        return memberRepository.countAllByHabitID(habitID);
+    }
+
 
 }
