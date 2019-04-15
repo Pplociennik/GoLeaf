@@ -16,10 +16,6 @@ Log in / Sign in
 
 ![Login View](https://i.ibb.co/q7NJwbY/goaleaf-login.png)
 
-Profile
+Profile Page
 
-![Profile page](https://i.ibb.co/pnSxBkb/Untitled1.png)
-
-Profile
-
-![New Habit](https://i.ibb.co/JpWCSzf/Untitled.png)
+New Habit
