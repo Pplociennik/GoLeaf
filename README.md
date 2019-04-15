@@ -15,3 +15,11 @@ npm start
 Log in / Sign in
 
 ![Login View](https://i.ibb.co/q7NJwbY/goaleaf-login.png)
+
+Profile
+
+![Profile page](https://ibb.co/stZ2dXb)
+
+Profile
+
+![New Habit](https://ibb.co/T0DrNHV)
