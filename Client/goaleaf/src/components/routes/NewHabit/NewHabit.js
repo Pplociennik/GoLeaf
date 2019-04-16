@@ -19,36 +19,22 @@ class NewHabit extends Component {
     e.preventDefault();
     console.log(this.state);
     axios.post('/api/habits/new-habit', {
-        "category": "NONE",
-        "frequency": "Daily",
-        "isPrivate": this.state.private,
-        "members": [
-          {
-            "doneDates": [
-              {}
-            ],
-            "habits": [
-              {
-                "category": "NONE",
-                "frequency": "Daily",
-                "habitStartDate": "",
-                "habitTitle": "string",
-                "id": 0,
-                "members": [
-                  {}
-                ],
-                "private": true
-              }
-            ],
-            "id": 0,
-            "userID": this.props.userLogged
-          }
-        ],
-        "startDate": "",
-        "title": this.state.title,
-        "token": localStorage.getItem('token')
 
-    })
+          "category": this.state.category,
+          "frequency": "Daily",
+          "isPrivate": this.state.private,
+          "members": [
+            {
+              "habitID": 0,
+              "id": 0,
+              "userID": this.props.userLogged
+            }
+          ],
+          "startDate": "2019-04-15T19:31:01.645Z",
+          "title": this.state.title,
+          "token": localStorage.getItem('token')
+        }
+    )
     .then(res => {
                   console.log(res);
                   this.props.history.push('/');

@@ -2,6 +2,12 @@
 
 .Dashboard {
     background-color: $primary-color;
-    width: 100%;
+    max-width: 100%;
     min-height: calc(100vh - #{$navbar-height});
+    margin: 0 auto; 
+    overflow-x: hidden;
+
+    @include md {
+        width: 80%;
+    }
 }

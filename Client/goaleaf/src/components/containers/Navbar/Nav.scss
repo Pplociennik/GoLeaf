@@ -1,7 +1,7 @@
 @import './../../../global-styles.scss';
 
 .NavNotLogged, .NavLogged {
-    height: 100%;
+    height: calc(100vh - #{$navbar-height});
     width: 100vw;
     background-color: $primary-color;
     margin: 0;
@@ -27,6 +27,7 @@
     font-size: 2em;
     }
     @include md {
+        height: 100%;
         width: auto;
         position: static;
         flex-direction: row;

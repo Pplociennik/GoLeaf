@@ -8,6 +8,10 @@
     justify-content: space-between;
     align-items: center;
     font-weight: 300;
+    z-index: 4;
+    position: sticky;
+    top: 0;
+    left: 0;
 
     .LogoMobile {
         margin: 0 0 0 1em;
