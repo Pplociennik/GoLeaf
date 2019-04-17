@@ -119,23 +119,23 @@ class Profile extends Component {
                 <input type="button" value="Delete my account" onClick={this.handleDelete}></input>
             </div>
         }
-        let errorMsg = <div className="errorMsg">{this.state.errorMsg}</div>
+        let errorMsg = <div className="error-msg">{this.state.errorMsg}</div>
         return (
-            <div className="Profile">
+            <div className="profile">
                 <section className="profile-photo">
-                    <img src={this.state.picPreview} alt="user avatar" title="Change avatar" onClick={() => this.refs.uploadPhoto.click()}/>
-                    <input type="file" accept="image/x-png,image/gif,image/jpeg" onChange={this.handleChangeAvatar} ref="uploadPhoto" style={{display: "none"}} />
+                    <img className="profile-img" src={this.state.picPreview} alt="user avatar" title="Change avatar" onClick={() => this.refs.uploadPhoto.click()}/>
+                    <input className="profile-img-input" type="file" accept="image/x-png,image/gif,image/jpeg" onChange={this.handleChangeAvatar} ref="uploadPhoto" style={{display: "none"}} />
                 </section>
                 <section className="profile-info">
-                    <h1>{this.state.login} </h1>
-                    <h2>{this.state.emailAddress} </h2>
+                    <h1 className="profile-info-login">{this.state.login} </h1>
+                    <h2 className="profile-info-email">{this.state.emailAddress} </h2>
                 </section>
                 <section className="change-password">
-                    <form onSubmit={this.handlePasswordChange} autoComplete="off">
-                            <h2>Change password</h2>
-                            <input className="password-input" type="password" id="oldPassword" placeholder="old password" onChange={this.handleChange} />
-                            <input className="password-input" type="password" id="newPassword" placeholder="new password" onChange={this.handleChange} />
-                            <input className="password-input" type="password" id="matchingNewPassword" placeholder="repeat new password" onChange={this.handleChange} />
+                    <form className="change-password-form" onSubmit={this.handlePasswordChange} autoComplete="off">
+                            <h2 className="change-password-title">Change password</h2>
+                            <input className="password-input" type="password" placeholder="old password" onChange={this.handleChange} />
+                            <input className="password-input" type="password" placeholder="new password" onChange={this.handleChange} />
+                            <input className="password-input" type="password" placeholder="repeat new password" onChange={this.handleChange} />
                             <input className="change-password-btn" type="submit" value="submit" />
                             {errorMsg}
                     </form>

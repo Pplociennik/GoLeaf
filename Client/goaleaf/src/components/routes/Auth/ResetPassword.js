@@ -36,28 +36,28 @@ class ResetPassword extends Component {
   }
 
   render() {
-    let errorMsg = <div className="ErrorMsg">{ this.state.errorMsg }</div>
+    let errorMsg = <div className="error-msg">{ this.state.errorMsg }</div>
       if (this.state.errorMsg === 'Please check your email') {
-        errorMsg = <div className="SuccessMsg">{ this.state.errorMsg}</div>
+        errorMsg = <div className="success-msg">{ this.state.errorMsg}</div>
       }
       if (this.state.errorMsg === 'waiting') {
-        errorMsg = <div className="WaitingMsg"></div>
+        errorMsg = <div className="waiting-msg"></div>
       }
 
       if (!localStorage.getItem('token')){    
       return (
-      <div className="ResetPassword">
-      <form onSubmit={ this.handleSubmit } autoComplete="off">
-        <h1> Reset password </h1>
-          <input className="InputField" type="email" id="email" placeholder="email" onChange={ this.handleChange } />
+      <div className="auth-container">
+      <form className="auth-form" onSubmit={ this.handleSubmit } autoComplete="off">
+        <h1 className="auth-title"> Reset password </h1>
+          <input className="auth-input" type="email" id="email" placeholder="email" onChange={ this.handleChange } />
         { errorMsg }
-          <div className="Buttons">
-            <input type="submit" value="Submit" />
-            <Link to='/login'><input type="button" value="Log in" /></Link>
+          <div className="auth-buttons">
+            <input className="auth-btn" type="submit" value="Submit" />
+            <Link to='/login'><input className="auth-btn" type="button" value="Log in" /></Link>
           </div>
       </form>
-      <img className="LogoBg1"src={LogoBg} alt="logo"></img>
-      <img className="LogoBg2" src={LogoBg} alt="logo"></img>
+      <img className="bg-leaf-1" src={LogoBg} alt=""></img>
+      <img className="bg-leaf-2" src={LogoBg} alt=""></img>
       </div>
     )} else {
       return <Redirect  to='/'/>

@@ -38,24 +38,24 @@ class LogIn extends Component {
     ).catch(err => this.setState({errorMsg: err.response.data.message}))
   }
   render() {
-      let errorMsg = <div className="ErrorMsg">{ this.state.errorMsg }</div>
+      let errorMsg = <div className="error-msg">{ this.state.errorMsg }</div>
 
       if (!localStorage.getItem('token')){
     return (
-      <div className="LogIn">
-      <form onSubmit={ this.handleSubmit } autoComplete="off">
-        <h1> Log In </h1> 
-          <input className="InputField" type="text" id="login" placeholder="login" onChange={ this.handleChange } />
-          <input className="InputField" type="password" id="password" placeholder="password" onChange={ this.handleChange } />
+      <div className="auth-container">
+      <form className="auth-form" onSubmit={ this.handleSubmit } autoComplete="off">
+        <h1 className="auth-title" > Log In </h1> 
+          <input className="auth-input" type="text" id="login" placeholder="login" onChange={ this.handleChange } />
+          <input className="auth-input" type="password" id="password" placeholder="password" onChange={ this.handleChange } />
         { errorMsg }
-          <div className="Buttons">
-            <input type="submit" value="Log in" />
-            <Link to='/signin'><input type="button" value="Sign in" /></Link>
+          <div className="auth-buttons">
+            <input className="auth-btn" type="submit" value="Log in" />
+            <Link to='/signin'><input className="auth-btn" type="button" value="Sign in" /></Link>
           </div>
-          <Link to='/reset-password' className="ForgotPassword">Forgot password?</Link>
+          <Link to='/reset-password' className="forgot-password">Forgot password?</Link>
       </form>
-      <img className="LogoBg1"src={LogoBg} alt="logo"></img>
-      <img className="LogoBg2" src={LogoBg} alt="logo"></img>
+      <img className="bg-leaf-1"src={LogoBg} alt="logo"></img>
+      <img className="bg-leaf-2" src={LogoBg} alt="logo"></img>
       </div>
     )} else {
       return <Redirect  to='/'/>

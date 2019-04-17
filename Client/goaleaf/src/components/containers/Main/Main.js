@@ -13,12 +13,11 @@ import NewHabit from './../../routes/NewHabit/NewHabit'
 import Profile from './../../routes/Profile/Profile'
 
 
-
 class Main extends Component {
   render(){
 
   return (
-    <main className="Main">
+    <main className="main">
         <Switch>
             <Route exact path='/' component={Dashboard}/>
 

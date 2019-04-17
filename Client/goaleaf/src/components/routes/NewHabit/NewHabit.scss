@@ -1,12 +1,12 @@
 @import './../../../global-styles.scss';
 
-.NewHabit {
+.new-habit {
     min-height: calc(100vh - #{$navbar-height});
     max-width: 100%;
     display: flex;
     justify-content: center;
 
-    form {
+    .new-habit-form {
         width: 86%;
         border-radius: 8px;
         z-index: 2;
@@ -15,13 +15,13 @@
         justify-content: space-evenly;
         
         
-        h1 {
+        .new-habit-title {
+            color: $secondary-color;
             margin: 0.4em 0;
             font-size: 2.2em;
             letter-spacing: 1px;
-            color: $secondary-color;
         }
-        .TitleInput {
+        .new-habit-title-input {
             background-color: $primary-color;
             height: 46px;
             font-family: 'Nunito', sans-serif;          
@@ -35,19 +35,19 @@
             border-bottom: 2px solid $secondary-color;
             outline: 0;
         }
-        h2 {
+        .new-habit-extra-info {
             color: lighten($text-color, 50%);
             font-size: 0.8em;
             font-weight: 300;
             margin: 0 0 1em 1em;
         }
 
-        .Categories {
+        .new-habit-categories {
             display: flex;
             flex-wrap: wrap;
             margin-bottom: 1em;
 
-            .category {
+            .new-habit-category {
                 width: 90px;
                 height: 34px;
                 color: $text-color;
@@ -62,7 +62,7 @@
                 outline: 0; 
             }
             
-            input:hover {
+            .new-habit-category:hover {
                 box-shadow: 2px 2px 10px 0px rgba(51,51,51,0.3);                
             }
             .none {
@@ -92,46 +92,46 @@
             .family {
                 border: 2px solid $family-color;
             }
-            .noneChosen {
+            .none-chosen {
                 background-color: $none-color;
                 color: #fff;
             }
-            .healthChosen {
+            .health-chosen {
                 background-color: $health-color;
                 color: #fff;
             }
-            .dietChosen {
+            .diet-chosen {
                 background-color: $diet-color;
                 color: #fff;
             }
-            .studyChosen {
+            .study-chosen {
                 background-color: $study-color;
                 color: #fff;
             }
-            .workChosen {
+            .work-chosen {
                 background-color: $work-color;
                 color: #fff;
             }
-            .sportChosen {
+            .sport-chosen {
                 background-color: $sport-color;
                 color: #fff;
             }
-            .socialChosen {
+            .social-chosen {
                 background-color: $social-color;
                 color: #fff;
             }
-            .moneyChosen {
+            .money-chosen {
                 background-color: $money-color;
                 color: #fff;
             }
-            .familyChosen {
+            .family-chosen {
                 background-color: $family-color;
                 color: #fff;
             }
         }
-        .Privacy {
+        .privacy-con {
             margin-bottom: 1em;
-            input {
+            .privacy-btn {
                 height: 26px;
                 width: 84px;
                 background-color: $primary-color;
@@ -145,11 +145,11 @@
                 outline: 0;
                 cursor: pointer;
             }
-            .privacyChosen {
+            .privacy-chosen {
                 background-color: #dae1e7;
             }
         }
-        .submit {
+        .new-habit-submit-btn {
             align-self: center;
             background-color: $secondary-color;
             height: 58px;
@@ -165,10 +165,10 @@
             outline: 0;
             cursor: pointer;
         }
-        .submit:hover {
+        .new-habit-submit-btn:hover {
             box-shadow: 2px 2px 10px 0px rgba(51,51,51,0.3);                
         }
-        .ErrorMsg {
+        .error-msg {
             align-self: center;
             color: $error-color;
             margin-top: 0.4em;
@@ -179,42 +179,42 @@
     @include md {
         justify-content: flex-start;
 
-        form {
+        .new-habit-form {
             width: 700px;
             margin: 30px auto;
             padding: 0 40px;
             box-shadow: 2px 2px 10px 0px rgba(51,51,51,0.2);
             border-radius: 8px;
 
-            h1 {
+            .new-habit-title {
 
             }
-            .TitleInput {
+            .new-habit-title-input {
                 height: 60px;
                 font-size: 2em;
                 letter-spacing: 2px;
                 margin: 0.4em 0;
             }
 
-            h2 {
+            .new-habit-extra-info {
                 font-size: 1em;
                 margin-bottom: 1em;
             }
-            .Categories {
-                .category {
+            .new-habit-categories {
+                .new-habit-category {
                     height: 34px;
                     width: 120px;
                     font-size: 1em;
                 }
             }
-            .Privacy {
-                input {
+            .privacy {
+                .privacy-btn {
                     height: 30px;
                     width: 100px;
                     font-size: 1em;
                     font-weight: 500;
                 }
-                .privacyChosen {
+                .privacy-chosen {
                     color: $text-color;
                 }
             }

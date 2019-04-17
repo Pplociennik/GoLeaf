@@ -23,9 +23,9 @@ class Navbar extends Component {
   }
 
   render() {
-    let hamburger = <img src={ Hamburger } alt="hamburger" className="Hamburger" onClick={ this.handleHamburger }></img>
+    let hamburger = <img className="hamburger" src={ Hamburger } alt="hamburger" onClick={ this.handleHamburger }></img>
     if(this.state.showNav) {
-      hamburger = <img src={ Close } alt="hamburger" className="Hamburger" onClick={ this.handleHamburger }></img>
+      hamburger = <img className="hamburger" src={ Close } alt="hamburger" onClick={ this.handleHamburger }></img>
     }
 
     let navigation = <NavNotLogged show={ this.state.showNav } handleNavElementClicked = { this.handleNavElementClicked } />
@@ -33,9 +33,9 @@ class Navbar extends Component {
         navigation = <NavLogged show={ this.state.showNav } handleNavElementClicked = { this.handleNavElementClicked } />
     }
     return (
-      <nav className="Navbar">
-        <Link to="/" className="LogoWeb" onClick={ this.handleNavElementClicked }>goaleaf</Link>
-        <Link to="/" className="LogoMobile" onClick={ this.handleNavElementClicked }><img src={Logo} alt="logo"></img></Link>
+      <nav className="navbar">
+        <Link to="/" className="logo-desktop" onClick={ this.handleNavElementClicked }>goaleaf</Link>
+        <Link to="/" className="logo-mobile" onClick={ this.handleNavElementClicked }><img src={Logo} alt="logo"></img></Link>
         { hamburger }
         { navigation }
       </nav>

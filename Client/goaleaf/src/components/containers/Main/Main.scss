@@ -1,7 +1,7 @@
 @import './../../../global-styles.scss';
 
-.Main {
+.main {
+    background-color: $primary-color;
     max-width: 100%;
     min-height: calc(100vh - #{$navbar-height});
-    background-color: $primary-color;
 }

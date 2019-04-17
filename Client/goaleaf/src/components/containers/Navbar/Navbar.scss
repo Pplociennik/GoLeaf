@@ -1,34 +1,34 @@
 @import './../../../global-styles.scss';
 
-.Navbar {
+.navbar {
+    background-color: $primary-color;
     width: 100%;
     height: $navbar-height;
-    background-color: $primary-color;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     font-weight: 300;
     z-index: 4;
     position: sticky;
     top: 0;
     left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-    .LogoMobile {
+    .logo-mobile {
         margin: 0 0 0 1em;
         display: flex;
         align-items: center;
     }
-    .LogoWeb {
-        display: none;
-        color: $secondary-color;
+    .logo-desktop {
         margin-left: 1em;
+        color: $secondary-color;
         font-size: 1.3em;
         font-weight: 400;
         letter-spacing: 1px;
         text-decoration: none;
         position: relative;
+        display: none;
     }
-    .LogoWeb::after {
+    .logo-desktop::after {
         content: url('./../../../assets/logo.png');
         position: absolute;
         top: -10px;
@@ -36,14 +36,14 @@
         
     }
     @include md {
-        .LogoMobile {
+        .logo-mobile {
             display: none;
         }
-        .LogoWeb {
+        .logo-desktop {
             display: block;
         }
     }
-    .Hamburger {
+    .hamburger {
         margin-right: 1em;
         @include md {
             display: none;

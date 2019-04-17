@@ -48,25 +48,25 @@ class SignIn extends Component {
   }
 
   render() {
-      let errorMsg = <div className="ErrorMsg">{ this.state.errorMsg }</div>
+      let errorMsg = <div className="error-msg">{ this.state.errorMsg }</div>
 
     if (!localStorage.getItem('token')){
     return (
-      <div className="SignIn">
-      <form onSubmit={ this.handleSubmit } autoComplete="off">
-        <h1> Sign In </h1>
-          <input className="InputField" type="text" id="login" placeholder="login" onChange={ this.handleChange } /> 
-          <input className="InputField" type="email" id="email" placeholder="email" onChange={ this.handleChange } />
-          <input className="InputField" type="password" id="password" placeholder="password" onChange={ this.handleChange } />
-          <input className="InputField" type="password" id="repeat_password" placeholder="repeat password" onChange={ this.handleChange } />
+      <div className="auth-container">
+      <form className="auth-form" onSubmit={ this.handleSubmit } autoComplete="off">
+        <h1 className="auth-title"> Sign In </h1>
+          <input className="auth-input" type="text" id="login" placeholder="login" onChange={ this.handleChange } /> 
+          <input className="auth-input" type="email" id="email" placeholder="email" onChange={ this.handleChange } />
+          <input className="auth-input" type="password" id="password" placeholder="password" onChange={ this.handleChange } />
+          <input className="auth-input" type="password" id="repeat_password" placeholder="repeat password" onChange={ this.handleChange } />
         { errorMsg }
-          <div className="Buttons">
-            <input type="submit" value="Sign in" />
-            <Link to='/login'><input type="button" value="Log in" /></Link>
+          <div className="auth-buttons">
+            <input className="auth-btn" type="submit" value="Sign in" />
+            <Link to='/login'><input className="auth-btn" type="button" value="Log in" /></Link>
           </div>
       </form>
-      <img className="LogoBg1"src={LogoBg} alt="logo"></img>
-      <img className="LogoBg2" src={LogoBg} alt="logo"></img>
+      <img className="bg-leaf-1" src={LogoBg} alt=""></img>
+      <img className="bg-leaf-2" src={LogoBg} alt=""></img>
       </div>
     )} else {
       return <Redirect  to='/'/>

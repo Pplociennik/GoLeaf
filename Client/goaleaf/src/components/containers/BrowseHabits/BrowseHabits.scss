@@ -5,7 +5,7 @@
     margin: 2em 0;
 
 
-    h1 {
+    .browse-habits-title {
         font-size: 2em;
         font-weight: 200;
         margin: 0;
@@ -28,13 +28,13 @@
         }
 
         .category {
-            width: 14%;
-            height: 22px;
-            font-size: 0.6em;
-            margin: 0 4px;
+            width: 20%;
+            height: 30px;
+            font-size: 0.7em;
+            margin: 4px 4px;
             color: $text-color;
             font-family: 'Nunito', sans-serif;         
-            background-color: $primary-color;
+            background-color: $primary-color-light;
             border: 1px solid $secondary-color;
             border-radius: 30px;
             font-weight: 400;
@@ -83,43 +83,43 @@
         .family {
             border: 2px solid $family-color;
         }
-        .allChosen {
+        .all-chosen {
             background-color: $text-color;
             color: #fff;
         }
-        .noneChosen {
+        .none-chosen {
             background-color: $none-color;
             color: #fff;
         }
-        .healthChosen {
+        .health-chosen {
             background-color: $health-color;
             color: #fff;
         }
-        .dietChosen {
+        .diet-chosen {
             background-color: $diet-color;
             color: #fff;
         }
-        .studyChosen {
+        .study-chosen {
             background-color: $study-color;
             color: #fff;
         }
-        .workChosen {
+        .work-chosen {
             background-color: $work-color;
             color: #fff;
         }
-        .sportChosen {
+        .sport-chosen {
             background-color: $sport-color;
             color: #fff;
         }
-        .socialChosen {
+        .social-chosen {
             background-color: $social-color;
             color: #fff;
         }
-        .moneyChosen {
+        .money-chosen {
             background-color: $money-color;
             color: #fff;
         }
-        .familyChosen {
+        .family-chosen {
             background-color: $family-color;
             color: #fff;
         }
