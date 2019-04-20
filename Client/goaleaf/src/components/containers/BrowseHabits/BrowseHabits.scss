@@ -21,7 +21,8 @@
         height: 80px;
         display: flex;
         flex-wrap: wrap;
-        margin: 2em 0 2em 1em;
+        justify-content: center;
+        margin: 2em 0;
 
         @include md {
             margin-left: 1em;
@@ -128,6 +129,7 @@
         width: 100%;
         display: flex;
         flex-wrap: wrap;
+        justify-content: center;
 
         .no-habits {
             margin: 0 auto;

@@ -7,22 +7,36 @@ import axios from 'axios';
 class BrowseHabits extends Component {
 
   state = {
-      habitsToShow: [],
-      category: "ALL"
+      category: "ALL",
+      habitCards: []
   }
 
   handleFilter = e => {
     this.setState({category: e.target.value})
   }
 
+  componentDidMount() {
+    this.setState({habitCards: this.props.habits})
+  }
+
   render() {
-      console.log(this.props.habits)
+    let habitCards = [];
+    this.props.habits.forEach(habit => {
+      this.props.users.forEach(user => {
+        if(habit.creatorID === user.id){
+          habit.ownerLogin = user.login;
+          habit.ownerImg = user.imageName
+          habitCards.push(habit)
+        }
+      })
+    })
+
       let foundHabits = false;
-      let habits = this.props.habits.map(habit => {
+      let habits = habitCards.map(habit => {
 
           if(!habit.private && (this.state.category === 'ALL' || habit.category === this.state.category)){
             foundHabits = true;
-          return <HabitCard key={ habit.id } title={ habit.habitTitle } category={ habit.category }/>
+          return <HabitCard key={ habit.id } title={ habit.habitTitle } category={ habit.category } frequency={ habit.frequency } startedOn={ habit.habitStartDate } login={habit.ownerLogin}/>
           }
       })
       if(!foundHabits){
@@ -55,7 +69,9 @@ class BrowseHabits extends Component {
 
 const mapStateToProps = state => {
   return {
-    habits: state.habits
+    habits: state.habits,
+    users: state.users
+
   }
 }
 

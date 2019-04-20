@@ -1,6 +1,6 @@
 @import './../../../global-styles.scss';
 
-.nav-not.logged, .nav-logged {
+.nav-not-logged, .nav-logged {
     background-color: $primary-color;
     height: calc(100vh - #{$navbar-height});
     width: 100vw;
