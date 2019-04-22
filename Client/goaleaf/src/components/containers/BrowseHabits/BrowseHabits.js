@@ -12,7 +12,7 @@ class BrowseHabits extends Component {
   }
 
   handleFilter = e => {
-    this.setState({category: e.target.value})
+    this.setState({category: e.currentTarget.value})
   }
 
   componentDidMount() {
@@ -31,6 +31,15 @@ class BrowseHabits extends Component {
       })
     })
 
+    habitCards.sort(function(a, b){
+      let keyA = new Date(a.habitStartDate),
+          keyB = new Date(b.habitStartDate);
+      // Compare the 2 dates
+      if(keyA > keyB) return -1;
+      if(keyA < keyB) return 1;
+      return 0;
+  });
+
       let foundHabits = false;
       let habits = habitCards.map(habit => {
 
@@ -48,16 +57,16 @@ class BrowseHabits extends Component {
       <section className="browse-habits">
       <h1 className="browse-habits-title" >Browse habits</h1>
       <div className="browse-habits-navigation">
-            <input className={this.state.category === 'ALL' ? 'category all-chosen all' : ' category all'} type="button" value="ALL" onClick={ this.handleFilter } />
-            <input className={this.state.category === 'NONE' ? 'category none-chosen none' : ' category none'} type="button" value="NONE" onClick={ this.handleFilter } />
-            <input className={this.state.category === 'DIET' ? 'category diet-chosen diet' : 'category diet'} type="button" value="DIET" onClick={ this.handleFilter }/>
-            <input className={this.state.category === 'SPORT' ? 'category sport-chosen sport' : 'category sport'} type="button" value="SPORT" onClick={ this.handleFilter }/>
-            <input className={this.state.category === 'HEALTH' ? 'category health-chosen health' : 'category health'} type="button" value="HEALTH" onClick={ this.handleFilter }/>
-            <input className={this.state.category === 'SOCIAL' ? 'category social-chosen social' : 'category social'} type="button" value="SOCIAL" onClick={ this.handleFilter }/>
-            <input className={this.state.category === 'FAMILY' ? 'category family-chosen family' : 'category family'} type="button" value="FAMILY" onClick={ this.handleFilter }/>
-            <input className={this.state.category === 'STUDY' ? 'category study-chosen study' : 'category study'} type="button" value="STUDY" onClick={ this.handleFilter }/>
-            <input className={this.state.category === 'WORK' ? 'category work-chosen work' : 'category work'} type="button" value="WORK" onClick={ this.handleFilter }/>
-            <input className={this.state.category === 'MONEY' ? 'category money-chosen money' : 'category money'} type="button" value="MONEY" onClick={ this.handleFilter }/>
+            <button className={this.state.category === 'ALL' ? 'category all-chosen all' : ' category all'} value="ALL" onClick={ this.handleFilter }>all</button>
+            <button className={this.state.category === 'NONE' ? 'category none-chosen none' : ' category none'} value="NONE" title="NONE" onClick={ this.handleFilter }><i className="fas fa-minus fa-lg"></i></button>
+            <button className={this.state.category === 'DIET' ? 'category diet-chosen diet' : 'category diet'} value="DIET" title="DIET" onClick={ this.handleFilter }><i className="fas fa-carrot fa-lg"></i></button>
+            <button className={this.state.category === 'SPORT' ? 'category sport-chosen sport' : 'category sport'} value="SPORT" title="SPORT" onClick={ this.handleFilter }><i className="fas fa-running fa-lg"></i></button>  
+            <button className={this.state.category === 'HEALTH' ? 'category health-chosen health' : 'category health'} value="HEALTH" title="HEALTH" onClick={ this.handleFilter }><i className="fas fa-heartbeat fa-lg"></i></button>
+            <button className={this.state.category === 'STUDY' ? 'category study-chosen study' : 'category study'} value="STUDY" title="STUDY" onClick={ this.handleFilter }><i className="fas fa-book fa-lg"></i></button>
+            <button className={this.state.category === 'WORK' ? 'category work-chosen work' : 'category work'} value="WORK" title="WORK" onClick={ this.handleFilter }><i className="fas fa-briefcase fa-lg"></i></button>
+            <button className={this.state.category === 'MONEY' ? 'category money-chosen money' : 'category money'} value="MONEY" title="MONEY" onClick={ this.handleFilter }><i className="fas fa-money-bill-alt fa-lg"></i></button>
+            <button className={this.state.category === 'SOCIAL' ? 'category social-chosen social' : 'category social'} value="SOCIAL" title="SOCIAL" onClick={ this.handleFilter }><i className="fas fa-heart fa-lg"></i></button>
+            <button className={this.state.category === 'FAMILY' ? 'category family-chosen family' : 'category family'} value="FAMILY" title="FAMILY" onClick={ this.handleFilter }><i className="fas fa-home fa-lg"></i></button>
       </div>
       <div className="habit-cards">
           { habits }

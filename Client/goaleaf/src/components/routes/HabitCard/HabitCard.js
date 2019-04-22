@@ -11,9 +11,12 @@ function HabitCard(props) {
     return (
       <div className={`habit-card ${props.category}`}>
           <h2 className="habit-card-title">{props.title}</h2>
-          <h3 className="started-date">started on: <span className="card-information">{startedOn}</span></h3>
-          <h3 className="created-by">by: <span className="card-information">{props.login}</span></h3>
-          <h3 className="frequency">recurrence: <span className="card-information">{props.frequency}</span></h3>
+          <div className="habit-card-info-con">
+            <h3 className="habit-card-info started-date"><i className="far fa-calendar-alt fa-xs"></i> {startedOn}</h3>
+            <h3 className="habit-card-info created-by"><i className="fas fa-user fa-xs"></i> {props.login}</h3>
+            <h3 className="habit-card-info frequency"><i className="fas fa-history fa-xs"></i> {props.frequency}</h3>
+          </div>
+
       </div>
     )
   }

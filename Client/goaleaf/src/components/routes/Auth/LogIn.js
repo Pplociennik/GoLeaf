@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './Auth.scss'
-import  LogoBg from './../../../assets/leaf-bg.png'
 import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios'
 
@@ -54,8 +53,6 @@ class LogIn extends Component {
           </div>
           <Link to='/reset-password' className="forgot-password">Forgot password?</Link>
       </form>
-      <img className="bg-leaf-1"src={LogoBg} alt="logo"></img>
-      <img className="bg-leaf-2" src={LogoBg} alt="logo"></img>
       </div>
     )} else {
       return <Redirect  to='/'/>
