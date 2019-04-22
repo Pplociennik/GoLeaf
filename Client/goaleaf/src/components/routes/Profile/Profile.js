@@ -145,6 +145,8 @@ class Profile extends Component {
                     {deleteAccount}
                 </section>
             </div>
+            
+
         )
     }
 
