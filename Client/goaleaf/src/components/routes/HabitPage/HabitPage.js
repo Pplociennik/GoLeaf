@@ -79,6 +79,12 @@ class HabitPage extends Component {
     render() {
         return (
             <div>
+            <div>
+                <h1>{this.state.habitTitle}</h1>
+                <h2>{this.state.habitStartDate}</h2>
+                <h2>{this.state.category}</h2>
+                <h2>{this.state.frequency}</h2>
+            </div>
                 <div>
                     <button onClick={this.joinHabit} value="Join habit"></button>
                 </div>
