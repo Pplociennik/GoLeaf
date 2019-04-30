@@ -67,15 +67,15 @@ class BrowseHabits extends Component {
       <h1 className="browse-habits-title" >Browse habits</h1>
       <div className="browse-habits-navigation">
             <button className={this.state.category === 'ALL' ? 'category all-chosen all' : ' category all'} value="ALL" onClick={ this.handleFilter }>all</button>
-            <button className={this.state.category === 'NONE' ? 'category none-chosen none' : ' category none'} value="NONE" title="NONE" onClick={ this.handleFilter }><i className="fas fa-minus fa-lg"></i></button>
-            <button className={this.state.category === 'DIET' ? 'category diet-chosen diet' : 'category diet'} value="DIET" title="DIET" onClick={ this.handleFilter }><i className="fas fa-carrot fa-lg"></i></button>
-            <button className={this.state.category === 'SPORT' ? 'category sport-chosen sport' : 'category sport'} value="SPORT" title="SPORT" onClick={ this.handleFilter }><i className="fas fa-running fa-lg"></i></button>  
-            <button className={this.state.category === 'HEALTH' ? 'category health-chosen health' : 'category health'} value="HEALTH" title="HEALTH" onClick={ this.handleFilter }><i className="fas fa-heartbeat fa-lg"></i></button>
-            <button className={this.state.category === 'STUDY' ? 'category study-chosen study' : 'category study'} value="STUDY" title="STUDY" onClick={ this.handleFilter }><i className="fas fa-book fa-lg"></i></button>
-            <button className={this.state.category === 'WORK' ? 'category work-chosen work' : 'category work'} value="WORK" title="WORK" onClick={ this.handleFilter }><i className="fas fa-briefcase fa-lg"></i></button>
-            <button className={this.state.category === 'MONEY' ? 'category money-chosen money' : 'category money'} value="MONEY" title="MONEY" onClick={ this.handleFilter }><i className="fas fa-money-bill-alt fa-lg"></i></button>
-            <button className={this.state.category === 'SOCIAL' ? 'category social-chosen social' : 'category social'} value="SOCIAL" title="SOCIAL" onClick={ this.handleFilter }><i className="fas fa-heart fa-lg"></i></button>
-            <button className={this.state.category === 'FAMILY' ? 'category family-chosen family' : 'category family'} value="FAMILY" title="FAMILY" onClick={ this.handleFilter }><i className="fas fa-home fa-lg"></i></button>
+            <button className={this.state.category === 'NONE' ? 'category none-chosen none' : ' category none'} value="NONE" onClick={ this.handleFilter }><i className="fas fa-minus fa-lg"></i></button>
+            <button className={this.state.category === 'DIET' ? 'category diet-chosen diet' : 'category diet'} value="DIET" onClick={ this.handleFilter }><i className="fas fa-carrot fa-lg"></i></button>
+            <button className={this.state.category === 'SPORT' ? 'category sport-chosen sport' : 'category sport'} value="SPORT" onClick={ this.handleFilter }><i className="fas fa-running fa-lg"></i></button>  
+            <button className={this.state.category === 'HEALTH' ? 'category health-chosen health' : 'category health'} value="HEALTH" onClick={ this.handleFilter }><i className="fas fa-heartbeat fa-lg"></i></button>
+            <button className={this.state.category === 'STUDY' ? 'category study-chosen study' : 'category study'} value="STUDY" onClick={ this.handleFilter }><i className="fas fa-book fa-lg"></i></button>
+            <button className={this.state.category === 'WORK' ? 'category work-chosen work' : 'category work'} value="WORK" onClick={ this.handleFilter }><i className="fas fa-briefcase fa-lg"></i></button>
+            <button className={this.state.category === 'MONEY' ? 'category money-chosen money' : 'category money'} value="MONEY" onClick={ this.handleFilter }><i className="fas fa-money-bill-alt fa-lg"></i></button>
+            <button className={this.state.category === 'SOCIAL' ? 'category social-chosen social' : 'category social'} value="SOCIAL" onClick={ this.handleFilter }><i className="fas fa-heart fa-lg"></i></button>
+            <button className={this.state.category === 'FAMILY' ? 'category family-chosen family' : 'category family'} value="FAMILY" onClick={ this.handleFilter }><i className="fas fa-home fa-lg"></i></button>
       </div>
       <div className="habit-cards">
           { habitsToDisplay }

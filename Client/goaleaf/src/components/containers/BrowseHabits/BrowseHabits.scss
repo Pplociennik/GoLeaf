@@ -35,16 +35,17 @@
             border: 1px solid $secondary-color;
             border-radius: 50%;
             font-weight: 300;
-            letter-spacing: 1px;
             cursor: pointer;
             outline: 0;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
 
             @include xl {
                 width: 44px;
                 height: 44px;
+                margin: 12px;
             }
         }
         .category:hover {
@@ -94,6 +95,52 @@
         .family {
             border: 2px solid $family-color;
             color: $family-color;
+        }
+
+        @mixin style-text-under-category-icon() {
+            position: absolute;
+            margin-top: 34px;
+            color: $text-color;
+            font-size: 1em;
+            opacity: 0.7;
+        }
+        @include xl {
+           .none::after {
+               content: 'none';
+               @include style-text-under-category-icon();
+           } 
+           .diet::after {
+               content: 'diet';
+               @include style-text-under-category-icon();
+           } 
+           .health::after {
+               content: 'health';
+               @include style-text-under-category-icon();
+           } 
+           .study::after {
+               content: 'study';
+               @include style-text-under-category-icon();
+           } 
+           .work::after {
+               content: 'work';
+               @include style-text-under-category-icon();
+           } 
+           .sport::after {
+               content: 'sport';
+               @include style-text-under-category-icon();
+           } 
+           .social::after {
+               content: 'social';
+               @include style-text-under-category-icon();
+           } 
+           .money::after {
+               content: 'money';
+               @include style-text-under-category-icon();
+           } 
+           .family::after {
+               content: 'family';
+               @include style-text-under-category-icon();
+           } 
         }
         .all-chosen {
             background-color: $all-color;
