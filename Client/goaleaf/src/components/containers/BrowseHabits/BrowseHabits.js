@@ -8,11 +8,14 @@ class BrowseHabits extends Component {
 
   state = {
       category: "ALL",
-      habitCards: []
+      habitCards: [],
+      habitsToShow: 20
   }
 
   handleFilter = e => {
-    this.setState({category: e.currentTarget.value})
+    if(this.state.category !== e.currentTarget.value){
+      this.setState({category: e.currentTarget.value, habitsToShow: 20})
+    }
   }
 
   componentDidMount() {
@@ -20,6 +23,7 @@ class BrowseHabits extends Component {
   }
 
   render() {
+
     let habitCards = [];
     this.props.habits.forEach(habit => {
       this.props.users.forEach(user => {
@@ -41,17 +45,22 @@ class BrowseHabits extends Component {
   });
 
       let foundHabits = false;
-      let habits = habitCards.map(habit => {
+      let habits = []
+      habitCards.forEach(habit => {
 
           if(!habit.private && (this.state.category === 'ALL' || habit.category === this.state.category)){
             foundHabits = true;
-          return <HabitCard key={ habit.id } title={ habit.habitTitle } category={ habit.category } frequency={ habit.frequency } startedOn={ habit.habitStartDate } login={habit.ownerLogin}/>
+          habits.push(<HabitCard key={ habit.id } title={ habit.habitTitle } category={ habit.category } frequency={ habit.frequency } startedOn={ habit.habitStartDate } login={habit.ownerLogin}/>)
           }
       })
+
+        let habitsToDisplay = habits.slice(0, this.state.habitsToShow);
+
+
       if(!foundHabits){
-     habits = <div className="no-habits"> No habits were found</div>
+     habitsToDisplay = <div className="no-habits"> No habits were found</div>
       }
-      
+
 
     return (
       <section className="browse-habits">
@@ -69,8 +78,9 @@ class BrowseHabits extends Component {
             <button className={this.state.category === 'FAMILY' ? 'category family-chosen family' : 'category family'} value="FAMILY" title="FAMILY" onClick={ this.handleFilter }><i className="fas fa-home fa-lg"></i></button>
       </div>
       <div className="habit-cards">
-          { habits }
+          { habitsToDisplay }
       </div>
+      <button className={habitsToDisplay.length < habits.length ? 'show-more-habits-btn' : 'hide-show-more-habits-btn'} onClick={() => this.setState({habitsToShow: this.state.habitsToShow + 5})}>SHOW MORE</button>
       </section>
     )
   } 
