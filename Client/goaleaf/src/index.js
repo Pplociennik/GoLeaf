@@ -32,6 +32,16 @@ export function fetchHabits(){
       }
     };
 
+// GET MEMBERS
+export function fetchMembers(){
+ return function(dispatch){
+    axios.get(`/api/members/all`)
+      .then(res => {
+        dispatch({ type: 'GET_MEMBERS', payload: res.data});
+      })
+      }
+    };
+
 axios.post('/validatetoken', {
   "Token": token
 }).then(res => {

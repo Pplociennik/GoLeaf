@@ -11,6 +11,7 @@ import NewPassword from './../../routes/Auth/NewPassword';
 import Dashboard from './../Dashboard/Dashboard';
 import NewHabit from './../../routes/NewHabit/NewHabit' 
 import Profile from './../../routes/Profile/Profile'
+import HabitPage from './../../routes/HabitPage/HabitPage'
 
 
 class Main extends Component {
@@ -29,6 +30,7 @@ class Main extends Component {
 
             <PrivateRoute exact path='/new-habit' component={NewHabit}/>
             <PrivateRoute exact path='/profile' component={Profile}/>
+            <PrivateRoute exact path='/habit/:id' component={HabitPage}/>
 
             <Route path="*" component={Dashboard} />
         </Switch>

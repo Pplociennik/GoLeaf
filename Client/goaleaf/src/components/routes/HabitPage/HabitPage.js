@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 class HabitPage extends Component {
 
@@ -15,14 +16,6 @@ class HabitPage extends Component {
         "members": [],
         "countMembers": ''
     };
-
-    /*
-    const dateObj = new Date(props.startedOn);
-    const day = dateObj.getUTCDate();
-    const month = dateObj.getUTCMonth() + 1;
-    const year = dateObj.getUTCFullYear();
-    const startedOn = day + "/" + month + "/" + year;
-    */
 
     componentDidMount() {
         console.log(this.state)
@@ -77,6 +70,7 @@ class HabitPage extends Component {
     }
 
     render() {
+        console.log(this.props.members)
         return (
             <div>
             <div>
@@ -97,7 +91,8 @@ class HabitPage extends Component {
 }
 
 const mapStateToProps = state => ({
-    userLogged: state.userLogged
+    userLogged: state.userLogged,
+    members: state.members
 })
 
 export default connect(mapStateToProps)(HabitPage);

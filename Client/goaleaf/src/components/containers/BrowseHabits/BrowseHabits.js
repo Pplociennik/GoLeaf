@@ -1,48 +1,74 @@
 import React, { Component } from 'react'
 import './BrowseHabits.scss'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import HabitCard from './../../routes/HabitCard/HabitCard'
-import axios from 'axios';
 
 class BrowseHabits extends Component {
 
   state = {
       category: "ALL",
       habitCards: [],
-      habitsToShow: 20
+      habitsToShow: 20,
+      habitsSortBy: 'NEWEST'
   }
 
+  handleHabitCardClicked = id => {
+    this.props.history.push(`/habit/${id}`);
+  }
+  
   handleFilter = e => {
     if(this.state.category !== e.currentTarget.value){
       this.setState({category: e.currentTarget.value, habitsToShow: 20})
     }
   }
 
-  componentDidMount() {
+ componentDidMount() {
     this.setState({habitCards: this.props.habits})
-  }
+  } 
 
   render() {
 
+    console.log(this.state)
     let habitCards = [];
     this.props.habits.forEach(habit => {
+      habit.members = [];
       this.props.users.forEach(user => {
         if(habit.creatorID === user.id){
           habit.ownerLogin = user.login;
-          habit.ownerImg = user.imageName
           habitCards.push(habit)
+        }
+      })
+      this.props.members.forEach(member => {
+        if(habit.id === member.habitID){
+          habit.members.push(member.userID)
+          if(habit.id === 1){
+            habit.members.push(100)
+          }
         }
       })
     })
 
+    console.log(habitCards)
+
     habitCards.sort(function(a, b){
       let keyA = new Date(a.habitStartDate),
           keyB = new Date(b.habitStartDate);
-      // Compare the 2 dates
       if(keyA > keyB) return -1;
       if(keyA < keyB) return 1;
       return 0;
   });
+
+  if(this.state.habitsSortBy === 'POPULAR'){
+      habitCards.sort(function(a, b){
+        let keyA = a.members.length,
+            keyB = b.members.length;  
+        if(keyA > keyB) return -1;
+        if(keyA < keyB) return 1;
+        return 0;
+    });
+  }
+
 
       let foundHabits = false;
       let habits = []
@@ -50,7 +76,7 @@ class BrowseHabits extends Component {
 
           if(!habit.private && (this.state.category === 'ALL' || habit.category === this.state.category)){
             foundHabits = true;
-          habits.push(<HabitCard key={ habit.id } title={ habit.habitTitle } category={ habit.category } frequency={ habit.frequency } startedOn={ habit.habitStartDate } login={habit.ownerLogin}/>)
+          habits.push(<HabitCard key={ habit.id } id={ habit.id } title={ habit.habitTitle } category={ habit.category } frequency={ habit.frequency } startedOn={ habit.habitStartDate } login={habit.ownerLogin} membersNumber={habit.members.length} habitCardClicked={ this.handleHabitCardClicked } />)
           }
       })
 
@@ -66,6 +92,7 @@ class BrowseHabits extends Component {
       <section className="browse-habits">
       <h1 className="browse-habits-title" >Browse habits</h1>
       <div className="browse-habits-navigation">
+        <div className="browse-habits-navigation-filters">
             <button className={this.state.category === 'ALL' ? 'category all-chosen all' : ' category all'} value="ALL" onClick={ this.handleFilter }>all</button>
             <button className={this.state.category === 'NONE' ? 'category none-chosen none' : ' category none'} value="NONE" onClick={ this.handleFilter }><i className="fas fa-minus fa-lg"></i></button>
             <button className={this.state.category === 'DIET' ? 'category diet-chosen diet' : 'category diet'} value="DIET" onClick={ this.handleFilter }><i className="fas fa-carrot fa-lg"></i></button>
@@ -76,6 +103,11 @@ class BrowseHabits extends Component {
             <button className={this.state.category === 'MONEY' ? 'category money-chosen money' : 'category money'} value="MONEY" onClick={ this.handleFilter }><i className="fas fa-money-bill-alt fa-lg"></i></button>
             <button className={this.state.category === 'SOCIAL' ? 'category social-chosen social' : 'category social'} value="SOCIAL" onClick={ this.handleFilter }><i className="fas fa-heart fa-lg"></i></button>
             <button className={this.state.category === 'FAMILY' ? 'category family-chosen family' : 'category family'} value="FAMILY" onClick={ this.handleFilter }><i className="fas fa-home fa-lg"></i></button>
+        </div>
+        <div className="browse-habits-navigation-sorting">
+          <button className="habit-cards-sort-popular" onClick={() => this.setState({habitsSortBy: 'NEWEST', habitsToShow: 20})}>NEWEST</button>
+          <button className="habit-cards-sort-popular" onClick={() => this.setState({habitsSortBy: 'POPULAR', habitsToShow: 20})}>POPULAR</button>
+        </div>      
       </div>
       <div className="habit-cards">
           { habitsToDisplay }
@@ -83,15 +115,16 @@ class BrowseHabits extends Component {
       <button className={habitsToDisplay.length < habits.length ? 'show-more-habits-btn' : 'hide-show-more-habits-btn'} onClick={() => this.setState({habitsToShow: this.state.habitsToShow + 5})}>SHOW MORE</button>
       </section>
     )
-  } 
+  }   
 }
 
 const mapStateToProps = state => {
   return {
     habits: state.habits,
-    users: state.users
+    users: state.users,
+    members: state.members
 
   }
 }
 
-export default connect(mapStateToProps)(BrowseHabits);
+export default withRouter(connect(mapStateToProps)(BrowseHabits));

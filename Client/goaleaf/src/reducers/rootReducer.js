@@ -2,7 +2,8 @@ const initState = {
     authenticated: false,
     userLogged: null,
     users: [],
-    habits: []
+    habits: [],
+    members: []
 }
 
 const rootReducer = (state = initState, action) => {
@@ -32,6 +33,18 @@ const rootReducer = (state = initState, action) => {
         }
     }
 
+    if(action.type === 'GET_HABITS'){
+        return {
+            ...state,
+            habits: action.payload
+          }
+    }
+    if(action.type === 'GET_MEMBERS'){
+        return {
+            ...state,
+            members: action.payload
+          }
+    }
     if(action.type === 'GET_USERS'){
             return {
                 ...state,
@@ -39,12 +52,6 @@ const rootReducer = (state = initState, action) => {
               }
     }
 
-    if(action.type === 'GET_HABITS'){
-            return {
-                ...state,
-                habits: action.payload
-              }
-    }
     return state;
 }   
 

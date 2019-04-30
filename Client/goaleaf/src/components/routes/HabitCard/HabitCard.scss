@@ -31,11 +31,21 @@
         display: flex;
     }
     .habit-card-info-con {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         opacity: 0.8;
         .habit-card-info {
             margin: 0;
             font-size: 0.9em;
             font-weight: 400;
+        }
+        .members-number {
+            margin-right: 12px;
+            font-size: 1.2em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
     }
 }
