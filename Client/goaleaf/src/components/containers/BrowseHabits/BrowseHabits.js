@@ -76,7 +76,7 @@ class BrowseHabits extends Component {
 
           if(!habit.private && (this.state.category === 'ALL' || habit.category === this.state.category)){
             foundHabits = true;
-          habits.push(<HabitCard key={ habit.id } id={ habit.id } title={ habit.habitTitle } category={ habit.category } frequency={ habit.frequency } startedOn={ habit.habitStartDate } login={habit.ownerLogin} membersNumber={habit.members.length} habitCardClicked={ this.handleHabitCardClicked } />)
+          habits.push(<HabitCard key={ habit.id } id={ habit.id } title={ habit.habitTitle } category={ habit.category } frequency={ habit.frequency } startedOn={ habit.habitStartDate } private={ habit.private } login={habit.ownerLogin} membersNumber={habit.members.length} habitCardClicked={ this.handleHabitCardClicked } />)
           }
       })
 
@@ -105,8 +105,8 @@ class BrowseHabits extends Component {
             <button className={this.state.category === 'FAMILY' ? 'category family-chosen family' : 'category family'} value="FAMILY" onClick={ this.handleFilter }><i className="fas fa-home fa-lg"></i></button>
         </div>
         <div className="browse-habits-navigation-sorting">
-          <button className={this.state.habitsSortBy === 'NEWEST' ? "habit-cards-sort-btn active-habit-cards-sort-btn" : "habit-cards-sort-btn inactive-habit-cards-sort-btn"} onClick={() => this.setState({habitsSortBy: 'NEWEST', habitsToShow: 20})}><i class="far fa-calendar-alt"></i> NEWEST</button>
-          <button className={this.state.habitsSortBy === 'POPULAR' ? "habit-cards-sort-btn active-habit-cards-sort-btn" : "habit-cards-sort-btn inactive-habit-cards-sort-btn"} onClick={() => this.setState({habitsSortBy: 'POPULAR', habitsToShow: 20})}><i class="fas fa-user-friends"></i> POPULAR</button>
+          <button className={this.state.habitsSortBy === 'NEWEST' ? "habit-cards-sort-btn active-habit-cards-sort-btn" : "habit-cards-sort-btn inactive-habit-cards-sort-btn"} onClick={() => this.setState({habitsSortBy: 'NEWEST', habitsToShow: 20})}><i className="far fa-calendar-alt"></i> NEWEST</button>
+          <button className={this.state.habitsSortBy === 'POPULAR' ? "habit-cards-sort-btn active-habit-cards-sort-btn" : "habit-cards-sort-btn inactive-habit-cards-sort-btn"} onClick={() => this.setState({habitsSortBy: 'POPULAR', habitsToShow: 20})}><i className="fas fa-user-friends"></i> POPULAR</button>
         </div>      
       </div>
       <div className="habit-cards">
