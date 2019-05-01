@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 class HabitPage extends Component {
 
     state = {
-        "id": this.props.id,
+        "id": parseInt(window.location.href.substr(window.location.href.lastIndexOf('/') + 1)),
         "habitTitle": '',
         "habitStartDate": '',
         "category": '',
@@ -18,33 +18,38 @@ class HabitPage extends Component {
     };
 
     componentDidMount() {
-        console.log(this.state)
+
+        axios.get(`/api/habits/getHabit/{id}?id=${this.state.id}`)
+            .then(res => {
+                this.setState({
+                    habitTitle: res.data.habitTitle,
+                    habitStartDate: res.data.habitStartDate,
+                    category: res.data.category,
+                    frequency: res.data.frequency,
+                    creatorID: res.data.creatorID,
+                    private: res.data.private
+                })
+            }
+            ).catch(err => this.setState({ errorMsg: err.response.data.message }))
+
         axios.get(`/api/habits/habit/members?habitID=${this.state.id}`)
             .then(res => { /* Repair res iteration!!!!!!!!!!!!!!!!!!!*/
-                console.log(res.data)
-                res.data.map( member => {
+                res.data.map(member => {
                     let members = [...this.state.members, member.userId]
                     this.setState({
                         members: members
                     })
-                    console.log(this.state)
                 })
             }
             ).catch(err => this.setState({ errorMsg: err.response.data.message }))
 
         axios.get(`/api/habits/habit/countmembers?habitID=${this.state.id}`)
             .then(res => {
-                console.log(res.data)
                 this.setState({
                     countMembers: res.data
                 })
-                console.log(this.state)
             }
             ).catch(err => this.setState({ errorMsg: err.response.data.message }))
-    }
-
-    joinHabit = e => {
-        e.preventDefault();
 
         axios.get(`/api/users/user/${this.props.userLogged}`)
             .then(res => {
@@ -53,6 +58,10 @@ class HabitPage extends Component {
                 })
             }
             ).catch(err => this.setState({ errorMsg: err.response.data.message }))
+    }
+
+    joinHabit = e => {
+        e.preventDefault();
 
         axios.post('/api/habits/addmember', {
             "token": localStorage.getItem("token"),
@@ -63,27 +72,29 @@ class HabitPage extends Component {
                 this.setState({ errorMsg: 'Successfully joined habit!' })
             }
             ).catch(err => this.setState({ errorMsg: err.response.data.message }))
+
+        console.log(this.state)
     }
 
     leaveHabit = e => {
-
+        e.preventDefault();
+        console.log(this.props.userLogged)
     }
 
     render() {
-        console.log(this.props.members)
         return (
             <div>
-            <div>
-                <h1>{this.state.habitTitle}</h1>
-                <h2>{this.state.habitStartDate}</h2>
-                <h2>{this.state.category}</h2>
-                <h2>{this.state.frequency}</h2>
-            </div>
                 <div>
-                    <button onClick={this.joinHabit} value="Join habit"></button>
+                    <h1>{this.state.habitTitle}</h1>
+                    <h2>{this.state.habitStartDate}</h2>
+                    <h2>{this.state.category}</h2>
+                    <h2>{this.state.frequency}</h2>
                 </div>
                 <div>
-                    <button onClick={this.leaveHabit} value="Leave habit"></button>
+                    <button onClick={this.joinHabit}>Join habit</button>
+                </div>
+                <div>
+                    <button onClick={this.leaveHabit}>Leave habit</button>
                 </div>
             </div>
         )
