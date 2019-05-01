@@ -105,8 +105,8 @@ class BrowseHabits extends Component {
             <button className={this.state.category === 'FAMILY' ? 'category family-chosen family' : 'category family'} value="FAMILY" onClick={ this.handleFilter }><i className="fas fa-home fa-lg"></i></button>
         </div>
         <div className="browse-habits-navigation-sorting">
-          <button className="habit-cards-sort-popular" onClick={() => this.setState({habitsSortBy: 'NEWEST', habitsToShow: 20})}>NEWEST</button>
-          <button className="habit-cards-sort-popular" onClick={() => this.setState({habitsSortBy: 'POPULAR', habitsToShow: 20})}>POPULAR</button>
+          <button className={this.state.habitsSortBy === 'NEWEST' ? "habit-cards-sort-btn active-habit-cards-sort-btn" : "habit-cards-sort-btn inactive-habit-cards-sort-btn"} onClick={() => this.setState({habitsSortBy: 'NEWEST', habitsToShow: 20})}><i class="far fa-calendar-alt"></i> NEWEST</button>
+          <button className={this.state.habitsSortBy === 'POPULAR' ? "habit-cards-sort-btn active-habit-cards-sort-btn" : "habit-cards-sort-btn inactive-habit-cards-sort-btn"} onClick={() => this.setState({habitsSortBy: 'POPULAR', habitsToShow: 20})}><i class="fas fa-user-friends"></i> POPULAR</button>
         </div>      
       </div>
       <div className="habit-cards">

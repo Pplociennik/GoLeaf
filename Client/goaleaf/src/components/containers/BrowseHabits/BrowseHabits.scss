@@ -31,6 +31,7 @@
         .browse-habits-navigation-filters {
             display: flex;
             flex-wrap: wrap;
+            margin: 10px 0;
         }
 
         .category {
@@ -153,43 +154,84 @@
         }
         .all-chosen {
             background-color: $all-color;
-            color: #fff;
+            color: $primary-color-light;
         }
         .none-chosen {
             background-color: $none-color;
-            color: #fff;
+            color: $primary-color-light;
         }
         .health-chosen {
             background-color: $health-color;
-            color: #fff;
+            color: $primary-color-light;
         }
         .diet-chosen {
             background-color: $diet-color;
-            color: #fff;
+            color: $primary-color-light;
         }
         .study-chosen {
             background-color: $study-color;
-            color: #fff;
+            color: $primary-color-light;
         }
         .work-chosen {
             background-color: $work-color;
-            color: #fff;
+            color: $primary-color-light;
         }
         .sport-chosen {
             background-color: $sport-color;
-            color: #fff;
+            color: $primary-color-light;
         }
         .social-chosen {
             background-color: $social-color;
-            color: #fff;
+            color: $primary-color-light;
         }
         .money-chosen {
             background-color: $money-color;
-            color: #fff;
+            color: $primary-color-light;
         }
         .family-chosen {
             background-color: $family-color;
-            color: #fff;
+            color: $primary-color-light;
+        }
+
+        .browse-habits-navigation-sorting {
+            display: flex;
+            .habit-cards-sort-btn {
+                background-color: #7189bf;
+                height: 36px;
+                width: 120px;
+                margin: 6px;
+                color: #fff;
+                font-size: 0.7em;
+                letter-spacing: 1px;
+                border-radius: 30px;
+                border: none;
+                cursor: pointer;
+                outline: none;
+
+                @include xl {
+                    width: 150px;
+                    height: 50px;
+                    margin: 12px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    
+                    i {
+                        margin-bottom: 4px;
+                        font-size: 1.5em;
+                    }
+                }
+
+            }
+            .inactive-habit-cards-sort-btn {
+                background-color: $primary-color;
+                border: 2px solid #7189bf;
+                color: #7189bf;
+            }
+            .habit-cards-sort-btn:hover {
+                box-shadow: 2px 2px 10px 0px rgba(51,51,51,0.3);                
+            }
         }
     }
     .habit-cards {
