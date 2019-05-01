@@ -15,22 +15,30 @@ const token = localStorage.getItem('token');
 
 // GET USERS
 export function fetchUsers() {
+  return function(dispatch){
 axios.get(`/api/users/all`)
       .then(res => {
       store.dispatch({ type: 'GET_USERS', payload: res.data});
-     } 
-      ).catch(err => console.log(err))
-    }
+     } )
+  }}
 
 // GET HABITS
 export function fetchHabits(){
- return function(dispatch){ 
+ return function(dispatch){
     axios.get(`/api/habits/all`)
-        .then(res => {
-          dispatch({ type: 'GET_HABITS', payload: res.data});
-          renderApp(); 
-        } 
-      ).catch(err => console.log(err))
+      .then(res => {
+        dispatch({ type: 'GET_HABITS', payload: res.data});
+      })
+      }
+    };
+
+// GET MEMBERS
+export function fetchMembers(){
+ return function(dispatch){
+    axios.get(`/api/members/all`)
+      .then(res => {
+        dispatch({ type: 'GET_MEMBERS', payload: res.data});
+      })
       }
     };
 

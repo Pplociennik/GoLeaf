@@ -120,24 +120,28 @@
             opacity: 0.6;
         }
     }
-    .bg-leaf-1, .bg-leaf-2 {
-        display: none;
-        opacity: 0.9;
+}
+.auth-container::after{
+    content: url(./../../../assets/leaf-bg.png);
+    position: absolute;
+    bottom: 50px;
+    right: -200px;
+    overflow: hidden;
+    display: none;
 
-        @include md {
-            display: block;
-        }
+    @include lg {
+        display: block;
     }
-    .bg-leaf-1 {
-        position: absolute;
-        bottom: 50px;
-        right: -200px;
-        
-    }
-    .bg-leaf-2 {
-        position: absolute;
-        bottom: -220px;
-        right: 0;
-        transform: rotate(-40deg);
+}
+.auth-container::before{
+    content: url(./../../../assets/leaf-bg.png);
+    position: absolute;
+    bottom: -220px;
+    right: 0;
+    transform: rotate(-40deg);
+    display: none;
+
+    @include lg {
+        display: block;
     }
 }

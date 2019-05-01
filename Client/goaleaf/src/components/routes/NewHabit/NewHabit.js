@@ -30,7 +30,7 @@ class NewHabit extends Component {
               "userID": this.props.userLogged
             }
           ],
-          "startDate": "2019-04-15T19:31:01.645Z",
+          "startDate": "",
           "title": this.state.title,
           "token": localStorage.getItem('token')
         }
@@ -49,14 +49,13 @@ class NewHabit extends Component {
   handleChange = e => {
     this.setState({[e.target.id]: e.target.value})
   }
-
   handleChangeCategory = e => {
-    this.setState({category: e.target.value})
+    this.setState({category: e.currentTarget.value})
 
 
   }
   handleChangePrivacy = e => {
-    e.target.value === 'private' ? this.setState({private: true}) : this.setState({private: false});
+    e.currentTarget.value === 'private' ? this.setState({private: true}) : this.setState({private: false});
   }
 
   render() {
@@ -66,23 +65,22 @@ class NewHabit extends Component {
       <div className="new-habit">
         <form className="new-habit-form" onSubmit={ this.handleSubmit } autoComplete="off" >
           <h1 className="new-habit-title">New Habit</h1>
-          <input className="new-habit-title-input" type="text" id="title" placeholder="what will be your next challenge?" onChange={ this.handleChange } maxLength="50" autoFocus />
-          <h2 className="new-habit-extra-info">Be sure to add a category..</h2>
+          <input className="new-habit-title-input" type="text" id="title" placeholder="your next challenge?" onChange={ this.handleChange } maxLength="49" autoFocus />
+          <h2 className="new-habit-categories-title">categories</h2>
           <div className="new-habit-categories">
-            <input className={this.state.category === 'NONE' ? 'new-habit-category none-chosen none' : ' new-habit-category none'} type="button" value="NONE" onClick={ this.handleChangeCategory } />
-            <input className={this.state.category === 'DIET' ? 'new-habit-category diet-chosen diet' : 'new-habit-category diet'} type="button" value="DIET" onClick={ this.handleChangeCategory }/>
-            <input className={this.state.category === 'SPORT' ? 'new-habit-category sport-chosen sport' : 'new-habit-category sport'} type="button" value="SPORT" onClick={ this.handleChangeCategory }/>
-            <input className={this.state.category === 'HEALTH' ? 'new-habit-category health-chosen health' : 'new-habit-category health'} type="button" value="HEALTH" onClick={ this.handleChangeCategory }/>
-            <input className={this.state.category === 'SOCIAL' ? 'new-habit-category social-chosen social' : 'new-habit-category social'} type="button" value="SOCIAL" onClick={ this.handleChangeCategory }/>
-            <input className={this.state.category === 'FAMILY' ? 'new-habit-category family-chosen family' : 'new-habit-category family'} type="button" value="FAMILY" onClick={ this.handleChangeCategory }/>
-            <input className={this.state.category === 'STUDY' ? 'new-habit-category study-chosen study' : 'new-habit-category study'} type="button" value="STUDY" onClick={ this.handleChangeCategory }/>
-            <input className={this.state.category === 'WORK' ? 'new-habit-category work-chosen work' : 'new-habit-category work'} type="button" value="WORK" onClick={ this.handleChangeCategory }/>
-            <input className={this.state.category === 'MONEY' ? 'new-habit-category money-chosen money' : 'new-habit-category money'} type="button" value="MONEY" onClick={ this.handleChangeCategory }/>
+            <button className={this.state.category === 'NONE' ? 'new-habit-category none-chosen none' : ' new-habit-category none'} value="NONE" type="button" onClick={ this.handleChangeCategory }><i className="fas fa-minus fa-lg"></i></button>
+            <button className={this.state.category === 'DIET' ? 'new-habit-category diet-chosen diet' : 'new-habit-category diet'} value="DIET" type="button" onClick={ this.handleChangeCategory }><i className="fas fa-carrot fa-lg"></i></button>
+            <button className={this.state.category === 'SPORT' ? 'new-habit-category sport-chosen sport' : 'new-habit-category sport'} value="SPORT" type="button" onClick={ this.handleChangeCategory }><i className="fas fa-running fa-lg"></i></button>  
+            <button className={this.state.category === 'HEALTH' ? 'new-habit-category health-chosen health' : 'new-habit-category health'} value="HEALTH" type="button" onClick={ this.handleChangeCategory }><i className="fas fa-heartbeat fa-lg"></i></button>
+            <button className={this.state.category === 'STUDY' ? 'new-habit-category study-chosen study' : 'new-habit-category study'} value="STUDY" type="button" onClick={ this.handleChangeCategory }><i className="fas fa-book fa-lg"></i></button>
+            <button className={this.state.category === 'WORK' ? 'new-habit-category work-chosen work' : 'new-habit-category work'} value="WORK" type="button" onClick={ this.handleChangeCategory }><i className="fas fa-briefcase fa-lg"></i></button>
+            <button className={this.state.category === 'MONEY' ? 'new-habit-category money-chosen money' : 'new-habit-category money'} value="MONEY" type="button" onClick={ this.handleChangeCategory }><i className="fas fa-money-bill-alt fa-lg"></i></button>
+            <button className={this.state.category === 'SOCIAL' ? 'new-habit-category social-chosen social' : 'new-habit-category social'} value="SOCIAL" type="button" onClick={ this.handleChangeCategory }><i className="fas fa-heart fa-lg"></i></button>
+            <button className={this.state.category === 'FAMILY' ? 'new-habit-category family-chosen family' : 'new-habit-category family'} value="FAMILY" type="button" onClick={ this.handleChangeCategory }><i className="fas fa-home fa-lg"></i></button>
           </div>
-          <h2 className="new-habit-extra-info" >Want to stay incognito? Set habit as private</h2>
           <div className="privacy-con">
-          <input className={this.state.private === false ? 'privacy-btn privacy-chosen' : 'privacy-btn'} type="button" value="public" onClick={ this.handleChangePrivacy } />
-          <input className={this.state.private === true ? 'privacy-btn privacy-chosen' : 'privacy-btn'} type="button" value="private" onClick={ this.handleChangePrivacy } />
+            <button className={this.state.private === false ? 'privacy-btn privacy-chosen' : 'privacy-btn'} type="button" value="public" onClick={ this.handleChangePrivacy }><i className="fas fa-lock-open fa-xs"></i> Public</button>
+            <button className={this.state.private === true ? 'privacy-btn privacy-chosen' : 'privacy-btn'} type="button" value="private" onClick={ this.handleChangePrivacy }><i className="fas fa-lock fa-xs"></i> Private</button>
           </div>
           <input className="new-habit-submit-btn" type="submit" value="Create habit" />
           { errorMsg }

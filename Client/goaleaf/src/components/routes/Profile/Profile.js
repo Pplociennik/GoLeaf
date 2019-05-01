@@ -116,7 +116,7 @@ class Profile extends Component {
 
             deleteAccount =  <div className="confirm-delete-profile">
                 <span>Are you sure you want to delete your account?</span>
-                <input type="button" value="Delete my account" onClick={this.handleDelete}></input>
+                <button onClick={this.handleDelete}><i class="fas fa-heart-broken"></i> Delete profile</button>
             </div>
         }
         let errorMsg = <div className="error-msg">{this.state.errorMsg}</div>
@@ -141,10 +141,12 @@ class Profile extends Component {
                     </form>
                 </section>
                 <section className="delete-profile">
-                    <input className="delete-profile-btn" type="button" value="Delete account" onClick={e => this.setState({confirmDelete: true })}/>
+                    <input className="delete-profile-btn" type="button" value="Delete profile" onClick={e => this.setState({confirmDelete: true })}/>
                     {deleteAccount}
                 </section>
             </div>
+            
+
         )
     }
 

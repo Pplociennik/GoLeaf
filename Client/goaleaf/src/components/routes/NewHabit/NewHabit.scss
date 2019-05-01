@@ -1,65 +1,92 @@
 @import './../../../global-styles.scss';
 
 .new-habit {
-    min-height: calc(100vh - #{$navbar-height});
+    height: calc(100vh - #{$navbar-height});
     max-width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
 
     .new-habit-form {
+        height: 100%;
         width: 86%;
         border-radius: 8px;
         z-index: 2;
         display: flex;
         flex-direction: column;
-        justify-content: space-evenly;
-        
-        
-        .new-habit-title {
-            color: $secondary-color;
-            margin: 0.4em 0;
-            font-size: 2.2em;
-            letter-spacing: 1px;
-        }
-        .new-habit-title-input {
-            background-color: $primary-color;
-            height: 46px;
-            font-family: 'Nunito', sans-serif;          
-            font-size: 1.1em;
-            font-weight: 100;   
-            letter-spacing: 1px;      
-            color: #333;
-            caret-color: $text-color;
-            margin: 1.8em 0;
-            border: none;
-            border-bottom: 2px solid $secondary-color;
-            outline: 0;
-        }
-        .new-habit-extra-info {
-            color: lighten($text-color, 50%);
-            font-size: 0.8em;
-            font-weight: 300;
-            margin: 0 0 1em 1em;
+        justify-content: center;
+
+        @include lg {
+            width: 70%;
         }
 
+        .new-habit-title {
+            font-size: 1.4em;
+            margin: 0;
+            font-weight: 300;
+            color: $text-color; 
+            @include xl {
+                font-size: 2em;
+            }
+        }
+        
+        .new-habit-title-input {
+            background-color: $primary-color;
+            height: 30px;
+            margin-bottom: 0%;
+            padding: 10px;
+            border: 2px solid $text-color;
+            color: $secondary-color;
+            font-family: 'Nunito', sans-serif;          
+            font-size: 1.8em;
+            font-weight: 300;   
+            letter-spacing: 1px;      
+            caret-color: $text-color;
+            outline: 0;
+
+            @include xl {
+                height: 60px;
+                font-size: 2.4em;
+            }
+        }
+        .new-habit-title-input::placeholder {
+            color: $secondary-color;
+            opacity: 1;
+          }
+        .new-habit-categories-title{
+            margin: 0;
+            margin-top: 4%;
+            font-size: 1em;
+            font-weight: 400;
+        }
         .new-habit-categories {
             display: flex;
             flex-wrap: wrap;
-            margin-bottom: 1em;
-
             .new-habit-category {
-                width: 90px;
-                height: 34px;
+                background-color: #fff;
+                width: 36px;
+                height: 36px;
+                margin: 0.6em;
                 color: $text-color;
                 font-family: 'Nunito', sans-serif;         
-                margin: 0 1.2em 1em 0;
-                background-color: $primary-color;
                 border: 2px solid $secondary-color;
-                border-radius: 30px;
+                border-radius: 50%;
                 font-weight: 400;
                 letter-spacing: 2px;
                 cursor: pointer;
                 outline: 0; 
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+                @include xl {
+                    height: 60px;
+                    width: 60px;
+                    font-size: 1.2em;
+                    margin: 1em;
+                }
             }
             
             .new-habit-category:hover {
@@ -67,30 +94,84 @@
             }
             .none {
                 border: 2px solid $none-color;
+                color: $none-color;
             }
             .diet {
                 border: 2px solid $diet-color;
+                color: $diet-color;
             }
             .health {
                 border: 2px solid $health-color;
+                color: $health-color;
             }
             .study {
                 border: 2px solid $study-color;
+                color: $study-color;
             }
             .work {
                 border: 2px solid $work-color;
+                color: $work-color;
             }
             .sport {
                 border: 2px solid $sport-color;
+                color: $sport-color;
             }
             .social {
                 border: 2px solid $social-color;
+                color: $social-color;
             }
             .money {
                 border: 2px solid $money-color;
+                color: $money-color;
             }
             .family {
                 border: 2px solid $family-color;
+                color: $family-color;
+            }
+            @mixin style-text-under-category-icon() {
+                position: absolute;
+                margin-top: 50px;
+                color: $text-color;
+                font-size: 1em;
+                opacity: 0.7;
+            }
+            @include xl {
+               .none::after {
+                   content: 'none';
+                   @include style-text-under-category-icon();
+               } 
+               .diet::after {
+                   content: 'diet';
+                   @include style-text-under-category-icon();
+               } 
+               .health::after {
+                   content: 'health';
+                   @include style-text-under-category-icon();
+               } 
+               .study::after {
+                   content: 'study';
+                   @include style-text-under-category-icon();
+               } 
+               .work::after {
+                   content: 'work';
+                   @include style-text-under-category-icon();
+               } 
+               .sport::after {
+                   content: 'sport';
+                   @include style-text-under-category-icon();
+               } 
+               .social::after {
+                   content: 'social';
+                   @include style-text-under-category-icon();
+               } 
+               .money::after {
+                   content: 'money';
+                   @include style-text-under-category-icon();
+               } 
+               .family::after {
+                   content: 'family';
+                   @include style-text-under-category-icon();
+               } 
             }
             .none-chosen {
                 background-color: $none-color;
@@ -130,10 +211,10 @@
             }
         }
         .privacy-con {
-            margin-bottom: 1em;
+            margin: 4% 0;
             .privacy-btn {
-                height: 26px;
-                width: 84px;
+                height: 36px;
+                width: 96px;
                 background-color: $primary-color;
                 color: lighten($text-color, 30%);
                 font-size: 0.9em;
@@ -141,29 +222,47 @@
                 letter-spacing: 1px; 
                 font-weight: 400;               
                 border: none;
-                border-radius: 30px;
                 outline: 0;
                 cursor: pointer;
             }
+            .privacy-btn:first-child {
+                border: 2px solid lighten($none-color, 20%);
+                border-right: none;
+                border-top-left-radius: 30px;
+                border-bottom-left-radius: 30px;
+            }
+            .privacy-btn:last-child {
+                border: 2px solid lighten($none-color, 20%);
+                border-left: none;
+                border-top-right-radius: 30px;
+                border-bottom-right-radius: 30px;
+            }
             .privacy-chosen {
-                background-color: #dae1e7;
+                background-color: lighten($none-color, 20%);
+                color: #fff;
             }
         }
         .new-habit-submit-btn {
             align-self: center;
             background-color: $secondary-color;
-            height: 58px;
-            width: 280px;
-            margin-top: 1em;
+            height: 56px;
+            width: 260px;
+            margin: 4% 0;
             color: #fff;
             font-family: 'Nunito', sans-serif;          
             font-size: 1.5em;
-            font-weight: 700;
+            font-weight: 400;
             letter-spacing: 2px;
             border: none;
             border-radius: 30px;
             outline: 0;
             cursor: pointer;
+
+            @include lg {
+                width: 300px;
+                min-height: 60px;
+                font-size: 1.7em;
+            }
         }
         .new-habit-submit-btn:hover {
             box-shadow: 2px 2px 10px 0px rgba(51,51,51,0.3);                
@@ -176,48 +275,28 @@
             letter-spacing: 1px;
         }
     }
-    @include md {
-        justify-content: flex-start;
+}
+.new-habit::after{
+    content: url(./../../../assets/leaf-bg.png);
+    position: absolute;
+    bottom: 50px;
+    right: -200px;
+    overflow: hidden;
+    display: none;
 
-        .new-habit-form {
-            width: 700px;
-            margin: 30px auto;
-            padding: 0 40px;
-            box-shadow: 2px 2px 10px 0px rgba(51,51,51,0.2);
-            border-radius: 8px;
+    @include lg {
+        display: block;
+    }
+}
+.new-habit::before{
+    content: url(./../../../assets/leaf-bg.png);
+    position: absolute;
+    bottom: -220px;
+    right: 0;
+    transform: rotate(-40deg);
+    display: none;
 
-            .new-habit-title {
-
-            }
-            .new-habit-title-input {
-                height: 60px;
-                font-size: 2em;
-                letter-spacing: 2px;
-                margin: 0.4em 0;
-            }
-
-            .new-habit-extra-info {
-                font-size: 1em;
-                margin-bottom: 1em;
-            }
-            .new-habit-categories {
-                .new-habit-category {
-                    height: 34px;
-                    width: 120px;
-                    font-size: 1em;
-                }
-            }
-            .privacy {
-                .privacy-btn {
-                    height: 30px;
-                    width: 100px;
-                    font-size: 1em;
-                    font-weight: 500;
-                }
-                .privacy-chosen {
-                    color: $text-color;
-                }
-            }
-        }
+    @include lg {
+        display: block;
     }
 }
