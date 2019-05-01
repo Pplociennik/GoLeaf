@@ -20,4 +20,5 @@ public class MemberController {
     public Iterable<Member> getWholeMembersTable() {
         return memberService.getAll();
     }
+
 }

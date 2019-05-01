@@ -18,4 +18,6 @@ public interface MemberService {
     Iterable<Member> getAll();
 
     Integer countAllHabitMembers(Integer habitID);
+
+    void removeMemberById(Integer habitID, Integer userID);
 }

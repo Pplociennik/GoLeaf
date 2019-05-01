@@ -16,4 +16,6 @@ public interface MemberRepository extends CrudRepository<Member, Integer> {
     Boolean existsByHabitIDAndAndUserID(Integer habitID, Integer userID);
 
     Integer countAllByHabitID(Integer habitID);
+
+    void deleteByHabitIDAndUserID(Integer habitID, Integer userID);
 }
