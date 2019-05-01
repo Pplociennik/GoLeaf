@@ -87,6 +87,15 @@ public class HabitController {
         return habitService.listAllHabits();
     }
 
+    @PermitAll
+    @RequestMapping(value = "/getHabit/{id}", method = RequestMethod.GET)
+    public Habit getHabitById(Integer id) {
+        if (habitService.findById(id) == null)
+            throw new HabitNotExistsException("Habit does not exist!");
+
+        return habitService.findById(id);
+    }
+
     @RequestMapping(value = "/addmember", method = RequestMethod.POST)
     public HttpStatus addMemberByLogin(@RequestBody AddMemberViewModel model) throws AccountNotExistsException {
         Claims claims = Jwts.parser()
@@ -117,6 +126,16 @@ public class HabitController {
         memberService.saveMember(newMember);
         return HttpStatus.OK;
     }
+
+    @RequestMapping(value = "/removemember", method = RequestMethod.DELETE)
+    public HttpStatus removeMemberFromDatabase(@PathVariable Integer habitID, @PathVariable Integer userID) {
+        if (habitService.findById(habitID) == null)
+            throw new HabitNotExistsException("Habit does not exist!");
+
+        memberService.removeMemberById(habitID, userID);
+        return HttpStatus.OK;
+    }
+
 
     @RequestMapping(value = "/habit/members", method = RequestMethod.GET)
     public Iterable<Member> getAllHabitMembers(Integer habitID) {

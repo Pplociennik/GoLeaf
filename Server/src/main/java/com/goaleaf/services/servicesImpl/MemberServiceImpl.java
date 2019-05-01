@@ -39,5 +39,9 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.countAllByHabitID(habitID);
     }
 
+    public void removeMemberById(Integer habitID, Integer userID) {
+        memberRepository.deleteByHabitIDAndUserID(habitID, userID);
+    }
+
 
 }
