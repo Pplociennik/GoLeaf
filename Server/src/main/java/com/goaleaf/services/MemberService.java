@@ -19,5 +19,7 @@ public interface MemberService {
 
     Integer countAllHabitMembers(Integer habitID);
 
-    void removeMemberById(Integer habitID, Integer userID);
+    void removeSpecifiedMember(Integer habitID, Integer userID);
+
+    Member findSpecifiedMember(Integer habitID, Integer userID);
 }

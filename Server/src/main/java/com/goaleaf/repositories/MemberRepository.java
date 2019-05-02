@@ -18,4 +18,6 @@ public interface MemberRepository extends CrudRepository<Member, Integer> {
     Integer countAllByHabitID(Integer habitID);
 
     void deleteByHabitIDAndUserID(Integer habitID, Integer userID);
+
+    Member findByHabitIDAndUserID(Integer habitID, Integer userID);
 }

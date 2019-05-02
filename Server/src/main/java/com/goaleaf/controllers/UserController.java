@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.goaleaf.entities.DTO.UserDto;
 import com.goaleaf.entities.User;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.DisableNotificationsViewModel;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditUserViewModel;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.EmailViewModel;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.PasswordViewModel;
@@ -155,6 +156,21 @@ public class UserController {
     public HttpStatus removeUserFromDatabase(@PathVariable Integer id) {
         userService.removeUser(id);
         return HttpStatus.OK;
+    }
+
+    @RequestMapping(value = "/disablentf", method = RequestMethod.PUT)
+    public HttpStatus disableUserNotifications(@RequestBody DisableNotificationsViewModel model) throws AccountNotExistsException {
+        if (userService.findById(model.userID) == null)
+            throw new AccountNotExistsException("User does not exist!");
+        if (!jwtService.Validate(model.token, SECRET))
+            throw new TokenExpiredException("You have to be logged in!");
+
+        User temp = userService.findById(model.userID);
+        temp.setNotifications(false);
+        userRepository.save(temp);
+
+        return HttpStatus.OK;
+
     }
 
 }

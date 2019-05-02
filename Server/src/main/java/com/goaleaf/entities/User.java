@@ -2,6 +2,7 @@ package com.goaleaf.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import javafx.beans.DefaultProperty;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -9,7 +10,7 @@ import java.util.Set;
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
         property = "refId", scope = User.class)
 @Entity
-@Table(name ="users")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -31,10 +32,14 @@ public class User {
     @Column
     private String imageName;
 
+    @Column
+    private Boolean notifications;
+
     @ManyToMany
     private Set<Role> roles;
 
     public User() {
+        notifications = true;
     }
 
     public User(Integer id, String userName, String login, String password, String emailAddress, String imageName) {
@@ -44,10 +49,20 @@ public class User {
         this.password = password;
         this.emailAddress = emailAddress;
         this.imageName = imageName;
+        notifications = true;
     }
+
 
     public String getImageName() {
         return imageName;
+    }
+
+    public Boolean getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(Boolean notifications) {
+        this.notifications = notifications;
     }
 
     public void setImageName(String imageName) {
