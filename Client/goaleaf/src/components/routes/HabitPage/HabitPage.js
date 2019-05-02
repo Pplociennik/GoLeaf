@@ -28,40 +28,43 @@ class HabitPage extends Component {
                 let month = dateObj.getUTCMonth() + 1;
                 let year = dateObj.getUTCFullYear();
                 let startedOn = day + "/" + month + "/" + year;
+
+                axios.get(`/api/users/user/${res.data.creatorID}`)
+                    .then(response => {
+
+                        this.setState({
+                            creator: { id: res.data.creatorID, login: response.data.login }
+                        })
+                    }
+                    ).catch(err => this.setState({ errorMsg: err.response.data.message }))
+
                 this.setState({
                     habitTitle: res.data.habitTitle,
                     habitStartDate: startedOn,
                     category: res.data.category,
                     frequency: res.data.frequency,
-                    creator: res.data.creatorID,
                     private: res.data.private
                 })
             }
             ).catch(err => this.setState({ errorMsg: err.response.data.message }))
 
         axios.get(`/api/habits/habit/members?habitID=${this.state.id}`)
-            .then(res => { 
+            .then(res => {
                 res.data.map(member => {
 
-                    /**********************member dziala, ale member.userId undefined**************************/
-
                     console.log(member)
-                    console.log(member.userId)
+                    console.log(member.userID)
 
-                    /************************************************/
+                    axios.get(`/api/users/user/${member.userID}`)
+                        .then(response => {
 
-                    let login = ''
-
-                    axios.get(`/api/users/user/${member.userId}`)
-                        .then(res => {
-                            login = res.data.login
+                            let members = [...this.state.members, { id: member.userID, login: response.data.login }]
+                            this.setState({
+                                members: members
+                            })
                         }
                         ).catch(err => this.setState({ errorMsg: err.response.data.message }))
 
-                    let members = [...this.state.members, { id: member.userId, login: login }]
-                    this.setState({
-                        members: members
-                    })
                 })
             }
             ).catch(err => this.setState({ errorMsg: err.response.data.message }))
@@ -102,13 +105,15 @@ class HabitPage extends Component {
     leaveHabit = e => {
         e.preventDefault();
 
+        console.log(this.state)
+
         axios.delete('/api/habits/removemember', {
             "habitID": this.state.id,
             "token": localStorage.getItem("token"),
             "userLogin": this.state.currentUserLogin
         })
             .then(res => {
-                this.setState({ errorMsg: 'Successfully joined habit!' })
+                this.setState({ errorMsg: 'Successfully leaved habit!' })
             }
             ).catch(err => this.setState({ errorMsg: err.response.data.message }))
 
@@ -123,10 +128,10 @@ class HabitPage extends Component {
                     <h2>Start date: {this.state.habitStartDate}</h2>
                     <h2>Category: {this.state.category}</h2>
                     <h2>Frequency: {this.state.frequency}</h2>
-                    <h2>Created by: {this.state.creator}</h2>
+                    <h2>Created by: {this.state.creator.login}</h2>
                     <div>
                         <h2>Members: {this.state.countMembers}</h2>
-                        <div></div>
+                        <Members members={this.state.members} />
                     </div>
                 </div>
                 <div>

@@ -8,7 +8,7 @@ const Members = ({ members }) => {
                 members.map(member => {
                     return(
                         <div key={member.id}>
-                            <div>{member.login}</div>
+                            <h3>{member.login}</h3>
                         </div>
                     )
                 })
