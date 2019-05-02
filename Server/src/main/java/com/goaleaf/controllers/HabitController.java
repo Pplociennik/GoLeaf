@@ -8,6 +8,8 @@ import com.goaleaf.entities.User;
 import com.goaleaf.entities.viewModels.habitsCreating.AddMemberViewModel;
 import com.goaleaf.entities.viewModels.habitsCreating.HabitViewModel;
 import com.goaleaf.entities.viewModels.habitsManaging.DeleteMemberViewModel;
+import com.goaleaf.entities.viewModels.habitsManaging.JoinHabitViewModel;
+import com.goaleaf.entities.viewModels.habitsManaging.MemberExistsException;
 import com.goaleaf.services.HabitService;
 import com.goaleaf.services.JwtService;
 import com.goaleaf.services.MemberService;
@@ -15,10 +17,7 @@ import com.goaleaf.services.UserService;
 import com.goaleaf.validators.HabitTitleValidator;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.AccountNotExistsException;
 import com.goaleaf.validators.exceptions.habitsCreating.*;
-import com.goaleaf.validators.exceptions.habitsProcessing.HabitNotExistsException;
-import com.goaleaf.validators.exceptions.habitsProcessing.MemberDoesNotExistException;
-import com.goaleaf.validators.exceptions.habitsProcessing.UserAlreadyInHabitException;
-import com.goaleaf.validators.exceptions.habitsProcessing.UserNotInHabitException;
+import com.goaleaf.validators.exceptions.habitsProcessing.*;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -157,6 +156,27 @@ public class HabitController {
             throw new HabitNotExistsException("Habit with given id does not exist!");
 
         return memberService.countAllHabitMembers(habitID);
+    }
+
+    @RequestMapping(value = "/habit/join", method = RequestMethod.POST)
+    public HttpStatus joinHabit(@RequestBody JoinHabitViewModel model) throws AccountNotExistsException {
+        if (habitService.findById(model.habitID) == null)
+            throw new HabitNotExistsException("Habit does not exist!");
+        if (!jwtService.Validate(model.token, SECRET))
+            throw new TokenExpiredException("You have to be logged in!");
+        if (userService.findById(model.userID) == null)
+            throw new AccountNotExistsException("Account does not exist!");
+        if (habitService.findById(model.habitID).getPrivate())
+            throw new HabitNotPublicException("You cannot join private habits!");
+        if (memberService.findSpecifiedMember(model.habitID, model.userID) != null)
+            throw new MemberExistsException("You cannot join habit you are involved in yet!");
+
+        Member newMember = new Member();
+        newMember.setHabitID(model.habitID);
+        newMember.setUserID(model.userID);
+
+        memberService.saveMember(newMember);
+        return HttpStatus.OK;
     }
 
 }
