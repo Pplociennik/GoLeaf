@@ -76,7 +76,7 @@ class MyHabits extends Component {
       }
 
 
-    if (localStorage.getItem('token')){
+    if (localStorage.getItem('token') && foundHabits){
     return (
       <section className="my-habits">
       <h1 className="my-habits-title" >My habits</h1>
