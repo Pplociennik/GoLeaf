@@ -52,9 +52,6 @@ class HabitPage extends Component {
             .then(res => {
                 res.data.map(member => {
 
-                    console.log(member)
-                    console.log(member.userID)
-
                     axios.get(`/api/users/user/${member.userID}`)
                         .then(response => {
 
@@ -104,16 +101,17 @@ class HabitPage extends Component {
 
     leaveHabit = e => {
         e.preventDefault();
-
-        console.log(this.state)
+        console.log(this.state.id)
+        console.log(localStorage.getItem("token"))
+        console.log(this.props.userLogged)
 
         axios.delete('/api/habits/removemember', {
             "habitID": this.state.id,
             "token": localStorage.getItem("token"),
-            "userLogin": this.state.currentUserLogin
+            "userID": this.props.userLogged
         })
             .then(res => {
-                this.setState({ errorMsg: 'Successfully leaved habit!' })
+                this.setState({ errorMsg: 'Successfully left habit!' })
             }
             ).catch(err => this.setState({ errorMsg: err.response.data.message }))
 
@@ -139,6 +137,7 @@ class HabitPage extends Component {
                 </div>
                 <div>
                     <button onClick={this.leaveHabit}>Leave habit</button>
+                    {this.state.errorMsg}
                 </div>
             </div>
         )
