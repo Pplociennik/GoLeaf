@@ -153,6 +153,9 @@ public class HabitController {
 
         memberService.removeSpecifiedMember(model.habitID, model.userID);
 
+        if (memberService.countAllHabitMembers(model.habitID) == 0)
+            habitService.removeHabit(model.habitID);
+
         return HttpStatus.OK;
     }
 
