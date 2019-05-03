@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.goaleaf.engine</groupId>
     <artifactId>GoaLeaf</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.4-SNAPSHOT</version>
     <name>GoaLeaf</name>
     <description>GoaLeaf</description>
     <packaging>war</packaging>
