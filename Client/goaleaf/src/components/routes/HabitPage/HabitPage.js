@@ -23,6 +23,7 @@ class HabitPage extends Component {
 
         axios.get(`/api/habits/habit/members?habitID=${this.state.id}`)
             .then(res => {
+
                 res.data.map(member => {
 
                     axios.get(`/api/users/user/${member.userID}`)
@@ -93,10 +94,6 @@ class HabitPage extends Component {
     joinHabit = e => {
         e.preventDefault();
 
-        console.log(this.state.id)
-        console.log(localStorage.getItem("token"))
-        console.log(this.props.userLogged)
-
         axios.post('/api/habits/habit/join', {
             "habitID": this.state.id,
             "token": localStorage.getItem("token"),
@@ -111,16 +108,19 @@ class HabitPage extends Component {
             members: []
         })
 
+        /*reloadMembers wywoluje sie dopiero po drugim kliknieciu na joinHabit a powinno zrobic update stanu zaraz po kliknieciu zeby wyswietlic zaktualizowana liste czlonkow*/
+
         this.reloadMembers()
+
+        console.log(this.state)
 
 
     }
 
     leaveHabit = e => {
         e.preventDefault();
-        console.log(this.state.id)
-        console.log(localStorage.getItem("token"))
-        console.log(this.props.userLogged)
+
+        /*removemember nie dziala, chociaz w swaggerze jest wszystko ok*/
 
         axios.delete('/api/habits/removemember', {
             "habitID": this.state.id,
@@ -137,6 +137,8 @@ class HabitPage extends Component {
         })
 
         this.reloadMembers()
+
+        console.log(this.state)
 
     }
 
@@ -157,8 +159,6 @@ class HabitPage extends Component {
                 </div>
                 <div>
                     <button onClick={this.joinHabit}>Join habit</button>
-                </div>
-                <div>
                     <button onClick={this.leaveHabit}>Leave habit</button>
                     {this.state.errorMsg}
                 </div>
