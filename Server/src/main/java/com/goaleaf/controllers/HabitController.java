@@ -10,6 +10,7 @@ import com.goaleaf.entities.viewModels.habitsCreating.AddMemberViewModel;
 import com.goaleaf.entities.viewModels.habitsCreating.HabitViewModel;
 import com.goaleaf.entities.viewModels.habitsManaging.DeleteMemberViewModel;
 import com.goaleaf.entities.viewModels.habitsManaging.JoinHabitViewModel;
+import com.goaleaf.security.EmailNotificationsSender;
 import com.goaleaf.services.*;
 import com.goaleaf.validators.exceptions.habitsProcessing.MemberExistsException;
 import com.goaleaf.validators.HabitTitleValidator;
@@ -25,6 +26,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
+import javax.mail.MessagingException;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
@@ -100,7 +102,7 @@ public class HabitController {
     }
 
     @RequestMapping(value = "/invitemember", method = RequestMethod.POST)
-    public HttpStatus inviteMemberByLogin(@RequestBody AddMemberViewModel model) throws AccountNotExistsException {
+    public HttpStatus inviteMemberByLogin(@RequestBody AddMemberViewModel model) throws AccountNotExistsException, MessagingException {
         Claims claims = Jwts.parser()
                 .setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8))
                 .parseClaimsJws(model.token).getBody();
@@ -131,6 +133,12 @@ public class HabitController {
         ntf.setDescription(userService.findById(Integer.parseInt(claims.getSubject())).getLogin() + " invited you to habit " + habitService.findById(model.habitID).getHabitTitle() + "!");
         ntf.setUrl((model.url.isEmpty() ? "EMPTY_URL" : model.url));
         notificationService.saveNotification(ntf);
+
+        if (searchingUser.getNotifications()) {
+            EmailNotificationsSender sender = new EmailNotificationsSender();
+            sender.sendInvitationNotification(searchingUser.getEmailAddress(), searchingUser.getLogin(), userService.findById(Integer.parseInt(claims.getSubject())).getLogin(), habitService.findById(model.habitID).getHabitTitle());
+        }
+
         return HttpStatus.OK;
     }
 

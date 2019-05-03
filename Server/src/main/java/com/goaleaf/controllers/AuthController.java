@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.goaleaf.entities.DTO.UserDto;
 import com.goaleaf.entities.User;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.AuthorizeViewModel;
+import com.goaleaf.security.EmailNotificationsSender;
 import com.goaleaf.services.servicesImpl.JwtServiceImpl;
 import com.goaleaf.services.UserService;
 import com.goaleaf.validators.UserCredentialsValidator;
@@ -19,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
+import javax.mail.MessagingException;
 import java.util.Date;
 import java.util.concurrent.TimeoutException;
 
@@ -41,7 +43,7 @@ public class AuthController {
 
     @PermitAll
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public UserDto registerUserAccount(@RequestBody RegisterViewModel register) throws EmailExistsException, LoginExistsException, BadCredentialsException {
+    public UserDto registerUserAccount(@RequestBody RegisterViewModel register) throws EmailExistsException, LoginExistsException, BadCredentialsException, MessagingException {
 
 
         if (!userCredentialsValidator.isValidEmail(register))
@@ -56,6 +58,10 @@ public class AuthController {
             throw new BadCredentialsException("Passwords are not equal!");
 
         register.password = (bCryptPasswordEncoder.encode(register.password));
+
+        EmailNotificationsSender sender = new EmailNotificationsSender();
+        sender.sayHello(register.emailAddress, register.login);
+
         User user = userService.registerNewUserAccount(register);
         UserDto userDto = new UserDto();
         userDto.login = user.getLogin();
