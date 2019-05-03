@@ -7,4 +7,6 @@ public class AddMemberViewModel {
     public Integer habitID;
 
     public String userLogin;
+
+    public String url;
 }
