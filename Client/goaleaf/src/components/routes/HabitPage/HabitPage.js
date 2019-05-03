@@ -19,6 +19,36 @@ class HabitPage extends Component {
         "countMembers": ''
     };
 
+    reloadMembers() {
+
+        axios.get(`/api/habits/habit/members?habitID=${this.state.id}`)
+            .then(res => {
+                res.data.map(member => {
+
+                    axios.get(`/api/users/user/${member.userID}`)
+                        .then(response => {
+
+                            let members = [...this.state.members, { id: member.userID, login: response.data.login }]
+                            this.setState({
+                                members: members
+                            })
+                        }
+                        ).catch(err => this.setState({ errorMsg: err.response.data.message }))
+
+                })
+            }
+            ).catch(err => this.setState({ errorMsg: err.response.data.message }))
+
+        axios.get(`/api/habits/habit/countmembers?habitID=${this.state.id}`)
+            .then(res => {
+                this.setState({
+                    countMembers: res.data
+                })
+            }
+            ).catch(err => this.setState({ errorMsg: err.response.data.message }))
+
+    }
+
     componentDidMount() {
 
         axios.get(`/api/habits/getHabit/{id}?id=${this.state.id}`)
@@ -48,31 +78,7 @@ class HabitPage extends Component {
             }
             ).catch(err => this.setState({ errorMsg: err.response.data.message }))
 
-        axios.get(`/api/habits/habit/members?habitID=${this.state.id}`)
-            .then(res => {
-                res.data.map(member => {
-
-                    axios.get(`/api/users/user/${member.userID}`)
-                        .then(response => {
-
-                            let members = [...this.state.members, { id: member.userID, login: response.data.login }]
-                            this.setState({
-                                members: members
-                            })
-                        }
-                        ).catch(err => this.setState({ errorMsg: err.response.data.message }))
-
-                })
-            }
-            ).catch(err => this.setState({ errorMsg: err.response.data.message }))
-
-        axios.get(`/api/habits/habit/countmembers?habitID=${this.state.id}`)
-            .then(res => {
-                this.setState({
-                    countMembers: res.data
-                })
-            }
-            ).catch(err => this.setState({ errorMsg: err.response.data.message }))
+        this.reloadMembers()
 
         axios.get(`/api/users/user/${this.props.userLogged}`)
             .then(res => {
@@ -87,15 +93,26 @@ class HabitPage extends Component {
     joinHabit = e => {
         e.preventDefault();
 
-        axios.post('/api/habits/addmember', {
+        console.log(this.state.id)
+        console.log(localStorage.getItem("token"))
+        console.log(this.props.userLogged)
+
+        axios.post('/api/habits/habit/join', {
             "habitID": this.state.id,
             "token": localStorage.getItem("token"),
-            "userLogin": this.state.currentUserLogin
+            "userID": this.props.userLogged
         })
             .then(res => {
                 this.setState({ errorMsg: 'Successfully joined habit!' })
             }
             ).catch(err => this.setState({ errorMsg: err.response.data.message }))
+
+        this.setState({
+            members: []
+        })
+
+        this.reloadMembers()
+
 
     }
 
@@ -114,6 +131,12 @@ class HabitPage extends Component {
                 this.setState({ errorMsg: 'Successfully left habit!' })
             }
             ).catch(err => this.setState({ errorMsg: err.response.data.message }))
+
+        this.setState({
+            members: []
+        })
+
+        this.reloadMembers()
 
     }
 
