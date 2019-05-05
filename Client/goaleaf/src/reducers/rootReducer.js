@@ -3,7 +3,8 @@ const initState = {
     userLogged: null,
     users: [],
     habits: [],
-    members: []
+    members: [],
+    isLoading: true
 }
 
 const rootReducer = (state = initState, action) => {
@@ -15,8 +16,8 @@ const rootReducer = (state = initState, action) => {
     }
     const tokenData = parseJwt(action.token);
 
-    console.log(action)
 
+    console.log(action)
     if(action.type === 'VALIDATE_USER'){
         return {
             ...state,
@@ -51,7 +52,13 @@ const rootReducer = (state = initState, action) => {
                 users: action.payload
               }
     }
-
+    if(action.type === 'IS_LOADED'){
+            return {
+                ...state,
+                isLoading: false
+              }
+    }
+    
     return state;
 }   
 

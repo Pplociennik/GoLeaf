@@ -17,7 +17,6 @@ class Profile extends Component {
         errorMsg: '',
         picture: null,
         picPreview: null,
-        
         confirmDelete: false
     };
     
@@ -136,7 +135,7 @@ class Profile extends Component {
                             <input className="password-input" type="password" placeholder="old password" onChange={this.handleChange} />
                             <input className="password-input" type="password" placeholder="new password" onChange={this.handleChange} />
                             <input className="password-input" type="password" placeholder="repeat new password" onChange={this.handleChange} />
-                            <input className="change-password-btn" type="submit" value="submit" />
+                            <input className="change-password-btn" type="submit" value="Submit" />
                             {errorMsg}
                     </form>
                 </section>

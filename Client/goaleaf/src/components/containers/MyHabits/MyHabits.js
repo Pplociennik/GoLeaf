@@ -7,7 +7,6 @@ import HabitCard from './../../routes/HabitCard/HabitCard'
 class MyHabits extends Component {
 
   state = {
-      category: "ALL",
       habitCards: [],
       habitsToShow: 20,
       habitsSortBy: 'NEWEST'
@@ -29,25 +28,9 @@ class MyHabits extends Component {
 
   render() {
 
-    let habitCards = [];
-    this.props.habits.forEach(habit => {
-      habit.members = [];
-      this.props.members.forEach(member => {
-        if(habit.id === member.habitID){
-          habit.members.push(member.userID)
-        }
-      })
-      this.props.users.forEach(user => {
-        if(habit.creatorID === user.id){
-          habit.ownerLogin = user.login;
-          habitCards.push(habit)
-        }
-      })
-    })
+    let habitCards = this.props.habits;
 
     habitCards = habitCards.filter(habitCard => habitCard.members.includes(this.props.userLogged));
-
-    console.log(habitCards);
 
     habitCards.sort(function(a, b){
       let keyA = new Date(a.habitStartDate),
@@ -61,11 +44,9 @@ class MyHabits extends Component {
       let foundHabits = false;
       let habits = []
       habitCards.forEach(habit => {
-
-          if(!habit.private && (this.state.category === 'ALL' || habit.category === this.state.category)){
             foundHabits = true;
-          habits.push(<HabitCard key={ habit.id } id={ habit.id } title={ habit.habitTitle } category={ habit.category } frequency={ habit.frequency } startedOn={ habit.habitStartDate } private={ habit.private } login={habit.ownerLogin} membersNumber={habit.members.length} habitCardClicked={ this.handleHabitCardClicked } />)
-          }
+          habits.push(<HabitCard key={ habit.id } id={ habit.id } title={ habit.habitTitle } category={ habit.category } frequency={ habit.frequency } startedOn={ habit.habitStartDate } private={ habit.private } login={habit.owner.login} membersNumber={habit.members.length} habitCardClicked={ this.handleHabitCardClicked } />)
+          
       })
 
         let habitsToDisplay = habits.slice(0, this.state.habitsToShow);

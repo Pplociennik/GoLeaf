@@ -2,7 +2,6 @@ package com.goaleaf.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import javafx.beans.DefaultProperty;
 
 import javax.persistence.*;
 import java.util.Set;

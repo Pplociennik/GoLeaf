@@ -23,33 +23,8 @@ class BrowseHabits extends Component {
     }
   }
 
- componentDidMount() {
-    this.setState({habitCards: this.props.habits})
-  } 
-
   render() {
-
-    console.log(this.state)
-    let habitCards = [];
-    this.props.habits.forEach(habit => {
-      habit.members = [];
-      this.props.users.forEach(user => {
-        if(habit.creatorID === user.id){
-          habit.ownerLogin = user.login;
-          habitCards.push(habit)
-        }
-      })
-      this.props.members.forEach(member => {
-        if(habit.id === member.habitID){
-          habit.members.push(member.userID)
-          if(habit.id === 1){
-            habit.members.push(100)
-          }
-        }
-      })
-    })
-
-    console.log(habitCards)
+    let habitCards = this.props.habits;
 
     habitCards.sort(function(a, b){
       let keyA = new Date(a.habitStartDate),
@@ -69,14 +44,14 @@ class BrowseHabits extends Component {
     });
   }
 
-
       let foundHabits = false;
       let habits = []
+      console.log(habitCards)
       habitCards.forEach(habit => {
 
-          if(!habit.private && (this.state.category === 'ALL' || habit.category === this.state.category)){
+          if(!habit.private && !habit.members.find(member => member === this.props.userLogged) && (this.state.category === 'ALL' || habit.category === this.state.category)){
             foundHabits = true;
-          habits.push(<HabitCard key={ habit.id } id={ habit.id } title={ habit.habitTitle } category={ habit.category } frequency={ habit.frequency } startedOn={ habit.habitStartDate } private={ habit.private } login={habit.ownerLogin} membersNumber={habit.members.length} habitCardClicked={ this.handleHabitCardClicked } />)
+          habits.push(<HabitCard key={ habit.id } id={ habit.id } title={ habit.habitTitle } category={ habit.category } frequency={ habit.frequency } startedOn={ habit.habitStartDate } private={ habit.private } login={habit.owner.login} membersNumber={habit.members.length} habitCardClicked={ this.handleHabitCardClicked } />)
           }
       })
 
@@ -112,7 +87,7 @@ class BrowseHabits extends Component {
       <div className="habit-cards">
           { habitsToDisplay }
       </div>
-      <button className={habitsToDisplay.length < habits.length ? 'show-more-habits-btn' : 'hide-show-more-habits-btn'} onClick={() => this.setState({habitsToShow: this.state.habitsToShow + 5})}>SHOW MORE</button>
+      <button className={habitsToDisplay.length < habits.length ? 'show-more-habits-btn' : 'hide-show-more-habits-btn'} onClick={() => this.setState({habitsToShow: this.state.habitsToShow + 20})}>SHOW MORE</button>
       </section>
     )
   }   
@@ -121,9 +96,7 @@ class BrowseHabits extends Component {
 const mapStateToProps = state => {
   return {
     habits: state.habits,
-    users: state.users,
-    members: state.members
-
+    userLogged: state.userLogged
   }
 }
 

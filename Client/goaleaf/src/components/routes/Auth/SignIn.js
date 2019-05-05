@@ -23,6 +23,8 @@ class SignIn extends Component {
       return;
     }
 
+    this.setState({errorMsg: 'waiting'})
+
     axios.post(`/register`, {
         "emailAddress": this.state.email,
         "login": this.state.login,
@@ -48,6 +50,9 @@ class SignIn extends Component {
 
   render() {
       let errorMsg = <div className="error-msg">{ this.state.errorMsg }</div>
+      if (this.state.errorMsg === 'waiting') {
+        errorMsg = <div className="waiting-msg"></div>
+      }
 
     if (!localStorage.getItem('token')){
     return (
