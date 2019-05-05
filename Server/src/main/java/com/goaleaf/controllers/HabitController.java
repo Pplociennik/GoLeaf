@@ -153,6 +153,9 @@ public class HabitController {
 
         memberService.removeSpecifiedMember(model.habitID, model.userID);
 
+        if (memberService.countAllHabitMembers(model.habitID) == 0)
+            habitService.removeHabit(model.habitID);
+
         return HttpStatus.OK;
     }
 
@@ -184,7 +187,7 @@ public class HabitController {
         if (habitService.findById(model.habitID).getPrivate())
             throw new HabitNotPublicException("You cannot join private habits!");
         if (memberService.findSpecifiedMember(model.habitID, model.userID) != null)
-            throw new MemberExistsException("You cannot join habit you are involved in yet!");
+            throw new MemberExistsException("You cannot join habit you are already involved in!");
 
         Member newMember = new Member();
         newMember.setHabitID(model.habitID);
