@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom'
 import './HabitPage.scss'
 import {changeDateFormat1} from './../../../functions.js'
 
@@ -35,12 +36,14 @@ class HabitPage extends Component {
     }
 
     render() {
+        console.log(this.props.habits)
+        let xd = this.props.habits;
         let habit = this.props.habits.find(habit => habit.id === parseInt(this.props.match.params.id));
-        console.log(habit)
 
-        let userIsMember
-        habit.members.find(member => member === this.props.userLogged) ? userIsMember = true : userIsMember = false
-
+        let userIsMember;
+        
+        if(habit){
+            habit.members.find(member => member === this.props.userLogged) ? userIsMember = true : userIsMember = false;
         return (
             <div className="habit-page">
             <section className="habit-page-header-con">
@@ -62,6 +65,9 @@ class HabitPage extends Component {
                 </div>
             </section>
             </div>
+        )} else
+         return (
+            <Redirect to="/" />
         )
         }
     }
