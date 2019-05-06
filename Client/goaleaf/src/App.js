@@ -35,11 +35,10 @@ class App extends Component {
 
     this.props.habits.forEach(habit => {
       habit.members = [];
-      this.props.users.forEach(user => {
-        if(habit.creatorID === user.id){
-          habit.owner = user;
-        }
-      })
+      habit.owner = this.props.users.find(user => habit.creatorID === user.id)
+      if(habit.owner === undefined){
+        habit.owner = {login: 'user deleted'}
+      }
       this.props.members.forEach(member => {
         if(habit.id === member.habitID){
           habit.members.push(member.userID)
