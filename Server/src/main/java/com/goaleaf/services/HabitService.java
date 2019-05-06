@@ -29,4 +29,6 @@ public interface HabitService {
     Habit findById(Integer id);
 
     Habit findByOwnerName(String ownerName);
+
+    Iterable<Habit> findHabitsByCreatorID(Integer creatorID);
 }
