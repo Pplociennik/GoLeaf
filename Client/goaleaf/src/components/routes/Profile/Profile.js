@@ -53,6 +53,7 @@ class Profile extends Component {
     }
 
     handlePasswordChange = e => {
+        console.log(this.state)
         e.preventDefault();
         axios.put('/api/users/edit', {
             "token": localStorage.getItem("token"),
@@ -64,7 +65,7 @@ class Profile extends Component {
             "userName": ''
         })
         .then(res => {
-                this.setState({ errorMsg: 'Edit successful!' })
+                window.location.reload()
             }
             ).catch(err => this.setState({errorMsg: err.response.data.message}))
     }
@@ -132,9 +133,9 @@ class Profile extends Component {
                 <section className="change-password">
                     <form className="change-password-form" onSubmit={this.handlePasswordChange} autoComplete="off">
                             <h2 className="change-password-title">Change password</h2>
-                            <input className="password-input" type="password" placeholder="old password" onChange={this.handleChange} />
-                            <input className="password-input" type="password" placeholder="new password" onChange={this.handleChange} />
-                            <input className="password-input" type="password" placeholder="repeat new password" onChange={this.handleChange} />
+                            <input className="password-input" id="oldPassword" type="password" placeholder="old password" onChange={this.handleChange} />
+                            <input className="password-input" id="newPassword" type="password" placeholder="new password" onChange={this.handleChange} />
+                            <input className="password-input" id="matchingNewPassword" type="password" placeholder="repeat new password" onChange={this.handleChange} />
                             <input className="change-password-btn" type="submit" value="Submit" />
                             {errorMsg}
                     </form>
