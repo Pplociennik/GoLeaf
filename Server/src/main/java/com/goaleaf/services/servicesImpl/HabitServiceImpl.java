@@ -6,6 +6,7 @@ import com.goaleaf.entities.viewModels.habitsCreating.HabitViewModel;
 import com.goaleaf.repositories.HabitRepository;
 import com.goaleaf.services.HabitService;
 import com.goaleaf.services.MemberService;
+import com.goaleaf.services.UserService;
 import com.goaleaf.validators.exceptions.habitsCreating.WrongTitleException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +24,8 @@ public class HabitServiceImpl implements HabitService {
     private HabitRepository habitRepository;
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private UserService userService;
 
 
     @Override
@@ -66,6 +69,7 @@ public class HabitServiceImpl implements HabitService {
         newHabit.setCategory(model.category);
         newHabit.setPrivate(model.isPrivate);
         newHabit.setCreatorID(creatorID);
+        newHabit.setCreatorLogin(userService.findById(creatorID).getLogin());
 
         newHabit = habitRepository.save(newHabit);
 
@@ -91,5 +95,10 @@ public class HabitServiceImpl implements HabitService {
     @Override
     public Habit findByOwnerName(String ownerName) {
         return null;
+    }
+
+    @Override
+    public Iterable<Habit> findHabitsByCreatorID(Integer creatorID) {
+        return habitRepository.findAllByCreatorID(creatorID);
     }
 }

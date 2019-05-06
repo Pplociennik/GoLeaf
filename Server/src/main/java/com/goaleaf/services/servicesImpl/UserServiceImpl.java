@@ -1,10 +1,14 @@
 package com.goaleaf.services.servicesImpl;
 
+import com.goaleaf.entities.Habit;
 import com.goaleaf.entities.User;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditImageViewModel;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditUserViewModel;
 import com.goaleaf.repositories.RoleRepository;
+import com.goaleaf.services.HabitService;
+import com.goaleaf.services.MemberService;
 import com.goaleaf.services.UserService;
+import com.goaleaf.validators.UserCredentialsValidator;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.BadCredentialsException;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.EmailExistsException;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.LoginExistsException;
@@ -24,6 +28,12 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private HabitService habitService;
+    @Autowired
+    private MemberService memberService;
+
+    private UserCredentialsValidator userCredentialsValidator = new UserCredentialsValidator();
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -51,6 +61,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void removeUser(Integer id) {
         userRepository.delete(id);
+
+        Iterable<Habit> userHabits = habitService.findHabitsByCreatorID(id);
+
+        for (Habit habit : userHabits) {
+            memberService.removeSpecifiedMember(habit.getId(), habit.getCreatorID());
+            habit.setCreatorID(null);
+            habit.setCreatorLogin(habit.getCreatorLogin() + "(ACCOUNT_NOT_EXISTS)");
+        }
     }
 
     @Override
@@ -78,20 +96,28 @@ public class UserServiceImpl implements UserService {
 
     public void updateUser(EditUserViewModel model) throws BadCredentialsException {
         if (findById(model.id) != null) {
-            User updatedUser = findById(model.id);
-            updatedUser.setUserName(model.userName);
+            User updatingUser = findById(model.id);
+
 
             if (bCryptPasswordEncoder.matches(model.oldPassword, userRepository.findById(model.id).getPassword())) {
-                updatedUser.setEmailAddress(model.emailAddress);
-                if (model.newPassword.equals(model.matchingNewPassword))
-                    updatedUser.setPassword(bCryptPasswordEncoder.encode(model.newPassword));
-                else
+                if (!userCredentialsValidator.isValidEmail(model.emailAddress)) {
+                    throw new BadCredentialsException("Wrong email format!");
+                } else {
+                    updatingUser.setEmailAddress(model.emailAddress);
+                }
+                if (model.newPassword.equals(model.matchingNewPassword)) {
+                    if (!userCredentialsValidator.isPasswordFormatValid(model.newPassword)) {
+                        throw new BadCredentialsException("Password must be at least 6 characters long and cannot contain spaces!");
+                    } else {
+                        updatingUser.setPassword(bCryptPasswordEncoder.encode(model.newPassword));
+                    }
+                } else
                     throw new BadCredentialsException("Passwords are not equal!");
             } else {
                 throw new BadCredentialsException("Wrong Password!");
             }
 
-            userRepository.save(updatedUser);
+            userRepository.save(updatingUser);
         }
     }
 

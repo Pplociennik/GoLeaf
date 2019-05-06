@@ -46,7 +46,7 @@ public class AuthController {
     public UserDto registerUserAccount(@RequestBody RegisterViewModel register) throws EmailExistsException, LoginExistsException, BadCredentialsException, MessagingException {
 
 
-        if (!userCredentialsValidator.isValidEmail(register))
+        if (!userCredentialsValidator.isValidEmail(register.emailAddress))
             throw new BadCredentialsException("Wrong email format!");
         if (userService.findByEmailAddress(register.emailAddress) != null)
             throw new BadCredentialsException("Account with email " + register.emailAddress + " address already exists!");
@@ -60,9 +60,10 @@ public class AuthController {
         register.password = (bCryptPasswordEncoder.encode(register.password));
 
         EmailNotificationsSender sender = new EmailNotificationsSender();
-        sender.sayHello(register.emailAddress, register.login);
 
         User user = userService.registerNewUserAccount(register);
+        sender.sayHello(register.emailAddress, register.login);
+
         UserDto userDto = new UserDto();
         userDto.login = user.getLogin();
         userDto.emailAddress = user.getEmailAddress();
