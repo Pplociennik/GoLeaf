@@ -1,175 +1,81 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import './Members.js';
-import Members from './Members.js';
+import { Redirect } from 'react-router-dom'
+import './HabitPage.scss'
+import {changeDateFormat1} from './../../../functions.js'
 
 class HabitPage extends Component {
-
-    state = {
-        "id": parseInt(window.location.href.substr(window.location.href.lastIndexOf('/') + 1)),
-        "habitTitle": '',
-        "habitStartDate": '',
-        "category": '',
-        "frequency": '',
-        "creator": '',
-        "private": '',
-        "currentUserLogin": '',
-        "members": [],
-        "countMembers": ''
-    };
-
-    reloadMembers() {
-
-        axios.get(`/api/habits/habit/members?habitID=${this.state.id}`)
-            .then(res => {
-
-                res.data.map(member => {
-
-                    axios.get(`/api/users/user/${member.userID}`)
-                        .then(response => {
-
-                            let members = [...this.state.members, { id: member.userID, login: response.data.login }]
-                            this.setState({
-                                members: members
-                            })
-                        }
-                        ).catch(err => this.setState({ errorMsg: err.response.data.message }))
-
-                })
-            }
-            ).catch(err => this.setState({ errorMsg: err.response.data.message }))
-
-        axios.get(`/api/habits/habit/countmembers?habitID=${this.state.id}`)
-            .then(res => {
-                this.setState({
-                    countMembers: res.data
-                })
-            }
-            ).catch(err => this.setState({ errorMsg: err.response.data.message }))
-
-    }
-
-    componentDidMount() {
-
-        axios.get(`/api/habits/getHabit/{id}?id=${this.state.id}`)
-            .then(res => {
-                let dateObj = new Date(res.data.habitStartDate);
-                let day = dateObj.getUTCDate();
-                let month = dateObj.getUTCMonth() + 1;
-                let year = dateObj.getUTCFullYear();
-                let startedOn = day + "/" + month + "/" + year;
-
-                axios.get(`/api/users/user/${res.data.creatorID}`)
-                    .then(response => {
-
-                        this.setState({
-                            creator: { id: res.data.creatorID, login: response.data.login }
-                        })
-                    }
-                    ).catch(err => this.setState({ errorMsg: err.response.data.message }))
-
-                this.setState({
-                    habitTitle: res.data.habitTitle,
-                    habitStartDate: startedOn,
-                    category: res.data.category,
-                    frequency: res.data.frequency,
-                    private: res.data.private
-                })
-            }
-            ).catch(err => this.setState({ errorMsg: err.response.data.message }))
-
-        this.reloadMembers()
-
-        axios.get(`/api/users/user/${this.props.userLogged}`)
-            .then(res => {
-                this.setState({
-                    currentUserLogin: res.data.login
-                })
-            }
-            ).catch(err => this.setState({ errorMsg: err.response.data.message }))
-
-    }
-
-    joinHabit = e => {
-        e.preventDefault();
+    
+    joinHabit = id => {
 
         axios.post('/api/habits/habit/join', {
-            "habitID": this.state.id,
+            "habitID": id,
             "token": localStorage.getItem("token"),
             "userID": this.props.userLogged
         })
             .then(res => {
-                this.setState({ errorMsg: 'Successfully joined habit!' })
+                window.location.reload();
             }
-            ).catch(err => this.setState({ errorMsg: err.response.data.message }))
-
-        this.setState({
-            members: []
-        })
-
-        /*reloadMembers wywoluje sie dopiero po drugim kliknieciu na joinHabit a powinno zrobic update stanu zaraz po kliknieciu zeby wyswietlic zaktualizowana liste czlonkow*/
-
-        this.reloadMembers()
-
-        console.log(this.state)
-
+            ).catch(err => console.log(err.response.data.message))
 
     }
 
-    leaveHabit = e => {
-        e.preventDefault();
+    leaveHabit = id => {
 
-        /*removemember nie dziala, chociaz w swaggerze jest wszystko ok*/
-
-        axios.delete('/api/habits/removemember', {
-            "habitID": this.state.id,
+        axios.delete('/api/habits/removemember', {data: {
+            "habitID": id,
             "token": localStorage.getItem("token"),
             "userID": this.props.userLogged
-        })
+        }})
             .then(res => {
-                this.setState({ errorMsg: 'Successfully left habit!' })
+                window.location.reload();
             }
-            ).catch(err => this.setState({ errorMsg: err.response.data.message }))
-
-        this.setState({
-            members: []
-        })
-
-        this.reloadMembers()
-
-        console.log(this.state)
+            ).catch(err => console.log(err.response.data.message))
 
     }
 
     render() {
+        console.log(this.props.habits)
+        let xd = this.props.habits;
+        let habit = this.props.habits.find(habit => habit.id === parseInt(this.props.match.params.id));
+
+        let userIsMember;
+        
+        if(habit){
+            habit.members.find(member => member === this.props.userLogged) ? userIsMember = true : userIsMember = false;
         return (
-            <div>
-                <div>
-                    <h1>Title: {this.state.habitTitle}</h1>
-                    {this.state.private ? <h2>Private</h2> : <h2>Public</h2>}
-                    <h2>Start date: {this.state.habitStartDate}</h2>
-                    <h2>Category: {this.state.category}</h2>
-                    <h2>Frequency: {this.state.frequency}</h2>
-                    <h2>Created by: {this.state.creator.login}</h2>
-                    <div>
-                        <h2>Members: {this.state.countMembers}</h2>
-                        <Members members={this.state.members} />
+            <div className="habit-page">
+            <section className="habit-page-header-con">
+                <div className="habit-page-info-con">
+                    <h1 className="habit-page-title">{habit.habitTitle}</h1>
+                    <div className="habit-page-info-blocks">
+                            <h2 className="habit-page-info-block started-date"><span><i className="far fa-calendar-alt fa-xs"></i> started on:</span> <span className="date-span"> {changeDateFormat1(habit.habitStartDate)}</span></h2>
+                            <h2 className="habit-page-info-block created-by"><span><i className="fas fa-user fa-xs"></i> created by: </span><span> {habit.owner.login}</span></h2>
+                            <h2 className="habit-page-info-block privacy"><span><i className={habit.private ? 'fas fa-lock fa-xs' : 'fa fa-lock-open fa-xs'}></i> privacy:</span> <span> {habit.private ? 'Private' : 'Public'}</span></h2>
+                    </div>
+                    <div className="habit-page-info-blocks">
+                            <h2 className={`habit-page-info-block category-${habit.category}`}><span><i className="fas fa-dumbbell fa-sm"></i> category:</span> <span> {habit.category}</span></h2>
+                            <h2 className="habit-page-info-block frequency"><span><i className="fas fa-history fa-sm"></i> frequency:</span> <span> {habit.frequency}</span></h2>
+                            <h2 className="habit-page-info-block members-number"><span><i className="fas fa-user-friends fa-sm"></i> members:</span> <span> {habit.members.length}</span></h2>
                     </div>
                 </div>
-                <div>
-                    <button onClick={this.joinHabit}>Join habit</button>
-                    <button onClick={this.leaveHabit}>Leave habit</button>
-                    {this.state.errorMsg}
+                <div className="habit-page-header-btn-con">
+                    {userIsMember ? <button className="habit-page-header-btn leave-habit-btn" onClick={() => this.leaveHabit(habit.id)}>Leave habit</button> : <button className="habit-page-header-btn join-habit-btn" onClick={() => this.joinHabit(habit.id)}>Join habit</button>}
                 </div>
+            </section>
             </div>
+        )} else
+         return (
+            <Redirect to="/" />
         )
+        }
     }
-}
 
 const mapStateToProps = state => ({
     userLogged: state.userLogged,
-    members: state.members
+    habits: state.habits,
+    isLoading: state.isLoading
 })
 
 export default connect(mapStateToProps)(HabitPage);

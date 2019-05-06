@@ -1,32 +1,39 @@
 @import './../../../global-styles.scss';
 
 .new-habit {
-    height: calc(100vh - #{$navbar-height});
     max-width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    min-height: calc(100vh - #{$navbar-height});
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     .new-habit-form {
-        height: 100%;
-        width: 86%;
+        background-color: $primary-color;
+        width: 500px;
+        max-width: 86%;
+        height: auto;
+        max-height: 90%;
+        border: none;
         border-radius: 8px;
         z-index: 2;
         display: flex;
         flex-direction: column;
-        justify-content: center;
 
-        @include lg {
-            width: 70%;
+        @include md {
+            background-color: $primary-color-light;
+            padding: 30px;
+            border: 3px solid $secondary-color;
+            box-shadow: 2px 2px 10px 0px rgba(51,51,51,0.2);        
         }
 
         .new-habit-title {
             font-size: 1.4em;
-            margin: 0;
+            margin: 1em 0;
             font-weight: 300;
-            color: $text-color; 
+            color: $secondary-color; 
             @include xl {
                 font-size: 2em;
             }
@@ -34,41 +41,44 @@
         
         .new-habit-title-input {
             background-color: $primary-color;
-            height: 30px;
-            margin-bottom: 0%;
-            padding: 10px;
-            border: 2px solid $text-color;
-            color: $secondary-color;
+            height: 40px;
+            margin: 0.6em 0;
+            border: none;
+            border-bottom: 1px solid $secondary-color;
+            color: $text-color;
             font-family: 'Nunito', sans-serif;          
-            font-size: 1.8em;
+            font-size: 1.6em;
             font-weight: 300;   
-            letter-spacing: 1px;      
+            letter-spacing: 2px;      
             caret-color: $text-color;
             outline: 0;
 
-            @include xl {
-                height: 60px;
-                font-size: 2.4em;
+            @include md {
+                background-color: $primary-color-light;
+                font-size: 1.6em;
+                height: 40px;
             }
         }
         .new-habit-title-input::placeholder {
-            color: $secondary-color;
-            opacity: 1;
+            color: $text-color;
+            opacity: 0.6;
           }
         .new-habit-categories-title{
             margin: 0;
-            margin-top: 4%;
-            font-size: 1em;
+            font-size: 0.8em;
             font-weight: 400;
+            color: $text-color;
+            opacity: 0.8;
         }
         .new-habit-categories {
+            margin: 1em 0;
             display: flex;
             flex-wrap: wrap;
             .new-habit-category {
                 background-color: #fff;
-                width: 36px;
-                height: 36px;
-                margin: 0.6em;
+                width: 42px;
+                height: 42px;
+                margin: 1em 0.8em;
                 color: $text-color;
                 font-family: 'Nunito', sans-serif;         
                 border: 2px solid $secondary-color;
@@ -80,13 +90,6 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                
-                @include xl {
-                    height: 60px;
-                    width: 60px;
-                    font-size: 1.2em;
-                    margin: 1em;
-                }
             }
             
             .new-habit-category:hover {
@@ -130,12 +133,11 @@
             }
             @mixin style-text-under-category-icon() {
                 position: absolute;
-                margin-top: 50px;
+                margin-top: 32px;
                 color: $text-color;
-                font-size: 1em;
+                font-size: 0.9em;
                 opacity: 0.7;
             }
-            @include xl {
                .none::after {
                    content: 'none';
                    @include style-text-under-category-icon();
@@ -172,7 +174,7 @@
                    content: 'family';
                    @include style-text-under-category-icon();
                } 
-            }
+            
             .none-chosen {
                 background-color: $none-color;
                 color: #fff;
@@ -211,68 +213,58 @@
             }
         }
         .privacy-con {
-            margin: 4% 0;
+            margin-top: 1.2em;
+            display: flex;
             .privacy-btn {
                 height: 36px;
-                width: 96px;
-                background-color: $primary-color;
-                color: lighten($text-color, 30%);
-                font-size: 0.9em;
+                width: 100px;
+                background-color: $primary-color-light;
+                color: #7189bf;
+                font-size: 0.75em;
                 font-family: 'Nunito', sans-serif;
                 letter-spacing: 1px; 
                 font-weight: 400;               
-                border: none;
+                border: 2px solid #7189bf;
                 outline: 0;
                 cursor: pointer;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                border-radius: 30px;
+                margin: 0 0.8em;
             }
-            .privacy-btn:first-child {
-                border: 2px solid lighten($none-color, 20%);
-                border-right: none;
-                border-top-left-radius: 30px;
-                border-bottom-left-radius: 30px;
-            }
-            .privacy-btn:last-child {
-                border: 2px solid lighten($none-color, 20%);
-                border-left: none;
-                border-top-right-radius: 30px;
-                border-bottom-right-radius: 30px;
-            }
+
             .privacy-chosen {
-                background-color: lighten($none-color, 20%);
-                color: #fff;
+                background-color: #7189bf;
+                color: $primary-color-light;
             }
         }
         .new-habit-submit-btn {
             align-self: center;
             background-color: $secondary-color;
-            height: 56px;
-            width: 260px;
-            margin: 4% 0;
+            height: 50px;
+            width: 200px;
+            margin-top: 50px;
             color: #fff;
             font-family: 'Nunito', sans-serif;          
-            font-size: 1.5em;
+            font-size: 1.2em;
             font-weight: 400;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             border: none;
             border-radius: 30px;
             outline: 0;
             cursor: pointer;
-
-            @include lg {
-                width: 300px;
-                min-height: 60px;
-                font-size: 1.7em;
-            }
         }
         .new-habit-submit-btn:hover {
             box-shadow: 2px 2px 10px 0px rgba(51,51,51,0.3);                
         }
         .error-msg {
             align-self: center;
+            margin-top: 6px;
             color: $error-color;
-            margin-top: 0.4em;
-            font-size: 1em;
-            letter-spacing: 1px;
+            font-size: 0.7em;
+            
         }
     }
 }

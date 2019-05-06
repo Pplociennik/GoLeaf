@@ -1,0 +1,173 @@
+@import './../../../global-styles.scss';
+
+.habit-page {
+    width: 100%;
+    color: $text-color;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .habit-page-header-con {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 16px;
+        margin: 30px;
+        display: flex;
+        flex-direction: column;
+        
+        @include md {
+            flex-direction: row;
+        }
+
+        @include md {
+            width: 80%;
+        }
+        @include lg {
+            width: 70%;
+        }
+        .habit-page-info-con {
+            display: flex;
+            flex-wrap: wrap;
+            
+            .habit-page-title {
+                width: 100%;
+                margin: 0.5em 0;
+                font-size: 2.4em;
+                font-weight: 300;
+                @include lg {
+                    font-size: 4em;
+                }
+            }
+            .habit-page-info-blocks {
+                min-width: 230px;
+                max-width: 90%;
+                margin-left: 20px;
+                font-size: 0.7em;
+                display: flex;
+                flex-direction: column;
+                
+                @include lg {
+                    margin-left: 50px;
+                }
+
+                .habit-page-info-block {
+                    background-color: $primary-color;
+                    margin: 4px 0;
+                    font-weight: 200;
+
+                    display: flex;
+                    justify-content: space-between;
+
+                    i {
+                        margin-right: 6px;
+                    }
+
+                    span:first-child{
+                        color: lighten($text-color, 40%);
+                    }
+                    span:last-child {
+                        font-weight: 400;
+                    }
+                }
+
+                .frequency{
+                    span:last-child{
+                        background-color: #f1eb9a;
+                        padding: 0 10px;
+                        border-radius: 4px; 
+                    }
+                }
+                @mixin style-category-span() {
+                    padding: 0 10px;
+                    border-radius: 4px;
+                    text-transform: lowercase;
+                    text-transform: capitalize;
+                }
+                .category-NONE{
+                    span:last-child{
+                        background-color: $none-color;
+                        @include style-category-span();
+                    }
+                }
+                .category-DIET{
+                    span:last-child{
+                        background-color: $diet-color;
+                        @include style-category-span();
+                    }
+                }
+                .category-SPORT{
+                    span:last-child{
+                        background-color: $sport-color;
+                        @include style-category-span();
+                    }
+                }
+                .category-HEALTH{
+                    span:last-child{
+                        background-color: $health-color;
+                        @include style-category-span();
+                    }
+                }
+                .category-STUDY{
+                    span:last-child{
+                        background-color: $study-color;
+                        @include style-category-span();
+                    }
+                }
+                .category-WORK{
+                    span:last-child{
+                        background-color: $work-color;
+                        @include style-category-span();
+                    }
+                }
+                .category-MONEY{
+                    span:last-child{
+                        background-color: $money-color;
+                        @include style-category-span();
+                    }
+                }
+                .category-SOCIAL{
+                    span:last-child{
+                        background-color: $social-color;
+                        @include style-category-span();
+                    }
+                }
+                .category-FAMILY{
+                    span:last-child{
+                        background-color: $family-color;
+                        @include style-category-span();
+                    }
+                }
+
+            }
+
+            }
+
+            .habit-page-header-btn-con {
+                margin: 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .habit-page-header-btn {
+                    background-color: $secondary-color;
+                    height: 60px;
+                    width: 190px;
+                    color: #fff;
+                    font-family: 'Nunito', sans-serif;          
+                    font-size: 1.2em;
+                    font-weight: 400;
+                    letter-spacing: 1px;
+                    border: none;
+                    border-radius: 30px;
+                    outline: 0;
+                    cursor: pointer;
+                }
+                .habit-page-header-btn:hover {
+                    box-shadow: 2px 2px 10px 0px rgba(51,51,51,0.3);                
+                }
+                .leave-habit-btn {
+                    background-color: #f33535;
+                }
+            }
+        }
+    }

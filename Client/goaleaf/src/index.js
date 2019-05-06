@@ -15,39 +15,43 @@ const token = localStorage.getItem('token');
 
 // GET USERS
 export function fetchUsers() {
-  return function(dispatch){
+  return dispatch =>
 axios.get(`/api/users/all`)
       .then(res => {
-      store.dispatch({ type: 'GET_USERS', payload: res.data});
+        dispatch({ type: 'GET_USERS', payload: res.data});
      } )
-  }}
+  }
 
 // GET HABITS
 export function fetchHabits(){
- return function(dispatch){
+ return dispatch => 
     axios.get(`/api/habits/all`)
       .then(res => {
         dispatch({ type: 'GET_HABITS', payload: res.data});
       })
-      }
+      
     };
 
-// GET MEMBERS
+    // GET MEMBERS
 export function fetchMembers(){
- return function(dispatch){
-    axios.get(`/api/members/all`)
-      .then(res => {
-        dispatch({ type: 'GET_MEMBERS', payload: res.data});
-      })
-      }
-    };
-
+    return dispatch =>
+        axios.get(`/api/members/all`)
+          .then(res => {
+            dispatch({ type: 'GET_MEMBERS', payload: res.data});
+          })
+          
+        };
+    // IS LOADED
+export function isLoaded(){
+    return dispatch =>
+          dispatch({ type: 'IS_LOADED'});
+      };
+    
 axios.post('/validatetoken', {
   "Token": token
 }).then(res => {
       store.dispatch({ type: 'VALIDATE_USER', token: token})
       renderApp();
-
            }
 ).catch(err => {store.dispatch({ type: 'INVALIDATE_USER'})
             renderApp();
