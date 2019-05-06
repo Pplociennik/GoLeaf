@@ -18,9 +18,9 @@ public class MainController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String generateModel() {
-        User user = new User(1, "defaultUser", "DefaultUser", "def", "def", "def@default.com");
+//        User user = new User(1, "DefaultUser", "def", "def", "def@default.com");
 
-        userService.saveUser(user);
+//        userService.saveUser(user);
 
         return "Generated default User!";
     }

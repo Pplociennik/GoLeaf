@@ -1,40 +1,60 @@
 package com.goaleaf.controllers;
 
-import com.goaleaf.DTO.UserDto;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.goaleaf.entities.DTO.UserDto;
 import com.goaleaf.entities.User;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.DisableNotificationsViewModel;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditUserViewModel;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.EmailViewModel;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.PasswordViewModel;
+import com.goaleaf.repositories.UserRepository;
+import com.goaleaf.security.EmailSender;
+import com.goaleaf.services.servicesImpl.JwtServiceImpl;
 import com.goaleaf.services.UserService;
-import com.goaleaf.validators.UserValidator;
-import com.goaleaf.validators.exceptions.EmailExistsException;
+import com.goaleaf.validators.UserCredentialsValidator;
+import com.goaleaf.validators.exceptions.accountsAndAuthorization.AccountNotExistsException;
+import com.goaleaf.validators.exceptions.accountsAndAuthorization.BadCredentialsException;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import javax.annotation.security.PermitAll;
+import javax.mail.MessagingException;
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
 import java.util.Optional;
+
+import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
+import static com.goaleaf.security.SecurityConstants.*;
 
 @RestController
 @RequestMapping("/api/users")
 @CrossOrigin(origins = "http://localhost:3000")
-@Component
 public class UserController {
 
     @Autowired
     private UserService userService;
     @Autowired
-    private UserValidator userValidator;
+    private JwtServiceImpl jwtService;
+    @Autowired
+    private UserCredentialsValidator userCredentialsValidator;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     //to listing all users
+    @PermitAll
     @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Iterable<User> list(Model model) {
+    public Iterable<User> list(/*String token*/) {
+//        jwtService.Validate(token);
+//        userService.saveUser(new User(1, "defaultUser", "DefaultUser", "def", "def", "def@default.com"));
         return userService.listAllUsers();
     }
 
@@ -56,61 +76,101 @@ public class UserController {
 //        return userService.getUserById(publicId);
 //    }
 
-    //to creating registration form
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String showRegistrationForm(WebRequest request, Model model) {
-        UserDto userDTO = new UserDto();
-        model.addAttribute("user", userDTO);
-        return "registration";
+    @CrossOrigin("http://localhost:3000")
+    @RequestMapping(method = RequestMethod.PUT, value = "/edit")
+    public void updateUser(@RequestBody EditUserViewModel model) throws BadCredentialsException {
+
+        if (!jwtService.Validate(model.token, SECRET))
+            throw new TokenExpiredException("You have to be logged in!");
+
+        userService.updateUser(model);
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ModelAndView registerUserAccount(
-            @ModelAttribute("user") @Valid UserDto accountDto,
-            BindingResult result,
-            WebRequest request,
-            Errors errors) {
+    @RequestMapping(method = RequestMethod.POST, value = "/resetpassword")
+    public void resetPassword(@RequestBody EmailViewModel model) throws AccountNotExistsException, MessagingException {
+        if (userService.findByEmailAddress(model.emailAddress) == null)
+            throw new AccountNotExistsException("Account with this email address does not exist!");
 
-        User registered = new User();
-        if (!result.hasErrors()) {
-            registered = createUserAccount(accountDto, result);
-        }
-        if (registered == null) {
-            result.rejectValue("email", "message.regError");
-        }
-        if (result.hasErrors()) {
-            return new ModelAndView("registration", "user", accountDto);
-        } else {
-            return new ModelAndView("successRegister", "user", accountDto);
-        }
+        String resetPasswordToken = JWT.create()
+                .withSubject(String.valueOf(userService.findByEmailAddress(model.emailAddress).getId()))
+                .withClaim("Email", model.emailAddress)
+                .withExpiresAt(new Date(System.currentTimeMillis() + PASSWORD_RECOVERY_SECRET_EXPIRATION_TIME))
+                .sign(HMAC512(PASSWORD_RECOVERY_SECRET.getBytes()));
+        jwtService.Validate(resetPasswordToken, PASSWORD_RECOVERY_SECRET);
+
+        EmailSender sender = new EmailSender();
+        sender.setSender("goaleaf@gmail.com", "spaghettiCode");
+        sender.addRecipient(model.emailAddress);
+        sender.setSubject("GoaLeaf Password Reset Request");
+        sender.setBody("Hello " + userService.findByEmailAddress(model.emailAddress).getLogin() + "!\n\n" +
+                "Here's your confirmation link: http://localhost:3000/resetpassword/" + resetPasswordToken + "\n\n" +
+                "If you have not requested a password reset, ignore this message.\n\n" +
+                "Thank you and have a nice day! :)\n\n" +
+                "GoaLeaf group");
+//        sender.addAttachment("TestFile.txt");
+        sender.send();
     }
 
-    private User createUserAccount(UserDto accountDto, BindingResult result) {
-        User registered = null;
-        try {
-            registered = userService.registerNewUserAccount(accountDto);
-        } catch (EmailExistsException e) {
-            e.printStackTrace();
-        }
-        return registered;
+    @RequestMapping(method = RequestMethod.POST, value = "/requestpasswordvalidate")
+    public HttpStatus validateRequestPasswordToken(String token) throws BadCredentialsException {
+        Date currentDate = new Date();
+
+        if (!jwtService.Validate(token, PASSWORD_RECOVERY_SECRET))
+            throw new BadCredentialsException("Account not exists!");
+        else
+            return HttpStatus.OK;
     }
 
-    //to editing user in database
-    @RequestMapping(value = "/user", method = RequestMethod.PUT)
-    public ResponseEntity<Void> edit(@RequestBody @Valid @NotNull User user) {
-        if (!userService.checkIfExists(user.getId()))
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        else {
-            userService.saveUser(user);
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        }
+    @RequestMapping(method = RequestMethod.POST, value = "/setnewpassword")
+    public void setNewUserPassword(@RequestBody PasswordViewModel newPasswords) throws BadCredentialsException {
+        Claims claims = Jwts.parser()
+                .setSigningKey(PASSWORD_RECOVERY_SECRET.getBytes(StandardCharsets.UTF_8))
+                .parseClaimsJws(newPasswords.token).getBody();
+
+        User user = userService.findById(Integer.parseInt(claims.getSubject()));
+
+        if (!userCredentialsValidator.isPasswordFormatValid(newPasswords.password))
+            throw new BadCredentialsException("Password must be at least 6 characters long and cannot contain spaces!");
+        if (!(newPasswords.password.equals(newPasswords.matchingPassword)))
+            throw new BadCredentialsException("Passwords are not equal!");
+
+        user.setPassword(bCryptPasswordEncoder.encode(newPasswords.password));
+        userService.saveUser(user);
     }
 
-    //to removing user from database
-//    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
-//    public ResponseEntity<User> delete(@PathVariable Integer id) {
-//        userService.removeUser(id);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+    @RequestMapping(value = "/user/{login}", method = RequestMethod.GET)
+    public UserDto getUserByLogin(String login) {
+        User user = userService.findByLogin(login);
+
+        UserDto userDto = new UserDto();
+        userDto.userID = user.getId();
+        userDto.emailAddress = user.getEmailAddress();
+        userDto.login = user.getLogin();
+        userDto.userName = user.getUserName();
+
+        return userDto;
+    }
+
+    @CrossOrigin("http://localhost:3000")
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
+    public HttpStatus removeUserFromDatabase(@PathVariable Integer id) {
+        userService.removeUser(id);
+        return HttpStatus.OK;
+    }
+
+    @RequestMapping(value = "/disablentf", method = RequestMethod.PUT)
+    public HttpStatus disableUserNotifications(@RequestBody DisableNotificationsViewModel model) throws AccountNotExistsException {
+        if (userService.findById(model.userID) == null)
+            throw new AccountNotExistsException("User does not exist!");
+        if (!jwtService.Validate(model.token, SECRET))
+            throw new TokenExpiredException("You have to be logged in!");
+
+        User temp = userService.findById(model.userID);
+        temp.setNotifications(false);
+        userRepository.save(temp);
+
+        return HttpStatus.OK;
+
+    }
 
 }

@@ -14,8 +14,12 @@ npm start
 ## Progress
 Log in / Sign in
 
+
+![Login View](https://i.ibb.co/q7NJwbY/goaleaf-login.png)
+=======
 ![Login View](https://i.ibb.co/q7NJwbY/goaleaf-login.png)
 
 Profile Page
 
 New Habit
+

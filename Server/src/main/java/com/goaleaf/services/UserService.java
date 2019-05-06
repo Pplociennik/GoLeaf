@@ -1,9 +1,13 @@
 package com.goaleaf.services;
 
-import com.goaleaf.DTO.UserDto;
 import com.goaleaf.entities.User;
 
-import com.goaleaf.validators.exceptions.EmailExistsException;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditImageViewModel;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditUserViewModel;
+import com.goaleaf.validators.exceptions.accountsAndAuthorization.BadCredentialsException;
+import com.goaleaf.validators.exceptions.accountsAndAuthorization.EmailExistsException;
+import com.goaleaf.validators.exceptions.accountsAndAuthorization.LoginExistsException;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.RegisterViewModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,8 +25,16 @@ public interface UserService {
 
     Iterable<User> listAllUsersPaging(Integer pageNr, Integer howManyOnPage);
 
-    User registerNewUserAccount(UserDto accountDto) throws EmailExistsException;
+    User registerNewUserAccount(RegisterViewModel register) throws EmailExistsException, LoginExistsException;
 
-    User findByUserName(String username);
+    User findByLogin(String user);
+
+    User findById(Integer id);
+
+    void updateUser(EditUserViewModel model) throws BadCredentialsException;
+
+    void updateUserImage(EditImageViewModel model);
+
+    User findByEmailAddress(String email);
 
     }

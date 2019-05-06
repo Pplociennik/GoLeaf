@@ -1,0 +1,13 @@
+@import './../../../global-styles.scss';
+
+.dashboard {
+    background-color: $primary-color;
+    max-width: 100%;
+    min-height: calc(100vh - #{$navbar-height});
+    margin: 0 auto; 
+    overflow-x: hidden;
+
+    @include xl {
+        width: 86%;
+    }
+}
