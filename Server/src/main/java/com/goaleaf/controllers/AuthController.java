@@ -46,7 +46,7 @@ public class AuthController {
     public UserDto registerUserAccount(@RequestBody RegisterViewModel register) throws EmailExistsException, LoginExistsException, BadCredentialsException, MessagingException {
 
 
-        if (!userCredentialsValidator.isValidEmail(register))
+        if (!userCredentialsValidator.isValidEmail(register.emailAddress))
             throw new BadCredentialsException("Wrong email format!");
         if (userService.findByEmailAddress(register.emailAddress) != null)
             throw new BadCredentialsException("Account with email " + register.emailAddress + " address already exists!");

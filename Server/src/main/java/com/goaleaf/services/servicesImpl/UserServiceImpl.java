@@ -8,6 +8,7 @@ import com.goaleaf.repositories.RoleRepository;
 import com.goaleaf.services.HabitService;
 import com.goaleaf.services.MemberService;
 import com.goaleaf.services.UserService;
+import com.goaleaf.validators.UserCredentialsValidator;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.BadCredentialsException;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.EmailExistsException;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.LoginExistsException;
@@ -31,6 +32,8 @@ public class UserServiceImpl implements UserService {
     private HabitService habitService;
     @Autowired
     private MemberService memberService;
+
+    private UserCredentialsValidator userCredentialsValidator = new UserCredentialsValidator();
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -93,20 +96,28 @@ public class UserServiceImpl implements UserService {
 
     public void updateUser(EditUserViewModel model) throws BadCredentialsException {
         if (findById(model.id) != null) {
-            User updatedUser = findById(model.id);
-            updatedUser.setUserName(model.userName);
+            User updatingUser = findById(model.id);
+
 
             if (bCryptPasswordEncoder.matches(model.oldPassword, userRepository.findById(model.id).getPassword())) {
-                updatedUser.setEmailAddress(model.emailAddress);
-                if (model.newPassword.equals(model.matchingNewPassword))
-                    updatedUser.setPassword(bCryptPasswordEncoder.encode(model.newPassword));
-                else
+                if (!userCredentialsValidator.isValidEmail(model.emailAddress)) {
+                    throw new BadCredentialsException("Wrong email format!");
+                } else {
+                    updatingUser.setEmailAddress(model.emailAddress);
+                }
+                if (model.newPassword.equals(model.matchingNewPassword)) {
+                    if (!userCredentialsValidator.isPasswordFormatValid(model.newPassword)) {
+                        throw new BadCredentialsException("Password must be at least 6 characters long and cannot contain spaces!");
+                    } else {
+                        updatingUser.setPassword(bCryptPasswordEncoder.encode(model.newPassword));
+                    }
+                } else
                     throw new BadCredentialsException("Passwords are not equal!");
             } else {
                 throw new BadCredentialsException("Wrong Password!");
             }
 
-            userRepository.save(updatedUser);
+            userRepository.save(updatingUser);
         }
     }
 

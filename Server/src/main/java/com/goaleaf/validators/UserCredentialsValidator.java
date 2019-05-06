@@ -9,8 +9,8 @@ public class UserCredentialsValidator {
     private EmailValidator emailValidator = new EmailValidator();
     private PasswordMatchesValidator passwordMatchesValidator = new PasswordMatchesValidator();
 
-    public boolean isValidEmail(RegisterViewModel model) {
-        return emailValidator.isValid(model.emailAddress);
+    public boolean isValidEmail(String emailAddress) {
+        return emailValidator.isValid(emailAddress);
     }
 
     public boolean arePasswordsEquals(RegisterViewModel model) {
