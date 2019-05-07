@@ -49,13 +49,15 @@ class MyHabits extends Component {
           
       })
 
-        let habitsToDisplay = habits.slice(0, this.state.habitsToShow);
+      let habitsToDisplay = habits.slice(0, this.state.habitsToShow);
 
 
       if(!foundHabits){
      habitsToDisplay = <div className="no-habits"> Join some habits to see them here</div>
       }
 
+      console.log(habitsToDisplay.length);
+      console.log(habits.length);
 
     if (localStorage.getItem('token') && foundHabits){
     return (
@@ -65,7 +67,7 @@ class MyHabits extends Component {
       <div className="habit-cards">
           { habitsToDisplay }
       </div>
-      <button className={habitsToDisplay.length < habits.length ? 'show-more-habits-btn' : 'hide-show-more-habits-btn'} onClick={() => this.setState({habitsToShow: this.state.habitsToShow + 5})}>SHOW MORE</button>
+      <button className={habitsToDisplay.length < habits.length ? 'my-habits-show-more-habits-btn' : 'my-habits-hide-show-more-habits-btn'} onClick={() => this.setState({habitsToShow: this.state.habitsToShow + 20})}>SHOW MORE</button>
       </section>
     )} else {
       return null;

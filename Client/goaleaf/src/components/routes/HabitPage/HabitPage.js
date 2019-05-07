@@ -36,8 +36,6 @@ class HabitPage extends Component {
     }
 
     render() {
-        console.log(this.props.habits)
-        let xd = this.props.habits;
         let habit = this.props.habits.find(habit => habit.id === parseInt(this.props.match.params.id));
 
         let userIsMember;
