@@ -6,6 +6,11 @@ import './HabitPage.scss'
 import {changeDateFormat1} from './../../../functions.js'
 
 class HabitPage extends Component {
+
+    state = {
+        newMemberLogin: '',
+        errorMsg: ''
+      }
     
     joinHabit = id => {
 
@@ -35,6 +40,28 @@ class HabitPage extends Component {
 
     }
 
+    addMember = id => {
+
+        axios.post('/api/habits/invitemember', {
+            "habitID": id,
+            "token": localStorage.getItem('token'),
+            "url": window.location.href,
+            "userLogin": this.state.newMemberLogin
+          })
+          .then(res => {
+                        window.location.reload();
+                        this.setState({errorMsg: "Member invited"})
+                       }
+          ).catch(err => this.setState({errorMsg: err.response.data.message}))
+
+    }
+
+    handleChange = e => {
+        this.setState({
+            [e.target.id]: e.target.value
+          })
+    }
+
     render() {
         let habit = this.props.habits.find(habit => habit.id === parseInt(this.props.match.params.id));
 
@@ -61,6 +88,17 @@ class HabitPage extends Component {
                 <div className="habit-page-header-btn-con">
                     {userIsMember ? <button className="habit-page-header-btn leave-habit-btn" onClick={() => this.leaveHabit(habit.id)}>Leave habit</button> : <button className="habit-page-header-btn join-habit-btn" onClick={() => this.joinHabit(habit.id)}>Join habit</button>}
                 </div>
+
+                {userIsMember ? 
+                <div>
+                    <form onSubmit={ () => this.addMember(habit.id) } autoComplete="off">
+                        <h1>Invite member</h1> 
+                        <input type="text" id="newMemberLogin" placeholder="Enter user login..." onChange={ this.handleChange }/>
+                        <input type="submit" value="Invite member"/>
+                        { this.state.errorMsg }
+                    </form>
+                </div> : null}
+       
             </section>
             </div>
         )} else
