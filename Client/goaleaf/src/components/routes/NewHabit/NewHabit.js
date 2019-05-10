@@ -62,7 +62,7 @@ class NewHabit extends Component {
       <div className="new-habit">
         <form className="new-habit-form" onSubmit={ this.handleSubmit } autoComplete="off" >
           <h1 className="new-habit-title">New Habit</h1>
-          <input className="new-habit-title-input" type="text" id="title" placeholder="title.." onChange={ this.handleChange } maxLength="49" autoFocus />
+          <input className="new-habit-title-input" type="text" id="title" placeholder="title" onChange={ this.handleChange } maxLength="49" autoFocus />
           <div className="new-habit-categories">
             <button className={this.state.category === 'NONE' ? 'new-habit-category none-chosen none' : ' new-habit-category none'} value="NONE" type="button" onClick={ this.handleChangeCategory }><i className="fas fa-minus fa-lg"></i></button>
             <button className={this.state.category === 'DIET' ? 'new-habit-category diet-chosen diet' : 'new-habit-category diet'} value="DIET" type="button" onClick={ this.handleChangeCategory }><i className="fas fa-carrot fa-lg"></i></button>

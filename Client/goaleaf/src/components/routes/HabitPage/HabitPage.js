@@ -49,17 +49,18 @@ class HabitPage extends Component {
             "userLogin": this.state.newMemberLogin
           })
           .then(res => {
-                        window.location.reload();
-                        this.setState({errorMsg: "Member invited"})
+                        this.setState({errorMsg: "Invitation sent"})
                        }
           ).catch(err => this.setState({errorMsg: err.response.data.message}))
 
     }
 
     handleChange = e => {
+        e.preventDefault();
         this.setState({
             [e.target.id]: e.target.value
           })
+        console.log(this.state)
     }
 
     render() {
