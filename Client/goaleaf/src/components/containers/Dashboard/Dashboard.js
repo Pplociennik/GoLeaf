@@ -9,7 +9,6 @@ class Dashboard extends Component {
 
     return (
       <div className="dashboard">
-        <MyHabits />
         <BrowseHabits />
       </div>
     )
