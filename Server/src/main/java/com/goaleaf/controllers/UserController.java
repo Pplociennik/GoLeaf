@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.goaleaf.entities.DTO.UserDto;
 import com.goaleaf.entities.User;
-import com.goaleaf.entities.viewModels.accountsAndAuthorization.DisableNotificationsViewModel;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.ChangeNotificationsViewModel;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditUserViewModel;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.EmailViewModel;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.PasswordViewModel;
@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
@@ -158,15 +157,15 @@ public class UserController {
         return HttpStatus.OK;
     }
 
-    @RequestMapping(value = "/disablentf", method = RequestMethod.PUT)
-    public HttpStatus disableUserNotifications(@RequestBody DisableNotificationsViewModel model) throws AccountNotExistsException {
+    @RequestMapping(value = "/changentf", method = RequestMethod.PUT)
+    public HttpStatus disableUserNotifications(@RequestBody ChangeNotificationsViewModel model) throws AccountNotExistsException {
         if (userService.findById(model.userID) == null)
             throw new AccountNotExistsException("User does not exist!");
         if (!jwtService.Validate(model.token, SECRET))
             throw new TokenExpiredException("You have to be logged in!");
 
         User temp = userService.findById(model.userID);
-        temp.setNotifications(false);
+        temp.setNotifications(!temp.getNotifications());
         userRepository.save(temp);
 
         return HttpStatus.OK;

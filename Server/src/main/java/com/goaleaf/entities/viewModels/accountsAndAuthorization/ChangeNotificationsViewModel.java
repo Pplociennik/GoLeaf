@@ -1,6 +1,6 @@
 package com.goaleaf.entities.viewModels.accountsAndAuthorization;
 
-public class DisableNotificationsViewModel {
+public class ChangeNotificationsViewModel {
 
     public Integer userID;
 
