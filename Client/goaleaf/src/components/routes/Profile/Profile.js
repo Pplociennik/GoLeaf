@@ -83,9 +83,21 @@ class Profile extends Component {
             ).catch(err => { })
     }
 
-    setNotifications = () => {
+    setNotifications = (e) => {
+        e.preventDefault();
+        console.log(this.props.userLogged)
+        console.log(this.state.notifications)
 
-        ////Ustawiać notifications true/false w serwerze!!!!!!
+        axios.post('/api/users/setnf', {
+            "newNotificationsStatus": this.state.notifications,
+            "token": localStorage.getItem("token"),
+            "userID": this.props.userLogged
+        })
+            .then(res => {
+                window.location.reload()
+            }
+            ).catch(err => this.setState({ errorMsg: err.response.data.message }))
+
 
     }
 
