@@ -4,10 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.goaleaf.entities.DTO.UserDto;
 import com.goaleaf.entities.User;
-import com.goaleaf.entities.viewModels.accountsAndAuthorization.ChangeNotificationsViewModel;
-import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditUserViewModel;
-import com.goaleaf.entities.viewModels.accountsAndAuthorization.EmailViewModel;
-import com.goaleaf.entities.viewModels.accountsAndAuthorization.PasswordViewModel;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.*;
 import com.goaleaf.repositories.UserRepository;
 import com.goaleaf.security.EmailSender;
 import com.goaleaf.services.servicesImpl.JwtServiceImpl;
@@ -170,6 +167,18 @@ public class UserController {
 
         return HttpStatus.OK;
 
+    }
+
+    @RequestMapping(value = "/setntf", method = RequestMethod.POST)
+    public User setEmailNotifications(@RequestBody SetEmailNotificationsViewModel model) throws AccountNotExistsException {
+        if (userService.findById(model.userID) == null)
+            throw new AccountNotExistsException("User does not exist!");
+        if (!jwtService.Validate(model.token, SECRET))
+            throw new TokenExpiredException("You have to be logged in!");
+
+        User temp = userService.findById(model.userID);
+        temp.setNotifications(model.newNotificationsStatus);
+        return userRepository.save(temp);
     }
 
 }
