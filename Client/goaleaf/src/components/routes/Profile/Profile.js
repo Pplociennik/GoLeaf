@@ -97,7 +97,8 @@ class Profile extends Component {
                     username: res.data.username,
                     emailAddress: res.data.emailAddress,
                     login: res.data.login,
-                    id: res.data.id
+                    id: res.data.id,
+                    notifications: res.data.notifications
                 })
             }
             ).catch(err => this.setState({ errorMsg: err.response.data.message }))
@@ -115,7 +116,6 @@ class Profile extends Component {
 
             .catch(err => this.setState({ errorMsg: err.response.data.message }))
 
-        ////Pobierać notifications true/false z serwera!!!!!!
     }
 
 
