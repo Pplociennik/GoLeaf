@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import NotificationCard from './NotificationCard'
+import axios from 'axios'
 
 class Notifications extends Component {
 
@@ -12,7 +13,8 @@ class Notifications extends Component {
     }
 
     handleNtfCardClicked = (id, url) => {
-        this.props.history.push(url);
+        console.log(url)
+        this.props.history.push(url)
     }
 
     componentDidMount() {
@@ -27,6 +29,7 @@ class Notifications extends Component {
             })
 
             .catch(err => console.log(err.response.data.message))
+            console.log(this.state)
     }
 
     render() {
@@ -46,7 +49,7 @@ class Notifications extends Component {
         notifications.forEach(ntf => {
 
             foundNtfs = true;
-            notificationCards.push(<NotificationCard key={ntf.id} id={ntf.id} description={ntf.description} date={ntf.date} url={ntf.url} ntfCardClicked={this.handleNtfCardClicked} />)
+            notificationCards.push(<NotificationCard key={ntf.id} id={ntf.id} description={ntf.description} date={ntf.date} url={ntf.url} handleNtfCardClicked={() => this.handleNtfCardClicked(ntf.id, ntf.url)} />)
 
         })
 
@@ -68,7 +71,14 @@ class Notifications extends Component {
                 </section>
             )
         } else {
-            return null;
+            return (
+                <section>
+                    <h1>My notifications</h1>
+                    <div>
+                        {ntfsToDisplay}
+                    </div>
+                </section>
+            );
         }
     }
 }
