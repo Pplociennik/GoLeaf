@@ -14,7 +14,11 @@ class Notifications extends Component {
 
     handleNtfCardClicked = (id, url) => {
         console.log(url)
-        this.props.history.push(url)
+        this.props.history.push(url) ///////////// Nie przenosi do nowej strony, tylko skleja aktualny url z nowym
+    }
+
+    handleNtfCardDeleted = (id, url) => {
+        
     }
 
     componentDidMount() {
@@ -27,8 +31,7 @@ class Notifications extends Component {
                     })
                 })
             })
-
-            .catch(err => console.log(err.response.data.message))
+            .catch(err => {console.log('Error when downloading notifications')})
             console.log(this.state)
     }
 
@@ -49,7 +52,7 @@ class Notifications extends Component {
         notifications.forEach(ntf => {
 
             foundNtfs = true;
-            notificationCards.push(<NotificationCard key={ntf.id} id={ntf.id} description={ntf.description} date={ntf.date} url={ntf.url} handleNtfCardClicked={() => this.handleNtfCardClicked(ntf.id, ntf.url)} />)
+            notificationCards.push(<NotificationCard key={ntf.id} id={ntf.id} description={ntf.description} date={ntf.date} url={ntf.url} handleNtfCardClicked={() => this.handleNtfCardClicked(ntf.id, ntf.url)} handleNtfCardDeleted={() => this.handleNtfCardDeleted(ntf.id, ntf.url)}/>)
 
         })
 
@@ -67,7 +70,7 @@ class Notifications extends Component {
                     <div>
                         {ntfsToDisplay}
                     </div>
-                    <button onClick={() => this.setState({ notificationsToShow: this.state.notificationsToShow + 20 })}>Show more</button>
+                    { notificationCards.length > this.state.notificationsToShow ? <button onClick={() => this.setState({ notificationsToShow: this.state.notificationsToShow + 20 })}>Show more</button> : null }
                 </section>
             )
         } else {
