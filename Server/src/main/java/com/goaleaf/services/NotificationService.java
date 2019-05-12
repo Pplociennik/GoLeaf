@@ -12,4 +12,6 @@ public interface NotificationService {
 
     Iterable<Notification> getAll();
 
+    void removeFromDatabaseByID(Integer ntfID);
+
 }

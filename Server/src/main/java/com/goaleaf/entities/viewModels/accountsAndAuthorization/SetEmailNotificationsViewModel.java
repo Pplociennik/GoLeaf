@@ -6,5 +6,5 @@ public class SetEmailNotificationsViewModel {
 
     public String token;
 
-    public boolean newNotificationsStatus;
+    public Boolean newNotificationsStatus;
 }

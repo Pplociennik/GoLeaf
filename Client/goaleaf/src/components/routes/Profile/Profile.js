@@ -18,11 +18,10 @@ class Profile extends Component {
         picture: null,
         picPreview: null,
         confirmDelete: false,
-        notifications: false
+        notifications: true
     };
 
     handleChangeAvatar = e => {
-        e.preventDefault();
 
         if (e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)) {
 
@@ -83,22 +82,18 @@ class Profile extends Component {
             ).catch(err => { })
     }
 
-    setNotifications = (e) => {
-        e.preventDefault();
-        console.log(this.props.userLogged)
-        console.log(this.state.notifications)
-
-        axios.post('/api/users/setnf', {
-            "newNotificationsStatus": this.state.notifications,
+    setNotifications = () => {
+        let notificationsStatus;
+        this.state.notifications ? notificationsStatus = false : notificationsStatus = true
+        axios.post('/api/users/setntf', {
+            "newNotificationsStatus": notificationsStatus,
             "token": localStorage.getItem("token"),
             "userID": this.props.userLogged
         })
-            .then(res => {
-                window.location.reload()
+            .then(res => { console.log(res);
+                           this.setState({notifications: res.data.notifications})
             }
-            ).catch(err => this.setState({ errorMsg: err.response.data.message }))
-
-
+            ).catch(err => console.log(err.response.data.message))
     }
 
     componentDidMount() {
@@ -134,10 +129,9 @@ class Profile extends Component {
     render() {
         let deleteAccount = ''
         if (this.state.confirmDelete === true) {
-
             deleteAccount = <div className="confirm-delete-profile">
                 <span>Are you sure you want to delete your account?</span>
-                <button onClick={this.handleDelete}><i class="fas fa-heart-broken"></i> Delete profile</button>
+                <button className="confirm-delete-profile-btn" onClick={this.handleDelete}><i className="fas fa-heart-broken"></i> Delete my account</button>
             </div>
         }
         let errorMsg = <div className="error-msg">{this.state.errorMsg}</div>
@@ -149,13 +143,10 @@ class Profile extends Component {
                 </section>
                 <section className="profile-info">
                     <h1 className="profile-info-login">{this.state.login} </h1>
-                    <h2 className="profile-info-email">{this.state.emailAddress} </h2>
-
-                    <form onSubmit={ this.setNotifications } autoComplete="off">
-                        <h2>Notifications</h2>
-                        <input type="checkbox" id="notifications" checked={this.state.notifications} onChange={this.handleChange} />
-                        <input type="submit" value="Set notifications on/off" />
-                    </form>
+                    <div className="profile-info-email">
+                        <span>{this.state.emailAddress}</span>
+                        <button className={this.state.notifications ? 'notifications-btn notifications-btn-true' : 'notifications-btn notifications-btn-false'} onClick={ this.setNotifications } title={this.state.notifications ? "Disable notifications" : "Allow notifications"}><i className={this.state.notifications ? 'fas fa-bell' : 'fas fa-bell-slash'}></i></button>
+                    </div>
 
                 </section>
                 <section className="change-password">
