@@ -12,7 +12,7 @@ import Dashboard from './../Dashboard/Dashboard';
 import NewHabit from './../../routes/NewHabit/NewHabit' 
 import Profile from './../../routes/Profile/Profile'
 import HabitPage from './../../routes/HabitPage/HabitPage'
-import MyHabits from '../MyHabits/MyHabits'
+import BrowseHabits from '../BrowseHabits/BrowseHabits'
 
 
 class Main extends Component {
@@ -32,7 +32,7 @@ class Main extends Component {
             <PrivateRoute exact path='/new-habit' component={NewHabit}/>
             <PrivateRoute exact path='/profile' component={Profile}/>
             <PrivateRoute exact path='/habit/:id' component={HabitPage}/>
-            <PrivateRoute exact path='/myhabits' component={MyHabits}/>
+            <Route exact path='/browsehabits' component={BrowseHabits}/>
 
             <Route path="*" component={Dashboard} />
         </Switch>

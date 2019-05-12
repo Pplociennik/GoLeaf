@@ -1,8 +1,8 @@
 @import './../../../global-styles.scss';
 
 .browse-habits {
-    width: 100%;
-    margin: 2em 0;
+    width: 90%;
+    margin: 2em auto;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -240,10 +240,6 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-
-        @include xl {
-            justify-content: flex-start;
-        }
 
         .no-habits {
             margin: 0 auto;
