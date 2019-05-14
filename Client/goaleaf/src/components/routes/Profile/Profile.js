@@ -131,7 +131,7 @@ class Profile extends Component {
         if (this.state.confirmDelete === true) {
             deleteAccount = <div className="confirm-delete-profile">
                 <span>Are you sure you want to delete your account?</span>
-                <button className="confirm-delete-profile-btn" onClick={this.handleDelete}><i className="fas fa-heart-broken"></i> Delete my account</button>
+                <button className="confirm-delete-profile-btn" onClick={this.handleDelete}>Delete my account <i className="far fa-frown"></i></button>
             </div>
         }
         let errorMsg = <div className="error-msg">{this.state.errorMsg}</div>

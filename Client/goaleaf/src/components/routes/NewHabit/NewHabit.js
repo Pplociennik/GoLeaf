@@ -75,8 +75,8 @@ class NewHabit extends Component {
             <button className={this.state.category === 'FAMILY' ? 'new-habit-category family-chosen family' : 'new-habit-category family'} value="FAMILY" type="button" onClick={ this.handleChangeCategory }><i className="fas fa-home fa-lg"></i></button>
           </div>
           <div className="privacy-con">
-            <button className={this.state.private === false ? 'privacy-btn privacy-chosen' : 'privacy-btn'} type="button" value="public" onClick={ this.handleChangePrivacy }><i className="fas fa-lock-open fa-xs"></i> Public</button>
-            <button className={this.state.private === true ? 'privacy-btn privacy-chosen' : 'privacy-btn'} type="button" value="private" onClick={ this.handleChangePrivacy }><i className="fas fa-lock fa-xs"></i> Private</button>
+            <button className={this.state.private === false ? 'privacy-btn privacy-chosen' : 'privacy-btn'} type="button" value="public" onClick={ this.handleChangePrivacy }><i className="fas fa-lock-open fa-sm"></i> Public</button>
+            <button className={this.state.private === true ? 'privacy-btn privacy-chosen' : 'privacy-btn'} type="button" value="private" onClick={ this.handleChangePrivacy }><i className="fas fa-lock fa-sm"></i> Private</button>
           </div>
           <input className="new-habit-submit-btn" type="submit" value="Create habit" />
           { errorMsg }

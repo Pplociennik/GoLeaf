@@ -218,21 +218,25 @@
             .privacy-btn {
                 background-color: $primary-color-light;
                 height: 30px;
-                width: 74px;
+                width: auto;
                 margin: 0 0.4em;
+                padding: 0 1em;
                 color: #7189bf;
-                font-size: 0.6em;
+                font-size: 0.7em;
                 font-family: 'Nunito', sans-serif;
                 letter-spacing: 1px; 
                 font-weight: 600;               
                 border: 2px solid #7189bf;
+                border-radius: 30px;
                 outline: 0;
                 cursor: pointer;
                 display: flex;
-                flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                border-radius: 30px;
+
+                i {
+                    margin-right: 6px;
+                }
             }
 
             .privacy-chosen {

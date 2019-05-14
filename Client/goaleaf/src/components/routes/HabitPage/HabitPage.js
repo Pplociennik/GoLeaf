@@ -3,7 +3,9 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom'
 import './HabitPage.scss'
+import InviteMember from './InviteMember/InviteMember'
 import { changeDateFormat1 } from './../../../functions.js'
+import Popup from "reactjs-popup";
 
 class HabitPage extends Component {
 
@@ -42,26 +44,6 @@ class HabitPage extends Component {
 
     }
 
-    addMember = (e, id) => {
-        e.preventDefault();
-
-        axios.post('/api/habits/invitemember', {
-            "habitID": id,
-            "token": localStorage.getItem('token'),
-            "url": window.location.href,
-            "userLogin": this.state.newMemberLogin
-        })
-            .then(res => {
-                this.setState({ errorMsg: "Invitation sent" })
-                console.log('Success!!!')
-            }
-            ).catch(err => {
-                this.setState({ errorMsg: err.response.data.message })
-                console.log('Failed!!!')
-            })
-
-    }
-
     handleChange = e => {
         e.preventDefault();
         this.setState({
@@ -95,18 +77,13 @@ class HabitPage extends Component {
                         <div className="habit-page-header-btn-con">
                             {userIsMember ? <button className="habit-page-header-btn leave-habit-btn" onClick={() => this.leaveHabit(habit.id)}>Leave habit</button> : <button className="habit-page-header-btn join-habit-btn" onClick={() => this.joinHabit(habit.id)}>Join habit</button>}
                         </div>
-
-                        {userIsMember ?
-                            <div>
-                                <form onSubmit={(e) => this.addMember(e, habit.id)} autoComplete="off">
-                                    <h1>Invite member</h1>
-                                    <input type="text" id="newMemberLogin" placeholder="Enter user login..." onChange={this.handleChange} />
-                                    <input type="submit" value="Invite member" />
-                                    {this.state.errorMsg}
-                                </form>
-                            </div> : null}
-
                     </section>
+                    {userIsMember ?
+                    <section className="habit-page-main">
+                        <div className="habit-page-navigation">
+                            <InviteMember habitID={habit.id} />
+                        </div>
+                    </section> : null}
                 </div>
             )
         } else
