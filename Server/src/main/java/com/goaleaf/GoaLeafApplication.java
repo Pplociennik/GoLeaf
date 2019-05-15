@@ -4,8 +4,10 @@ package com.goaleaf;
 import com.goaleaf.security.uploadingFiles.FileStorageProperties;
 import com.goaleaf.services.MemberService;
 import com.goaleaf.services.NotificationService;
+import com.goaleaf.services.PostService;
 import com.goaleaf.services.servicesImpl.MemberServiceImpl;
 import com.goaleaf.services.servicesImpl.NotificationServiceImpl;
+import com.goaleaf.services.servicesImpl.PostServiceImpl;
 import com.goaleaf.validators.UserCredentialsValidator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -59,6 +61,11 @@ public class GoaLeafApplication extends SpringBootServletInitializer {
     @Bean
     public NotificationService notificationService() {
         return new NotificationServiceImpl();
+    }
+
+    @Bean
+    public PostService postService() {
+        return new PostServiceImpl();
     }
 
     @Bean
