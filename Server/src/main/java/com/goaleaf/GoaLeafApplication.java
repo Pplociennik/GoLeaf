@@ -2,9 +2,11 @@ package com.goaleaf;
 
 
 import com.goaleaf.security.uploadingFiles.FileStorageProperties;
+import com.goaleaf.services.CommentService;
 import com.goaleaf.services.MemberService;
 import com.goaleaf.services.NotificationService;
 import com.goaleaf.services.PostService;
+import com.goaleaf.services.servicesImpl.CommentServiceImpl;
 import com.goaleaf.services.servicesImpl.MemberServiceImpl;
 import com.goaleaf.services.servicesImpl.NotificationServiceImpl;
 import com.goaleaf.services.servicesImpl.PostServiceImpl;
@@ -66,6 +68,11 @@ public class GoaLeafApplication extends SpringBootServletInitializer {
     @Bean
     public PostService postService() {
         return new PostServiceImpl();
+    }
+
+    @Bean
+    public CommentService commentService() {
+        return new CommentServiceImpl();
     }
 
     @Bean
