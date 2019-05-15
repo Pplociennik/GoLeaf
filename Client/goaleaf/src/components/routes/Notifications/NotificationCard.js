@@ -1,17 +1,19 @@
 import React from 'react'
-import { changeDateFormat } from './../../../functions.js'
+import { changeDateFormat1 } from './../../../functions.js'
 
 function NotificationCard(props) {
 
     return (
-        <div>
-            <div>
-                <h3>{changeDateFormat(props.date)}</h3>
-                <h3>{props.description}</h3>
-                <button onClick={() => props.handleNtfCardClicked(props.id, props.url)}>View</button>
-                <button onClick={() => props.handleNtfCardDeleted(props.id, props.url)}>Delete</button>
+        <li className="collection-item">
+            <div className="ntf-card-info">
+            <span className="ntf-card-info-title">{props.description}</span>
+            <span className="ntf-card-info-date">{changeDateFormat1(props.date)}</span>
             </div>
-        </div>
+            <div className="ntf-card-btn-con">
+                <a className="btn view-ntf-btn" href={props.url}>View</a>
+                <button className="btn delete-ntf-btn" onClick={() => props.handleNtfCardDeleted(props.id, props.url)}>Delete</button>
+            </div>
+        </li>
     )
 }
 

@@ -15,7 +15,7 @@ class InviteMember extends Component {
     e.preventDefault();
 
     this.setState({
-        msg: <i class="fas fa-spinner fa-spin grey-text"></i>
+        msg: <i className="fas fa-spinner fa-spin grey-text"></i>
     })
 
     axios.post('/api/habits/invitemember', {
@@ -52,7 +52,7 @@ class InviteMember extends Component {
     render() {
 
     return (
-        <Popup trigger={<button className="btn waves-effect waves-light invite-user-btn" ><i class="small material-icons">people</i><span>Invite user</span></button>} modal closeOnDocumentClick
+        <Popup trigger={<button className="btn waves-effect waves-light invite-user-btn" ><i className="small material-icons">people</i><span>Invite user</span></button>} modal closeOnDocumentClick
             onOpen={ this.clearMsg }
             contentStyle={{
                 maxWidth: '80%',
@@ -69,13 +69,13 @@ class InviteMember extends Component {
         <div className="row">
             <form className="col s10 offset-s1  l6 offset-l3 center-align" onSubmit={(e) => this.addMember(e, this.props.habitID)} autoComplete="off">
                 <h4 className="">Invite user</h4>
-                <div class="input-field inline">
+                <div className="input-field inline">
                     <input id="userInvited" type="text" onChange={ this.handleChange } />
-                    <label for="userInvited">username</label>
-                    <span class={this.state.msg === 'Invitation sent' ? "helper-text green-text" : "helper-text red-text "}>{this.state.msg}</span>
+                    <label htmlFor="userInvited">username</label>
+                    <span className={this.state.msg === 'Invitation sent' ? "helper-text green-text" : "helper-text red-text "}>{this.state.msg}</span>
                 </div>
                 <button className="btn" type="submit" value="Invite user">
-                    <i class="small material-icons">people</i>
+                    <i className="small material-icons">people</i>
                     <span>Invite user</span>
                 </button>
             </form>
