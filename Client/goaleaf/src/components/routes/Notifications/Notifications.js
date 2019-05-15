@@ -90,7 +90,9 @@ class Notifications extends Component {
                         <ul className="collection">
                             {ntfsToDisplay}
                         </ul>
-                        { notificationCards.length > this.state.notificationsToShow ? <button onClick={() => this.setState({ notificationsToShow: this.state.notificationsToShow + 20 })}>Show more</button> : null }
+                        <div className="show-more-btn-con">
+                            { notificationCards.length > this.state.notificationsToShow ? <button className="btn waves-effect waves-light show-more-btn" onClick={() => this.setState({ notificationsToShow: this.state.notificationsToShow + 20 })}>Show more</button> : null }
+                        </div>
                     </div>
                 </Popup>
             </section>
