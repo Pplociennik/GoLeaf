@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import 'materialize-css/dist/css/materialize.min.css';
 import './App.scss';
 import Navbar from './components/containers/Navbar/Navbar';
 import Main from './components/containers/Main/Main';

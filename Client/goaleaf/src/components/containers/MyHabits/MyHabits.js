@@ -3,7 +3,6 @@ import './MyHabits.scss'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import HabitCard from './../../routes/HabitCard/HabitCard'
-import Notifications from '../../routes/Notifications/Notifications'
 
 class MyHabits extends Component {
 
@@ -69,19 +68,10 @@ class MyHabits extends Component {
             {habitsToDisplay}
           </div>
           <button className={habitsToDisplay.length < habits.length ? 'my-habits-show-more-habits-btn' : 'my-habits-hide-show-more-habits-btn'} onClick={() => this.setState({ habitsToShow: this.state.habitsToShow + 20 })}>SHOW MORE</button>
-          <div>
-            <Notifications />
-          </div>
         </section>
       )
     } else {
-      return (
-        <section>
-          <div>
-            <Notifications />
-          </div>
-        </section>
-      );
+      return null
     }
   }
 }

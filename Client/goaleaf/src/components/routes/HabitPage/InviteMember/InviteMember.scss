@@ -2,70 +2,41 @@
 
 .invite-user-btn {
     background-color: $secondary-color;
-    width: auto;
-    height: 40px;
-    margin: 10px;
-    padding: 0 20px;
     border-radius: 30px;
-    font-size: 1em;
-    color: $primary-color-light;
-    letter-spacing: 1px;
-    font-weight: 400;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 
-    border: none;
-    outline: none;
-    cursor: pointer;
+    i { margin-right: 10px }
 }
 .invite-user-btn:hover {
-    box-shadow: 2px 2px 10px 0px rgba(51,51,51,0.3);                
+    background-color: lighten($secondary-color, 6%);
 }
 
-.add-user-con {
-  //  height: 300px;
-    padding: 50px 10px;
-
+.invite-user-box {
+    h4 {
+        font-weight: 300;
+    }
     form {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-        .invite-user-title {
-            font-weight: 400;
-        }
-        .invite-user-form-input {
-            background-color: $primary-color;
-            height: 30px;
-            width: 80%;
-            margin: 10px;
-            border: none;
-            border-bottom: 1px solid lighten($text-color, 50%);
-            font-size: 1em;
-            outline: none;
-
-            @include md {
-                width: 50%;
-            }
-        }
-        .invite-user-form-btn{
-            background-color: $secondary-color;
-            height: 40px;
-            width: 130px;
-            margin: 10px;
-            color: #fff;
-            font-family: 'Nunito', sans-serif;          
-            font-size: 1em;
-            font-weight: 400;
-            letter-spacing: 1px;
-            outline: 0;
-            border: none;
-            border-radius: 30px;
-            outline: none;
-            cursor: pointer;
-        }
-        .invite-user-form-btn:hover {
-            box-shadow: 2px 2px 10px 0px rgba(51,51,51,0.3);             
-        }
     }
-
+    .btn {
+        background-color: $secondary-color;
+        margin: 10px;
+        border-radius: 30px;
+        font-weight: 500;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        i { margin-right: 10px }
+    }
+    .input-field input[type=text]:focus + label {
+        color: $text-color;
+    }
+    .input-field input[type=text]:focus {
+        border-bottom: 1px solid $text-color;
+        box-shadow: 0 1px 0 0 $text-color;
+    }
 }

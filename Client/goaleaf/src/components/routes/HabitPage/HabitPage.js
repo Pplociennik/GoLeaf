@@ -5,7 +5,6 @@ import { Redirect } from 'react-router-dom'
 import './HabitPage.scss'
 import InviteMember from './InviteMember/InviteMember'
 import { changeDateFormat1 } from './../../../functions.js'
-import Popup from "reactjs-popup";
 
 class HabitPage extends Component {
 
@@ -64,18 +63,18 @@ class HabitPage extends Component {
                         <div className="habit-page-info-con">
                             <h1 className="habit-page-title">{habit.habitTitle}</h1>
                             <div className="habit-page-info-blocks">
-                                <h2 className="habit-page-info-block started-date"><span><i className="far fa-calendar-alt fa-xs"></i> started on:</span> <span className="date-span"> {changeDateFormat1(habit.habitStartDate)}</span></h2>
-                                <h2 className="habit-page-info-block created-by"><span><i className="fas fa-user fa-xs"></i> created by: </span><span> {habit.owner.login}</span></h2>
-                                <h2 className="habit-page-info-block privacy"><span><i className={habit.private ? 'fas fa-lock fa-xs' : 'fa fa-lock-open fa-xs'}></i> privacy:</span> <span> {habit.private ? 'Private' : 'Public'}</span></h2>
+                                <h6 className="habit-page-info-block started-date"><span><i className="far fa-calendar-alt fa-xs"></i> started on:</span> <span className="date-span"> {changeDateFormat1(habit.habitStartDate)}</span></h6>
+                                <h6 className="habit-page-info-block created-by"><span><i className="fas fa-user fa-xs"></i> created by: </span><span> {habit.owner.login}</span></h6>
+                                <h6 className="habit-page-info-block privacy"><span><i className={habit.private ? 'fas fa-lock fa-xs' : 'fa fa-lock-open fa-xs'}></i> privacy:</span> <span> {habit.private ? 'Private' : 'Public'}</span></h6>
                             </div>
                             <div className="habit-page-info-blocks">
-                                <h2 className={`habit-page-info-block category-${habit.category}`}><span><i className="fas fa-dumbbell fa-sm"></i> category:</span> <span> {habit.category}</span></h2>
-                                <h2 className="habit-page-info-block frequency"><span><i className="fas fa-history fa-sm"></i> frequency:</span> <span> {habit.frequency}</span></h2>
-                                <h2 className="habit-page-info-block members-number"><span><i className="fas fa-user-friends fa-sm"></i> members:</span> <span> {habit.members.length}</span></h2>
+                                <h6 className={`habit-page-info-block category-${habit.category}`}><span><i className="fas fa-dumbbell fa-sm"></i> category:</span> <span> {habit.category}</span></h6>
+                                <h6 className="habit-page-info-block frequency"><span><i className="fas fa-history fa-sm"></i> frequency:</span> <span> {habit.frequency}</span></h6>
+                                <h6 className="habit-page-info-block members-number"><span><i className="fas fa-user-friends fa-sm"></i> members:</span> <span> {habit.members.length}</span></h6>
                             </div>
                         </div>
                         <div className="habit-page-header-btn-con">
-                            {userIsMember ? <button className="habit-page-header-btn leave-habit-btn" onClick={() => this.leaveHabit(habit.id)}>Leave habit</button> : <button className="habit-page-header-btn join-habit-btn" onClick={() => this.joinHabit(habit.id)}>Join habit</button>}
+                            {userIsMember ? <button className="habit-page-header-btn leave-habit-btn" onClick={() => this.leaveHabit(habit.id)}>Leave habit</button> : <button className="btn-floating pulse habit-page-header-btn join-habit-btn" onClick={() => this.joinHabit(habit.id)}>Join habit</button>}
                         </div>
                     </section>
                     {userIsMember ?

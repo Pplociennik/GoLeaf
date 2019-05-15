@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import NotificationCard from './NotificationCard'
+import './Notifications.scss';
 import axios from 'axios'
+import Popup from "reactjs-popup";
 
 class Notifications extends Component {
 
@@ -14,17 +16,23 @@ class Notifications extends Component {
 
     handleNtfCardClicked = (id, url) => {
         console.log(url)
-        this.props.history.push(url) ///////////// Nie przenosi do nowej strony, tylko skleja aktualny url z nowym
+        this.props.history.push(url) 
     }
 
     handleNtfCardDeleted = (id, url) => {
-        
+        axios.delete(`/api/notifications/ntf/{id}?ntfID=${id}`)
+            .then(res => {
+                console.log(`Deleted notification ${id}`);
+                this.setState({notifications: this.state.notifications.filter(ntf => ntf.id !== id)})
+
+        })
+            .catch(err => console.log(err))
     }
 
     componentDidMount() {
         axios.get(`/api/notifications/usersntf?userID=${this.props.userLogged}`)
             .then(res => {
-                res.data.map(ntf => {
+                res.data.forEach(ntf => {
                     let notifications = [...this.state.notifications, ntf]
                     this.setState({
                         notifications: notifications
@@ -32,7 +40,6 @@ class Notifications extends Component {
                 })
             })
             .catch(err => {console.log('Error when downloading notifications')})
-            console.log(this.state)
     }
 
     render() {
@@ -63,25 +70,33 @@ class Notifications extends Component {
             ntfsToDisplay = <div>You have no notifications</div>
         }
 
-        if (localStorage.getItem('token') && foundNtfs) {
+        if (localStorage.getItem('token')) {
             return (
-                <section>
-                    <h1>My notifications</h1>
-                    <div>
-                        {ntfsToDisplay}
+                <section className="dashboard-nav">
+                <Popup trigger={<button className={foundNtfs ? "btn waves-effect waves-light notifications-modal-btn" : "btn disabled notifications-modal-btn"} ><i className="small material-icons">notifications</i><span>Notifications</span></button>} modal closeOnDocumentClick
+                onOpen={ this.clearMsg }
+                contentStyle={{
+                    maxWidth: '90%',
+                    width: '700px',
+                    backgroundColor: '#f2f2f2',
+                    border: "none"
+                }}
+                overlayStyle={{
+                    background: "rgb(0,0,0, 0.4)"
+                }}
+            >
+                    <div className="notifications-section row">
+                        <h4>My notifications</h4>
+                        <ul className="collection">
+                            {ntfsToDisplay}
+                        </ul>
+                        { notificationCards.length > this.state.notificationsToShow ? <button onClick={() => this.setState({ notificationsToShow: this.state.notificationsToShow + 20 })}>Show more</button> : null }
                     </div>
-                    { notificationCards.length > this.state.notificationsToShow ? <button onClick={() => this.setState({ notificationsToShow: this.state.notificationsToShow + 20 })}>Show more</button> : null }
-                </section>
+                </Popup>
+            </section>
             )
         } else {
-            return (
-                <section>
-                    <h1>My notifications</h1>
-                    <div>
-                        {ntfsToDisplay}
-                    </div>
-                </section>
-            );
+            return null
         }
     }
 }

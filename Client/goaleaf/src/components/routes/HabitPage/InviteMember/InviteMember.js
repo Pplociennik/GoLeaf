@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './InviteMember.scss'
 import axios from 'axios';
 import Popup from "reactjs-popup";
+import M from "materialize-css";
 
 class InviteMember extends Component {
 
@@ -14,7 +15,7 @@ class InviteMember extends Component {
     e.preventDefault();
 
     this.setState({
-        msg: <i class="fas fa-spinner fa-spin"></i>
+        msg: <i className="fas fa-spinner fa-spin grey-text"></i>
     })
 
     axios.post('/api/habits/invitemember', {
@@ -25,11 +26,9 @@ class InviteMember extends Component {
     })
         .then(res => {
             this.setState({ msg: "Invitation sent" })
-            console.log('Success!!!')
         }
         ).catch(err => {
             this.setState({ msg: err.response.data.message })
-            console.log('Failed!!!')
         })
 
     }
@@ -41,16 +40,19 @@ class InviteMember extends Component {
     }
     
     clearMsg = () => {
-        console.log('dupson')
         this.setState({
             msg: null
         })
     }
 
+    componentDidMount() {
+        M.AutoInit();
+    }
+
     render() {
 
     return (
-        <Popup trigger={<button className="invite-user-btn" ><i className="fas fa-user-friends fa-sm" ></i> Invite user</button>} modal closeOnDocumentClick
+        <Popup trigger={<button className="btn waves-effect waves-light invite-user-btn" ><i className="small material-icons">people</i><span>Invite user</span></button>} modal closeOnDocumentClick
             onOpen={ this.clearMsg }
             contentStyle={{
                 maxWidth: '80%',
@@ -63,14 +65,21 @@ class InviteMember extends Component {
                 background: "rgb(0,0,0, 0.4)"
             }}
         >
-        <div className="add-user-con">
-            <form onSubmit={(e) => this.addMember(e, this.props.habitID)} autoComplete="off">
-                <i className="fas fa-user-friends fa-3x" ></i>
-                <h2 className="invite-user-title"> Invite user</h2>
-                <input className="invite-user-form-input" type="text" id="userInvited" placeholder="username" onChange={this.handleChange} />
-                <input className="invite-user-form-btn" type="submit" value="Invite user" />
-                {this.state.msg}
+        <div className="invite-user-box">
+        <div className="row">
+            <form className="col s10 offset-s1  l6 offset-l3 center-align" onSubmit={(e) => this.addMember(e, this.props.habitID)} autoComplete="off">
+                <h4 className="">Invite user</h4>
+                <div className="input-field inline">
+                    <input id="userInvited" type="text" onChange={ this.handleChange } />
+                    <label htmlFor="userInvited">username</label>
+                    <span className={this.state.msg === 'Invitation sent' ? "helper-text green-text" : "helper-text red-text "}>{this.state.msg}</span>
+                </div>
+                <button className="btn" type="submit" value="Invite user">
+                    <i className="small material-icons">people</i>
+                    <span>Invite user</span>
+                </button>
             </form>
+            </div>
         </div>
     </Popup>
     )
