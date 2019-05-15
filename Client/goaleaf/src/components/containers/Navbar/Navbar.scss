@@ -9,6 +9,7 @@
     position: sticky;
     top: 0;
     left: 0;
+    box-shadow: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -33,7 +34,6 @@
         position: absolute;
         top: -10px;
         left: 80px;
-        
     }
     @include md {
         .logo-mobile {

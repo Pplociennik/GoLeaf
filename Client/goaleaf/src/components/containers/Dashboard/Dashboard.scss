@@ -10,4 +10,13 @@
     @include xl {
         width: 90%;
     }
+
+    .dashboard-nav {
+        height: 100px;
+        width: 90%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+    }
 }

@@ -26,6 +26,9 @@
         font-size: 2em;
         text-decoration: none;
     }
+    a:hover {
+        background-color: $primary-color;
+    }
     @include md {
         height: 100%;
         width: auto;

@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import NotificationCard from './NotificationCard'
+import './Notifications.scss';
 import axios from 'axios'
+import Popup from "reactjs-popup";
 
 class Notifications extends Component {
 
@@ -32,7 +34,6 @@ class Notifications extends Component {
                 })
             })
             .catch(err => {console.log('Error when downloading notifications')})
-            console.log(this.state)
     }
 
     render() {
@@ -63,25 +64,34 @@ class Notifications extends Component {
             ntfsToDisplay = <div>You have no notifications</div>
         }
 
-        if (localStorage.getItem('token') && foundNtfs) {
+        if (localStorage.getItem('token')) {
             return (
-                <section>
-                    <h1>My notifications</h1>
-                    <div>
-                        {ntfsToDisplay}
+                <section className="dashboard-nav">
+                <Popup trigger={<button className={foundNtfs ? "btn waves-effect waves-light notifications-modal-btn" : "btn disabled notifications-modal-btn"} ><i className="small material-icons">notifications</i><span>Notifications</span></button>} modal closeOnDocumentClick
+                onOpen={ this.clearMsg }
+                contentStyle={{
+                    maxWidth: '90%',
+                    width: '700px',
+                    backgroundColor: '#f2f2f2',
+                    borderRadius: '10px',
+                    border: "none"
+                }}
+                overlayStyle={{
+                    background: "rgb(0,0,0, 0.4)"
+                }}
+            >
+                    <div className="notifications-section">
+                        <h1>My notifications</h1>
+                        <div>
+                            {ntfsToDisplay}
+                        </div>
+                        { notificationCards.length > this.state.notificationsToShow ? <button onClick={() => this.setState({ notificationsToShow: this.state.notificationsToShow + 20 })}>Show more</button> : null }
                     </div>
-                    { notificationCards.length > this.state.notificationsToShow ? <button onClick={() => this.setState({ notificationsToShow: this.state.notificationsToShow + 20 })}>Show more</button> : null }
-                </section>
+                </Popup>
+            </section>
             )
         } else {
-            return (
-                <section>
-                    <h1>My notifications</h1>
-                    <div>
-                        {ntfsToDisplay}
-                    </div>
-                </section>
-            );
+            return null
         }
     }
 }

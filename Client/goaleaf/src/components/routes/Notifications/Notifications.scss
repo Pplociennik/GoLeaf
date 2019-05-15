@@ -1,0 +1,21 @@
+@import './../../../global-styles.scss';
+
+.notifications-modal-btn {
+    background-color: #d65a31;
+    border-radius: 30px;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    i { margin-right: 10px }
+}
+.notifications-modal-btn:hover {
+    background-color: darken(#d65a31, 6%);
+}
+
+.notifications-con {
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+    margin: 1em;
+}

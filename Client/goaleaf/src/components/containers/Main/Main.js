@@ -32,7 +32,7 @@ class Main extends Component {
             <PrivateRoute exact path='/new-habit' component={NewHabit}/>
             <PrivateRoute exact path='/profile' component={Profile}/>
             <PrivateRoute exact path='/habit/:id' component={HabitPage}/>
-            <Route exact path='/browsehabits' component={BrowseHabits}/>
+            <Route exact path='/browse' component={BrowseHabits}/>
 
             <Route path="*" component={Dashboard} />
         </Switch>
