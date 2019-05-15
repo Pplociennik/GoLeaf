@@ -6,6 +6,7 @@ import com.goaleaf.entities.Post;
 import com.goaleaf.entities.User;
 import com.goaleaf.entities.enums.PostTypes;
 import com.goaleaf.entities.viewModels.habitsManaging.postsCreating.NewPostViewModel;
+import com.goaleaf.entities.viewModels.habitsManaging.postsManaging.EditPostViewModel;
 import com.goaleaf.entities.viewModels.habitsManaging.postsManaging.RemovePostViewModel;
 import com.goaleaf.services.*;
 import com.goaleaf.validators.exceptions.habitsProcessing.MemberDoesNotExistException;
@@ -94,15 +95,43 @@ public class PostController {
         if (memberService.findSpecifiedMember(model.habitID, Integer.parseInt(claims.getSubject())) == null)
             throw new MemberDoesNotExistException("You are not a member!");
         if (postService.findOneByID(model.postID).getCreatorLogin() != tempUser.getLogin())
-            throw new UserIsNotCreatorException("You cannot delete posts which are not posted by you");
+            throw new UserIsNotCreatorException("You cannot delete posts which were not posted by you");
 
         postService.removePostFromDatabase(model.postID);
         return HttpStatus.OK;
 
     }
 
+    @RequestMapping(value = "/post/{id}", method = RequestMethod.PUT)
+    public HttpStatus editPost(@RequestBody EditPostViewModel model) {
+
+        Claims claims = Jwts.parser()
+                .setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8))
+                .parseClaimsJws(model.token).getBody();
+
+        User tempUser = userService.findById(Integer.parseInt(claims.getSubject()));
+
+        if (!jwtService.Validate(model.token, SECRET))
+            throw new TokenExpiredException("You have to be logged in!");
+        if (memberService.findSpecifiedMember(model.habitID, Integer.parseInt(claims.getSubject())) == null)
+            throw new MemberDoesNotExistException("You are not a member!");
+        if (postService.findOneByID(model.postID).getCreatorLogin() != tempUser.getLogin())
+            throw new UserIsNotCreatorException("You cannot edit posts which were not posted by you");
+
+        Post post = postService.findOneByID(model.postID);
+        if (model.type == PostTypes.JustText)
+            post.setPostType(PostTypes.JustText);
+        if (model.type == PostTypes.JustPhoto)
+            post.setPostType(PostTypes.JustPhoto);
+        if (model.type == PostTypes.TextAndPhoto)
+            post.setPostType(PostTypes.TextAndPhoto);
+
+        post.setPostText(model.text);
+
+        postService.updatePost(post);
+
+        return HttpStatus.OK;
+    }
 
 
-
-    
 }

@@ -9,4 +9,6 @@ public interface PostService {
     Post findOneByID(Integer id);
 
     void removePostFromDatabase(Integer id);
+
+    void updatePost(Post post);
 }

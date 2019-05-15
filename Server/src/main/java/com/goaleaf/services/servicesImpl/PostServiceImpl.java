@@ -24,4 +24,9 @@ public class PostServiceImpl implements PostService {
     public void removePostFromDatabase(Integer id) {
         postRepository.delete(id);
     }
+
+    @Override
+    public void updatePost(Post post) {
+        postRepository.save(post);
+    }
 }

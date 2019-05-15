@@ -27,6 +27,9 @@ public class Post {
     private PostTypes postType;
 
     @Column
+    private String postText;
+
+    @Column
     private String imgName;
 
     @Column
@@ -115,5 +118,13 @@ public class Post {
 
     public void setImgName(String imgName) {
         this.imgName = imgName;
+    }
+
+    public String getPostText() {
+        return postText;
+    }
+
+    public void setPostText(String postText) {
+        this.postText = postText;
     }
 }
