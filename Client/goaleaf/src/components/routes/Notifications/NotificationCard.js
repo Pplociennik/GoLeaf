@@ -5,6 +5,7 @@ function NotificationCard(props) {
 
     return (
         <li className="collection-item">
+            <i className="material-icons small">notifications</i>
             <div className="ntf-card-info">
             <span className="ntf-card-info-title">{props.description}</span>
             <span className="ntf-card-info-date">{changeDateFormat1(props.date)}</span>

@@ -79,6 +79,7 @@ class Notifications extends Component {
                     maxWidth: '90%',
                     width: '700px',
                     backgroundColor: '#f2f2f2',
+                    borderRadius: '10px',
                     border: "none"
                 }}
                 overlayStyle={{

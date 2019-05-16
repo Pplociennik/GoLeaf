@@ -34,6 +34,12 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            align-items: center;
+
+            i {
+                margin-right: 20px;
+                color: darken($secondary-color, 16%);
+            }
 
             @include md {
                 flex-direction: row;

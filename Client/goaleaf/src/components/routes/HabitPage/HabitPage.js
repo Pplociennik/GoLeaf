@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom'
 import './HabitPage.scss'
 import InviteMember from './InviteMember/InviteMember'
+import AddPost from './AddPost/AddPost'
 import { changeDateFormat1 } from './../../../functions.js'
 
 class HabitPage extends Component {
@@ -61,20 +62,20 @@ class HabitPage extends Component {
                 <div className="habit-page">
                     <section className="habit-page-header-con">
                         <div className="habit-page-info-con">
-                            <h1 className="habit-page-title">{habit.habitTitle}</h1>
-                            <div className="habit-page-info-blocks">
-                                <h6 className="habit-page-info-block started-date"><span><i className="far fa-calendar-alt fa-xs"></i> started on:</span> <span className="date-span"> {changeDateFormat1(habit.habitStartDate)}</span></h6>
-                                <h6 className="habit-page-info-block created-by"><span><i className="fas fa-user fa-xs"></i> created by: </span><span> {habit.owner.login}</span></h6>
-                                <h6 className="habit-page-info-block privacy"><span><i className={habit.private ? 'fas fa-lock fa-xs' : 'fa fa-lock-open fa-xs'}></i> privacy:</span> <span> {habit.private ? 'Private' : 'Public'}</span></h6>
-                            </div>
-                            <div className="habit-page-info-blocks">
-                                <h6 className={`habit-page-info-block category-${habit.category}`}><span><i className="fas fa-dumbbell fa-sm"></i> category:</span> <span> {habit.category}</span></h6>
-                                <h6 className="habit-page-info-block frequency"><span><i className="fas fa-history fa-sm"></i> frequency:</span> <span> {habit.frequency}</span></h6>
-                                <h6 className="habit-page-info-block members-number"><span><i className="fas fa-user-friends fa-sm"></i> members:</span> <span> {habit.members.length}</span></h6>
-                            </div>
-                        </div>
-                        <div className="habit-page-header-btn-con">
-                            {userIsMember ? <button className="habit-page-header-btn leave-habit-btn" onClick={() => this.leaveHabit(habit.id)}>Leave habit</button> : <button className="btn-floating pulse habit-page-header-btn join-habit-btn" onClick={() => this.joinHabit(habit.id)}>Join habit</button>}
+                                <div className="habit-page-text-con">
+                                    <h1 className="habit-page-title">{habit.habitTitle}</h1>
+                                    <div className="habit-page-info-blocks">
+                                        <div className="habit-page-info-block started-date"><i className="far fa-calendar-alt fa-xs"></i><span className="date-span"> {changeDateFormat1(habit.habitStartDate)}</span></div>
+                                        <div className="habit-page-info-block created-by"><i className="fas fa-user fa-xs"></i><span> {habit.owner.login}</span></div>
+                                        <div className="habit-page-info-block privacy"><i className={habit.private ? 'fas fa-lock fa-xs' : 'fa fa-lock-open fa-xs'}></i> <span> {habit.private ? 'Private' : 'Public'}</span></div>
+                                        <div className={`habit-page-info-block category-${habit.category}`}><i className="fas fa-dumbbell fa-sm"></i><span> {habit.category}</span></div>
+                                        <div className="habit-page-info-block frequency"><i className="fas fa-history fa-sm"></i><span> {habit.frequency}</span></div>
+                                        <div className="habit-page-info-block members-number"><i className="fas fa-user-friends fa-sm"></i><span> {habit.members.length}</span></div>
+                                    </div>
+                                </div>
+                                <div className="habit-page-header-btn-con col s12 l4 center">
+                                    {userIsMember ? <button className="btn-floating btn-large habit-page-header-btn leave-habit-btn" onClick={() => this.leaveHabit(habit.id)}>Leave</button> : <button className="btn-floating btn-large pulse habit-page-header-btn join-habit-btn" onClick={() => this.joinHabit(habit.id)}>Join</button>}
+                                </div>
                         </div>
                     </section>
                     {userIsMember ?
@@ -83,6 +84,9 @@ class HabitPage extends Component {
                             <InviteMember habitID={habit.id} />
                         </div>
                     </section> : null}
+                    <section className="habit-page-dashboard">
+                        {userIsMember ? <AddPost /> : null}
+                    </section>
                 </div>
             )
         } else
