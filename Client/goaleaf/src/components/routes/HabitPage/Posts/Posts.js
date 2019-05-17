@@ -13,6 +13,26 @@ class Posts extends Component {
         postsSortBy: 'NEWEST'
     }
 
+    handlePostCardEdited = id => {
+    }
+    
+
+    handlePostCardDeleted = id => {
+        axios.delete(`/api/posts/delete/{id}`, {
+            data: {
+                "habitID": this.props.habitID,
+                "postID": id,
+                "token": localStorage.getItem("token")
+            }
+        })
+            .then(res => {
+                console.log(`Deleted post ${id}`);
+                this.setState({ posts: this.state.posts.filter(post => post.id !== id) })
+
+            })
+            .catch(err => console.log(err))
+    }
+
     componentDidMount() {
         axios.get(`/api/posts/all?token=${localStorage.getItem("token")}&habitID=${this.props.habitID}`)
             .then(res => {
@@ -23,27 +43,27 @@ class Posts extends Component {
                     })
                 })
             })
-            .catch(err => {console.log('Error when downloading posts')})
+            .catch(err => { console.log('Error when downloading posts') })
     }
 
     render() {
 
         let posts = this.state.posts;
-/*
-        posts.sort(function (a, b) {
-            let keyA = new Date(a.date),
-                keyB = new Date(b.date);
-            if (keyA > keyB) return -1;
-            if (keyA < keyB) return 1;
-            return 0;
-        });
-*/
+        /*
+                posts.sort(function (a, b) {
+                    let keyA = new Date(a.date),
+                        keyB = new Date(b.date);
+                    if (keyA > keyB) return -1;
+                    if (keyA < keyB) return 1;
+                    return 0;
+                });
+        */
         let foundPosts = false;
         let postCards = []
         posts.forEach(post => {
 
             foundPosts = true;
-            postCards.push(<PostCard />)
+            postCards.push(<PostCard key={post.id} id={post.id} handlePostCardEdited={() => this.handlePostCardEdited(post.id)} handlePostCardDeleted={() => this.handlePostCardDeleted(post.id)} />)
 
         })
 
@@ -62,10 +82,10 @@ class Posts extends Component {
                             {postsToDisplay}
                         </ul>
                         <div>
-                            { postCards.length > this.state.postsToShow ? <button onClick={() => this.setState({ postsToShow: this.state.postsToShow + 20 })}>Show more</button> : null }
+                            {postCards.length > this.state.postsToShow ? <button onClick={() => this.setState({ postsToShow: this.state.postsToShow + 20 })}>Show more</button> : null}
                         </div>
                     </div>
-            </section>
+                </section>
             )
         } else {
             return null
