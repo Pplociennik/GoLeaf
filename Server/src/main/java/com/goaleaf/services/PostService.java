@@ -11,4 +11,6 @@ public interface PostService {
     void removePostFromDatabase(Integer id);
 
     void updatePost(Post post);
+
+    void save(Post post);
 }

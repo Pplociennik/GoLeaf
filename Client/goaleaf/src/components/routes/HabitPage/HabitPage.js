@@ -6,6 +6,7 @@ import './HabitPage.scss'
 import InviteMember from './InviteMember/InviteMember'
 import AddPost from './AddPost/AddPost'
 import { changeDateFormat1 } from './../../../functions.js'
+import Posts from './Posts/Posts'
 
 class HabitPage extends Component {
 
@@ -86,6 +87,9 @@ class HabitPage extends Component {
                     </section> : null}
                     <section className="habit-page-dashboard">
                         {userIsMember ? <AddPost habitID = { habit.id } /> : null}
+                    </section>
+                    <section>
+                        {userIsMember ? <Posts habitID={habit.id}/> : null}
                     </section>
                 </div>
             )
