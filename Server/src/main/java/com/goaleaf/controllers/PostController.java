@@ -77,6 +77,8 @@ public class PostController {
             newPost.setPostType(PostTypes.TextAndPhoto);
         newPost.setCreatorLogin(tempUser.getLogin());
 
+        postService.save(newPost);
+
         return HttpStatus.OK;
 
     }
