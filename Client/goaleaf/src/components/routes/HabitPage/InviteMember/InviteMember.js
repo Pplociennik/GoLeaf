@@ -58,7 +58,7 @@ class InviteMember extends Component {
                 maxWidth: '80%',
                 width: '500px',
                 backgroundColor: '#f2f2f2',
-                borderRadius: '10px',
+                borderRadius: '30px',
                 border: "none"
             }}
             overlayStyle={{
@@ -67,11 +67,10 @@ class InviteMember extends Component {
         >
         <div className="invite-user-box">
         <div className="row">
-            <form className="col s10 offset-s1  l6 offset-l3 center-align" onSubmit={(e) => this.addMember(e, this.props.habitID)} autoComplete="off">
-                <h4 className="">Invite user</h4>
+            <form className="col s10 offset-s1  l8 offset-l2 center-align" onSubmit={(e) => this.addMember(e, this.props.habitID)} autoComplete="off">
+                <h4 className="">Send invitation</h4>
                 <div className="input-field inline">
-                    <input id="userInvited" type="text" onChange={ this.handleChange } />
-                    <label htmlFor="userInvited">username</label>
+                    <input id="userInvited" type="text" placeholder="username" onChange={ this.handleChange } />
                     <span className={this.state.msg === 'Invitation sent' ? "helper-text green-text" : "helper-text red-text "}>{this.state.msg}</span>
                 </div>
                 <button className="btn" type="submit" value="Invite user">

@@ -79,13 +79,13 @@ class HabitPage extends Component {
                         </div>
                     </section>
                     {userIsMember ?
-                    <section className="habit-page-main">
+                    <section className="habit-page-navigation-con">
                         <div className="habit-page-navigation">
                             <InviteMember habitID={habit.id} />
                         </div>
                     </section> : null}
                     <section className="habit-page-dashboard">
-                        {userIsMember ? <AddPost /> : null}
+                        {userIsMember ? <AddPost habitID = { habit.id } /> : null}
                     </section>
                 </div>
             )

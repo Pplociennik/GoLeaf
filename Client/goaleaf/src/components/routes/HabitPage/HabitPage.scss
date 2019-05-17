@@ -2,6 +2,7 @@
 
 .habit-page {
     width: 100%;
+    margin-top: 2em;
     color: $text-color;
     height: auto;
     display: flex;
@@ -10,11 +11,24 @@
     overflow: hidden;
 
     .habit-page-header-con {
-        width: 100%;
+        background-color: $secondary-color;
         height: auto;
+        min-height: 320px;
+        width: 90%;
+        max-width: 1100px;
+        padding: 10px;
+        border-radius: 30px;
         color: $text-color;
+        box-shadow: 2px 2px 10px 0px rgba(51,51,51,0.2);
         display: flex;
         justify-content: center;
+
+        @include md {
+            width: 80%;
+        }
+        @include lg {
+            width: 70%;
+        }
 
         .habit-page-info-con {
             width: 100%;
@@ -28,15 +42,17 @@
             }
 
             .habit-page-text-con {
-                padding: 20px;
+                padding: 10px;
 
                 @include lg {
                     width: 80%;
                 }
                 h1 {
+                    color: $primary-color-light;
                     overflow-wrap: break-word;
                     margin-bottom: 0;
                     font-size: 3em;
+                    font-weight: 400;
                     @include lg {
                         font-size: 4em;
                     }
@@ -47,44 +63,49 @@
                 justify-content: center;
                 align-items: center;
 
-                .btn {
-                    letter-spacing: 4px;
+                .habit-page-header-btn {
+                    background-color: $primary-color-light;
+                    color: $secondary-color;
+                    height: 60px;
+                    width: 140px;
+                    margin: 10px;
+                    border-radius: 30px;
+                    font-size: 1.3em;
+                    letter-spacing: 1px;
                 }
                 .leave-habit-btn {
-                    background-color: #ff6138;
+                    color: #ff6138;
                 }
             }
         }
-        .habit-page-header-btn {
-            background-color: $secondary-color;
-            height: 100px;
-            width: 100px;
-            font-size: 1.3em;
-            letter-spacing: 1px;
-        }
         .habit-page-info-blocks {
+            width: 90%;
+            margin: 1em 0;
             display: flex;
             flex-wrap: wrap;
 
             .habit-page-info-block {
                 width: auto;
-                height: 30px;
-                background-color: #f1eb9a;
-                padding: 4px 10px;
-                margin: 10px;
-                border-radius: 4px;
-                color: $text-color;
-                font-weight: 600;
+                height: 28px;
+                background-color: #fd9191;
+                color: #fff;
+                padding: 4px 16px;
+                margin: 6px;
+                border-radius: 20px;
+                font-weight: 500;
+                letter-spacing: 0.5px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                i { margin-right: 6px; }
 
-                i {
-                    color: lighten($text-color, 20%);
-                }
             }
         }
     }
 
-    .habit-page-main {
-        width: 100%;
+    .habit-page-navigation-con {
+        width: 90%;
+        max-width: 1100px;
         height: auto;
         @include md {
             width: 80%;
@@ -97,6 +118,13 @@
             width: 100%;
             height: auto;
             margin: 1em 0;
+
+            @include md {
+                width: 80%;
+            }
+            @include lg {
+                width: 70%;
+            }
         }
     }
     .habit-page-dashboard {
