@@ -1,18 +1,16 @@
 @import './../../../../global-styles.scss';
 
 .invite-user-btn {
-    border-radius: 30px;
     color: $primary-color-light;
     font-weight: 500;
+    font-size: 1.2em;
     letter-spacing: 1px;    
+    border-radius: 10px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
 
     i { margin-right: 10px }
-}
-.invite-user-btn:hover {
-    background-color: darken(#aa5c9f, 6%);
 }
 
 .invite-user-box {

@@ -63,12 +63,11 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            .input-field {
+            .input-field  {
                 width: 90%;
-                margin-left: auto;
-                margin-right: auto;
+                margin: 10px auto;
                 textarea {
-                    font-size: 1.5em;
+                    font-size: 1.7em;
                 }
             }
             .add-post-buttons-con {
@@ -115,7 +114,7 @@
            }
         .input-field input[type=text]:focus, .materialize-textarea:focus:not([readonly]) {
             border-bottom: 1px solid $secondary-color !important;
-            box-shadow: 0 1px 0 0 $secondary-color !important;
+            box-shadow: 0 1px 0 0 $secondary-color !important;  
            }
     }
     #achievement {

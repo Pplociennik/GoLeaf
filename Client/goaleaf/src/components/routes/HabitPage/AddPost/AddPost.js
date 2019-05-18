@@ -29,10 +29,10 @@ class AddPost extends Component {
     
     return (
         <div className="add-post-con row">
-            <div className="col s12 m8 offset-m2">
+            <div className="col s10 m8 offset-s1 offset-m2">
                 <ul className="tabs">
                     <li className="post-tab tab col s6 l4 offset-l1"><a className="active" href="#post">Post</a></li>
-                    <li className="achievement-tab tab col s6 l4 offset-l2"><a  href="#achievement">Achievement</a></li>
+                    <li className="achievement-tab tab col s6 l4 offset-s1 offset-l2"><a  href="#achievement">Achievement</a></li>
                 </ul>
             </div>
             <div id="post" className="col s10 offset-s1 m8 offset-m2">
