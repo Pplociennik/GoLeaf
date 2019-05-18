@@ -11,7 +11,7 @@ class AddPost extends Component {
   }
 
   handleAddPost = e => {
-      e.preventDefault();      
+      e.preventDefault();    
       axios.post('/api/posts/addpost', {
             "habitID": this.props.habitID,
             "postText": this.state.postText,

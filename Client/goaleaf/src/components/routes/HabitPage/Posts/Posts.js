@@ -48,21 +48,13 @@ class Posts extends Component {
     render() {
 
         let posts = this.state.posts;
-        /*
-                posts.sort(function (a, b) {
-                    let keyA = new Date(a.date),
-                        keyB = new Date(b.date);
-                    if (keyA > keyB) return -1;
-                    if (keyA < keyB) return 1;
-                    return 0;
-                });
-        */
+
         let foundPosts = false;
         let postCards = []
         posts.forEach(post => {
 
             foundPosts = true;
-            postCards.push(<PostCard key={post.id} id={post.id} handlePostCardEdited={() => this.handlePostCardEdited(post.id)} handlePostCardDeleted={() => this.handlePostCardDeleted(post.id)} />)
+            postCards.push(<PostCard key={post.id} id={post.id} creatorLogin={post.creatorLogin} postType={post.postType} postText={post.postText} imgName={post.imgName} counter_CLAPPING={post.counter_CLAPPING} counter_WOW={post.counter_WOW} counter_NS={post.counter_NS} counter_TTD={post.counter_TTD} handlePostCardEdited={() => this.handlePostCardEdited(post.id)} handlePostCardDeleted={() => this.handlePostCardDeleted(post.id)} />)
 
         })
 
