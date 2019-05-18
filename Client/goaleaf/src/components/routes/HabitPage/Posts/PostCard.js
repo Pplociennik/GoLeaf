@@ -6,11 +6,10 @@ function PostCard(props) {
     return (
         <li>
             <div>
-                <span>{props.creatorLogin}</span>
-                <span>{props.postText}</span>
+                <h4>{props.creatorLogin}</h4>
+                <p>{props.postText}</p>
                 <div>
-                    <button onClick={() => props.handlePostCardEdited(props.id)}>Edit</button>
-                    <button onClick={() => props.handlePostCardDeleted(props.id)}>Delete</button>
+                    {props.currentUserLogin === props.creatorLogin ? <button onClick={() => props.handlePostCardDeleted(props.id)}>Delete</button> : null}
                 </div>
             </div>
         </li>

@@ -9,13 +9,9 @@ class Posts extends Component {
 
     state = {
         posts: [],
-        postsToShow: 20,
-        postsSortBy: 'NEWEST'
+        postsToShow: 20
     }
 
-    handlePostCardEdited = id => {
-    }
-    
     handlePostCardDeleted = id => {
         axios.delete(`/api/posts/delete/{id}`, {
             data: {
@@ -43,6 +39,14 @@ class Posts extends Component {
                 })
             })
             .catch(err => { console.log('Error when downloading posts') })
+
+        axios.get(`/api/users/user/${this.props.userLogged}`)
+            .then(res => {
+                this.setState({
+                    currentUserLogin: res.data.login
+                })
+            }
+            ).catch(err => console.log(err.response.data.message))
     }
 
     render() {
@@ -54,7 +58,7 @@ class Posts extends Component {
         posts.forEach(post => {
 
             foundPosts = true;
-            postCards.push(<PostCard key={post.id} id={post.id} creatorLogin={post.creatorLogin} postType={post.postType} postText={post.postText} imgName={post.imgName} counter_CLAPPING={post.counter_CLAPPING} counter_WOW={post.counter_WOW} counter_NS={post.counter_NS} counter_TTD={post.counter_TTD} handlePostCardEdited={() => this.handlePostCardEdited(post.id)} handlePostCardDeleted={() => this.handlePostCardDeleted(post.id)} />)
+            postCards.push(<PostCard key={post.id} id={post.id} currentUserLogin={this.state.currentUserLogin} creatorLogin={post.creatorLogin} postType={post.postType} postText={post.postText} imgName={post.imgName} counter_CLAPPING={post.counter_CLAPPING} counter_WOW={post.counter_WOW} counter_NS={post.counter_NS} counter_TTD={post.counter_TTD} handlePostCardDeleted={() => this.handlePostCardDeleted(post.id)} />)
 
         })
 
