@@ -29,6 +29,9 @@
         @include lg {
             width: 70%;
         }
+        @include xl {
+            width: 60%;
+        }
 
         .habit-page-info-con {
             width: 100%;
@@ -85,20 +88,17 @@
             flex-wrap: wrap;
 
             .habit-page-info-block {
+                background-color: $primary-color-light;
                 width: auto;
                 height: 28px;
-                background-color: #fd9191;
-                color: #fff;
                 padding: 4px 16px;
                 margin: 6px;
-                border-radius: 20px;
+                border-radius: 6px;
                 font-weight: 500;
-                letter-spacing: 0.5px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 i { margin-right: 6px; }
-
             }
         }
     }
@@ -113,6 +113,9 @@
         @include lg {
             width: 70%;
         }
+        @include xl {
+            width: 60%;
+        }
 
         .habit-page-navigation {
             width: 100%;
@@ -125,11 +128,112 @@
             @include lg {
                 width: 70%;
             }
+
         }
     }
     .habit-page-dashboard {
         width: 900px;
         max-width: 100%;
         margin-top: 3em;
+    }
+}
+
+.NONE-category {
+    .habit-page-header-con {
+        background-color: $none-color;
+        .habit-page-info-block {
+            color: $none-color;
+        }
+    }
+    .habit-page-navigation .btn {
+        background-color: $none-color;
+    }
+}
+.DIET-category {
+    .habit-page-header-con {
+        background-color: $diet-color;
+        .habit-page-info-block {
+            color: $diet-color;
+        }
+    }
+    .habit-page-navigation .btn {
+        background-color: $diet-color;
+    }
+}
+.SPORT-category {
+    .habit-page-header-con {
+        background-color: $sport-color;
+        .habit-page-info-block {
+            color: $sport-color;
+        }
+    }
+    .habit-page-navigation .btn {
+        background-color: $sport-color;
+    }
+}
+.HEALTH-category {
+    .habit-page-header-con {
+        background-color: $health-color;
+        .habit-page-info-block {
+            color: $health-color;
+        }
+    }
+    .habit-page-navigation .btn {
+        background-color: $health-color;
+    }
+}
+.STUDY-category {
+    .habit-page-header-con {
+        background-color: $study-color;
+        .habit-page-info-block {
+            color: $study-color;
+        }
+    }
+    .habit-page-navigation .btn {
+        background-color: $study-color;
+    }
+}
+.WORK-category {
+    .habit-page-header-con {
+        background-color: $work-color;
+        .habit-page-info-block {
+            color: $work-color;
+        }
+    }
+    .habit-page-navigation .btn {
+        background-color: $work-color;
+    }
+}
+.MONEY-category {
+    .habit-page-header-con {
+        background-color: $money-color;
+        .habit-page-info-block {
+            color: $money-color;
+        }
+    }
+    .habit-page-navigation .btn {
+        background-color: $money-color;
+    }
+}
+.SOCIAL-category {
+    .habit-page-header-con {
+        background-color: $social-color;
+        .habit-page-info-block {
+            color: $social-color;
+        }
+    }
+    .habit-page-navigation .btn {
+        background-color: $social-color;
+    }
+}
+.FAMILY-category {
+    .habit-page-header-con {
+        background-color: $family-color;
+        .habit-page-info-block {
+            color: $family-color;
+        }
+    }
+    .habit-page-navigation .btn {
+        background-color: $family-color;
     }
 }

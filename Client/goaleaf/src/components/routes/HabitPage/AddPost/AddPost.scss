@@ -1,6 +1,7 @@
 @import './../../../../global-styles.scss';
 
 .add-post-con {
+    margin-top: 20px;
     .col {
         padding: 0;
     }
@@ -14,25 +15,31 @@
         font-weight: 600;
     }
     .tabs .achievement-tab a {
-        color: #ede862;
-        border: 1px solid #ede862;
+        color: #CAC531;
+        border: 1px solid #CAC531;
     }
     .tabs .post-tab a {
-        color: $secondary-color;
-        border: 1px solid $secondary-color;
+        color: #1D976C;
+        border: 1px solid #1D976C;
     }
     .tabs .achievement-tab a:hover {
-        color: darken(#ede862, 20%);
+        color: darken(#CAC531, 6%);
     }
     .tabs .post-tab a:hover {
-        color: darken($secondary-color, 20%);
+        color: darken(#1D976C, 6%);
     }
     .tabs .post-tab a.active {
-        background-color: $secondary-color;
+        background: #1D976C;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #93F9B9, #1D976C);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #93F9B9, #1D976C); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
         color: $primary-color-light;
     }
     .tabs .achievement-tab a.active {
-        background-color: #ede862;
+        background: #CAC531;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #F3F9A7, #CAC531);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #F3F9A7, #CAC531); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
         color: $primary-color-light;
     }
     .tabs .indicator {
@@ -80,6 +87,7 @@
                         height: 40px;
                         width: auto;
                         margin-left: 30px;
+                        margin-top: 10px;
                         cursor: pointer;
                     }
                 }
@@ -97,7 +105,10 @@
     }
     #post {
         .add-post-btn {
-            background-color: $secondary-color;
+            background: #1D976C;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #93F9B9, #1D976C);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #93F9B9, #1D976C); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
         }
         .input-field input[type=text]:focus + label, .materialize-textarea:focus:not([readonly]) + label {
             color: $secondary-color !important;
@@ -109,7 +120,10 @@
     }
     #achievement {
         .add-post-btn {
-            background-color: #ede862;
+            background: #CAC531;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #F3F9A7, #CAC531);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #F3F9A7, #CAC531); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
         }
         .input-field input[type=text]:focus + label, .materialize-textarea:focus:not([readonly]) + label {
             color: #ede862 !important;

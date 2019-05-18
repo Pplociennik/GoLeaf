@@ -16,7 +16,6 @@ class Posts extends Component {
     handlePostCardEdited = id => {
     }
     
-
     handlePostCardDeleted = id => {
         axios.delete(`/api/posts/delete/{id}`, {
             data: {

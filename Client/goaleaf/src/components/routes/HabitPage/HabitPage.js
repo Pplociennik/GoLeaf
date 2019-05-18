@@ -60,7 +60,7 @@ class HabitPage extends Component {
         if (habit) {
             habit.members.find(member => member === this.props.userLogged) ? userIsMember = true : userIsMember = false;
             return (
-                <div className="habit-page">
+                <div className={`habit-page ${habit.category}-category`}>
                     <section className="habit-page-header-con">
                         <div className="habit-page-info-con">
                                 <div className="habit-page-text-con">
