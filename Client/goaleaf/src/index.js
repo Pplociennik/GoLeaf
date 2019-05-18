@@ -29,7 +29,6 @@ export function fetchHabits(){
       .then(res => {
         dispatch({ type: 'GET_HABITS', payload: res.data});
       })
-      
     };
 
     // GET MEMBERS
@@ -39,7 +38,6 @@ export function fetchMembers(){
           .then(res => {
             dispatch({ type: 'GET_MEMBERS', payload: res.data});
           })
-          
         };
     // IS LOADED
 export function isLoaded(){

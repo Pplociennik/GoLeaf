@@ -10,11 +10,20 @@
     overflow: hidden;
 
     .habit-page-header-con {
-        width: 100%;
+        background-color: $secondary-color;
         height: auto;
+        min-height: 400px;
+        border-radius: 30px;
+        width: 90%;
+        padding: 10px;
         color: $text-color;
+        box-shadow: 2px 2px 10px 0px rgba(51,51,51,0.2);
         display: flex;
         justify-content: center;
+
+        @include md {
+            width: 98%;
+        }
 
         .habit-page-info-con {
             width: 100%;
@@ -23,22 +32,27 @@
 
             @include lg {
                 flex-direction: row;
-                justify-content: space-evenly;
+                justify-content: space-between;
                 width: 80%;
             }
 
             .habit-page-text-con {
-                padding: 20px;
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
 
                 @include lg {
                     width: 80%;
                 }
                 h1 {
+                    color: $primary-color-light;
                     overflow-wrap: break-word;
-                    margin-bottom: 0;
+                    margin: 0;
                     font-size: 3em;
+                    font-weight: 400;
                     @include lg {
-                        font-size: 4em;
+                        font-size: 5em;
                     }
                 }
             }
@@ -47,61 +61,166 @@
                 justify-content: center;
                 align-items: center;
 
-                .btn {
-                    letter-spacing: 4px;
+                .habit-page-header-btn {
+                    background-color: $primary-color-light;
+                    color: $secondary-color;
+                    height: 60px;
+                    width: 140px;
+                    margin: 10px;
+                    border-radius: 30px;
+                    font-size: 1.3em;
+                    letter-spacing: 1px;
                 }
                 .leave-habit-btn {
-                    background-color: #ff6138;
+                    color: #ff6138;
                 }
             }
         }
-        .habit-page-header-btn {
-            background-color: $secondary-color;
-            height: 100px;
-            width: 100px;
-            font-size: 1.3em;
-            letter-spacing: 1px;
-        }
         .habit-page-info-blocks {
+            width: 90%;
+            margin: 1em 0;
             display: flex;
             flex-wrap: wrap;
 
             .habit-page-info-block {
+                background-color: $primary-color-light;
                 width: auto;
-                height: 30px;
-                background-color: #f1eb9a;
-                padding: 4px 10px;
-                margin: 10px;
-                border-radius: 4px;
-                color: $text-color;
-                font-weight: 600;
-
-                i {
-                    color: lighten($text-color, 20%);
-                }
+                height: 28px;
+                padding: 4px 16px;
+                margin: 6px;
+                border-radius: 6px;
+                font-weight: 500;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                i { margin-right: 6px; }
             }
         }
     }
 
-    .habit-page-main {
-        width: 100%;
+    .habit-page-navigation-con {
+        width: 90%;
         height: auto;
         @include md {
-            width: 80%;
+            width: 98%;
         }
-        @include lg {
-            width: 70%;
-        }
-
         .habit-page-navigation {
             width: 100%;
             height: auto;
             margin: 1em 0;
+
+            @include md {
+                width: 80%;
+            }
+            @include lg {
+                width: 70%;
+            }
+
         }
     }
     .habit-page-dashboard {
         width: 900px;
         max-width: 100%;
         margin-top: 3em;
+    }
+}
+
+.NONE-category {
+    .habit-page-header-con {
+        background-color: $none-color;
+        .habit-page-info-block {
+            color: $none-color;
+        }
+    }
+    .habit-page-navigation .habit-page-navigation-btn {
+        background-color: $none-color;
+    }
+}
+.DIET-category {
+    .habit-page-header-con {
+        background-color: $diet-color;
+        .habit-page-info-block {
+            color: $diet-color;
+        }
+    }
+    .habit-page-navigation .habit-page-navigation-btn {
+        background-color: $diet-color;
+    }
+}
+.SPORT-category {
+    .habit-page-header-con {
+        background-color: $sport-color;
+        .habit-page-info-block {
+            color: $sport-color;
+        }
+    }
+    .habit-page-navigation .habit-page-navigation-btn {
+        background-color: $sport-color;
+    }
+}
+.HEALTH-category {
+    .habit-page-header-con {
+        background-color: $health-color;
+        .habit-page-info-block {
+            color: $health-color;
+        }
+    }
+    .habit-page-navigation .habit-page-navigation-btn {
+        background-color: $health-color;
+    }
+}
+.STUDY-category {
+    .habit-page-header-con {
+        background-color: $study-color;
+        .habit-page-info-block {
+            color: $study-color;
+        }
+    }
+    .habit-page-navigation .habit-page-navigation-btn {
+        background-color: $study-color;
+    }
+}
+.WORK-category {
+    .habit-page-header-con {
+        background-color: $work-color;
+        .habit-page-info-block {
+            color: $work-color;
+        }
+    }
+    .habit-page-navigation .habit-page-navigation-btn {
+        background-color: $work-color;
+    }
+}
+.MONEY-category {
+    .habit-page-header-con {
+        background-color: $money-color;
+        .habit-page-info-block {
+            color: $money-color;
+        }
+    }
+    .habit-page-navigation .habit-page-navigation-btn {
+        background-color: $money-color;
+    }
+}
+.SOCIAL-category {
+    .habit-page-header-con {
+        background-color: $social-color;
+        .habit-page-info-block {
+            color: $social-color;
+        }
+    }
+    .habit-page-navigation .habit-page-navigation-btn {
+        background-color: $social-color;
+    }
+}
+.FAMILY-category {
+    .habit-page-header-con {
+        background-color: $family-color;
+        .habit-page-info-block {
+            color: $family-color;
+        }
+    }
+    .habit-page-navigation .habit-page-navigation-btn {
+        background-color: $family-color;
     }
 }

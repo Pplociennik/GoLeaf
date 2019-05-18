@@ -1,6 +1,7 @@
 @import './../../../../global-styles.scss';
 
 .add-post-con {
+    margin-top: 20px;
     .col {
         padding: 0;
     }
@@ -12,45 +13,66 @@
         font-size: 1.3em;
         letter-spacing: 1px;
         font-weight: 600;
-    } 
-    .tabs .tab a:hover {
-        background-color:#eee;
-        color:#000;
-    } 
+    }
+    .tabs .achievement-tab a {
+        color: #CAC531;
+        border: 1px solid #CAC531;
+    }
+    .tabs .post-tab a {
+        color: #1D976C;
+        border: 1px solid #1D976C;
+    }
+    .tabs .achievement-tab a:hover {
+        color: darken(#CAC531, 6%);
+    }
+    .tabs .post-tab a:hover {
+        color: darken(#1D976C, 6%);
+    }
     .tabs .post-tab a.active {
-        background-color: $secondary-color;
+        background: #1D976C;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #93F9B9, #1D976C);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #93F9B9, #1D976C); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
         color: $primary-color-light;
     }
     .tabs .achievement-tab a.active {
-        background-color: #ede862;
+        background: #CAC531;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #F3F9A7, #CAC531);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #F3F9A7, #CAC531); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
         color: $primary-color-light;
     }
     .tabs .indicator {
         display: none;
     }
+    .tabs {
+        background-color: $primary-color;
+    }
+    .tab a {
+        border-radius: 30px;
+    }
 
-    #post {
+    #post, #achievement {
         background-color: $primary-color-light;
         min-height: 240px;
-        border: 2px solid $secondary-color;
-        border-top: none;
-
+        margin-top: 24px;
+        border-radius: 30px;
+        box-shadow: 2px 2px 10px 0px rgba(51,51,51,0.2);        
         form {
             min-height: 240px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            .input-field {
+            .input-field  {
                 width: 90%;
-                margin-left: auto;
-                margin-right: auto;
+                margin: 10px auto;
                 textarea {
-                    font-size: 1.5em;
+                    font-size: 1.7em;
                 }
             }
             .add-post-buttons-con {
                 width: 100%;
-                height: 80px;
+                height: 70px;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -60,70 +82,54 @@
                     justify-content: center;
                     align-items: center;
 
-                    i {
-                        margin-left: 20px;
-                        color: lighten($text-color, 30%);
-                        font-size: 2.4em;
+                    img {
+                        height: 40px;
+                        width: auto;
+                        margin-left: 30px;
+                        margin-top: 10px;
+                        cursor: pointer;
                     }
                 }
 
                 .add-post-btn {
-                    background-color: $secondary-color;
+                    height: 42px;
+                    width: 100px;
                     margin-right: 2em;
                     border-radius: 30px;
                     font-weight: 600;
                     letter-spacing: 3px;
                 }
             }
-
-
         }
     }
-    #achievement {
-        background-color: $primary-color-light;
-        min-height: 240px;
-        border: 2px solid #ede862;
-        border-top: none;
-
-
-        form {
-            min-height: 240px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            .input-field {
-                width: 90%;
-                margin-left: auto;
-                margin-right: auto;
-                textarea {
-                    font-size: 1.5em;
-                    letter-spacing: 1px;
-                    color: $text-color;
-                }
-            }
-            .input-field input[type=text]:focus, .materialize-textarea:focus:not([readonly]) {
-                 border-bottom: 1px solid #ede862 !important;
-                 box-shadow: 0 1px 0 0 #ede862 !important;
-            }
-
-            .add-achievement-buttons-con {
-                width: 100%;
-                height: 80px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-
-                .add-achievement-btn {
-                    background-color: #ede862;
-                    margin-right: 2em;
-                    border-radius: 30px;
-                    font-weight: 600;
-                    letter-spacing: 3px;
-                }
-            }
-
+    #post {
+        .add-post-btn {
+            background: #1D976C;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #93F9B9, #1D976C);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #93F9B9, #1D976C); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
         }
+        .input-field input[type=text]:focus + label, .materialize-textarea:focus:not([readonly]) + label {
+            color: $secondary-color !important;
+           }
+        .input-field input[type=text]:focus, .materialize-textarea:focus:not([readonly]) {
+            border-bottom: 1px solid $secondary-color !important;
+            box-shadow: 0 1px 0 0 $secondary-color !important;  
+           }
+    }
+    #achievement {
+        .add-post-btn {
+            background: #CAC531;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #F3F9A7, #CAC531);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #F3F9A7, #CAC531); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
+        }
+        .input-field input[type=text]:focus + label, .materialize-textarea:focus:not([readonly]) + label {
+            color: #ede862 !important;
+           }
+        .input-field input[type=text]:focus, .materialize-textarea:focus:not([readonly]) {
+            border-bottom: 1px solid #ede862 !important;
+            box-shadow: 0 1px 0 0 #ede862 !important;
+           }
     }
 }

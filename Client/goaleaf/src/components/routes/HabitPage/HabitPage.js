@@ -60,7 +60,7 @@ class HabitPage extends Component {
         if (habit) {
             habit.members.find(member => member === this.props.userLogged) ? userIsMember = true : userIsMember = false;
             return (
-                <div className="habit-page">
+                <div className={`habit-page ${habit.category}-category`}>
                     <section className="habit-page-header-con">
                         <div className="habit-page-info-con">
                                 <div className="habit-page-text-con">
@@ -80,13 +80,13 @@ class HabitPage extends Component {
                         </div>
                     </section>
                     {userIsMember ?
-                    <section className="habit-page-main">
+                    <section className="habit-page-navigation-con">
                         <div className="habit-page-navigation">
                             <InviteMember habitID={habit.id} />
                         </div>
                     </section> : null}
                     <section className="habit-page-dashboard">
-                        {userIsMember ? <AddPost /> : null}
+                        {userIsMember ? <AddPost habitID = { habit.id } /> : null}
                     </section>
                     <section>
                         {userIsMember ? <Posts habitID={habit.id}/> : null}
