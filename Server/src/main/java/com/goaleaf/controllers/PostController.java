@@ -2,14 +2,18 @@ package com.goaleaf.controllers;
 
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.goaleaf.entities.DTO.PostReactionsNrDTO;
 import com.goaleaf.entities.Post;
+import com.goaleaf.entities.PostReaction;
 import com.goaleaf.entities.User;
 import com.goaleaf.entities.enums.PostTypes;
 import com.goaleaf.entities.viewModels.habitsManaging.postsCreating.NewPostViewModel;
+import com.goaleaf.entities.viewModels.habitsManaging.postsManaging.AddReactionViewModel;
 import com.goaleaf.entities.viewModels.habitsManaging.postsManaging.EditPostViewModel;
 import com.goaleaf.entities.viewModels.habitsManaging.postsManaging.RemovePostViewModel;
 import com.goaleaf.services.*;
 import com.goaleaf.validators.exceptions.habitsProcessing.MemberDoesNotExistException;
+import com.goaleaf.validators.exceptions.habitsProcessing.postsProcessing.PostNotFoundException;
 import com.goaleaf.validators.exceptions.habitsProcessing.postsProcessing.UserIsNotCreatorException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -37,6 +41,8 @@ public class PostController {
     private NotificationService notificationService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ReactionService reactionService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public Iterable<Post> getAllHabitPosts(@RequestParam String token, Integer habitID) {
@@ -136,5 +142,61 @@ public class PostController {
         return HttpStatus.OK;
     }
 
+    @RequestMapping(value = "/post/addreaction", method = RequestMethod.POST)
+    public PostReactionsNrDTO addReactionToPost(@RequestBody AddReactionViewModel model) {
 
+        Post post = postService.findOneByID(model.postID);
+        String pastType = "";
+
+        Claims claims = Jwts.parser()
+                .setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8))
+                .parseClaimsJws(model.token).getBody();
+        User tempUser = userService.getUserById(Integer.parseInt(claims.getSubject()));
+
+        if (!jwtService.Validate(model.token, SECRET))
+            throw new TokenExpiredException("You have to be logged in!");
+        if (memberService.findSpecifiedMember(post.getHabitID(), Integer.parseInt(claims.getSubject())) == null)
+            throw new MemberDoesNotExistException("You are not a member!");
+        if (postService.findOneByID(model.postID) == null)
+            throw new PostNotFoundException(HttpStatus.NOT_FOUND, "Post not found");
+
+        if (reactionService.checkIfExist(model.postID, tempUser.getLogin())) {
+            PostReaction reaction = reactionService.getReactionByPostIdAndUserLogin(model.postID, tempUser.getLogin());
+            pastType = String.valueOf(reaction.getType());
+            reactionService.remove(model.postID, tempUser.getLogin());
+            if (pastType == "CLAPPING")
+                post.setCounter_CLAPPING(post.getCounter_CLAPPING() - 1);
+            if (pastType == "WOW")
+                post.setCounter_WOW(post.getCounter_WOW() - 1);
+            if (pastType == "NOTHING_SPECIAL")
+                post.setCounter_NS(post.getCounter_NS() - 1);
+            if (pastType == "THERES_THE_DOOR")
+                post.setCounter_TTD(post.getCounter_TTD() - 1);
+        }
+
+        PostReaction newReaction = new PostReaction();
+        newReaction.setPostID(model.postID);
+        newReaction.setType(model.type);
+        newReaction.setUserLogin(tempUser.getLogin());
+
+        if (model.type == "CLAPPING")
+            post.setCounter_CLAPPING(post.getCounter_CLAPPING() + 1);
+        if (model.type == "WOW")
+            post.setCounter_WOW(post.getCounter_WOW() + 1);
+        if (model.type == "NOTHING_SPECIAL")
+            post.setCounter_NS(post.getCounter_NS() + 1);
+        if (model.type == "THERES_THE_DOOR")
+            post.setCounter_TTD(post.getCounter_TTD() + 1);
+
+        reactionService.add(newReaction);
+        postService.updatePost(post);
+
+        PostReactionsNrDTO dataToReturn = new PostReactionsNrDTO();
+        dataToReturn.counter_CLAPPING = post.getCounter_CLAPPING();
+        dataToReturn.counter_NS = post.getCounter_NS();
+        dataToReturn.counter_TTD = post.getCounter_TTD();
+        dataToReturn.counter_WOW = post.getCounter_WOW();
+
+        return dataToReturn;
+    }
 }
