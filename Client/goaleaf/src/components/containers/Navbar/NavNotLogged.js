@@ -18,8 +18,8 @@ class NavNotLogged extends Component {
 
     return (
         <ul className="nav-not-logged" style={ navStyle }>
-            <li className="nav-item" onClick = { this.props.handleNavElementClicked } ><NavLink to='/login' activeStyle={{color: '#00bd56' }}>log in</NavLink></li>
-            <li className="nav-item" onClick = { this.props.handleNavElementClicked } ><NavLink to='/signin' activeStyle={{color: '#00bd56' }}>sign in</NavLink></li>
+            <li className="nav-item" onClick = { this.props.handleNavElementClicked } ><NavLink to='/login' activeStyle={{color: '#08c299' }}>log in</NavLink></li>
+            <li className="nav-item" onClick = { this.props.handleNavElementClicked } ><NavLink to='/signin' activeStyle={{color: '#08c299' }}>sign in</NavLink></li>
         </ul>
     )
   }

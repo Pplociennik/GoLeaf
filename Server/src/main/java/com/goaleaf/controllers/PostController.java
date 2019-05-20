@@ -76,6 +76,9 @@ public class PostController {
         if (model.type == PostTypes.TextAndPhoto)
             newPost.setPostType(PostTypes.TextAndPhoto);
         newPost.setCreatorLogin(tempUser.getLogin());
+        newPost.setPostText(model.postText);
+
+        postService.save(newPost);
 
         return HttpStatus.OK;
 
