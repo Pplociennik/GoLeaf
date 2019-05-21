@@ -50,7 +50,7 @@ public class CommentController {
     public void updateComment(@RequestBody EditCommentViewModel model) {
 
         if (commentService.getOneByID(model.commentID) == null)
-            throw new CommentNotFoundException(HttpStatus.NOT_FOUND, "Comment Not Found!");
+            throw new CommentNotFoundException("Comment Not Found!");
 
         Comment comment = commentService.getOneByID(model.commentID);
 

@@ -158,7 +158,7 @@ public class PostController {
         if (memberService.findSpecifiedMember(post.getHabitID(), Integer.parseInt(claims.getSubject())) == null)
             throw new MemberDoesNotExistException("You are not a member!");
         if (postService.findOneByID(model.postID) == null)
-            throw new PostNotFoundException(HttpStatus.NOT_FOUND, "Post not found");
+            throw new PostNotFoundException("Post not found");
 
         if (reactionService.checkIfExist(model.postID, tempUser.getLogin())) {
             PostReaction reaction = reactionService.getReactionByPostIdAndUserLogin(model.postID, tempUser.getLogin());
