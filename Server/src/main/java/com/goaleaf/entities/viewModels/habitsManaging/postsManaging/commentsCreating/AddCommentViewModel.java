@@ -1,4 +1,4 @@
-package com.goaleaf.entities.viewModels.habitsManaging.commentsCreating;
+package com.goaleaf.entities.viewModels.habitsManaging.postsManaging.commentsCreating;
 
 public class AddCommentViewModel {
 
