@@ -1,7 +1,9 @@
 package com.goaleaf.services;
 
 import com.goaleaf.entities.Comment;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface CommentService {
 
     Iterable<Comment> listAllByPostID(Integer postID);
