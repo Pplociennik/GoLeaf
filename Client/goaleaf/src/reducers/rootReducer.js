@@ -4,6 +4,7 @@ const initState = {
     users: [],
     habits: [],
     members: [],
+    posts: [],
     isLoading: true
 }
 
@@ -56,6 +57,24 @@ const rootReducer = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: false
+              }
+    }
+    if(action.type === 'ADD_POST'){
+            return {
+                ...state,
+                posts: state.posts.push(action.payload)
+              }
+    }
+    if(action.type === 'GET_POSTS'){
+            return {
+                ...state,
+                posts: action.payload
+              }
+    }
+    if(action.type === 'DELETE_POST'){
+            return {
+                ...state,
+                posts: state.posts.filter(post => post.id !== action.payload)
               }
     }
     

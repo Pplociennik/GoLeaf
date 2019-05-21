@@ -4,6 +4,9 @@ import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 import Popup from "reactjs-popup"
 import PostCard from './PostCard'
+import './Posts.scss'
+import {fetchPosts} from './../../../../index'
+import {deletePost} from './../../../../index'
 
 class Posts extends Component {
 
@@ -22,23 +25,15 @@ class Posts extends Component {
         })
             .then(res => {
                 console.log(`Deleted post ${id}`);
-                this.setState({ posts: this.state.posts.filter(post => post.id !== id) })
+                this.props.deletePost(id);
+                
 
             })
             .catch(err => console.log(err))
     }
 
     componentDidMount() {
-        axios.get(`/api/posts/all?token=${localStorage.getItem("token")}&habitID=${this.props.habitID}`)
-            .then(res => {
-                res.data.forEach(post => {
-                    let posts = [...this.state.posts, post]
-                    this.setState({
-                        posts: posts
-                    })
-                })
-            })
-            .catch(err => { console.log('Error when downloading posts') })
+        this.props.fetchPosts(this.props.habitID);
 
         axios.get(`/api/users/user/${this.props.userLogged}`)
             .then(res => {
@@ -50,8 +45,8 @@ class Posts extends Component {
     }
 
     render() {
-
-        let posts = this.state.posts;
+        
+        let posts = this.props.posts;
 
         let foundPosts = false;
         let postCards = []
@@ -71,7 +66,7 @@ class Posts extends Component {
 
         if (localStorage.getItem('token')) {
             return (
-                <section>
+                <section className="posts">
                     <div>
                         <ul>
                             {postsToDisplay}
@@ -93,8 +88,12 @@ const mapStateToProps = state => {
         habits: state.habits,
         users: state.users,
         members: state.members,
+        posts: state.posts,
         userLogged: state.userLogged
     }
 }
-
-export default withRouter(connect(mapStateToProps)(Posts));
+const mapDispatchToProps = dispatch => ({
+    fetchPosts: (habitID) =>  dispatch(fetchPosts(habitID)),
+    deletePost: (habitID) =>  dispatch(deletePost(habitID))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(Posts);

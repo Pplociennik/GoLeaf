@@ -17,7 +17,10 @@ class AddPost extends Component {
             "postText": this.state.postText,
             "token": localStorage.getItem('token'),
             "type": "JustText"
-      }).then(res =>  console.log(res)
+      }).then(res => {
+          this.setState({postText: ''})
+          console.log(res)
+        }
        ).catch(err => console.log(err))
   }
 
