@@ -2,6 +2,7 @@ package com.goaleaf.controllers;
 
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.goaleaf.entities.DTO.PostDTO;
 import com.goaleaf.entities.DTO.PostReactionsNrDTO;
 import com.goaleaf.entities.Post;
 import com.goaleaf.entities.PostReaction;
@@ -60,7 +61,7 @@ public class PostController {
     }
 
     @RequestMapping(value = "/addpost", method = RequestMethod.POST)
-    public HttpStatus addNewPost(@RequestBody NewPostViewModel model) {
+    public PostDTO addNewPost(@RequestBody NewPostViewModel model) {
 
         Claims claims = Jwts.parser()
                 .setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8))
@@ -86,7 +87,12 @@ public class PostController {
 
         postService.save(newPost);
 
-        return HttpStatus.OK;
+        PostDTO dataToResponse = new PostDTO();
+        dataToResponse.creator = tempUser.getLogin();
+        dataToResponse.text = model.postText;
+        dataToResponse.type = model.type;
+
+        return dataToResponse;
 
     }
 
