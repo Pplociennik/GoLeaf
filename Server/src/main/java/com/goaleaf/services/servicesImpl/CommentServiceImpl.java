@@ -3,7 +3,9 @@ package com.goaleaf.services.servicesImpl;
 import com.goaleaf.entities.Comment;
 import com.goaleaf.repositories.CommentRepository;
 import com.goaleaf.services.CommentService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CommentServiceImpl implements CommentService {
 
     private CommentRepository commentRepository;
