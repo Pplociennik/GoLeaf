@@ -63,7 +63,7 @@ public class PostController {
     }
 
     @RequestMapping(value = "/addpost", method = RequestMethod.POST)
-    public PostDTO addNewPost(@RequestBody NewPostViewModel model) {
+    public Post addNewPost(@RequestBody NewPostViewModel model) {
 
         Claims claims = Jwts.parser()
                 .setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8))
@@ -92,13 +92,13 @@ public class PostController {
 
         postService.save(newPost);
 
-        PostDTO dataToResponse = new PostDTO();
-        dataToResponse.creator = tempUser.getLogin();
-        dataToResponse.text = model.postText;
-        dataToResponse.type = model.type;
-        dataToResponse.dateOfAddition = newPost.getDateOfAddition();
+//        PostDTO dataToResponse = new PostDTO();
+//        dataToResponse.creator = tempUser.getLogin();
+//        dataToResponse.text = model.postText;
+//        dataToResponse.type = model.type;
+//        dataToResponse.dateOfAddition = newPost.getDateOfAddition();
 
-        return dataToResponse;
+        return newPost;
 
     }
 
