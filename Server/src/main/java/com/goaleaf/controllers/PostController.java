@@ -14,6 +14,7 @@ import com.goaleaf.entities.viewModels.habitsManaging.postsManaging.EditPostView
 import com.goaleaf.entities.viewModels.habitsManaging.postsManaging.RemovePostViewModel;
 import com.goaleaf.services.*;
 import com.goaleaf.validators.exceptions.habitsProcessing.MemberDoesNotExistException;
+import com.goaleaf.validators.exceptions.habitsProcessing.postsProcessing.EmptyPostException;
 import com.goaleaf.validators.exceptions.habitsProcessing.postsProcessing.PostNotFoundException;
 import com.goaleaf.validators.exceptions.habitsProcessing.postsProcessing.UserIsNotCreatorException;
 import io.jsonwebtoken.Claims;
@@ -23,6 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 
 import static com.goaleaf.security.SecurityConstants.SECRET;
 
@@ -73,6 +75,8 @@ public class PostController {
             throw new TokenExpiredException("You have to be logged in!");
         if (memberService.findSpecifiedMember(model.habitID, Integer.parseInt(claims.getSubject())) == null)
             throw new MemberDoesNotExistException("You are not a member!");
+        if (model.postText.isEmpty())
+            throw new EmptyPostException("Post cannot be empty!");
 
         Post newPost = new Post();
         newPost.setHabitID(model.habitID);
@@ -84,6 +88,7 @@ public class PostController {
             newPost.setPostType(PostTypes.TextAndPhoto);
         newPost.setCreatorLogin(tempUser.getLogin());
         newPost.setPostText(model.postText);
+        newPost.setDateOfAddition(new Date());
 
         postService.save(newPost);
 
@@ -91,6 +96,7 @@ public class PostController {
         dataToResponse.creator = tempUser.getLogin();
         dataToResponse.text = model.postText;
         dataToResponse.type = model.type;
+        dataToResponse.dateOfAddition = newPost.getDateOfAddition();
 
         return dataToResponse;
 
