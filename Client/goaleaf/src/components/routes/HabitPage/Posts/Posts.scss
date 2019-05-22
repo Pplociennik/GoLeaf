@@ -1,2 +1,16 @@
 @import './../../../../global-styles.scss';
 
+.posts {
+    .show-more-posts-btn-con {
+        width: 100%;
+        display: flex;
+        justify-content: center;  
+        
+        .show-more-posts-btn {
+            background-color: $secondary-color;
+            margin: 2em;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+    }
+}

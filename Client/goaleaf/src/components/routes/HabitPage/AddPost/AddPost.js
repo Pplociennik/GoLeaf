@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import './AddPost.scss'
 import axios from 'axios';
+import { connect } from 'react-redux';
 import PhotoIcon from './../../../../assets/photo-icon.png';
-
+import {addPost} from './../../../../index'
 class AddPost extends Component {
 
   state = {
@@ -14,12 +15,14 @@ class AddPost extends Component {
       e.preventDefault();    
       axios.post('/api/posts/addpost', {
             "habitID": this.props.habitID,
-            "postText": this.state.postText,
+            "postText": this.state.postText.replace(/\n\s*\n/g, '\n'),
             "token": localStorage.getItem('token'),
             "type": "JustText"
       }).then(res => {
           this.setState({postText: ''})
           console.log(res)
+          this.props.addPost(res.data);
+
         }
        ).catch(err => console.log(err))
   }
@@ -42,7 +45,7 @@ class AddPost extends Component {
                 <form className="" onSubmit={ this.handleAddPost }>
                     <div className="">
                         <div className="input-field">
-                            <textarea id="postText" className="materialize-textarea" placeholder="what's on your mind?" onChange={ this.handleChange }></textarea>
+                            <textarea id="postText" className="materialize-textarea" placeholder="what's on your mind?" value={ this.state.postText } onChange={ this.handleChange }></textarea>
                         </div>
                     </div>
                     <div className="add-post-buttons-con">
@@ -78,4 +81,8 @@ class AddPost extends Component {
   } 
 }
 
-export default AddPost;
+const mapDispatchToProps = dispatch => ({
+    addPost: post => dispatch(addPost(post))
+})
+
+export default connect(null, mapDispatchToProps)(AddPost);

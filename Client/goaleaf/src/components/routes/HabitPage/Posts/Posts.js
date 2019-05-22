@@ -46,6 +46,7 @@ class Posts extends Component {
 
     render() {
         
+        console.log(this.props.posts)
         let posts = this.props.posts;
 
         let foundPosts = false;
@@ -53,33 +54,28 @@ class Posts extends Component {
         posts.forEach(post => {
 
             foundPosts = true;
-            postCards.push(<PostCard key={post.id} id={post.id} currentUserLogin={this.state.currentUserLogin} creatorLogin={post.creatorLogin} postType={post.postType} postText={post.postText} imgName={post.imgName} counter_CLAPPING={post.counter_CLAPPING} counter_WOW={post.counter_WOW} counter_NS={post.counter_NS} counter_TTD={post.counter_TTD} handlePostCardDeleted={() => this.handlePostCardDeleted(post.id)} />)
+            postCards.push(<PostCard key={post.id} id={post.id} currentUserLogin={this.state.currentUserLogin} creatorLogin={post.creatorLogin} createdDate={post.dateOfAddition} postType={post.postType} postText={post.postText} imgName={post.imgName} counter_CLAPPING={post.counter_CLAPPING} counter_WOW={post.counter_WOW} counter_NS={post.counter_NS} counter_TTD={post.counter_TTD} handlePostCardDeleted={() => this.handlePostCardDeleted(post.id)} />)
 
         })
-
+        
         let postsToDisplay = postCards.slice(0, this.state.postsToShow);
 
 
         if (!foundPosts) {
-            postsToDisplay = <div>There are no posts yet</div>
+            postsToDisplay = <div className="center">There are no posts yet</div>
         }
 
-        if (localStorage.getItem('token')) {
-            return (
-                <section className="posts">
+        return (
+                <section className="posts row">
+                    <div className="col s12 m8  offset-m2">
+                        {postsToDisplay}
                     <div>
-                        <ul>
-                            {postsToDisplay}
-                        </ul>
-                        <div>
-                            {postCards.length > this.state.postsToShow ? <button onClick={() => this.setState({ postsToShow: this.state.postsToShow + 20 })}>Show more</button> : null}
-                        </div>
+                        {postCards.length > this.state.postsToShow ? <div className="show-more-posts-btn-con"><button class="show-more-posts-btn btn center" onClick={() => this.setState({ postsToShow: this.state.postsToShow + 20 })}>Show more</button></div> : null}
+                    </div>
                     </div>
                 </section>
             )
-        } else {
-            return null
-        }
+        
     }
 }
 
@@ -93,7 +89,7 @@ const mapStateToProps = state => {
     }
 }
 const mapDispatchToProps = dispatch => ({
-    fetchPosts: (habitID) =>  dispatch(fetchPosts(habitID)),
-    deletePost: (habitID) =>  dispatch(deletePost(habitID))
+    fetchPosts: habitID =>  dispatch(fetchPosts(habitID)),
+    deletePost: habitID =>  dispatch(deletePost(habitID))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);

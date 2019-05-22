@@ -28,6 +28,10 @@
         text-decoration: none;
         position: relative;
         display: none;
+        outline-color: none;
+    }
+    .logo-desktop.active {
+        background-color: none;
     }
     .logo-desktop::after {
         content: url('./../../../assets/logo.png');

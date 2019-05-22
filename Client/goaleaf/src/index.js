@@ -59,7 +59,6 @@ export function addPost(post){
               dispatch({ type: 'ADD_POST', payload: post})
         };
 
-
     // IS LOADED
 export function isLoaded(){
     return dispatch =>
