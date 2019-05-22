@@ -4,6 +4,7 @@ import './PostCard.scss'
 import TempPic from './../../../../assets/default-profile-pic.png'
 import { Dropdown } from 'react-materialize'
 import MoreIcon from './../../../../assets/more.png'
+import ClapIcon from './../../../../assets/clap.png'
 
 class PostCard extends Component {
 
@@ -20,6 +21,29 @@ class PostCard extends Component {
             <div className="post-content">
                 <p className="post-card-text">{this.props.postText}</p>
             </div>
+            <div className="post-bottom-navigation">
+                <div className="post-reactions">
+                    <div className="reaction">
+                        <img src={ClapIcon}></img>
+                        <span className="reaction-counter">{this.props.counter_CLAPPING}</span>
+                    </div>
+                    <div className="reaction">
+                        <img src={ClapIcon}></img>
+                        <span className="reaction-counter">{this.props.counter_CLAPPING}</span>
+                    </div>
+                    <div className="reaction">
+                        <img src={ClapIcon}></img>
+                        <span className="reaction-counter">{this.props.counter_CLAPPING}</span>
+                    </div>
+                    <div className="reaction">
+                        <img src={ClapIcon}></img>
+                        <span className="reaction-counter">{this.props.counter_CLAPPING}</span>
+                    </div>
+                </div>
+                <button className="show-comments-btn">Show comments</button>
+
+            </div>
+
             {this.props.currentUserLogin === this.props.creatorLogin ? 
                 <Dropdown trigger={ <a href="#!" className='post-card-more-btn dropdown-trigger' data-target={this.props.id}><img src={MoreIcon}></img></a>}>
                     <a className="dropdown-item delete-post" href="#!" onClick={() => this.props.handlePostCardDeleted(this.props.id)}>Delete</a>
