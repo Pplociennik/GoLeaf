@@ -5,9 +5,11 @@ import com.goaleaf.entities.DTO.CommentDTO;
 import com.goaleaf.entities.viewModels.habitsManaging.postsManaging.commentsCreating.AddCommentViewModel;
 import com.goaleaf.entities.viewModels.habitsManaging.postsManaging.commentsManaging.EditCommentViewModel;
 import com.goaleaf.services.CommentService;
+import com.goaleaf.services.PostService;
+import com.goaleaf.validators.exceptions.habitsProcessing.postsProcessing.PostNotFoundException;
 import com.goaleaf.validators.exceptions.habitsProcessing.postsProcessing.commentsProcessing.CommentNotFoundException;
+import com.goaleaf.validators.exceptions.habitsProcessing.postsProcessing.commentsProcessing.EmptyCommentException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,9 +19,16 @@ public class CommentController {
 
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private PostService postService;
 
     @RequestMapping(value = "/addcomment", method = RequestMethod.POST)
     public CommentDTO addComment(@RequestBody AddCommentViewModel model) {
+
+        if (postService.findOneByID(model.postID) == null)
+            throw new PostNotFoundException("Post not found");
+        if (model.text.isEmpty())
+            throw new EmptyCommentException("Comment cannot be empty!");
 
         Comment comment = new Comment();
         comment.setCommentText(model.text);
