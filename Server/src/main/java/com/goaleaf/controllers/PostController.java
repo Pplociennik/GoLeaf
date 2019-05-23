@@ -187,9 +187,15 @@ public class PostController {
                 post.setCounter_TTD(post.getCounter_TTD() - 1);
             postService.updatePost(post);
         }
+        PostReactionsNrDTO dataToReturn = new PostReactionsNrDTO();
+        dataToReturn.counter_CLAPPING = post.getCounter_CLAPPING();
+        dataToReturn.counter_NS = post.getCounter_NS();
+        dataToReturn.counter_TTD = post.getCounter_TTD();
+        dataToReturn.counter_WOW = post.getCounter_WOW();
+
 
         if (Objects.equals(model.type, pastType))
-            return null;
+            return dataToReturn;
 
         PostReaction newReaction = new PostReaction();
         newReaction.setPostID(model.postID);
@@ -208,7 +214,6 @@ public class PostController {
         reactionService.add(newReaction);
         postService.updatePost(post);
 
-        PostReactionsNrDTO dataToReturn = new PostReactionsNrDTO();
         dataToReturn.counter_CLAPPING = post.getCounter_CLAPPING();
         dataToReturn.counter_NS = post.getCounter_NS();
         dataToReturn.counter_TTD = post.getCounter_TTD();
