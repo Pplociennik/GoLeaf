@@ -13,4 +13,6 @@ public interface PostService {
     void updatePost(Post post);
 
     void save(Post post);
+
+    void updatePostImage(Integer postID, String imgName);
 }

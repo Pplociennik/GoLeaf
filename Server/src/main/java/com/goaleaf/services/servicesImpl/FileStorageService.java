@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Objects;
 
 @Service
 public class FileStorageService {
@@ -34,10 +35,13 @@ public class FileStorageService {
         }
     }
 
-    public String storeFile(MultipartFile file, Integer userID) {
+    public String storeFile(MultipartFile file, Integer ID, String processType) {
         // Normalize file name
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        fileName = StringUtils.replace(file.getOriginalFilename(), file.getOriginalFilename(), "img_" + userID + returnImageType(file.getContentType()));
+        if (Objects.equals(processType, "PROFILE"))
+            fileName = StringUtils.replace(file.getOriginalFilename(), file.getOriginalFilename(), "img_" + ID + returnImageType(file.getContentType()));
+        else
+            fileName = StringUtils.replace(file.getOriginalFilename(), file.getOriginalFilename(), "img_post_" + ID + returnImageType(file.getContentType()));
         try {
             // Check if the file's name contains invalid characters
             if (fileName.contains("..")) {
