@@ -12,6 +12,7 @@ import com.goaleaf.entities.viewModels.habitsManaging.postsManaging.AddReactionV
 import com.goaleaf.entities.viewModels.habitsManaging.postsManaging.EditPostViewModel;
 import com.goaleaf.entities.viewModels.habitsManaging.postsManaging.RemovePostViewModel;
 import com.goaleaf.services.*;
+import com.goaleaf.validators.exceptions.accountsAndAuthorization.AccountNotExistsException;
 import com.goaleaf.validators.exceptions.habitsProcessing.MemberDoesNotExistException;
 import com.goaleaf.validators.exceptions.habitsProcessing.postsProcessing.EmptyPostException;
 import com.goaleaf.validators.exceptions.habitsProcessing.postsProcessing.PostNotFoundException;
@@ -214,5 +215,16 @@ public class PostController {
         dataToReturn.counter_WOW = post.getCounter_WOW();
 
         return dataToReturn;
+    }
+
+    @RequestMapping(value = "/presentreaction", method = RequestMethod.GET)
+    public PostReaction getUsersPresentReaction(@RequestParam Integer postID, @RequestParam String userLogin) throws AccountNotExistsException {
+        if (postService.findOneByID(postID) == null)
+            throw new PostNotFoundException("Post not found");
+        if (userService.findByLogin(userLogin) == null) {
+            throw new AccountNotExistsException("Account with this login not exists!");
+        }
+
+        return reactionService.getReactionByPostIdAndUserLogin(postID, userLogin);
     }
 }
