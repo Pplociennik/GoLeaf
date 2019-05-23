@@ -18,6 +18,12 @@ public class Member {
     @Column
     private Integer habitID;
 
+    @Column
+    private String userLogin;
+
+    @Column
+    private String imgName;
+
 //    @Column
 //    @ManyToMany
 //    private Set<Habit> habits;
@@ -74,4 +80,21 @@ public class Member {
 //    public void addDate(Date date) {
 //        this.doneDates.add(new LeafDate(id, new Date()));
 //    }
+
+
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
+    }
+
+    public String getImgName() {
+        return imgName;
+    }
+
+    public void setImgName(String imgName) {
+        this.imgName = imgName;
+    }
 }

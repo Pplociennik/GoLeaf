@@ -17,4 +17,6 @@ public interface ReactionService {
     void remove(Integer postID, String userLogin);
 
     void add(PostReaction reaction);
+
+    void delete(PostReaction reaction);
 }

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.goaleaf.entities.enums.Reactions;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
         property = "refId", scope = PostReaction.class)
@@ -55,13 +56,13 @@ public class PostReaction {
     }
 
     public void setType(String type) {
-        if (type == "CLAPPING")
+        if (Objects.equals(type, "CLAPPING"))
             this.type = Reactions.Clapping;
-        if (type == "WOW")
+        if (Objects.equals(type, "WOW"))
             this.type = Reactions.Wow;
-        if (type == "NOTHING_SPECIAL")
+        if (Objects.equals(type, "NOTHING_SPECIAL"))
             this.type = Reactions.Nothing_Special;
-        if (type == "THERES_THE_DOOR")
+        if (Objects.equals(type, "THERES_THE_DOOR"))
             this.type = Reactions.Theres_The_Door;
     }
 }

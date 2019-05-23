@@ -42,4 +42,9 @@ public class ReactionServiceImpl implements ReactionService {
     public void add(PostReaction reaction) {
         reactionRepository.save(reaction);
     }
+
+    @Override
+    public void delete(PostReaction reaction) {
+        reactionRepository.delete(reaction);
+    }
 }

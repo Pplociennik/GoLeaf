@@ -2,7 +2,6 @@ package com.goaleaf.controllers;
 
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.goaleaf.entities.DTO.PostDTO;
 import com.goaleaf.entities.DTO.PostReactionsNrDTO;
 import com.goaleaf.entities.Post;
 import com.goaleaf.entities.PostReaction;
@@ -25,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.Objects;
 
 import static com.goaleaf.security.SecurityConstants.SECRET;
 
@@ -172,32 +172,36 @@ public class PostController {
         if (postService.findOneByID(model.postID) == null)
             throw new PostNotFoundException("Post not found");
 
-        if (reactionService.checkIfExist(model.postID, tempUser.getLogin())) {
+        if (!(reactionService.getReactionByPostIdAndUserLogin(model.postID, tempUser.getLogin()) == null)) {
             PostReaction reaction = reactionService.getReactionByPostIdAndUserLogin(model.postID, tempUser.getLogin());
-            pastType = String.valueOf(reaction.getType());
-            reactionService.remove(model.postID, tempUser.getLogin());
-            if (pastType == "CLAPPING")
+            pastType = String.valueOf(reaction.getType()).toUpperCase();
+            reactionService.delete(reaction);
+            if (Objects.equals(pastType, "CLAPPING"))
                 post.setCounter_CLAPPING(post.getCounter_CLAPPING() - 1);
-            if (pastType == "WOW")
+            if (Objects.equals(pastType, "WOW"))
                 post.setCounter_WOW(post.getCounter_WOW() - 1);
-            if (pastType == "NOTHING_SPECIAL")
+            if (Objects.equals(pastType, "NOTHING_SPECIAL"))
                 post.setCounter_NS(post.getCounter_NS() - 1);
-            if (pastType == "THERES_THE_DOOR")
+            if (Objects.equals(pastType, "THERES_THE_DOOR"))
                 post.setCounter_TTD(post.getCounter_TTD() - 1);
+            postService.updatePost(post);
         }
+
+        if (Objects.equals(model.type, pastType))
+            return null;
 
         PostReaction newReaction = new PostReaction();
         newReaction.setPostID(model.postID);
         newReaction.setType(model.type);
         newReaction.setUserLogin(tempUser.getLogin());
 
-        if (model.type == "CLAPPING")
+        if (Objects.equals(model.type, "CLAPPING"))
             post.setCounter_CLAPPING(post.getCounter_CLAPPING() + 1);
-        if (model.type == "WOW")
+        if (Objects.equals(model.type, "WOW"))
             post.setCounter_WOW(post.getCounter_WOW() + 1);
-        if (model.type == "NOTHING_SPECIAL")
+        if (Objects.equals(model.type, "NOTHING_SPECIAL"))
             post.setCounter_NS(post.getCounter_NS() + 1);
-        if (model.type == "THERES_THE_DOOR")
+        if (Objects.equals(model.type, "THERES_THE_DOOR"))
             post.setCounter_TTD(post.getCounter_TTD() + 1);
 
         reactionService.add(newReaction);
