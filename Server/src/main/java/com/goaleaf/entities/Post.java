@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.goaleaf.entities.enums.PostTypes;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
         property = "refId", scope = Post.class)
@@ -44,8 +45,15 @@ public class Post {
     @Column
     private Integer counter_TTD;
 
+    @Column
+    private Date dateOfAddition;
+
 
     public Post() {
+        this.counter_CLAPPING = 0;
+        this.counter_NS = 0;
+        this.counter_TTD = 0;
+        this.counter_WOW = 0;
     }
 
     public Integer getId() {
@@ -122,6 +130,14 @@ public class Post {
 
     public String getPostText() {
         return postText;
+    }
+
+    public Date getDateOfAddition() {
+        return dateOfAddition;
+    }
+
+    public void setDateOfAddition(Date dateOfAddition) {
+        this.dateOfAddition = dateOfAddition;
     }
 
     public void setPostText(String postText) {

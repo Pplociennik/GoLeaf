@@ -7,6 +7,7 @@ import InviteMember from './InviteMember/InviteMember'
 import AddPost from './AddPost/AddPost'
 import { changeDateFormat1 } from './../../../functions.js'
 import Posts from './Posts/Posts'
+import Members from './Members/Members'
 
 class HabitPage extends Component {
 
@@ -83,6 +84,9 @@ class HabitPage extends Component {
                     <section className="habit-page-navigation-con">
                         <div className="habit-page-navigation">
                             <InviteMember habitID={habit.id} />
+                        </div>
+                        <div className="habit-page-navigation">
+                            <Members habitID={habit.id}/>
                         </div>
                     </section> : null}
                     <section className="habit-page-dashboard">

@@ -21,7 +21,7 @@ public class PostReaction {
     private Integer postID;
 
     @Column
-    private Integer userID;
+    private String userLogin;
 
     @Column
     private Reactions type;
@@ -42,19 +42,26 @@ public class PostReaction {
         this.postID = postID;
     }
 
-    public Integer getUserID() {
-        return userID;
+    public String getUserLogin() {
+        return userLogin;
     }
 
-    public void setUserID(Integer userID) {
-        this.userID = userID;
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
     }
 
     public Reactions getType() {
         return type;
     }
 
-    public void setType(Reactions type) {
-        this.type = type;
+    public void setType(String type) {
+        if (type == "CLAPPING")
+            this.type = Reactions.Clapping;
+        if (type == "WOW")
+            this.type = Reactions.Wow;
+        if (type == "NOTHING_SPECIAL")
+            this.type = Reactions.Nothing_Special;
+        if (type == "THERES_THE_DOOR")
+            this.type = Reactions.Theres_The_Door;
     }
 }

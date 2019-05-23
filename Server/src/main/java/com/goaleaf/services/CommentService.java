@@ -1,7 +1,9 @@
 package com.goaleaf.services;
 
 import com.goaleaf.entities.Comment;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface CommentService {
 
     Iterable<Comment> listAllByPostID(Integer postID);
@@ -9,4 +11,8 @@ public interface CommentService {
     Comment getOneByID(Integer commentID);
 
     void addNewComment(Comment comment);
+
+    void removeById(Integer id);
+
+    void updateComment(Comment comment);
 }
