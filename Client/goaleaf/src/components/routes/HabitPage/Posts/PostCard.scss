@@ -54,11 +54,13 @@
             .reaction {
                 margin-left: 12px;
                 img {
-                    height: 30px;
-                    width: 30px;
+                    height: 24px;
+                    width: 24px;
                 }
                 .reaction-counter {
                     color: lighten($text-color, 40%);
+                    font-size: 0.9em;
+                    margin-left: 1px;
                 }
                 
             }

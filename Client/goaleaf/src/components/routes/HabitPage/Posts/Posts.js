@@ -53,7 +53,7 @@ class Posts extends Component {
         let postCards = []
         posts.forEach(post => {
 
-            foundPosts = true;
+            foundPosts = true; 
             postCards.push(<PostCard key={post.id} id={post.id} currentUserLogin={this.state.currentUserLogin} creatorLogin={post.creatorLogin} createdDate={post.dateOfAddition} postType={post.postType} postText={post.postText} imgName={post.imgName} counter_CLAPPING={post.counter_CLAPPING} counter_WOW={post.counter_WOW} counter_NS={post.counter_NS} counter_TTD={post.counter_TTD} handlePostCardDeleted={() => this.handlePostCardDeleted(post.id)} />)
 
         })
@@ -70,7 +70,7 @@ class Posts extends Component {
                     <div className="col s12 m8  offset-m2">
                         {postsToDisplay}
                     <div>
-                        {postCards.length > this.state.postsToShow ? <div className="show-more-posts-btn-con"><button class="show-more-posts-btn btn center" onClick={() => this.setState({ postsToShow: this.state.postsToShow + 20 })}>Show more</button></div> : null}
+                        {postCards.length > this.state.postsToShow ? <div className="show-more-posts-btn-con"><button className="show-more-posts-btn btn center" onClick={() => this.setState({ postsToShow: this.state.postsToShow + 20 })}>Show more</button></div> : null}
                     </div>
                     </div>
                 </section>

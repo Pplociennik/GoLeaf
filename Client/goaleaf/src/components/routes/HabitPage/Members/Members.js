@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
+import './Members.scss'
 import Popup from "reactjs-popup"
 import MemberCard from './MemberCard'
 
@@ -58,13 +59,12 @@ class Members extends Component {
                         background: "rgb(0,0,0, 0.4)"
                     }}
                 >
-                    <section>
-                        <div>
-                            <ul>
-                                {membersToDisplay}
-                            </ul>
-                        </div>
-                    </section>
+                    <div className="members-section row">
+                        <h4>Members</h4>
+                        <ul className="collection">
+                            {membersToDisplay}
+                        </ul>
+                    </div>
                 </Popup>
             )
         } else {
