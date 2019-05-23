@@ -29,7 +29,7 @@ class Profile extends Component {
             const formData = new FormData();
             formData.append('file', blob);
 
-            axios.post(`/uploadImage?token=${localStorage.getItem("token")}`, formData, {
+            axios.post(`/uploadImage?token=${localStorage.getItem("token")}?type=PROFILE`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

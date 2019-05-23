@@ -45,16 +45,20 @@ class Posts extends Component {
     }
 
     render() {
-        
-        console.log(this.props.posts)
         let posts = this.props.posts;
-
+        posts.sort(function(a, b){
+            let keyA = new Date(a.dateOfAddition),
+                keyB = new Date(b.dateOfAddition);
+            if(keyA > keyB) return -1;
+            if(keyA < keyB) return 1;
+            return 0;
+        });
         let foundPosts = false;
         let postCards = []
         posts.forEach(post => {
 
             foundPosts = true; 
-            postCards.push(<PostCard key={post.id} id={post.id} currentUserLogin={this.state.currentUserLogin} creatorLogin={post.creatorLogin} createdDate={post.dateOfAddition} postType={post.postType} postText={post.postText} imgName={post.imgName} counter_CLAPPING={post.counter_CLAPPING} counter_WOW={post.counter_WOW} counter_NS={post.counter_NS} counter_TTD={post.counter_TTD} handlePostCardDeleted={() => this.handlePostCardDeleted(post.id)} />)
+            postCards.push(<PostCard key={post.id} id={post.id} currentUserLogin={this.props.userLoggedLogin} creatorLogin={post.creatorLogin} createdDate={post.dateOfAddition} postType={post.postType} postText={post.postText} imgName={post.imgName} counter_CLAPPING={post.counter_CLAPPING} counter_WOW={post.counter_WOW} counter_NS={post.counter_NS} counter_TTD={post.counter_TTD} handlePostCardDeleted={() => this.handlePostCardDeleted(post.id)} />)
 
         })
         
@@ -81,11 +85,9 @@ class Posts extends Component {
 
 const mapStateToProps = state => {
     return {
-        habits: state.habits,
-        users: state.users,
-        members: state.members,
         posts: state.posts,
-        userLogged: state.userLogged
+        userLogged: state.userLogged,
+        userLoggedLogin: state.userLoggedLogin
     }
 }
 const mapDispatchToProps = dispatch => ({

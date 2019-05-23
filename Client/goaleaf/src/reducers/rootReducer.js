@@ -1,6 +1,7 @@
 const initState = {
     authenticated: false,
     userLogged: null,
+    userLoggedLogin: null,
     users: [],
     habits: [],
     members: [],
@@ -23,7 +24,8 @@ const rootReducer = (state = initState, action) => {
         return {
             ...state,
             authenticated: true,
-            userLogged: parseInt(tokenData.sub)
+            userLogged: parseInt(tokenData.sub),
+            userLoggedLogin: tokenData.Login
         }
     }
     if(action.type === 'INVALIDATE_USER'){

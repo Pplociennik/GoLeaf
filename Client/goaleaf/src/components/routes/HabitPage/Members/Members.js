@@ -32,7 +32,7 @@ class Members extends Component {
         members.forEach(member => {
 
             foundMembers = true;
-            memberCards.push(<MemberCard key={member.id} userID={member.userID} />)
+            memberCards.push(<MemberCard key={member.id} userID={member.userID} userLogin={member.userLogin} profilePic={member.imgName} />)
 
         })
 

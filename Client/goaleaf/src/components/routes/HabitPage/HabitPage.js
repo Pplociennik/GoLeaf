@@ -89,7 +89,7 @@ class HabitPage extends Component {
                     </section> : null}
                     <section className="habit-page-dashboard">
                         {userIsMember ? <AddPost habitID = { habit.id } /> : null}
-                        <Posts habitID={habit.id}/>
+                        {userIsMember ? <Posts habitID={habit.id}/> : null}
                     </section>
                 </div>
             )
