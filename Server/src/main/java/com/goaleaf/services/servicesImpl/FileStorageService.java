@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Date;
 import java.util.Objects;
 
 @Service
@@ -39,9 +40,9 @@ public class FileStorageService {
         // Normalize file name
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         if (Objects.equals(processType, "PROFILE"))
-            fileName = StringUtils.replace(file.getOriginalFilename(), file.getOriginalFilename(), "img_" + ID + returnImageType(file.getContentType()));
+            fileName = StringUtils.replace(file.getOriginalFilename(), file.getOriginalFilename(), "img_" + new Date().getTime() + "_" + ID + returnImageType(file.getContentType()));
         else
-            fileName = StringUtils.replace(file.getOriginalFilename(), file.getOriginalFilename(), "img_post_" + ID + returnImageType(file.getContentType()));
+            fileName = StringUtils.replace(file.getOriginalFilename(), file.getOriginalFilename(), "img_post_" + new Date().getTime() + "_" + ID + returnImageType(file.getContentType()));
         try {
             // Check if the file's name contains invalid characters
             if (fileName.contains("..")) {
