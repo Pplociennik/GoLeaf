@@ -5,6 +5,7 @@ import TempPic from './../../../../assets/default-profile-pic.png'
 import { Dropdown } from 'react-materialize'
 import MoreIcon from './../../../../assets/more.png'
 import ClapIcon from './../../../../assets/clap.png'
+import WowIcon from './../../../../assets/wow.png'
 
 class PostCard extends Component {
 
@@ -28,16 +29,16 @@ class PostCard extends Component {
                         <span className="reaction-counter">{this.props.counter_CLAPPING}</span>
                     </div>
                     <div className="reaction">
-                        <img src={ClapIcon}></img>
-                        <span className="reaction-counter">{this.props.counter_CLAPPING}</span>
+                        <img src={WowIcon}></img>
+                        <span className="reaction-counter">{this.props.counter_WOW}</span>
                     </div>
                     <div className="reaction">
                         <img src={ClapIcon}></img>
-                        <span className="reaction-counter">{this.props.counter_CLAPPING}</span>
+                        <span className="reaction-counter">{this.props.NS}</span>
                     </div>
                     <div className="reaction">
                         <img src={ClapIcon}></img>
-                        <span className="reaction-counter">{this.props.counter_CLAPPING}</span>
+                        <span className="reaction-counter">{this.props.counter_TTD}</span>
                     </div>
                 </div>
                 <button className="show-comments-btn">Show comments</button>

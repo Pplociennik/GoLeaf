@@ -15,12 +15,9 @@ class Members extends Component {
     componentDidMount() {
         axios.get(`/api/habits/habit/members?habitID=${this.props.habitID}`)
             .then(res => {
-                res.data.forEach(member => {
-                    let members = [...this.state.members, member]
                     this.setState({
-                        members: members
+                        members: res.data
                     })
-                })
             }).catch (err => console.log(err.response.data.message))
 
     }
