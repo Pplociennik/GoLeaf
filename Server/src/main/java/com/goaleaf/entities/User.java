@@ -32,7 +32,7 @@ public class User {
     private String imageName;
 
     @Column
-    private Boolean notifications;
+    private boolean notifications;
 
     @ManyToMany
     private Set<Role> roles;
@@ -56,11 +56,11 @@ public class User {
         return imageName;
     }
 
-    public Boolean getNotifications() {
+    public boolean getNotifications() {
         return notifications;
     }
 
-    public void setNotifications(Boolean notifications) {
+    public void setNotifications(boolean notifications) {
         this.notifications = notifications;
     }
 

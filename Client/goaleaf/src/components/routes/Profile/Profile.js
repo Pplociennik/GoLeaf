@@ -17,38 +17,38 @@ class Profile extends Component {
         errorMsg: '',
         picture: null,
         picPreview: null,
-        confirmDelete: false
+        confirmDelete: false,
+        notifications: true
     };
-    
+
     handleChangeAvatar = e => {
-        e.preventDefault();
 
-        if (e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)){
+        if (e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)) {
 
-        const blob = new Blob([e.target.files[0]], {type: "image/png"});
-        const formData = new FormData();
-        formData.append('file', blob); 
+            const blob = new Blob([e.target.files[0]], { type: "image/png" });
+            const formData = new FormData();
+            formData.append('file', blob);
 
-        axios.post(`/uploadImage?token=${localStorage.getItem("token")}`, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-        })
-        .then(res => {
-            axios.get(`/downloadFile/${this.props.userLogged}`, { responseType: 'arraybuffer' })
-            .then(res => {
-                const base64 = btoa(
-                  new Uint8Array(res.data).reduce(
-                    (data, byte) => data + String.fromCharCode(byte),
-                    '',
-                  ),
-                );
-                this.setState({ picture: res.data, picPreview: "data:;base64," + base64 });
-              })
-                
-                .catch(err => {}) 
-            }
-            ).catch(err => {})
+            axios.post(`/uploadImage?token=${localStorage.getItem("token")}?type=PROFILE`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+                .then(res => {
+                    axios.get(`/downloadFile/${this.props.userLogged}`, { responseType: 'arraybuffer' })
+                        .then(res => {
+                            const base64 = btoa(
+                                new Uint8Array(res.data).reduce(
+                                    (data, byte) => data + String.fromCharCode(byte),
+                                    '',
+                                ),
+                            );
+                            this.setState({ picture: res.data, picPreview: "data:;base64," + base64 });
+                        })
+
+                        .catch(err => { })
+                }
+                ).catch(err => { })
         }
     }
 
@@ -64,10 +64,10 @@ class Profile extends Component {
             "oldPassword": this.state.oldPassword,
             "userName": ''
         })
-        .then(res => {
+            .then(res => {
                 window.location.reload()
             }
-            ).catch(err => this.setState({errorMsg: err.response.data.message}))
+            ).catch(err => this.setState({ errorMsg: err.response.data.message }))
     }
 
     handleChange = e => {
@@ -79,7 +79,21 @@ class Profile extends Component {
     handleDelete = event => {
         axios.delete(`/api/users/user/${this.props.userLogged}`)
             .then(res => window.location.reload()
-            ).catch(err => {})
+            ).catch(err => { })
+    }
+
+    setNotifications = () => {
+        let notificationsStatus;
+        this.state.notifications ? notificationsStatus = false : notificationsStatus = true
+        axios.post('/api/users/setntf', {
+            "newNotificationsStatus": notificationsStatus,
+            "token": localStorage.getItem("token"),
+            "userID": this.props.userLogged
+        })
+            .then(res => { console.log(res);
+                           this.setState({notifications: res.data.notifications})
+            }
+            ).catch(err => console.log(err.response.data.message))
     }
 
     componentDidMount() {
@@ -90,62 +104,67 @@ class Profile extends Component {
                     username: res.data.username,
                     emailAddress: res.data.emailAddress,
                     login: res.data.login,
-                    id: res.data.id
+                    id: res.data.id,
+                    notifications: res.data.notifications
                 })
             }
             ).catch(err => this.setState({ errorMsg: err.response.data.message }))
 
         axios.get(`/downloadFile/${this.props.userLogged}`, { responseType: 'arraybuffer' })
-        .then(res => {
-            const base64 = btoa(
-              new Uint8Array(res.data).reduce(
-                (data, byte) => data + String.fromCharCode(byte),
-                '',
-              ),
-            );
-            this.setState({ picture: res.data, picPreview: "data:;base64," + base64 });
-          })
-            
-            .catch(err => this.setState({ errorMsg: err.response.data.message })) 
+            .then(res => {
+                const base64 = btoa(
+                    new Uint8Array(res.data).reduce(
+                        (data, byte) => data + String.fromCharCode(byte),
+                        '',
+                    ),
+                );
+                this.setState({ picture: res.data, picPreview: "data:;base64," + base64 });
+            })
+
+            .catch(err => this.setState({ errorMsg: err.response.data.message }))
+
     }
 
 
     render() {
         let deleteAccount = ''
         if (this.state.confirmDelete === true) {
-
-            deleteAccount =  <div className="confirm-delete-profile">
+            deleteAccount = <div className="confirm-delete-profile">
                 <span>Are you sure you want to delete your account?</span>
-                <button onClick={this.handleDelete}><i class="fas fa-heart-broken"></i> Delete profile</button>
+                <button className="confirm-delete-profile-btn" onClick={this.handleDelete}>Delete my account <i className="far fa-frown"></i></button>
             </div>
         }
         let errorMsg = <div className="error-msg">{this.state.errorMsg}</div>
         return (
             <div className="profile">
                 <section className="profile-photo">
-                    <img className="profile-img" src={this.state.picPreview} alt="user avatar" title="Change avatar" onClick={() => this.refs.uploadPhoto.click()}/>
-                    <input className="profile-img-input" type="file" accept="image/x-png,image/gif,image/jpeg" onChange={this.handleChangeAvatar} ref="uploadPhoto" style={{display: "none"}} />
+                    <img className="profile-img" src={this.state.picPreview} alt="user avatar" title="Change avatar" onClick={() => this.refs.uploadPhoto.click()} />
+                    <input className="profile-img-input" type="file" accept="image/x-png,image/gif,image/jpeg" onChange={this.handleChangeAvatar} ref="uploadPhoto" style={{ display: "none" }} />
                 </section>
                 <section className="profile-info">
                     <h1 className="profile-info-login">{this.state.login} </h1>
-                    <h2 className="profile-info-email">{this.state.emailAddress} </h2>
+                    <div className="profile-info-email">
+                        <span>{this.state.emailAddress}</span>
+                        <button className={this.state.notifications ? 'notifications-btn notifications-btn-true' : 'notifications-btn notifications-btn-false'} onClick={ this.setNotifications } title={this.state.notifications ? "Disable notifications" : "Allow notifications"}><i className={this.state.notifications ? 'fas fa-bell' : 'fas fa-bell-slash'}></i></button>
+                    </div>
+
                 </section>
                 <section className="change-password">
                     <form className="change-password-form" onSubmit={this.handlePasswordChange} autoComplete="off">
-                            <h2 className="change-password-title">Change password</h2>
-                            <input className="password-input" id="oldPassword" type="password" placeholder="old password" onChange={this.handleChange} />
-                            <input className="password-input" id="newPassword" type="password" placeholder="new password" onChange={this.handleChange} />
-                            <input className="password-input" id="matchingNewPassword" type="password" placeholder="repeat new password" onChange={this.handleChange} />
-                            <input className="change-password-btn" type="submit" value="Submit" />
-                            {errorMsg}
+                        <h5 className="change-password-title">Change password</h5>
+                        <input className="password-input" id="oldPassword" type="password" placeholder="old password" onChange={this.handleChange} />
+                        <input className="password-input" id="newPassword" type="password" placeholder="new password" onChange={this.handleChange} />
+                        <input className="password-input" id="matchingNewPassword" type="password" placeholder="repeat new password" onChange={this.handleChange} />
+                        <input className="change-password-btn" type="submit" value="Submit" />
+                        {errorMsg}
                     </form>
                 </section>
                 <section className="delete-profile">
-                    <input className="delete-profile-btn" type="button" value="Delete profile" onClick={e => this.setState({confirmDelete: true })}/>
+                    <input className="delete-profile-btn" type="button" value="Delete profile" onClick={e => this.setState({ confirmDelete: true })} />
                     {deleteAccount}
                 </section>
             </div>
-            
+
 
         )
     }

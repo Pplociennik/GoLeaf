@@ -28,4 +28,9 @@ public class NotificationServiceImpl implements NotificationService {
     public Iterable<Notification> getAll() {
         return notificationRepository.findAll();
     }
+
+    @Override
+    public void removeFromDatabaseByID(Integer ntfID) {
+        notificationRepository.delete(ntfID);
+    }
 }

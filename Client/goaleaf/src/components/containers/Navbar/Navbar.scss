@@ -9,6 +9,7 @@
     position: sticky;
     top: 0;
     left: 0;
+    box-shadow: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -27,13 +28,16 @@
         text-decoration: none;
         position: relative;
         display: none;
+        outline-color: none;
+    }
+    .logo-desktop.active {
+        background-color: none;
     }
     .logo-desktop::after {
         content: url('./../../../assets/logo.png');
         position: absolute;
         top: -10px;
         left: 80px;
-        
     }
     @include md {
         .logo-mobile {

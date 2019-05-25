@@ -8,6 +8,15 @@
     overflow-x: hidden;
 
     @include xl {
-        width: 86%;
+        width: 90%;
+    }
+
+    .dashboard-nav {
+        height: 80px;
+        width: 90%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
     }
 }

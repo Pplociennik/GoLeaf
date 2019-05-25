@@ -23,8 +23,9 @@ class NavLogged extends Component {
 
     return (
         <ul className="nav-logged" style={ navStyle }>
-            <li className="nav-item" onClick = { this.props.handleNavElementClicked }><NavLink to='/new-habit' activeStyle={{color: '#57d131' }}>new habit</NavLink></li>
-            <li className="nav-item" onClick = { this.props.handleNavElementClicked }><NavLink to='/profile' activeStyle={{color: '#57d131' }}>profile</NavLink></li>
+            <li className="nav-item" onClick = { this.props.handleNavElementClicked }><NavLink to='/browse' activeStyle={{color: '#08c299' }}>browse</NavLink></li>
+            <li className="nav-item" onClick = { this.props.handleNavElementClicked }><NavLink to='/new-habit' activeStyle={{color: '#08c299' }}>new habit</NavLink></li>
+            <li className="nav-item" onClick = { this.props.handleNavElementClicked }><NavLink to='/profile' activeStyle={{color: '#08c299' }}>profile</NavLink></li>
             <li className="nav-item" onClick = { this.handleLogOut } ><Link to='/'>log out</Link></li>
         </ul>
     )

@@ -1,8 +1,10 @@
 package com.goaleaf.entities.viewModels.accountsAndAuthorization;
 
-public class DisableNotificationsViewModel {
+public class SetEmailNotificationsViewModel {
 
     public Integer userID;
 
     public String token;
+
+    public Boolean newNotificationsStatus;
 }

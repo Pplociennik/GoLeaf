@@ -1,9 +1,11 @@
 const initState = {
     authenticated: false,
     userLogged: null,
+    userLoggedLogin: null,
     users: [],
     habits: [],
     members: [],
+    posts: [],
     isLoading: true
 }
 
@@ -22,7 +24,8 @@ const rootReducer = (state = initState, action) => {
         return {
             ...state,
             authenticated: true,
-            userLogged: parseInt(tokenData.sub)
+            userLogged: parseInt(tokenData.sub),
+            userLoggedLogin: tokenData.Login
         }
     }
     if(action.type === 'INVALIDATE_USER'){
@@ -56,6 +59,24 @@ const rootReducer = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: false
+              }
+    }
+    if(action.type === 'GET_POSTS'){
+        return {
+            ...state,
+            posts: action.payload
+          }
+}
+    if(action.type === 'ADD_POST'){
+            return {
+                ...state,
+                posts: [action.payload, ...state.posts]
+              }
+    }
+    if(action.type === 'DELETE_POST'){
+            return {
+                ...state,
+                posts: state.posts.filter(post => post.id !== action.payload)
               }
     }
     

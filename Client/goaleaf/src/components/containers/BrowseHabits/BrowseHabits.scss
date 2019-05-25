@@ -1,12 +1,11 @@
 @import './../../../global-styles.scss';
 
 .browse-habits {
-    width: 100%;
-    margin: 2em 0;
+    width: 90%;
+    margin: 2em auto;
     display: flex;
     flex-direction: column;
     overflow: hidden;
-
 
     .browse-habits-title {
         color: $text-color;
@@ -35,6 +34,7 @@
         }
 
         .category {
+            position: relative;
             width: 36px;
             height: 36px;
             font-size: 0.9em;
@@ -109,7 +109,8 @@
 
         @mixin style-text-under-category-icon() {
             position: absolute;
-            margin-top: 40px;
+            top: 50px;
+            left: auto;
             color: $text-color;
             font-size: 1em;
             opacity: 0.7;
@@ -239,10 +240,6 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-
-        @include xl {
-            justify-content: flex-start;
-        }
 
         .no-habits {
             margin: 0 auto;

@@ -2,20 +2,22 @@ package com.goaleaf;
 
 
 import com.goaleaf.security.uploadingFiles.FileStorageProperties;
+import com.goaleaf.services.CommentService;
 import com.goaleaf.services.MemberService;
 import com.goaleaf.services.NotificationService;
+import com.goaleaf.services.PostService;
+import com.goaleaf.services.servicesImpl.CommentServiceImpl;
 import com.goaleaf.services.servicesImpl.MemberServiceImpl;
 import com.goaleaf.services.servicesImpl.NotificationServiceImpl;
+import com.goaleaf.services.servicesImpl.PostServiceImpl;
 import com.goaleaf.validators.UserCredentialsValidator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -59,6 +61,16 @@ public class GoaLeafApplication extends SpringBootServletInitializer {
     @Bean
     public NotificationService notificationService() {
         return new NotificationServiceImpl();
+    }
+
+    @Bean
+    public PostService postService() {
+        return new PostServiceImpl();
+    }
+
+    @Bean
+    public CommentService commentService() {
+        return new CommentServiceImpl();
     }
 
     @Bean
