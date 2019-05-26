@@ -3,11 +3,13 @@ package com.goaleaf.services.servicesImpl;
 import com.goaleaf.entities.Comment;
 import com.goaleaf.repositories.CommentRepository;
 import com.goaleaf.services.CommentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CommentServiceImpl implements CommentService {
 
+    @Autowired
     private CommentRepository commentRepository;
 
     @Override
@@ -21,8 +23,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void addNewComment(Comment comment) {
-        commentRepository.save(comment);
+    public Comment addNewComment(Comment comment) {
+        return commentRepository.save(comment);
     }
 
     @Override
