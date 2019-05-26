@@ -10,6 +10,7 @@ import NtIcon from './../../../../assets/nt.png'
 import TtdIcon from './../../../../assets/ttd.png'
 import axios from 'axios';
 import AddComment from './Comments/AddComment'
+import CommentCard from './Comments/CommentCard'
 
 class PostCard extends Component {
 
@@ -48,12 +49,13 @@ class PostCard extends Component {
                 this.setState({
                     comments: res.data
                 })
-                console.log(this.state)
+                console.log(this.state.comments)
             }).catch(err => console.log(err))
 
         this.setState({
             showComments: true
         })
+
     }
 
     componentDidMount() {
@@ -77,6 +79,31 @@ class PostCard extends Component {
 
     render() {
         console.log(this.state.userReaction)
+
+        let finalCommentsToDisplay = [];
+
+        if (this.state.showComments) {
+            let comments = this.state.comments;
+
+            let foundComments = false;
+            let commentCards = [];
+
+            comments.forEach(comment => {
+
+                foundComments = true;
+                commentCards.push(<CommentCard key={comment.id} id={comment.id} userID={comment.userID} commentText={comment.commentText} />)
+
+            })
+
+            let commentsToDisplay = commentCards;
+
+            if (!foundComments) {
+                commentsToDisplay = <div>There are no comments yet</div>
+            }
+
+            finalCommentsToDisplay = commentsToDisplay;
+        }
+
         return (
             <div className="post-card">
                 <div className="post-owner">
@@ -108,8 +135,13 @@ class PostCard extends Component {
                             <span className="reaction-counter">{this.state.reactions.counter_TTD}</span>
                         </div>
                     </div>
-                    {!this.state.showComments ? <button className="show-comments-btn" onClick={() => this.showComments()}>Show comments</button> : <button className="show-comments-btn" onClick={() => this.setState({ showComments: false })}>Hide comments</button> }
+                    {!this.state.showComments ? <button className="show-comments-btn" onClick={() => this.showComments()}>Show comments</button> : <button className="show-comments-btn" onClick={() => this.setState({ showComments: false })}>Hide comments</button>}
                     <AddComment userLogged={this.props.userLogged} id={this.props.id} />
+                    {this.state.showComments ?
+                        <div>
+                            {finalCommentsToDisplay}
+                        </div>
+                        : null}
                 </div>
 
                 {this.props.currentUserLogin === this.props.creatorLogin ?
