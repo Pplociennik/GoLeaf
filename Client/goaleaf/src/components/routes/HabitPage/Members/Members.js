@@ -9,22 +9,46 @@ import MemberCard from './MemberCard'
 class Members extends Component {
 
     state = {
-        members: []
+        members: [],
+        search: ''
     }
 
     componentDidMount() {
         axios.get(`/api/habits/habit/members?habitID=${this.props.habitID}`)
             .then(res => {
-                    this.setState({
-                        members: res.data
-                    })
-            }).catch (err => console.log(err.response.data.message))
+                this.setState({
+                    members: res.data
+                })
+            }).catch(err => console.log(err.response.data.message))
 
+    }
+
+    clearSearch = () => {
+        this.setState({
+            search: ''
+        })
+    }
+
+    handleChange = e => {
+        this.setState({
+            [e.target.id]: e.target.value
+        })
     }
 
     render() {
 
         let members = this.state.members;
+
+        if (this.state.search !== '') {
+            members = members.filter(member => {
+                if (member.userLogin != null) {
+                    return member.userLogin.startsWith(this.state.search);
+                }
+                else {
+                    return false;
+                }
+            })
+        }
 
         let foundMembers = false;
         let memberCards = [];
@@ -38,13 +62,17 @@ class Members extends Component {
 
         let membersToDisplay = memberCards;
 
-        if (!foundMembers) {
+        if (!foundMembers && this.state.search === '') {
             membersToDisplay = <div>There are no members yet</div>
+        } 
+        else if (!foundMembers && this.state.search !== '') {
+            membersToDisplay = <div>There are no members matching that name</div>
         }
 
         if (localStorage.getItem('token')) {
             return (
                 <Popup trigger={<button className="btn waves-effect waves-light invite-user-btn habit-page-navigation-btn" ><span>Members</span></button>} modal closeOnDocumentClick
+                    onOpen={this.clearSearch}
                     contentStyle={{
                         maxWidth: '80%',
                         width: '500px',
@@ -58,6 +86,7 @@ class Members extends Component {
                 >
                     <div className="members-section row">
                         <h4>Members</h4>
+                        <input id="search" type="text" placeholder="Search user" onChange={this.handleChange} />
                         <ul className="collection">
                             {membersToDisplay}
                         </ul>
