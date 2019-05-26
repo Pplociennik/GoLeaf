@@ -9,6 +9,7 @@ import WowIcon from './../../../../assets/wow.png'
 import NtIcon from './../../../../assets/nt.png'
 import TtdIcon from './../../../../assets/ttd.png'
 import axios from 'axios';
+import AddComment from './Comments/AddComment'
 
 class PostCard extends Component {
 
@@ -47,22 +48,12 @@ class PostCard extends Component {
                 this.setState({
                     comments: res.data
                 })
+                console.log(this.state)
             }).catch(err => console.log(err))
-        console.log(this.state.comments)
 
         this.setState({
             showComments: true
         })
-    }
-
-    addComment = () => {
-        axios.post('/api/comments/addcomment', {
-            "creatorID": this.props.userLogged,
-            "postID": this.props.id,
-            "text": "" ///////////////////////////////////////////
-        }).then(res => {
-
-        }).catch(err => console.log(err))
     }
 
     componentDidMount() {
@@ -117,8 +108,8 @@ class PostCard extends Component {
                             <span className="reaction-counter">{this.state.reactions.counter_TTD}</span>
                         </div>
                     </div>
-                    {/*<button className="show-comments-btn" onClick={() => this.showComments()}>Show comments</button>*/}
-
+                    {!this.state.showComments ? <button className="show-comments-btn" onClick={() => this.showComments()}>Show comments</button> : <button className="show-comments-btn" onClick={() => this.setState({ showComments: false })}>Hide comments</button> }
+                    <AddComment userLogged={this.props.userLogged} id={this.props.id} />
                 </div>
 
                 {this.props.currentUserLogin === this.props.creatorLogin ?
