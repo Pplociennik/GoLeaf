@@ -76,6 +76,7 @@ public class HabitServiceImpl implements HabitService {
         Member creator = new Member();
         creator.setUserID(creatorID);
         creator.setHabitID(newHabit.getId());
+        creator.setUserLogin(userService.getUserById(creatorID).getLogin());
 
         memberService.saveMember(creator);
 
