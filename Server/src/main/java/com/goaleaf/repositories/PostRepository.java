@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface PostRepository extends CrudRepository<Post, Integer> {
 
-    Iterable<Post> getAllByHabitID(Integer habitID);
+    Iterable<Post> getAllByHabitIDOrderByDateOfAdditionDesc(Integer habitID);
 
     Post findById(Integer id);
 }

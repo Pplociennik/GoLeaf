@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
         property = "refId", scope = Comment.class)
@@ -21,6 +22,12 @@ public class Comment {
 
     @Column
     private Integer userID;
+
+    @Column
+    private String userLogin;
+
+    @Column
+    private Date creationDate;
 
     @Column
     private String commentText;
@@ -55,5 +62,21 @@ public class Comment {
 
     public void setCommentText(String commentText) {
         this.commentText = commentText;
+    }
+
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 }

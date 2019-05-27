@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CommentRepository extends CrudRepository<Comment, Integer> {
 
-    Iterable<Comment> getAllByPostID(Integer postID);
+    Iterable<Comment> getAllByPostIDOrderByCreationDateDesc(Integer postID);
 
     Comment findById(Integer commentID);
 

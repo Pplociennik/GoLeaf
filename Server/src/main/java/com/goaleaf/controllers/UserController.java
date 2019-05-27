@@ -62,8 +62,14 @@ public class UserController {
 
     //to getting one specified user by id
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public User getByPublicId(@PathVariable("id") Integer publicId) {
-        return userService.getUserById(publicId);
+    public UserDto getByPublicId(@PathVariable("id") Integer publicId) {
+        User tempUser = userService.findById(publicId);
+        UserDto dataToReturn = new UserDto();
+        dataToReturn.login = tempUser.getLogin();
+        dataToReturn.emailAddress = tempUser.getEmailAddress();
+        dataToReturn.imageName = tempUser.getImageName();
+
+        return dataToReturn;
     }
 
     //to getting user by id

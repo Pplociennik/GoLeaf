@@ -13,7 +13,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Iterable<Post> getAllHabitPosts(Integer habitID) {
-        return postRepository.getAllByHabitID(habitID);
+        return postRepository.getAllByHabitIDOrderByDateOfAdditionDesc(habitID);
     }
 
     @Override

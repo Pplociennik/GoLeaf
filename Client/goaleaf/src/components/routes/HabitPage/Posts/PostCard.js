@@ -23,8 +23,12 @@ class PostCard extends Component {
             counter_TTD: 0
         },
         comments: [],
+<<<<<<< HEAD
         showComments: false,
         comment: null
+=======
+        showComments: false
+>>>>>>> 8542f57002167511c77b43bbd3bc891cb5c85acc
     }
 
     addReaction = reaction => {
@@ -44,6 +48,7 @@ class PostCard extends Component {
         }).catch(err => console.log(err))
     }
 
+<<<<<<< HEAD
     addComment = e => {
         e.preventDefault();
         this.clearMsg();
@@ -59,6 +64,8 @@ class PostCard extends Component {
           .catch(err => console.log(err))
     }
 
+=======
+>>>>>>> 8542f57002167511c77b43bbd3bc891cb5c85acc
     showComments = () => {
         axios.get(`/api/comments/getcomments?postID=${this.props.id}`)
             .then(res => {
@@ -70,6 +77,7 @@ class PostCard extends Component {
 
         this.setState({
             showComments: true
+<<<<<<< HEAD
         })
     }
 
@@ -83,6 +91,10 @@ class PostCard extends Component {
         this.setState({
             comment: ''
         })
+=======
+        })
+
+>>>>>>> 8542f57002167511c77b43bbd3bc891cb5c85acc
     }
 
     componentDidMount() {
@@ -116,8 +128,15 @@ class PostCard extends Component {
             let commentCards = [];
 
             comments.forEach(comment => {
+<<<<<<< HEAD
                 foundComments = true;
                 commentCards.push(<CommentCard key={comment.id} id={comment.id} userID={comment.userID} commentText={comment.commentText} />)
+=======
+
+                foundComments = true;
+                commentCards.push(<CommentCard key={comment.id} id={comment.id} userID={comment.userID} commentText={comment.commentText} />)
+
+>>>>>>> 8542f57002167511c77b43bbd3bc891cb5c85acc
             })
 
             let commentsToDisplay = commentCards;
@@ -161,6 +180,7 @@ class PostCard extends Component {
                         </div>
                     </div>
                     {!this.state.showComments ? <button className="show-comments-btn" onClick={() => this.showComments()}>Show comments</button> : <button className="show-comments-btn" onClick={() => this.setState({ showComments: false })}>Hide comments</button>}
+<<<<<<< HEAD
                     { /* <AddComment userLogged={this.props.userLogged} id={this.props.id} /> */}
                 </div>
                     {this.state.showComments ?
@@ -176,6 +196,15 @@ class PostCard extends Component {
                             </ul>
                         </div>
                         : null}
+=======
+                    <AddComment userLogged={this.props.userLogged} id={this.props.id} />
+                    {this.state.showComments ?
+                        <div>
+                            {finalCommentsToDisplay}
+                        </div>
+                        : null}
+                </div>
+>>>>>>> 8542f57002167511c77b43bbd3bc891cb5c85acc
 
                 {this.props.currentUserLogin === this.props.creatorLogin ?
                     <Dropdown trigger={<a href="#!" className='post-card-more-btn dropdown-trigger' data-target={this.props.id}><img src={MoreIcon}></img></a>}>
