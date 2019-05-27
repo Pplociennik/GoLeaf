@@ -19,7 +19,10 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -97,10 +100,14 @@ public class FileController {
 //                .collect(Collectors.toList());
 //    }
 
-    @GetMapping("/downloadFile/{userID:.+}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable Integer userID, HttpServletRequest request) {
+    @GetMapping("/downloadFile")
+    public ResponseEntity<Resource> downloadFile(Integer userID, Integer postID, HttpServletRequest request) {
         // Load file as Resource
-        Resource resource = fileStorageService.loadFileAsResource(userService.findById(userID).getImageName());
+        Resource resource = null;
+        if (postID == null)
+            resource = fileStorageService.loadFileAsResource(userService.findById(userID).getImageName());
+        else
+            resource = fileStorageService.loadFileAsResource(postService.findOneByID(postID).getImgName());
 
         // Try to determine file's content type
         String contentType = null;

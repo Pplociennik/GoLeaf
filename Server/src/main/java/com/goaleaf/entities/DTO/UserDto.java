@@ -12,4 +12,6 @@ public class UserDto {
 
     public String imageName;
 
+    public boolean notifications;
+
 }
