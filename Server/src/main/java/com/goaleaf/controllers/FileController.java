@@ -5,9 +5,11 @@ import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditImageViewMod
 import com.goaleaf.security.uploadingFiles.FileStorageProperties;
 import com.goaleaf.security.uploadingFiles.UploadFileResponse;
 import com.goaleaf.services.JwtService;
+import com.goaleaf.services.PostService;
 import com.goaleaf.services.UserService;
 import com.goaleaf.services.servicesImpl.FileStorageService;
 import com.goaleaf.validators.exceptions.FilesStorage.FormatNotAllowedException;
+import com.goaleaf.validators.exceptions.FilesStorage.WrongUploadFileProcessTypeException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.slf4j.Logger;
@@ -24,6 +26,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 import static com.goaleaf.security.SecurityConstants.SECRET;
 
@@ -32,9 +35,10 @@ public class FileController {
 
     @Autowired
     private JwtService jwtService;
-
     @Autowired
     private UserService userService;
+    @Autowired
+    private PostService postService;
 
     private FileStorageProperties fileStorageProperties = new FileStorageProperties();
 
@@ -44,9 +48,11 @@ public class FileController {
     private FileStorageService fileStorageService;
 
     @PostMapping("/uploadImage")
-    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file, String token) {
+    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("token") String token, @RequestParam("type") String type, Integer postID) {
         if (!jwtService.Validate(token, SECRET))
             throw new TokenExpiredException("You have to be logged in to send a photo!");
+        if (!Objects.equals(type, "PROFILE") && !Objects.equals(type, "POST"))
+            throw new WrongUploadFileProcessTypeException("UNKNOWN__PROCESS_TYPE");
 
         Claims claims = Jwts.parser()
                 .setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8))
@@ -61,10 +67,18 @@ public class FileController {
         if (!allowedExtentions.contains(substring))
             throw new FormatNotAllowedException("Wrong file format!");
 
-        String fileName = fileStorageService.storeFile(file, Integer.parseInt(claims.getSubject()));
+        String fileName = "";
+        if (Objects.equals(type, "PROFILE"))
+            fileName = fileStorageService.storeFile(file, Integer.parseInt(claims.getSubject()), type);
+        else
+            fileName = fileStorageService.storeFile(file, postID, type);
 
-        edit.imageName = fileName;
-        userService.updateUserImage(edit);
+        if (Objects.equals(type, "PROFILE")) {
+            edit.imageName = fileName;
+            userService.updateUserImage(edit);
+        } else {
+            postService.updatePostImage(postID, fileName);
+        }
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadFile/")

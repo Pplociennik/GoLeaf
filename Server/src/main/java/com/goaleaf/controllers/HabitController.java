@@ -12,14 +12,15 @@ import com.goaleaf.entities.viewModels.habitsManaging.DeleteMemberViewModel;
 import com.goaleaf.entities.viewModels.habitsManaging.JoinHabitViewModel;
 import com.goaleaf.security.EmailNotificationsSender;
 import com.goaleaf.services.*;
-import com.goaleaf.validators.exceptions.habitsProcessing.MemberExistsException;
 import com.goaleaf.validators.HabitTitleValidator;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.AccountNotExistsException;
-import com.goaleaf.validators.exceptions.habitsCreating.*;
+import com.goaleaf.validators.exceptions.habitsCreating.NoCategoryException;
+import com.goaleaf.validators.exceptions.habitsCreating.NoFrequencyException;
+import com.goaleaf.validators.exceptions.habitsCreating.NoPrivacyException;
+import com.goaleaf.validators.exceptions.habitsCreating.WrongTitleException;
 import com.goaleaf.validators.exceptions.habitsProcessing.*;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import org.hibernate.service.spi.InjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,11 +28,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
 import javax.mail.MessagingException;
-
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
-import static com.goaleaf.security.SecurityConstants.*;
+import static com.goaleaf.security.SecurityConstants.SECRET;
 
 
 @RestController
@@ -121,6 +121,8 @@ public class HabitController {
         Member newMember = new Member();
         newMember.setUserID(searchingUser.getId());
         newMember.setHabitID(model.habitID);
+        newMember.setImgName(searchingUser.getImageName());
+        newMember.setUserLogin(searchingUser.getLogin());
 
         if (memberService.checkIfExist(newMember))
             throw new UserAlreadyInHabitException("User already participating!");
@@ -189,9 +191,13 @@ public class HabitController {
         if (memberService.findSpecifiedMember(model.habitID, model.userID) != null)
             throw new MemberExistsException("You cannot join habit you are already involved in!");
 
+        User tempUser = userService.getUserById(model.userID);
+
         Member newMember = new Member();
         newMember.setHabitID(model.habitID);
         newMember.setUserID(model.userID);
+        newMember.setImgName(tempUser.getImageName());
+        newMember.setUserLogin(tempUser.getLogin());
 
         memberService.saveMember(newMember);
         return HttpStatus.OK;

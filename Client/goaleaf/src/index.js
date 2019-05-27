@@ -39,6 +39,26 @@ export function fetchMembers(){
             dispatch({ type: 'GET_MEMBERS', payload: res.data});
           })
         };
+
+export function fetchPosts(habitID){
+    return dispatch =>
+        axios.get(`/api/posts/all?token=${localStorage.getItem("token")}&habitID=${habitID}`)
+          .then(res => {
+              dispatch({ type: 'GET_POSTS', payload: res.data})
+          })
+            .catch(err => { console.log('Error when downloading posts') })
+        };
+
+export function deletePost(id){
+    return dispatch =>
+              dispatch({ type: 'DELETE_POST', payload: id})
+        };
+
+export function addPost(post){
+    return dispatch =>
+              dispatch({ type: 'ADD_POST', payload: post})
+        };
+
     // IS LOADED
 export function isLoaded(){
     return dispatch =>

@@ -29,6 +29,7 @@
                 width: 180px;
                 object-fit: cover;
                 border-radius: 50%;
+                border: 5px solid $secondary-color;
                 cursor: pointer;
         }
         .profile-img:hover{
