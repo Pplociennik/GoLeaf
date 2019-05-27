@@ -186,8 +186,8 @@ public class HabitController {
             throw new TokenExpiredException("You have to be logged in!");
         if (userService.findById(model.userID) == null)
             throw new AccountNotExistsException("Account does not exist!");
-        if (habitService.findById(model.habitID).getPrivate())
-            throw new HabitNotPublicException("You cannot join private habits!");
+//        if (habitService.findById(model.habitID).getPrivate())
+//            throw new HabitNotPublicException("You cannot join private habits!");
         if (memberService.findSpecifiedMember(model.habitID, model.userID) != null)
             throw new MemberExistsException("You cannot join habit you are already involved in!");
 

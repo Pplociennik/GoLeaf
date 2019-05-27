@@ -35,18 +35,20 @@ public class CommentController {
         comment.setPostID(model.postID);
         comment.setUserID(model.creatorID);
 
-        commentService.addNewComment(comment);
+        Comment returned = commentService.addNewComment(comment);
 
         CommentDTO commentDTO = new CommentDTO();
-        commentDTO.creatorID = model.creatorID;
-        commentDTO.postID = model.postID;
-        commentDTO.text = model.text;
+        commentDTO.creatorID = returned.getUserID();
+        commentDTO.postID = returned.getPostID();
+        commentDTO.text = returned.getCommentText();
 
         return commentDTO;
     }
 
     @RequestMapping(value = "/getcomments", method = RequestMethod.GET)
     public Iterable<Comment> getAllPostComments(@RequestParam Integer postID) {
+        if (postService.findOneByID(postID) == null)
+            throw new PostNotFoundException("Post not found!");
         return commentService.listAllByPostID(postID);
     }
 

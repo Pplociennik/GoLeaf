@@ -86,7 +86,7 @@ class Members extends Component {
                 >
                     <div className="members-section row">
                         <h4>Members</h4>
-                        <input id="search" type="text" placeholder="Search user" onChange={this.handleChange} />
+                        <input id="search" type="text" placeholder="Search user" autoComplete="off" onChange={this.handleChange} />
                         <ul className="collection">
                             {membersToDisplay}
                         </ul>

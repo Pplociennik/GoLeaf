@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
-import Popup from "reactjs-popup"
 import PostCard from './PostCard'
 import './Posts.scss'
 import {fetchPosts} from './../../../../index'
@@ -12,7 +11,8 @@ class Posts extends Component {
 
     state = {
         posts: [],
-        postsToShow: 20
+        postsToShow: 20,
+        postsLoading: true
     }
 
     handlePostCardDeleted = id => {
@@ -33,15 +33,8 @@ class Posts extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchPosts(this.props.habitID);
-
-        axios.get(`/api/users/user/${this.props.userLogged}`)
-            .then(res => {
-                this.setState({
-                    currentUserLogin: res.data.login
-                })
-            }
-            ).catch(err => console.log(err.response.data.message))
+        
+        this.props.fetchPosts(this.props.habitID).then(res => this.setState({postsLoading: false}))
     }
 
     render() {
@@ -58,28 +51,41 @@ class Posts extends Component {
         posts.forEach(post => {
 
             foundPosts = true; 
-            postCards.push(<PostCard key={post.id} id={post.id} currentUserLogin={this.props.userLoggedLogin} creatorLogin={post.creatorLogin} createdDate={post.dateOfAddition} postType={post.postType} postText={post.postText} imgName={post.imgName} counter_CLAPPING={post.counter_CLAPPING} counter_WOW={post.counter_WOW} counter_NS={post.counter_NS} counter_TTD={post.counter_TTD} handlePostCardDeleted={() => this.handlePostCardDeleted(post.id)} />)
+            postCards.push(<PostCard key={post.id} id={post.id} userLogged={this.props.userLogged} currentUserLogin={this.props.userLoggedLogin} creatorLogin={post.creatorLogin} createdDate={post.dateOfAddition} postType={post.postType} postText={post.postText} imgName={post.imgName} counter_CLAPPING={post.counter_CLAPPING} counter_WOW={post.counter_WOW} counter_NS={post.counter_NS} counter_TTD={post.counter_TTD} handlePostCardDeleted={() => this.handlePostCardDeleted(post.id)} />)
 
         })
         
         let postsToDisplay = postCards.slice(0, this.state.postsToShow);
 
 
+        if (this.state.postsLoading) {
+            postsToDisplay =   
+            <div class="preloader-wrapper small active">
+                <div class="spinner-layer spinner-green-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
+            </div>
+        }
         if (!foundPosts) {
             postsToDisplay = <div className="center">There are no posts yet</div>
         }
 
         return (
                 <section className="posts row">
-                    <div className="col s12 m8  offset-m2">
+                    <div className="col s12 m8  offset-m2 center">
                         {postsToDisplay}
                     <div>
                         {postCards.length > this.state.postsToShow ? <div className="show-more-posts-btn-con"><button className="show-more-posts-btn btn center" onClick={() => this.setState({ postsToShow: this.state.postsToShow + 20 })}>Show more</button></div> : null}
                     </div>
                     </div>
                 </section>
-            )
-        
+            ) 
     }
 }
 

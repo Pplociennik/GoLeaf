@@ -100,10 +100,12 @@ public class UserServiceImpl implements UserService {
 
 
             if (bCryptPasswordEncoder.matches(model.oldPassword, userRepository.findById(model.id).getPassword())) {
-                if (!userCredentialsValidator.isValidEmail(model.emailAddress)) {
-                    throw new BadCredentialsException("Wrong email format!");
-                } else {
-                    updatingUser.setEmailAddress(model.emailAddress);
+                if (!model.emailAddress.isEmpty()) {
+                    if (!userCredentialsValidator.isValidEmail(model.emailAddress)) {
+                        throw new BadCredentialsException("Wrong email format!");
+                    } else {
+                        updatingUser.setEmailAddress(model.emailAddress);
+                    }
                 }
                 if (model.newPassword.equals(model.matchingNewPassword)) {
                     if (!userCredentialsValidator.isPasswordFormatValid(model.newPassword)) {

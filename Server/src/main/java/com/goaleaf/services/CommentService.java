@@ -10,7 +10,7 @@ public interface CommentService {
 
     Comment getOneByID(Integer commentID);
 
-    void addNewComment(Comment comment);
+    Comment addNewComment(Comment comment);
 
     void removeById(Integer id);
 

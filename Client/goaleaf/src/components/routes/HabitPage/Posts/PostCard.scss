@@ -23,6 +23,7 @@
             flex-direction: column;
             margin-left: 10px;
             .post-card-owner {
+                text-align: left;
                 font-size: 1.2em;
                 font-weight: 400;
     
@@ -37,6 +38,7 @@
         min-height: 100px;
 
         .post-card-text {
+            text-align: left;
             width: 90%;
             padding: 1em;
             font-size: 1.7em;
@@ -102,10 +104,45 @@
     .delete-post {
         color: #e41749;
     }
-}
 
-p {
-    margin: 0;
-    white-space: pre-wrap;
-    overflow-wrap: break-word;
+    .comments-con {
+        
+        .comments {
+            ul {
+                list-style-type: none;
+            }
+            .comment-card {
+                margin: 1em 0;
+                .comment-profile {
+                    height: 40px;
+                    margin-left: 10px;
+                    display: flex;
+                    align-items: center;
+                    .comment-profile-pic {
+                        height: 24px;
+                        width: 24px;
+                        border-radius: 50%;
+                    }
+                    .comment-profile-login {
+                        margin: 0 10px;
+                        font-size: 1em;
+                    }
+                    .comment-profile-date {
+                        color: lighten($text-color, 50%);
+                        font-size: 0.9em;
+                    }
+                }
+                .comment-content {
+                    display: flex;
+                    margin-left: 30px;
+                }
+            }
+        }
+    }
+    
+    p {
+        margin: 0;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+    }
 }

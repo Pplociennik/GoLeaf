@@ -10,4 +10,6 @@ public interface CommentRepository extends CrudRepository<Comment, Integer> {
     Iterable<Comment> getAllByPostID(Integer postID);
 
     Comment findById(Integer commentID);
+
+//    Comment save(Comment comment);
 }
