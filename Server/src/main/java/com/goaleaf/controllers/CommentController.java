@@ -48,11 +48,8 @@ public class CommentController {
         commentDTO.creatorID = returned.getUserID();
         commentDTO.postID = returned.getPostID();
         commentDTO.text = returned.getCommentText();
-<<<<<<< HEAD
-=======
         commentDTO.creatorLogin = returned.getUserLogin();
         commentDTO.creationDate = returned.getCreationDate();
->>>>>>> 8542f57002167511c77b43bbd3bc891cb5c85acc
 
         return commentDTO;
     }

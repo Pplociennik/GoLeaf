@@ -8,7 +8,6 @@ class CommentCard extends Component {
         userLogin: ''
     }
 
-<<<<<<< HEAD
     render() {
         return (
             <li className="comment-card collection-item">
@@ -20,26 +19,6 @@ class CommentCard extends Component {
                 <div className="comment-content">
                     <span>{this.props.commentText}</span>
                 </div>
-
-=======
-    componentDidMount() {
-
-        axios.get(`/api/users/user/${this.props.userID}`)
-            .then(res => {
-                this.setState({
-                    userLogin: res.data.login
-                })
-            }
-            ).catch(err => this.setState({ errorMsg: err.response.data.message }))
-
-    }
-    render() {
-        return (
-            <li className="collection-item">
-                <img src={ TempPic } alt="User avatar" title="User avatar" width="128" height="128" />
-                <p>{this.state.userLogin}</p>
-                <span>{this.props.commentText}</span>
->>>>>>> 8542f57002167511c77b43bbd3bc891cb5c85acc
             </li>
         )
     }
