@@ -14,7 +14,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Iterable<Comment> listAllByPostID(Integer postID) {
-        return commentRepository.getAllByPostID(postID);
+        return commentRepository.getAllByPostIDOrderByCreationDateDesc(postID);
     }
 
     @Override
