@@ -7,8 +7,8 @@ import com.goaleaf.entities.User;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.*;
 import com.goaleaf.repositories.UserRepository;
 import com.goaleaf.security.EmailSender;
-import com.goaleaf.services.servicesImpl.JwtServiceImpl;
 import com.goaleaf.services.UserService;
+import com.goaleaf.services.servicesImpl.JwtServiceImpl;
 import com.goaleaf.validators.UserCredentialsValidator;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.AccountNotExistsException;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.BadCredentialsException;
@@ -68,6 +68,7 @@ public class UserController {
         dataToReturn.login = tempUser.getLogin();
         dataToReturn.emailAddress = tempUser.getEmailAddress();
         dataToReturn.imageName = tempUser.getImageName();
+        dataToReturn.notifications = tempUser.getNotifications();
 
         return dataToReturn;
     }
