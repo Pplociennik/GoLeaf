@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 import PostCard from './PostCard'
 import './Posts.scss'
@@ -38,14 +37,8 @@ class Posts extends Component {
     }
 
     render() {
+
         let posts = this.props.posts;
-        posts.sort(function(a, b){
-            let keyA = new Date(a.dateOfAddition),
-                keyB = new Date(b.dateOfAddition);
-            if(keyA > keyB) return -1;
-            if(keyA < keyB) return 1;
-            return 0;
-        });
         let foundPosts = false;
         let postCards = []
         posts.forEach(post => {
@@ -60,14 +53,14 @@ class Posts extends Component {
 
         if (this.state.postsLoading) {
             postsToDisplay =   
-            <div class="preloader-wrapper small active">
-                <div class="spinner-layer spinner-green-only">
-                <div class="circle-clipper left">
-                    <div class="circle"></div>
-                </div><div class="gap-patch">
-                    <div class="circle"></div>
-                </div><div class="circle-clipper right">
-                    <div class="circle"></div>
+            <div className="preloader-wrapper small active">
+                <div className="spinner-layer spinner-green-only">
+                <div className="circle-clipper left">
+                    <div className="circle"></div>
+                </div><div className="gap-patch">
+                    <div className="circle"></div>
+                </div><div className="circle-clipper right">
+                    <div className="circle"></div>
                 </div>
                 </div>
             </div>

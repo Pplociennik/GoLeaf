@@ -9,7 +9,6 @@ import WowIcon from './../../../../assets/wow.png'
 import NtIcon from './../../../../assets/nt.png'
 import TtdIcon from './../../../../assets/ttd.png'
 import axios from 'axios';
-import AddComment from './Comments/AddComment'
 import CommentCard from './Comments/CommentCard'
 
 class PostCard extends Component {
@@ -24,7 +23,7 @@ class PostCard extends Component {
         },
         comments: [],
         showComments: false,
-        comment: null
+        comment: ''
     }
 
     addReaction = reaction => {
@@ -52,7 +51,7 @@ class PostCard extends Component {
             "postID": this.props.id,
             "text": this.state.comment 
         }).then(res => {
-                this.setState({comments: [...this.state.comments, res.data]})
+                this.setState({comments: [res.data, ...this.state.comments]})
                 this.showComments();
             }
             )
@@ -106,7 +105,6 @@ class PostCard extends Component {
     }
 
     render() {
-        console.log(this.state.userReaction)
 
         let finalCommentsToDisplay = [];
 
@@ -116,12 +114,14 @@ class PostCard extends Component {
             let foundComments = false;
             let commentCards = [];
 
+            console.log(comments)
             comments.forEach(comment => {
                 foundComments = true;
-                commentCards.push(<CommentCard key={comment.id} id={comment.id} userID={comment.userID} commentText={comment.commentText} />)
+                commentCards.push(<CommentCard key={comment.id} id={comment.id} userLogin={comment.userLogin} date={comment.creationDate} commentText={comment.commentText} />)
             })
 
-            let commentsToDisplay = commentCards;
+            console.log(commentCards);
+            let commentsToDisplay = commentCards.reverse();
 
             if (!foundComments) {
                 commentsToDisplay = <div>There are no comments yet</div>
@@ -166,15 +166,15 @@ class PostCard extends Component {
                 </div>
                     {this.state.showComments ?
                         <div className="comments-con">
-                            <div className="add-comment-con row">
-                                <form className="col s10 offset-s1" onSubmit={ this.addComment }>
-                                <input id="comment" type="text" placeholder="add comment" autoComplete="off" onChange={ this.handleChange } />
-                                <input className="btn center" type="submit" placeholder="add"/>
-                                </form>
-                            </div>
                             <ul className="comments row">
                                 {finalCommentsToDisplay}
                             </ul>
+                            <div className="add-comment-con row">
+                                <form className="col s8 offset-s2" onSubmit={ this.addComment }>
+                                <input id="comment" type="text" placeholder="add comment" autoComplete="off" value={ this.state.comment } onChange={ this.handleChange }/>
+                                <input className="add-comment-btn btn center" type="submit" value="COMMENT"/>
+                                </form>
+                            </div>
                         </div>
                         : null}
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 import TempPic from './../../../../../assets/default-profile-pic.png'
+import {changeDateFormat1} from './../../../../../functions'
 
 class CommentCard extends Component {
 
@@ -10,11 +10,11 @@ class CommentCard extends Component {
 
     render() {
         return (
-            <li className="comment-card collection-item">
+            <li className="comment-card collection-item col s10 offset-s2">
                 <div className="comment-profile">
                     <img className="comment-profile-pic" src={ TempPic } alt="User avatar" title="User avatar" />
-                    <p className="comment-profile-login">marek</p>
-                    <p className="comment-profile-date">12/12/2012</p>
+                    <p className="comment-profile-login">{this.props.userLogin}</p>
+                    <p className="comment-profile-date">{changeDateFormat1(this.props.date)}</p>
                 </div>
                 <div className="comment-content">
                     <span>{this.props.commentText}</span>

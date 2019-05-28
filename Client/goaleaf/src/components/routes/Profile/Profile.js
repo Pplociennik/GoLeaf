@@ -3,6 +3,7 @@ import './Profile.scss'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import axios from 'axios'
+import TempPic from './../../../assets/default-profile-pic.png'
 
 class Profile extends Component {
 
@@ -110,19 +111,6 @@ class Profile extends Component {
             }
             ).catch(err => this.setState({ errorMsg: err.response.data.message }))
 
-        axios.get(`/downloadFile/${this.props.userLogged}`, { responseType: 'arraybuffer' })
-            .then(res => {
-                const base64 = btoa(
-                    new Uint8Array(res.data).reduce(
-                        (data, byte) => data + String.fromCharCode(byte),
-                        '',
-                    ),
-                );
-                this.setState({ picture: res.data, picPreview: "data:;base64," + base64 });
-            })
-
-            .catch(err => this.setState({ errorMsg: err.response.data.message }))
-
     }
 
 
@@ -138,7 +126,7 @@ class Profile extends Component {
         return (
             <div className="profile">
                 <section className="profile-photo">
-                    <img className="profile-img" src={this.state.picPreview} alt="user avatar" title="Change avatar" onClick={() => this.refs.uploadPhoto.click()} />
+                    <img className="profile-img" src={ TempPic } alt="user avatar" title="Change avatar" onClick={() => this.refs.uploadPhoto.click()} />
                     <input className="profile-img-input" type="file" accept="image/x-png,image/gif,image/jpeg" onChange={this.handleChangeAvatar} ref="uploadPhoto" style={{ display: "none" }} />
                 </section>
                 <section className="profile-info">

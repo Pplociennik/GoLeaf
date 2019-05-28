@@ -53,7 +53,7 @@ class MyHabits extends Component {
 
 
     if (!foundHabits) {
-      habitsToDisplay = <div className="no-habits"> Join some habits to see them here</div>
+      habitsToDisplay = <div className="no-habits"> Join some groups to see them here</div>
     }
 
     console.log(habitsToDisplay.length);
@@ -62,7 +62,7 @@ class MyHabits extends Component {
     if (localStorage.getItem('token') && foundHabits) {
       return (
         <section className="my-habits">
-          <h1 className="my-habits-title" >My habits</h1>
+          <h1 className="my-habits-title" >My groups</h1>
 
           <div className="habit-cards">
             {habitsToDisplay}

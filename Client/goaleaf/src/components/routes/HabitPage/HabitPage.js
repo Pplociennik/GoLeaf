@@ -71,7 +71,6 @@ class HabitPage extends Component {
                                         <div className="habit-page-info-block created-by"><i className="fas fa-user fa-xs"></i><span> {habit.owner.login}</span></div>
                                         <div className="habit-page-info-block privacy"><i className={habit.private ? 'fas fa-lock fa-xs' : 'fa fa-lock-open fa-xs'}></i> <span> {habit.private ? 'Private' : 'Public'}</span></div>
                                         <div className={`habit-page-info-block category-${habit.category}`}><i className="fas fa-dumbbell fa-sm"></i><span> {habit.category}</span></div>
-                                        <div className="habit-page-info-block frequency"><i className="fas fa-history fa-sm"></i><span> {habit.frequency}</span></div>
                                         <div className="habit-page-info-block members-number"><i className="fas fa-user-friends fa-sm"></i><span> {habit.members.length}</span></div>
                                     </div>
                                 </div>
