@@ -167,6 +167,9 @@ public class HabitController {
         Member memberToCheck = memberService.findSpecifiedMember(habitID, userID);
         Notification notificationToCheck = notificationService.findSpecifiedNtf(userID, "http://localhost:3000/habit/" + habitID);
 
+        if (!habitService.findById(habitID).getPrivate())
+            return true;
+
         return memberToCheck != null && notificationToCheck != null;
 
     }
