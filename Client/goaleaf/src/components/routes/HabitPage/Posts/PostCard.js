@@ -43,19 +43,33 @@ class PostCard extends Component {
         }).catch(err => console.log(err))
     }
 
+    handleCommentCardDeleted = (id) => {
+        axios.delete(`/api/comments/remove?id=${id}`)
+            .then(res => {
+                console.log(`Deleted comment ${id}`);
+                    let comments = this.state.comments.filter( comment => {
+                            return comment.id !== id;
+                    })
+                    this.setState({
+                        comments: comments
+                    })
+            }).catch(err => { console.log(err) })
+
+    }
+
     addComment = e => {
         e.preventDefault();
         this.clearMsg();
         axios.post('/api/comments/addcomment', {
             "creatorID": this.props.userLogged,
             "postID": this.props.id,
-            "text": this.state.comment 
+            "text": this.state.comment
         }).then(res => {
-                this.setState({comments: [res.data, ...this.state.comments]})
-                this.showComments();
-            }
-            )
-          .catch(err => console.log(err))
+            this.setState({ comments: [res.data, ...this.state.comments] })
+            this.showComments();
+        }
+        )
+            .catch(err => console.log(err))
     }
 
     showComments = () => {
@@ -117,7 +131,7 @@ class PostCard extends Component {
             console.log(comments)
             comments.forEach(comment => {
                 foundComments = true;
-                commentCards.push(<CommentCard key={comment.id} id={comment.id} userLogin={comment.userLogin} date={comment.creationDate} commentText={comment.commentText} />)
+                commentCards.push(<CommentCard key={comment.id} id={comment.id} currentUserLogin={this.props.currentUserLogin} userLogin={comment.userLogin} date={comment.creationDate} commentText={comment.commentText} handleCommentCardDeleted={() => this.handleCommentCardDeleted(comment.id)} />)
             })
 
             console.log(commentCards);
@@ -164,19 +178,19 @@ class PostCard extends Component {
                     {!this.state.showComments ? <button className="show-comments-btn" onClick={() => this.showComments()}>Show comments</button> : <button className="show-comments-btn" onClick={() => this.setState({ showComments: false })}>Hide comments</button>}
                     { /* <AddComment userLogged={this.props.userLogged} id={this.props.id} /> */}
                 </div>
-                    {this.state.showComments ?
-                        <div className="comments-con">
-                            <ul className="comments row">
-                                {finalCommentsToDisplay}
-                            </ul>
-                            <div className="add-comment-con row">
-                                <form className="col s8 offset-s2" onSubmit={ this.addComment }>
-                                <input id="comment" type="text" placeholder="add comment" autoComplete="off" value={ this.state.comment } onChange={ this.handleChange }/>
-                                <input className="add-comment-btn btn center" type="submit" value="COMMENT"/>
-                                </form>
-                            </div>
+                {this.state.showComments ?
+                    <div className="comments-con">
+                        <ul className="comments row">
+                            {finalCommentsToDisplay}
+                        </ul>
+                        <div className="add-comment-con row">
+                            <form className="col s8 offset-s2" onSubmit={this.addComment}>
+                                <input id="comment" type="text" placeholder="add comment" autoComplete="off" value={this.state.comment} onChange={this.handleChange} />
+                                <input className="add-comment-btn btn center" type="submit" value="COMMENT" />
+                            </form>
                         </div>
-                        : null}
+                    </div>
+                    : null}
 
 
                 {this.props.currentUserLogin === this.props.creatorLogin ?
