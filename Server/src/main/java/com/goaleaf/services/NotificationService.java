@@ -14,4 +14,6 @@ public interface NotificationService {
 
     void removeFromDatabaseByID(Integer ntfID);
 
+    Notification findSpecifiedNtf(Integer userID, String url);
+
 }

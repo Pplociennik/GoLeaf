@@ -18,7 +18,6 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
 
-
     @Override
     public Notification saveNotification(Notification notification) {
         return notificationRepository.save(notification);
@@ -32,5 +31,10 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public void removeFromDatabaseByID(Integer ntfID) {
         notificationRepository.delete(ntfID);
+    }
+
+    @Override
+    public Notification findSpecifiedNtf(Integer userID, String url) {
+        return notificationRepository.getByRecipientIDAndUrl(userID, url);
     }
 }
