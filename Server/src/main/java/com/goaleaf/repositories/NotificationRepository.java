@@ -11,5 +11,7 @@ public interface NotificationRepository extends CrudRepository<Notification, Int
 
     Iterable<Notification> findAll();
 
+    Notification getByRecipientIDAndUrl(Integer userID, String url);
+
 //    Notification save(Notification notification);
 }

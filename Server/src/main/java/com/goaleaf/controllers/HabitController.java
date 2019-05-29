@@ -19,6 +19,7 @@ import com.goaleaf.validators.exceptions.habitsCreating.NoFrequencyException;
 import com.goaleaf.validators.exceptions.habitsCreating.NoPrivacyException;
 import com.goaleaf.validators.exceptions.habitsCreating.WrongTitleException;
 import com.goaleaf.validators.exceptions.habitsProcessing.*;
+import com.goaleaf.validators.exceptions.habitsProcessing.postsProcessing.UserNotAllowedException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -159,6 +160,15 @@ public class HabitController {
             habitService.removeHabit(model.habitID);
 
         return HttpStatus.OK;
+    }
+
+    @RequestMapping(value = "/habit/checkPermissions", method = RequestMethod.GET)
+    public boolean checkIfAccessAllowed(@RequestParam Integer userID, @RequestParam Integer habitID) {
+        Member memberToCheck = memberService.findSpecifiedMember(habitID, userID);
+        Notification notificationToCheck = notificationService.findSpecifiedNtf(userID, "http://localhost:3000/habit/" + habitID);
+
+        return memberToCheck != null && notificationToCheck != null;
+
     }
 
 
