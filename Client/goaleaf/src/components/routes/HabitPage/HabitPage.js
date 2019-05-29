@@ -13,7 +13,8 @@ class HabitPage extends Component {
 
     state = {
         newMemberLogin: '',
-        errorMsg: ''
+        errorMsg: '',
+        permissions: true
     }
 
     joinHabit = id => {
@@ -53,12 +54,25 @@ class HabitPage extends Component {
         })
     }
 
+    ////Error jesli permissions w state poczatkowo ustawione na false
+
+    componentDidMount() {
+
+        axios.get(`/api/habits/habit/checkPermissions?userID=${this.props.userLogged}&habitID=${parseInt(this.props.match.params.id)}`)
+            .then(res => {
+                this.setState({
+                    permissions: res.data
+                })
+            }).catch(err => console.log(err))
+
+    }
+
     render() {
         let habit = this.props.habits.find(habit => habit.id === parseInt(this.props.match.params.id));
 
         let userIsMember;
 
-        if (habit) {
+        if (habit && this.state.permissions) {
             habit.members.find(member => member === this.props.userLogged) ? userIsMember = true : userIsMember = false;
             return (
                 <div className={`habit-page ${habit.category}-category`}>
