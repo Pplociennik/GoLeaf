@@ -2,7 +2,7 @@
 
 .add-post-con {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 80px;
     .col {
         padding: 0;
     }
@@ -105,10 +105,7 @@
     }
     #post {
         .add-post-btn {
-            background: #1D976C;  /* fallback for old browsers */
-            background: -webkit-linear-gradient(to right, #93F9B9, #1D976C);  /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to right, #93F9B9, #1D976C); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+            background: #1D976C;
         }
         .input-field input[type=text]:focus + label, .materialize-textarea:focus:not([readonly]) + label {
             color: $secondary-color !important;
@@ -120,10 +117,7 @@
     }
     #achievement {
         .add-post-btn {
-            background: #CAC531;  /* fallback for old browsers */
-            background: -webkit-linear-gradient(to right, #F3F9A7, #CAC531);  /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to right, #F3F9A7, #CAC531); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+            background: #CAC531;
         }
         .input-field input[type=text]:focus + label, .materialize-textarea:focus:not([readonly]) + label {
             color: #ede862 !important;

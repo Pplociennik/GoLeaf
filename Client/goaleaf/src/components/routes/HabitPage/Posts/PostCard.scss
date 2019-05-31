@@ -93,17 +93,6 @@
             opacity: 0.7;
         }
     }
-    .dropdown-content {
-        border-radius: 30px;
-    }
-    .dropdown-item {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .delete-post {
-        color: #e41749;
-    }
 
     .comments-con {
         border-top: 1px solid lighten($text-color, 50%);
@@ -114,8 +103,7 @@
 
             .add-comment-btn {
                 background: #1D976C;
-                background: -webkit-linear-gradient(to right, #93F9B9, #1D976C);
-                background: linear-gradient(to right, #93F9B9, #1D976C);
+                margin: 1em 0;
                 border-radius: 30px;
             }
         }
@@ -128,30 +116,41 @@
                 list-style-type: none;
             }
             .comment-card {
-                margin: 0.5em 0;
+                margin: 0.7em 0;
+                position: relative;
                 .comment-profile {
                     height: 40px;
                     display: flex;
                     align-items: center;
                     .comment-profile-pic {
-                        height: 24px;
-                        width: 24px;
+                        height: 28px;
+                        width: 28px;
                         border-radius: 50%;
                     }
                     .comment-profile-login {
                         margin: 0 10px;
-                        font-size: 0.9em;
+                        font-size: 1.1em;
                     }
                     .comment-profile-date {
                         color: lighten($text-color, 50%);
-                        font-size: 0.7em;
+                        font-size: 0.9em;
                     }
                 }
                 .comment-content {
                     display: flex;
+                    justify-content: space-between;
                     margin-left: 30px;
                     span {
                         font-size: 1.2em;
+                    }
+                }
+                .comment-nav {
+                    position: absolute;
+                    top: 20px;
+                    right: 20px;
+                    img {
+                        height: 20px;
+                        width: auto;
                     }
                 }
             }
@@ -162,5 +161,16 @@
         margin: 0;
         white-space: pre-wrap;
         overflow-wrap: break-word;
+    }
+    .dropdown-content {
+        border-radius: 30px;
+    }
+    .dropdown-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .dropdown-delete {
+        color: #e41749;
     }
 }

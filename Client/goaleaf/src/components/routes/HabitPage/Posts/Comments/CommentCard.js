@@ -20,14 +20,12 @@ class CommentCard extends Component {
                 </div>
                 <div className="comment-content">
                     <span>{this.props.commentText}</span>
-                    <div>
-                        {this.props.currentUserLogin === this.props.userLogin ?
-                            <Dropdown trigger={<a href="#!" data-target={this.props.id}><img src={MoreIcon}></img></a>}>
-                                <a href="#!" onClick={() => this.props.handleCommentCardDeleted(this.props.id)}>Delete</a>
+                </div>
+                {this.props.currentUserLogin === this.props.userLogin ?
+                            <Dropdown trigger={<a href="#!" className='comment-nav dropdown-trigger' data-target={this.props.id}><img src={MoreIcon}></img></a>}>
+                             <a href="#!" className="dropdown-item dropdown-delete" onClick={() => this.props.handleCommentCardDeleted(this.props.id)}>Delete</a>
                             </Dropdown>
                             : null}
-                    </div>
-                </div>
             </li>
         )
     }
