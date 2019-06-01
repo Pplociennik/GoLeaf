@@ -170,7 +170,7 @@ public class HabitController {
         if (!habitService.findById(habitID).getPrivate())
             return true;
 
-        return memberToCheck != null && notificationToCheck != null;
+        return memberToCheck != null || notificationToCheck != null;
 
     }
 
