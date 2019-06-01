@@ -8,16 +8,17 @@ import AddPost from './AddPost/AddPost'
 import { changeDateFormat1 } from './../../../functions.js'
 import Posts from './Posts/Posts'
 import Members from './Members/Members'
+import Loader from './../Loader/Loader'
 
 class HabitPage extends Component {
 
     state = {
         newMemberLogin: '',
-        errorMsg: ''
+        errorMsg: '',
+        permissions: false
     }
 
     joinHabit = id => {
-
         axios.post('/api/habits/habit/join', {
             "habitID": id,
             "token": localStorage.getItem("token"),
@@ -27,7 +28,6 @@ class HabitPage extends Component {
                 window.location.reload();
             }
             ).catch(err => console.log(err.response.data.message))
-
     }
 
     leaveHabit = id => {
@@ -40,6 +40,7 @@ class HabitPage extends Component {
             }
         })
             .then(res => {
+                this.props.history.push('/');
                 window.location.reload();
             }
             ).catch(err => console.log(err.response.data.message))
@@ -53,12 +54,22 @@ class HabitPage extends Component {
         })
     }
 
+    componentDidMount() {
+        axios.get(`/api/habits/habit/checkPermissions?userID=${this.props.userLogged}&habitID=${parseInt(this.props.match.params.id)}`)
+            .then(res => {
+                    this.setState({
+                        permissions: res.data
+                    })
+            }).catch(err => console.log(err))
+    }
+
     render() {
+        console.log("HABIT RENDERED")
         let habit = this.props.habits.find(habit => habit.id === parseInt(this.props.match.params.id));
 
         let userIsMember;
 
-        if (habit) {
+        if (habit && this.state.permissions) {
             habit.members.find(member => member === this.props.userLogged) ? userIsMember = true : userIsMember = false;
             return (
                 <div className={`habit-page ${habit.category}-category`}>
@@ -94,15 +105,14 @@ class HabitPage extends Component {
             )
         } else
             return (
-                <Redirect to="/" />
+                <Loader />
             )
-    }
+    } 
 }
 
 const mapStateToProps = state => ({
     userLogged: state.userLogged,
-    habits: state.habits,
-    isLoading: state.isLoading
+    habits: state.habits
 })
 
 export default connect(mapStateToProps)(HabitPage);

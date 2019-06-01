@@ -1,3 +1,57 @@
 2019-05-28 09:34:37 jdbc[12]: exception
 org.h2.jdbc.JdbcSQLException: Value too long for column "POST_TEXT VARCHAR(255)": "STRINGDECODE('skjdsakjsdsadsadksjdksajd\nsakjdksajdsajdkasjdksajd\nsadsakjdsajkdjsakdjsadksa\ndsa\ndsa\ndsajdksajdkjsdkskjdsakjs... (22100)"; SQL statement:
 insert into posts (id, counter_clapping, counter_ns, counter_ttd, counter_wow, creator_login, date_of_addition, habitid, img_name, post_text, post_type) values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-193]
+2019-05-28 09:34:41 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "POST_TEXT VARCHAR(255)": "STRINGDECODE('skjdsakjsdsadsadksjdksajd\nsakjdksajdsajdkasjdksajd\nsadsakjdsajkdjsakdjsadksa\ndsa\ndsa\ndsajdksajdkjsdkskjdsakjs... (22100)"; SQL statement:
+insert into posts (id, counter_clapping, counter_ns, counter_ttd, counter_wow, creator_login, date_of_addition, habitid, img_name, post_text, post_type) values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-193]
+2019-05-28 09:34:42 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "POST_TEXT VARCHAR(255)": "STRINGDECODE('skjdsakjsdsadsadksjdksajd\nsakjdksajdsajdkasjdksajd\nsadsakjdsajkdjsakdjsadksa\ndsa\ndsa\ndsajdksajdkjsdkskjdsakjs... (22100)"; SQL statement:
+insert into posts (id, counter_clapping, counter_ns, counter_ttd, counter_wow, creator_login, date_of_addition, habitid, img_name, post_text, post_type) values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-193]
+2019-05-28 09:34:42 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "POST_TEXT VARCHAR(255)": "STRINGDECODE('skjdsakjsdsadsadksjdksajd\nsakjdksajdsajdkasjdksajd\nsadsakjdsajkdjsakdjsadksa\ndsa\ndsa\ndsajdksajdkjsdkskjdsakjs... (22100)"; SQL statement:
+insert into posts (id, counter_clapping, counter_ns, counter_ttd, counter_wow, creator_login, date_of_addition, habitid, img_name, post_text, post_type) values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-193]
+2019-05-28 09:34:42 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "POST_TEXT VARCHAR(255)": "STRINGDECODE('skjdsakjsdsadsadksjdksajd\nsakjdksajdsajdkasjdksajd\nsadsakjdsajkdjsakdjsadksa\ndsa\ndsa\ndsajdksajdkjsdkskjdsakjs... (22100)"; SQL statement:
+insert into posts (id, counter_clapping, counter_ns, counter_ttd, counter_wow, creator_login, date_of_addition, habitid, img_name, post_text, post_type) values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-193]
+2019-05-28 09:34:43 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "POST_TEXT VARCHAR(255)": "STRINGDECODE('skjdsakjsdsadsadksjdksajd\nsakjdksajdsajdkasjdksajd\nsadsakjdsajkdjsakdjsadksa\ndsa\ndsa\ndsajdksajdkjsdkskjdsakjs... (22100)"; SQL statement:
+insert into posts (id, counter_clapping, counter_ns, counter_ttd, counter_wow, creator_login, date_of_addition, habitid, img_name, post_text, post_type) values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-193]
+2019-05-28 09:34:43 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "POST_TEXT VARCHAR(255)": "STRINGDECODE('skjdsakjsdsadsadksjdksajd\nsakjdksajdsajdkasjdksajd\nsadsakjdsajkdjsakdjsadksa\ndsa\ndsa\ndsajdksajdkjsdkskjdsakjs... (22100)"; SQL statement:
+insert into posts (id, counter_clapping, counter_ns, counter_ttd, counter_wow, creator_login, date_of_addition, habitid, img_name, post_text, post_type) values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-193]
+2019-05-28 09:34:43 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "POST_TEXT VARCHAR(255)": "STRINGDECODE('skjdsakjsdsadsadksjdksajd\nsakjdksajdsajdkasjdksajd\nsadsakjdsajkdjsakdjsadksa\ndsa\ndsa\ndsajdksajdkjsdkskjdsakjs... (22100)"; SQL statement:
+insert into posts (id, counter_clapping, counter_ns, counter_ttd, counter_wow, creator_login, date_of_addition, habitid, img_name, post_text, post_type) values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-193]
+2019-05-28 09:34:43 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "POST_TEXT VARCHAR(255)": "STRINGDECODE('skjdsakjsdsadsadksjdksajd\nsakjdksajdsajdkasjdksajd\nsadsakjdsajkdjsakdjsadksa\ndsa\ndsa\ndsajdksajdkjsdkskjdsakjs... (22100)"; SQL statement:
+insert into posts (id, counter_clapping, counter_ns, counter_ttd, counter_wow, creator_login, date_of_addition, habitid, img_name, post_text, post_type) values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-193]
+2019-05-28 09:34:44 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "POST_TEXT VARCHAR(255)": "STRINGDECODE('skjdsakjsdsadsadksjdksajd\nsakjdksajdsajdkasjdksajd\nsadsakjdsajkdjsakdjsadksa\ndsa\ndsa\ndsajdksajdkjsdkskjdsakjs... (22100)"; SQL statement:
+insert into posts (id, counter_clapping, counter_ns, counter_ttd, counter_wow, creator_login, date_of_addition, habitid, img_name, post_text, post_type) values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-193]
+2019-05-28 09:34:44 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "POST_TEXT VARCHAR(255)": "STRINGDECODE('skjdsakjsdsadsadksjdksajd\nsakjdksajdsajdkasjdksajd\nsadsakjdsajkdjsakdjsadksa\ndsa\ndsa\ndsajdksajdkjsdkskjdsakjs... (22100)"; SQL statement:
+insert into posts (id, counter_clapping, counter_ns, counter_ttd, counter_wow, creator_login, date_of_addition, habitid, img_name, post_text, post_type) values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-193]
+2019-05-28 09:34:44 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "POST_TEXT VARCHAR(255)": "STRINGDECODE('skjdsakjsdsadsadksjdksajd\nsakjdksajdsajdkasjdksajd\nsadsakjdsajkdjsakdjsadksa\ndsa\ndsa\ndsajdksajdkjsdkskjdsakjs... (22100)"; SQL statement:
+insert into posts (id, counter_clapping, counter_ns, counter_ttd, counter_wow, creator_login, date_of_addition, habitid, img_name, post_text, post_type) values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-193]
+2019-05-28 09:34:44 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "POST_TEXT VARCHAR(255)": "STRINGDECODE('skjdsakjsdsadsadksjdksajd\nsakjdksajdsajdkasjdksajd\nsadsakjdsajkdjsakdjsadksa\ndsa\ndsa\ndsajdksajdkjsdkskjdsakjs... (22100)"; SQL statement:
+insert into posts (id, counter_clapping, counter_ns, counter_ttd, counter_wow, creator_login, date_of_addition, habitid, img_name, post_text, post_type) values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-193]
+2019-05-28 09:34:45 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "POST_TEXT VARCHAR(255)": "STRINGDECODE('skjdsakjsdsadsadksjdksajd\nsakjdksajdsajdkasjdksajd\nsadsakjdsajkdjsakdjsadksa\ndsa\ndsa\ndsajdksajdkjsdkskjdsakjs... (22100)"; SQL statement:
+insert into posts (id, counter_clapping, counter_ns, counter_ttd, counter_wow, creator_login, date_of_addition, habitid, img_name, post_text, post_type) values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-193]
+2019-05-28 09:34:45 jdbc[11]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "POST_TEXT VARCHAR(255)": "STRINGDECODE('skjdsakjsdsadsadksjdksajd\nsakjdksajdsajdkasjdksajd\nsadsakjdsajkdjsakdjsadksa\ndsa\ndsa\ndsajdksajdkjsdkskjdsakjs... (22100)"; SQL statement:
+insert into posts (id, counter_clapping, counter_ns, counter_ttd, counter_wow, creator_login, date_of_addition, habitid, img_name, post_text, post_type) values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-193]
+2019-05-28 09:34:45 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "POST_TEXT VARCHAR(255)": "STRINGDECODE('skjdsakjsdsadsadksjdksajd\nsakjdksajdsajdkasjdksajd\nsadsakjdsajkdjsakdjsadksa\ndsa\ndsa\ndsajdksajdkjsdkskjdsakjs... (22100)"; SQL statement:
+insert into posts (id, counter_clapping, counter_ns, counter_ttd, counter_wow, creator_login, date_of_addition, habitid, img_name, post_text, post_type) values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-193]
+2019-05-28 09:34:46 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "POST_TEXT VARCHAR(255)": "STRINGDECODE('skjdsakjsdsadsadksjdksajd\nsakjdksajdsajdkasjdksajd\nsadsakjdsajkdjsakdjsadksa\ndsa\ndsa\ndsajdksajdkjsdkskjdsakjs... (22100)"; SQL statement:
+insert into posts (id, counter_clapping, counter_ns, counter_ttd, counter_wow, creator_login, date_of_addition, habitid, img_name, post_text, post_type) values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-193]
+2019-05-28 09:34:46 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "POST_TEXT VARCHAR(255)": "STRINGDECODE('skjdsakjsdsadsadksjdksajd\nsakjdksajdsajdkasjdksajd\nsadsakjdsajkdjsakdjsadksa\ndsa\ndsa\ndsajdksajdkjsdkskjdsakjs... (22100)"; SQL statement:
+insert into posts (id, counter_clapping, counter_ns, counter_ttd, counter_wow, creator_login, date_of_addition, habitid, img_name, post_text, post_type) values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-193]
+2019-05-28 09:34:46 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "POST_TEXT VARCHAR(255)": "STRINGDECODE('skjdsakjsdsadsadksjdksajd\nsakjdksajdsajdkasjdksajd\nsadsakjdsajkdjsakdjsadksa\ndsa\ndsa\ndsajdksajdkjsdkskjdsakjs... (22100)"; SQL statement:
+insert into posts (id, counter_clapping, counter_ns, counter_ttd, counter_wow, creator_login, date_of_addition, habitid, img_name, post_text, post_type) values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-193]

@@ -15,6 +15,8 @@ class Posts extends Component {
     }
 
     handlePostCardDeleted = id => {
+        console.log(this.props.habitID)
+        console.log(`delete post ${id}`)
         axios.delete(`/api/posts/delete/{id}`, {
             data: {
                 "habitID": this.props.habitID,

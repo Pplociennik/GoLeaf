@@ -176,7 +176,6 @@ class PostCard extends Component {
                         </div>
                     </div>
                     {!this.state.showComments ? <button className="show-comments-btn" onClick={() => this.showComments()}>Show comments</button> : <button className="show-comments-btn" onClick={() => this.setState({ showComments: false })}>Hide comments</button>}
-                    { /* <AddComment userLogged={this.props.userLogged} id={this.props.id} /> */}
                 </div>
                 {this.state.showComments ?
                     <div className="comments-con">
@@ -195,7 +194,8 @@ class PostCard extends Component {
 
                 {this.props.currentUserLogin === this.props.creatorLogin ?
                     <Dropdown trigger={<a href="#!" className='post-card-more-btn dropdown-trigger' data-target={this.props.id}><img src={MoreIcon}></img></a>}>
-                        <a className="dropdown-item delete-post" href="#!" onClick={() => this.props.handlePostCardDeleted(this.props.id)}>Delete</a>
+                        <a className="dropdown-item dropdown-edit" href="#!" >Edit</a>
+                        <a className="dropdown-item dropdown-delete" href="#!" onClick={() => this.props.handlePostCardDeleted(this.props.id)}>Delete</a>
                     </Dropdown>
                     : null}
             </div>
