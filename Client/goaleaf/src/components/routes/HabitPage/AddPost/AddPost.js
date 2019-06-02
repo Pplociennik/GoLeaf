@@ -3,7 +3,7 @@ import './AddPost.scss'
 import axios from 'axios';
 import { connect } from 'react-redux';
 import PhotoIcon from './../../../../assets/photo-icon.png';
-import {addPost} from './../../../../index'
+import {addPost} from '../../../../js/state';
 class AddPost extends Component {
 
   state = {

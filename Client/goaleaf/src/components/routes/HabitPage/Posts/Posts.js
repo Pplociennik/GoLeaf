@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import PostCard from './PostCard'
 import './Posts.scss'
-import {fetchPosts} from './../../../../index'
-import {deletePost} from './../../../../index'
+import {fetchPosts} from '../../../../js/state'
+import {deletePost} from '../../../../js/state'
 
 class Posts extends Component {
 

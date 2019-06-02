@@ -1,6 +1,4 @@
 import React from 'react'
-import { changeDateFormat1 } from './../../../../functions'
-import axios from 'axios'
 import TempPic from './../../../../assets/default-profile-pic.png'
 
 function MemberCard(props) {

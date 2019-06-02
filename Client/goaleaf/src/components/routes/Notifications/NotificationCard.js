@@ -1,5 +1,5 @@
 import React from 'react'
-import { changeDateFormat1 } from './../../../functions.js'
+import { changeDateFormat1 } from '../../../js/helpers'
 
 function NotificationCard(props) {
 
