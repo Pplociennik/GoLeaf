@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import TempPic from './../../../../../assets/default-profile-pic.png'
-import { changeDateFormat1 } from './../../../../../functions'
+import { changeDateFormat1 } from '../../../../../js/helpers'
 import { Dropdown } from 'react-materialize'
 import MoreIcon from './../../../../../assets/more.png'
 

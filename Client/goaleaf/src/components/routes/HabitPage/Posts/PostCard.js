@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { changeDateFormat1 } from './../../../../functions'
+import { changeDateFormat1 } from '../../../../js/helpers'
 import './PostCard.scss'
 import TempPic from './../../../../assets/default-profile-pic.png'
 import { Dropdown } from 'react-materialize'

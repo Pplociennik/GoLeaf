@@ -1,6 +1,6 @@
 import React from 'react'
 import './HabitCard.scss'
-import {changeDateFormat} from './../../../functions.js'
+import {changeDateFormat} from '../../../js/helpers'
 
 function HabitCard(props) {
 

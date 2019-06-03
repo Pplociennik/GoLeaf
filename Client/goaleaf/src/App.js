@@ -5,24 +5,30 @@ import Navbar from './components/containers/Navbar/Navbar';
 import Main from './components/containers/Main/Main';
 import Loader from './components/routes/Loader/Loader'
 import { BrowserRouter } from 'react-router-dom';
-import {fetchHabits} from './index';
-import {fetchUsers} from './index';
-import {fetchMembers} from './index';
-import {isLoaded} from './index';
-import store from './index'
+import {fetchHabits} from './js/state';
+import {fetchUsers} from './js/state';
+import {fetchMembers} from './js/state';
+import {isLoaded} from './js/state';
 import { connect } from 'react-redux'
+import axios from 'axios';
 
 class App extends Component {
 
   componentDidMount() {
+
+    axios.post('/validatetoken', {
+      "Token": localStorage.getItem('token')
+    }).then(res => { this.props.validateUser() }
+     ).catch(err => { this.props.invalidateUser()})
+
+     // TEMPORARY CALLS
     Promise.all([
-    store.dispatch(fetchHabits()),
-    store.dispatch(fetchMembers()),
-    store.dispatch(fetchUsers())
-    ]).then(() => store.dispatch(isLoaded()))
+    this.props.fetchHabits(),
+    this.props.fetchMembers(),
+    this.props.fetchUsers(),
+    ]).then(() => this.props.isLoaded() )
   }
   render() {
-
     if(this.props.isLoading){
       return(
         <BrowserRouter>
@@ -34,6 +40,7 @@ class App extends Component {
       )
     }
 
+    // TEMPORARY ACTION, WILL CHANGE THAT AFTER SERVER CHANGES
     this.props.habits.forEach(habit => {
       habit.members = [];
       habit.owner = this.props.users.find(user => habit.creatorID === user.id)
@@ -46,8 +53,6 @@ class App extends Component {
         }
       })
     })
-
-
     this.props.habits.forEach(habit => {
       habit.membersObj = [];
       habit.members.forEach(memberId => habit.membersObj.push(this.props.users.find(user => memberId === user.id)
@@ -74,4 +79,14 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, null)(App);
+const mapDispatchToProps = dispatch => ({
+  validateUser: () => dispatch({ type: 'VALIDATE_USER', token: localStorage.getItem('token')}),
+  invalidateUser: () => dispatch({ type: 'INVALIDATE_USER' }),
+  fetchHabits: () => dispatch(fetchHabits()),
+  fetchMembers: () => dispatch(fetchMembers()),
+  fetchUsers: () => dispatch(fetchUsers()),
+  isLoaded: () => dispatch(isLoaded())
+
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
