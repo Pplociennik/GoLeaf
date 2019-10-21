@@ -38,7 +38,7 @@ class AddPost extends Component {
             <div className="col s10 m8 offset-s1 offset-m2">
                 <ul className="tabs">
                     <li className="post-tab tab col s6 l4 offset-l1"><a className="active" href="#post">Post</a></li>
-                    <li className="achievement-tab tab col s6 l4 offset-s1 offset-l2"><a  href="#achievement">Achievement</a></li>
+                    <li className="achievement-tab tab col s6 l4 offset-s1 offset-l2"><a  href="#achievement">Task</a></li>
                 </ul>
             </div>
             <div id="post" className="col s10 offset-s1 m8 offset-m2">
@@ -59,21 +59,7 @@ class AddPost extends Component {
                 </form>
             </div>
             <div id="achievement" className="col s10 offset-s1 m8 offset-m2">
-                <form className="" onSubmit={ this.handleAddPost }>
-                    <div className="">
-                        <div className="input-field">
-                            <textarea id="postText" className="materialize-textarea" placeholder="what have you achieved?" onChange={ this.handleChange }></textarea>
-                        </div>
-                    </div>
-                    <div className="add-post-buttons-con">
-                        <div className="add-post-left-buttons">
-                            <img src={ PhotoIcon } alt="add image"></img>
-                        </div>
-                        <div>
-                            <button className="add-post-btn btn" type="submit">Post</button>
-                        </div>
-                    </div>
-                </form>
+
             </div>
 
         </div>

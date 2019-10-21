@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom'
 import './HabitPage.scss'
 import InviteMember from './InviteMember/InviteMember'
+import AddTask from './AddTask/AddTask'
 import AddPost from './AddPost/AddPost'
 import { changeDateFormat1 } from '../../../js/helpers'
 import Posts from './Posts/Posts'
@@ -95,6 +96,7 @@ class HabitPage extends Component {
                         <div className="habit-page-navigation">
                             <InviteMember habitID={habit.id} />
                             <Members habitID={habit.id}/>
+                            <AddTask habitID={habit.id}/>
                         </div>
                     </section> : null}
                     <section className="habit-page-dashboard">
