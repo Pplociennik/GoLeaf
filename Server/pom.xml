@@ -329,7 +329,6 @@
                 <value.hibernate.hbm2ddl.auto>create</value.hibernate.hbm2ddl.auto>
                 <value.database.driver></value.database.driver>
                 <value.database.platform></value.database.platform>
-
             </properties>
             <activation>
                 <property>
