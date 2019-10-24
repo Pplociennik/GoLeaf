@@ -11,6 +11,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.List;
 
 import static com.goaleaf.security.SecurityConstants.SECRET;
 
+@Service
 public class TaskServiceImpl implements TaskService {
 
     @Autowired

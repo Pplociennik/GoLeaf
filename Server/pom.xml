@@ -198,7 +198,7 @@
                 <configuration>
                     <schemaVersion>V2</schemaVersion>
                     <resourceGroup>Goaleaf</resourceGroup>
-                    <appName>goaleaf-api</appName>
+                    <appName>glf-api</appName>
                     <pricingTier>F1</pricingTier>
                     <region>westeurope</region>
                     <runtime>

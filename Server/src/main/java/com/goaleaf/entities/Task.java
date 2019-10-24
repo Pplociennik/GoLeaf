@@ -1,12 +1,12 @@
 package com.goaleaf.entities;
 
-import org.springframework.data.annotation.Id;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
+        property = "refId", scope = Task.class)
 @Entity
 @Table(name = "Tasks")
 public class Task {
