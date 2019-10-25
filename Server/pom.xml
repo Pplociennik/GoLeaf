@@ -326,7 +326,7 @@
             <id>offlineMode</id>
             <properties>
                 <value.spring.datasource.url>jdbc:h2:file:./bazaDanych</value.spring.datasource.url>
-                <value.hibernate.hbm2ddl.auto>create</value.hibernate.hbm2ddl.auto>
+                <value.hibernate.hbm2ddl.auto>update</value.hibernate.hbm2ddl.auto>
                 <value.database.driver></value.database.driver>
                 <value.database.platform></value.database.platform>
             </properties>
