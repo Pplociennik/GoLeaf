@@ -30,7 +30,7 @@ class Tasks extends Component {
         tasks.forEach(task => {
 
             foundTasks = true;
-            taskCards.push(<TaskCard key={task.id} description={task.description} points={task.points} />)
+            taskCards.push(<TaskCard key={task.id} id={task.id} description={task.description} points={task.points} habitID={this.props.habitID}/>)
 
         })
 

@@ -17,8 +17,21 @@ class CompleteTask extends Component {
     }
 
     completeTask = (e, id) => {
-
-        ////TODO////
+        e.preventDefault();
+        console.log(this.state.taskComment)
+        console.log(this.props.habitID)
+        console.log(id)
+        console.log(localStorage.getItem("token"))
+        axios.post('/api/tasks/complete', {
+            "comment": this.state.taskComment,
+            "habitID": this.props.habitID,
+            "taskID": id,
+            "token": localStorage.getItem("token")
+        })
+        .then(res => {
+            window.location.reload();
+        }
+        ).catch(err => console.log(err.response.data.message))
 
     }
 
@@ -39,7 +52,7 @@ class CompleteTask extends Component {
                     }}
                 >
                     <div>
-                        <form onSubmit={(e) => this.completeTask(e, this.props.id)}>
+                        <form onSubmit={e => this.completeTask(e, this.props.id)}>
                             <h4>{this.props.description}</h4>
                             <h3>{this.props.points}</h3>
                             <input id="taskComment" type="text" placeholder="Add a comment" autoComplete="off" onChange={this.handleChange} />

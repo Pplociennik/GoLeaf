@@ -11,6 +11,7 @@ import Posts from './Posts/Posts'
 import Tasks from './Tasks/Tasks'
 import Members from './Members/Members'
 import Loader from './../Loader/Loader'
+import Leaderboard from './Leaderboard/Leaderboard'
 
 class HabitPage extends Component {
 
@@ -98,6 +99,7 @@ class HabitPage extends Component {
                             <InviteMember habitID={habit.id} />
                             <Members habitID={habit.id}/>
                             <AddTask habitID={habit.id}/>
+                            <Leaderboard habitID={habit.id}/>
                         </div>
                     </section> : null}
                     <section className="habit-page-dashboard">

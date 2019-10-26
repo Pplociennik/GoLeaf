@@ -14,10 +14,6 @@ class AddTask extends Component {
 
   addTask = (e, id) => {
     e.preventDefault();
-    console.log(this.state.task)
-    console.log(id)
-    console.log(this.state.taskPoints)
-    console.log(localStorage.getItem("token"))
 
     axios.post('/api/tasks/add', {
         "description": this.state.task,

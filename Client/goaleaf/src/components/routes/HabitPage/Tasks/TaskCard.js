@@ -7,7 +7,7 @@ function TaskCard(props) {
             <li className="collection-item">
                 <span className="member-login">{props.description}</span>
                 <span className="member-login">{props.points}</span>
-                <CompleteTask id={props.id} description={props.description} points={props.points}/>
+                <CompleteTask id={props.id} description={props.description} points={props.points} habitID={props.habitID}/>
             </li>
         )
 
