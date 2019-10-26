@@ -2,13 +2,13 @@ package com.goaleaf.entities.DTO;
 
 public class TaskDTO {
 
-    private String token;
+    public String token;
 
-    private Integer habitID;
+    public Integer habitID;
 
-    private String description;
+    public String description;
 
-    private Integer points;
+    public Integer points;
 
 
     public TaskDTO(String token, Integer habitID, String description, Integer points) {

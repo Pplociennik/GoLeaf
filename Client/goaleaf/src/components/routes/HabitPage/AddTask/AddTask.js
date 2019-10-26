@@ -14,9 +14,21 @@ class AddTask extends Component {
 
   addTask = (e, id) => {
     e.preventDefault();
+    console.log(this.state.task)
+    console.log(id)
+    console.log(this.state.taskPoints)
+    console.log(localStorage.getItem("token"))
 
-    // TODO
-    // Post method to add task to the group
+    axios.post('/api/tasks/add', {
+        "description": this.state.task,
+        "habitID": id,
+        "points": this.state.taskPoints,
+        "token": localStorage.getItem("token")
+    })
+    .then(res => {
+        window.location.reload();
+    }
+    ).catch(err => console.log(err.response.data.message))
 
     }
 
