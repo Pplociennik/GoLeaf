@@ -24,6 +24,9 @@ public class Task {
     private Integer points;
 
 
+    public Task() {
+    }
+
     public Task(Integer creatorID, Integer habitID, String description, Integer points) {
         this.creatorID = creatorID;
         this.habitID = habitID;
