@@ -18,7 +18,6 @@ class Tasks extends Component {
                     tasks: res.data
                 })
             }).catch(err => console.log(err.response.data.message))
-
     }
 
     render() {

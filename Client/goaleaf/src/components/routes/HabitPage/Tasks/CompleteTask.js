@@ -19,7 +19,7 @@ class CompleteTask extends Component {
     completeTask = (e, id) => {
 
         ////TODO////
-        
+
     }
 
     render() {
@@ -43,7 +43,7 @@ class CompleteTask extends Component {
                             <h4>{this.props.description}</h4>
                             <h3>{this.props.points}</h3>
                             <input id="taskComment" type="text" placeholder="Add a comment" autoComplete="off" onChange={this.handleChange} />
-                            <button className="btn" type="submit" value="Complete task"></button>
+                            <button className="btn" type="submit" value="Complete task">Complete task</button>
                         </form>
                     </div>
                 </Popup>
