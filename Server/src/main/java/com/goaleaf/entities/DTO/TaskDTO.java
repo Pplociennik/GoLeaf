@@ -2,14 +2,16 @@ package com.goaleaf.entities.DTO;
 
 public class TaskDTO {
 
-    public String token;
+    private String token;
 
-    public Integer habitID;
+    private Integer habitID;
 
-    public String description;
+    private String description;
 
-    public Integer points;
+    private Integer points;
 
+    public TaskDTO() {
+    }
 
     public TaskDTO(String token, Integer habitID, String description, Integer points) {
         this.token = token;
