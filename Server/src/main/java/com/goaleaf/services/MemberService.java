@@ -5,6 +5,8 @@ import com.goaleaf.entities.Member;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
+
 @Service
 public interface MemberService {
 
@@ -23,4 +25,6 @@ public interface MemberService {
     void removeSpecifiedMember(Integer habitID, Integer userID);
 
     Member findSpecifiedMember(Integer habitID, Integer userID);
+
+    Map<Integer, Member> getRank();
 }

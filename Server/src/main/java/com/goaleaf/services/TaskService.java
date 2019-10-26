@@ -1,8 +1,11 @@
 package com.goaleaf.services;
 
+import com.goaleaf.entities.DTO.CompleteTaskDTO;
+import com.goaleaf.entities.DTO.PostDTO;
 import com.goaleaf.entities.DTO.TaskDTO;
 import com.goaleaf.entities.Task;
 import com.goaleaf.entities.viewModels.TaskViewModel;
+import com.goaleaf.entities.viewModels.habitsManaging.postsCreating.NewPostViewModel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,5 +26,7 @@ public interface TaskService {
     TaskViewModel saveTask(TaskDTO newTask);
 
     TaskViewModel getTaskByID(Integer taskID);
+
+    PostDTO completeTask(CompleteTaskDTO cmp);
 
 }

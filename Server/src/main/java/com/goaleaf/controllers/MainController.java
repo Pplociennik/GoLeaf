@@ -4,6 +4,7 @@ import com.goaleaf.entities.DTO.TaskDTO;
 import com.goaleaf.entities.Habit;
 import com.goaleaf.entities.User;
 import com.goaleaf.entities.enums.Category;
+import com.goaleaf.services.HabitService;
 import com.goaleaf.services.TaskService;
 import com.goaleaf.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class MainController {
     private UserService userService;
     @Autowired
     private TaskService taskService;
+    @Autowired
+    private HabitService habitService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String generateModel() {
@@ -34,6 +37,8 @@ public class MainController {
         habit.setCategory(Category.DIET);
         habit.setHabitTitle("Potrawka Snafa");
         habit.setPrivate(false);
+        habitService.saveHabit(habit);
+
 
         TaskDTO taskDTO = new TaskDTO("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiTG9naW4iOiJQc3plbWtvIiwiZXhwIjoxNTcyMTc2NTE1fQ.eByT27fDnGkAdMsUUswRTjF9NBqrvqDttd_W8h6-HrX6cFDu0mLgyWunMpG3GUQi0nbH8KWQRDI1hTTlyep4pQ"
         , 1, "Bieda jedzonko z kolonii", 5);

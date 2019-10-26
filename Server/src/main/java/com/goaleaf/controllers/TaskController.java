@@ -1,7 +1,9 @@
 package com.goaleaf.controllers;
 
+import com.goaleaf.entities.DTO.CompleteTaskDTO;
 import com.goaleaf.entities.DTO.TaskDTO;
 import com.goaleaf.entities.viewModels.TaskViewModel;
+import com.goaleaf.entities.viewModels.habitsManaging.postsCreating.NewPostViewModel;
 import com.goaleaf.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +53,11 @@ public class TaskController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public TaskViewModel addTask(@RequestBody TaskDTO newTaskDTO) {
         return taskService.saveTask(newTaskDTO);
+    }
+
+    @RequestMapping(value = "/complete", method = RequestMethod.POST)
+    public NewPostViewModel completeTask(@RequestBody CompleteTaskDTO cmp) {
+        return taskService.completeTask(cmp);
     }
 
 }

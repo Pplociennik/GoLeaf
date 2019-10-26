@@ -19,7 +19,6 @@ import com.goaleaf.validators.exceptions.habitsCreating.NoFrequencyException;
 import com.goaleaf.validators.exceptions.habitsCreating.NoPrivacyException;
 import com.goaleaf.validators.exceptions.habitsCreating.WrongTitleException;
 import com.goaleaf.validators.exceptions.habitsProcessing.*;
-import com.goaleaf.validators.exceptions.habitsProcessing.postsProcessing.UserNotAllowedException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,7 @@ import javax.annotation.security.PermitAll;
 import javax.mail.MessagingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.Map;
 
 import static com.goaleaf.security.SecurityConstants.SECRET;
 
@@ -211,9 +211,15 @@ public class HabitController {
         newMember.setUserID(model.userID);
         newMember.setImgName(tempUser.getImageName());
         newMember.setUserLogin(tempUser.getLogin());
+        newMember.setPoints(0);
 
         memberService.saveMember(newMember);
         return HttpStatus.OK;
+    }
+
+    @RequestMapping(value = "/rank", method = RequestMethod.GET)
+    public Map<Integer, Member> getHabitMembersRank() {
+        return habitService.getRank();
     }
 
 }

@@ -1,11 +1,15 @@
 package com.goaleaf.services.servicesImpl;
 
+import com.goaleaf.entities.DTO.CompleteTaskDTO;
+import com.goaleaf.entities.DTO.PostDTO;
 import com.goaleaf.entities.DTO.TaskDTO;
+import com.goaleaf.entities.Member;
+import com.goaleaf.entities.Post;
 import com.goaleaf.entities.Task;
 import com.goaleaf.entities.User;
+import com.goaleaf.entities.enums.PostTypes;
 import com.goaleaf.entities.viewModels.TaskViewModel;
-import com.goaleaf.repositories.TaskRepository;
-import com.goaleaf.repositories.UserRepository;
+import com.goaleaf.repositories.*;
 import com.goaleaf.services.TaskService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -15,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.goaleaf.security.SecurityConstants.SECRET;
@@ -27,6 +32,15 @@ public class TaskServiceImpl implements TaskService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private HabitRepository habitRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
+
+    @Autowired
+    private PostRepository postRepository;
 
 
     @Override
@@ -86,12 +100,41 @@ public class TaskServiceImpl implements TaskService {
                 .setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8))
                 .parseClaimsJws(newTask.getToken()).getBody();
 
-        Task newT = new Task(Integer.parseInt(claims.getSubject()), newTask.getHabitID(), newTask.getDescription(), newTask.getPoints());
+        Task newT = new Task(Integer.parseInt(claims.getSubject()), newTask.getHabitID(), newTask.getDescription(), newTask.getPoints(), false);
 
         Task returned = taskRepository.save(newT);
 
         return convertToViewModel(returned);
 
+    }
+
+    @Override
+    public PostDTO completeTask(CompleteTaskDTO cmp) {
+
+        Claims claims = Jwts.parser()
+                .setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8))
+                .parseClaimsJws(cmp.getToken()).getBody();
+
+        User user = userRepository.findById(Integer.parseInt(claims.getSubject()));
+        Task task = taskRepository.getById(cmp.getTaskID());
+        Member member = memberRepository.findByHabitIDAndUserID(cmp.getHabitID(), user.getId());
+
+        member.addPoints(task.getPoints());
+        memberRepository.save(member);
+
+        task.setCompleted(true);
+        taskRepository.save(task);
+
+        Post newPost = new Post();
+        newPost.setPostType(PostTypes.Task);
+        newPost.setCreatorLogin(user.getLogin());
+        newPost.setDateOfAddition(new Date());
+        newPost.setHabitID(cmp.getHabitID());
+        newPost.setPostText("User " + user.getLogin() + " completed task: " + task.getDescription() + "!");
+        Post aS = postRepository.save(newPost);
+
+        PostDTO dto = new PostDTO(aS.getCreatorLogin(), aS.getPostText(), aS.getPostType(), aS.getDateOfAddition());
+        return dto;
     }
 
     @Override

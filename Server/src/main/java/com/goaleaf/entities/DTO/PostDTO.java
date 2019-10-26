@@ -6,13 +6,23 @@ import java.util.Date;
 
 public class PostDTO {
 
-    public Integer id;
+    private Integer id;
 
-    public String creator;
+    private String creator;
 
-    public String text;
+    private String text;
 
-    public PostTypes type;
+    private PostTypes type;
 
-    public Date dateOfAddition;
+    private Date dateOfAddition;
+
+    public PostDTO() {
+    }
+
+    public PostDTO(String creator, String text, PostTypes type, Date dateOfAddition) {
+        this.creator = creator;
+        this.text = text;
+        this.type = type;
+        this.dateOfAddition = dateOfAddition;
+    }
 }

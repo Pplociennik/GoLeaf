@@ -5,6 +5,9 @@ import com.goaleaf.repositories.MemberRepository;
 import com.goaleaf.services.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class MemberServiceImpl implements MemberService {
 
     @Autowired
@@ -45,6 +48,18 @@ public class MemberServiceImpl implements MemberService {
 
     public Member findSpecifiedMember(Integer habitID, Integer userID) {
         return memberRepository.findByHabitIDAndUserID(habitID, userID);
+    }
+
+    public Map<Integer, Member> getRank() {
+        Iterable<Member> data = memberRepository.getAllByHabitIDOrderByPointsDesc();
+        Map<Integer, Member> resultMap = new LinkedHashMap<>();
+        Integer i = 1;
+
+        for (Member m : data) {
+            resultMap.put(i, m);
+        }
+
+        return resultMap;
     }
 
 

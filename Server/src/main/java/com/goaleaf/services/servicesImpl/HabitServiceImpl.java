@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
 
 @Service
 public class HabitServiceImpl implements HabitService {
@@ -102,5 +99,10 @@ public class HabitServiceImpl implements HabitService {
     @Override
     public Iterable<Habit> findHabitsByCreatorID(Integer creatorID) {
         return habitRepository.findAllByCreatorID(creatorID);
+    }
+
+    @Override
+    public Iterable<Member> getRank() {
+        return memberService.getRank();
     }
 }

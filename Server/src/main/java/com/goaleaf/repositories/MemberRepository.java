@@ -22,4 +22,6 @@ public interface MemberRepository extends CrudRepository<Member, Integer> {
     void deleteByHabitIDAndUserID(Integer habitID, Integer userID);
 
     Member findByHabitIDAndUserID(Integer habitID, Integer userID);
+
+    Iterable<Member> getAllByHabitIDOrderByPointsDesc();
 }

@@ -23,15 +23,18 @@ public class Task {
 
     private Integer points;
 
+    private Boolean isCompleted;
+
 
     public Task() {
     }
 
-    public Task(Integer creatorID, Integer habitID, String description, Integer points) {
+    public Task(Integer creatorID, Integer habitID, String description, Integer points, Boolean isCompleted) {
         this.creatorID = creatorID;
         this.habitID = habitID;
         this.description = description;
         this.points = points;
+        this.isCompleted = isCompleted;
     }
 
     public Integer getId() {
@@ -68,5 +71,17 @@ public class Task {
 
     public void setPoints(Integer points) {
         this.points = points;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Boolean getCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(Boolean completed) {
+        isCompleted = completed;
     }
 }

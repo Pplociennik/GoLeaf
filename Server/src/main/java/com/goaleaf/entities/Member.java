@@ -1,8 +1,6 @@
 package com.goaleaf.entities;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "members")
@@ -23,6 +21,9 @@ public class Member {
 
     @Column
     private String imgName;
+
+    @Column
+    private Integer points;
 
 //    @Column
 //    @ManyToMany
@@ -96,5 +97,17 @@ public class Member {
 
     public void setImgName(String imgName) {
         this.imgName = imgName;
+    }
+
+    public Integer getPoints() {
+        return points;
+    }
+
+    public void setPoints(Integer points) {
+        this.points = points;
+    }
+
+    public void addPoints(Integer increaseNr) {
+        this.points += increaseNr;
     }
 }
