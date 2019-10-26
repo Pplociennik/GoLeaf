@@ -103,7 +103,7 @@ public class TaskServiceImpl implements TaskService {
         List resultList = new ArrayList<TaskViewModel>(0);
         for (Task t : input) {
             User u = userRepository.findById(t.getCreatorID());
-            TaskViewModel model = new TaskViewModel(u.getLogin(), t.getDescription(), t.getPoints());
+            TaskViewModel model = new TaskViewModel(t.getId(), u.getLogin(), t.getDescription(), t.getPoints());
             resultList.add(model);
         }
         Iterable<TaskViewModel> outputList = resultList;
@@ -112,6 +112,6 @@ public class TaskServiceImpl implements TaskService {
 
     TaskViewModel convertToViewModel(Task task) {
         User u = userRepository.findById(task.getCreatorID());
-        return new TaskViewModel(u.getLogin(), task.getDescription(), task.getPoints());
+        return new TaskViewModel(task.getId(), u.getLogin(), task.getDescription(), task.getPoints());
     }
 }
