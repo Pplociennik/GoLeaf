@@ -218,8 +218,8 @@ public class HabitController {
     }
 
     @RequestMapping(value = "/rank", method = RequestMethod.GET)
-    public Map<Integer, Member> getHabitMembersRank() {
-        return habitService.getRank();
+    public Map<Integer, Member> getHabitMembersRank(@RequestParam Integer habitID) {
+        return habitService.getRank(habitID);
     }
 
 }

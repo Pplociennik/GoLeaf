@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Map;
 
 @Service
 public class HabitServiceImpl implements HabitService {
@@ -102,7 +103,7 @@ public class HabitServiceImpl implements HabitService {
     }
 
     @Override
-    public Iterable<Member> getRank() {
-        return memberService.getRank();
+    public Map<Integer, Member> getRank(Integer habitID) {
+        return memberService.getRank(habitID);
     }
 }

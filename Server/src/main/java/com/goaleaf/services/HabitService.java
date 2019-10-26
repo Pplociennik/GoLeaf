@@ -35,5 +35,5 @@ public interface HabitService {
 
     Iterable<Habit> findHabitsByCreatorID(Integer creatorID);
 
-    Map<Integer, Member> getRank();
+    Map<Integer, Member> getRank(Integer habitID);
 }

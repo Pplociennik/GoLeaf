@@ -50,8 +50,8 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findByHabitIDAndUserID(habitID, userID);
     }
 
-    public Map<Integer, Member> getRank() {
-        Iterable<Member> data = memberRepository.getAllByHabitIDOrderByPointsDesc();
+    public Map<Integer, Member> getRank(Integer habitID) {
+        Iterable<Member> data = memberRepository.getAllByHabitIDOrderByPointsDesc(habitID);
         Map<Integer, Member> resultMap = new LinkedHashMap<>();
         Integer i = 1;
 
