@@ -8,6 +8,7 @@ import AddTask from './AddTask/AddTask'
 import AddPost from './AddPost/AddPost'
 import { changeDateFormat1 } from '../../../js/helpers'
 import Posts from './Posts/Posts'
+import Tasks from './Tasks/Tasks'
 import Members from './Members/Members'
 import Loader from './../Loader/Loader'
 
@@ -100,6 +101,7 @@ class HabitPage extends Component {
                         </div>
                     </section> : null}
                     <section className="habit-page-dashboard">
+                        {userIsMember ? <Tasks habitID={habit.id}/> : null}
                         {userIsMember ? <AddPost habitID = { habit.id } /> : null}
                         {userIsMember ? <Posts habitID={habit.id}/> : null}
                     </section>
