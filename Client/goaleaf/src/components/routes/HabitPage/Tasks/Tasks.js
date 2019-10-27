@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 import Popup from "reactjs-popup"
 import TaskCard from './TaskCard'
+import './TaskCard.scss';
 
 class Tasks extends Component {
 
@@ -42,8 +43,8 @@ class Tasks extends Component {
 
         if (localStorage.getItem('token')) {
             return (
-                    <div className="members-section row">
-                        <ul className="collection">
+                    <div className="row">
+                        <ul className="tasks">
                             {tasksToDisplay}
                         </ul>
                     </div>
