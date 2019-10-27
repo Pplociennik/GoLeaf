@@ -8,6 +8,8 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    text-transform: lowercase;
+    letter-spacing: 1px;
 
     i { margin-right: 10px }
 }

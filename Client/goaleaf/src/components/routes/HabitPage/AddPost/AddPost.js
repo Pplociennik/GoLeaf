@@ -4,6 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import PhotoIcon from './../../../../assets/photo-icon.png';
 import {addPost} from '../../../../js/state';
+import Tasks from '../Tasks/Tasks';
 class AddPost extends Component {
 
   state = {
@@ -59,7 +60,7 @@ class AddPost extends Component {
                 </form>
             </div>
             <div id="achievement" className="col s10 offset-s1 m8 offset-m2">
-
+                <Tasks habitID={this.props.habitID}/>
             </div>
 
         </div>

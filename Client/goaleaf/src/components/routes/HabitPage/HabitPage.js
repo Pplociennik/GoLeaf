@@ -67,7 +67,6 @@ class HabitPage extends Component {
     }
 
     render() {
-        console.log("HABIT RENDERED")
         let habit = this.props.habits.find(habit => habit.id === parseInt(this.props.match.params.id));
 
         let userIsMember;
@@ -76,23 +75,23 @@ class HabitPage extends Component {
             habit.members.find(member => member === this.props.userLogged) ? userIsMember = true : userIsMember = false;
             return (
                 <div className={`habit-page ${habit.category}-category`}>
-                    <section className="habit-page-header-con">
+                    <span className="habit-page-header-con">
                         <div className="habit-page-info-con">
                                 <div className="habit-page-text-con">
                                     <h1 className="habit-page-title">{habit.habitTitle}</h1>
                                     <div className="habit-page-info-blocks">
-                                        <div className="habit-page-info-block started-date"><i className="far fa-calendar-alt fa-xs"></i><span className="date-span"> {changeDateFormat1(habit.habitStartDate)}</span></div>
-                                        <div className="habit-page-info-block created-by"><i className="fas fa-user fa-xs"></i><span> {habit.owner.login}</span></div>
-                                        <div className="habit-page-info-block privacy"><i className={habit.private ? 'fas fa-lock fa-xs' : 'fa fa-lock-open fa-xs'}></i> <span> {habit.private ? 'Private' : 'Public'}</span></div>
-                                        <div className={`habit-page-info-block category-${habit.category}`}><i className="fas fa-dumbbell fa-sm"></i><span> {habit.category}</span></div>
-                                        <div className="habit-page-info-block members-number"><i className="fas fa-user-friends fa-sm"></i><span> {habit.members.length}</span></div>
+                                        <div className="habit-page-info-block started-date">📆<span className="date-span">  {changeDateFormat1(habit.habitStartDate)}</span></div>
+                                        <div className="habit-page-info-block created-by">🙍‍ <span> {habit.owner.login}</span></div>
+                                        <div className="habit-page-info-block privacy">🔒 <span> {habit.private ? 'Private' : 'Public'}</span></div>
+                                        <div className={`habit-page-info-block category-${habit.category}`}>🚩 <span> {habit.category}</span></div>
+                                        <div className="habit-page-info-block members-number">👭 <span> {habit.members.length}</span></div>
                                     </div>
                                 </div>
                                 <div className="habit-page-header-btn-con col s12 l4 center">
-                                    {userIsMember ? <button className="btn-floating btn-large habit-page-header-btn leave-habit-btn" onClick={() => this.leaveHabit(habit.id)}>Leave</button> : <button className="btn-floating btn-large pulse habit-page-header-btn join-habit-btn" onClick={() => this.joinHabit(habit.id)}>Join</button>}
+                                    {userIsMember ? <button className="btn-floating btn-large habit-page-header-btn leave-habit-btn" onClick={() => this.leaveHabit(habit.id)}>🏃‍♀️ leave</button> : <button className="btn-floating btn-large pulse habit-page-header-btn join-habit-btn" onClick={() => this.joinHabit(habit.id)}>🙋‍♂️ join</button>}
                                 </div>
                         </div>
-                    </section>
+                    </span>
                     {userIsMember ?
                     <section className="habit-page-navigation-con">
                         <div className="habit-page-navigation">
@@ -103,7 +102,6 @@ class HabitPage extends Component {
                         </div>
                     </section> : null}
                     <section className="habit-page-dashboard">
-                        {userIsMember ? <Tasks habitID={habit.id}/> : null}
                         {userIsMember ? <AddPost habitID = { habit.id } /> : null}
                         {userIsMember ? <Posts habitID={habit.id}/> : null}
                     </section>

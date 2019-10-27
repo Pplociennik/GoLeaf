@@ -52,7 +52,7 @@ class InviteMember extends Component {
     render() {
 
     return (
-        <Popup trigger={<button className="btn waves-effect waves-light invite-user-btn habit-page-navigation-btn" ><span>Invite user</span></button>} modal closeOnDocumentClick
+        <Popup trigger={<button className="btn waves-effect waves-light invite-user-btn habit-page-navigation-btn" ><span>🤼 Invite user</span></button>} modal closeOnDocumentClick
             onOpen={ this.clearMsg }
             contentStyle={{
                 maxWidth: '80%',

@@ -62,7 +62,7 @@ class AddTask extends Component {
     render() {
 
     return (
-        <Popup trigger={<button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" ><span>Add Task</span></button>} modal closeOnDocumentClick
+        <Popup trigger={<button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" ><span>🔥 Add Task</span></button>} modal closeOnDocumentClick
             onOpen={ this.clearMsg }
             contentStyle={{
                 maxWidth: '80%',

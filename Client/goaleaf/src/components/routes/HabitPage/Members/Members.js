@@ -71,7 +71,7 @@ class Members extends Component {
 
         if (localStorage.getItem('token')) {
             return (
-                <Popup trigger={<button className="btn waves-effect waves-light invite-user-btn habit-page-navigation-btn" ><span>Members</span></button>} modal closeOnDocumentClick
+                <Popup trigger={<button className="btn waves-effect waves-light invite-user-btn habit-page-navigation-btn" ><span>👬 Members</span></button>} modal closeOnDocumentClick
                     onOpen={this.clearSearch}
                     contentStyle={{
                         maxWidth: '80%',

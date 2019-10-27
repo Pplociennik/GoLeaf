@@ -44,7 +44,7 @@ class Leaderboard extends Component {
 
         if (localStorage.getItem('token')) {
             return (
-                <Popup trigger={<button className="btn waves-effect waves-light invite-user-btn habit-page-navigation-btn" ><span>Leaderboard</span></button>} modal closeOnDocumentClick
+                <Popup trigger={<button className="btn waves-effect waves-light invite-user-btn habit-page-navigation-btn" ><span>⚡ Leaderboard</span></button>} modal closeOnDocumentClick
                     contentStyle={{
                         maxWidth: '80%',
                         width: '500px',

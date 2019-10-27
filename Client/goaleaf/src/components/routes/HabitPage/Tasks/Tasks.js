@@ -43,7 +43,6 @@ class Tasks extends Component {
         if (localStorage.getItem('token')) {
             return (
                     <div className="members-section row">
-                        <h4>Tasks</h4>
                         <ul className="collection">
                             {tasksToDisplay}
                         </ul>
