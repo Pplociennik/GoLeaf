@@ -36,4 +36,23 @@ public class CompleteTaskDTO {
     public String getComment() {
         return comment;
     }
+
+    public void setHabitID(Integer habitID) {
+        this.habitID = habitID;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public void setTaskID(Integer taskID) {
+        this.taskID = taskID;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+
 }
+

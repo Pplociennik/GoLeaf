@@ -130,7 +130,8 @@ public class TaskServiceImpl implements TaskService {
         newPost.setCreatorLogin(user.getLogin());
         newPost.setDateOfAddition(new Date());
         newPost.setHabitID(cmp.getHabitID());
-        newPost.setPostText("User " + user.getLogin() + " completed task: " + task.getDescription() + "!");
+        newPost.setPostText("User " + user.getLogin() + " completed task: " + task.getDescription() + "!" + "" +
+                "\n\nComment:\n" + cmp.getComment());
         Post aS = postRepository.save(newPost);
 
         PostDTO dto = new PostDTO(aS.getCreatorLogin(), aS.getPostText(), aS.getPostType(), aS.getDateOfAddition());

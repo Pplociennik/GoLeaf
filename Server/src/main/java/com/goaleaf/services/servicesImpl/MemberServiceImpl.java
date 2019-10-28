@@ -57,6 +57,7 @@ public class MemberServiceImpl implements MemberService {
 
         for (Member m : data) {
             resultMap.put(i, m);
+            i++;
         }
 
         return resultMap;
