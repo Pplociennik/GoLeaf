@@ -48,6 +48,12 @@ public class Post {
     @Column
     private Date dateOfAddition;
 
+    @Column
+    private String userComment;
+
+    @Column
+    private Integer taskPoints;
+
 
     public Post() {
         this.counter_CLAPPING = 0;
@@ -142,5 +148,21 @@ public class Post {
 
     public void setPostText(String postText) {
         this.postText = postText;
+    }
+
+    public String getUserComment() {
+        return userComment;
+    }
+
+    public void setUserComment(String userComment) {
+        this.userComment = userComment;
+    }
+
+    public Integer getTaskPoints() {
+        return taskPoints;
+    }
+
+    public void setTaskPoints(Integer taskPoints) {
+        this.taskPoints = taskPoints;
     }
 }

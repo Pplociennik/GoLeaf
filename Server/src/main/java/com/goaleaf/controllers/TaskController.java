@@ -3,6 +3,7 @@ package com.goaleaf.controllers;
 import com.goaleaf.entities.DTO.CompleteTaskDTO;
 import com.goaleaf.entities.DTO.PostDTO;
 import com.goaleaf.entities.DTO.TaskDTO;
+import com.goaleaf.entities.Post;
 import com.goaleaf.entities.viewModels.TaskViewModel;
 import com.goaleaf.entities.viewModels.habitsManaging.postsCreating.NewPostViewModel;
 import com.goaleaf.services.TaskService;
@@ -57,7 +58,7 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/complete", method = RequestMethod.POST)
-    public PostDTO completeTask(@RequestBody CompleteTaskDTO cmp) {
+    public Post completeTask(@RequestBody CompleteTaskDTO cmp) {
         return taskService.completeTask(cmp);
     }
 

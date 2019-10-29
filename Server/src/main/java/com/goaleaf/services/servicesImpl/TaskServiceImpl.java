@@ -1,7 +1,6 @@
 package com.goaleaf.services.servicesImpl;
 
 import com.goaleaf.entities.DTO.CompleteTaskDTO;
-import com.goaleaf.entities.DTO.PostDTO;
 import com.goaleaf.entities.DTO.TaskDTO;
 import com.goaleaf.entities.Member;
 import com.goaleaf.entities.Post;
@@ -109,7 +108,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public PostDTO completeTask(CompleteTaskDTO cmp) {
+    public Post completeTask(CompleteTaskDTO cmp) {
 
         Claims claims = Jwts.parser()
                 .setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8))
@@ -130,12 +129,13 @@ public class TaskServiceImpl implements TaskService {
         newPost.setCreatorLogin(user.getLogin());
         newPost.setDateOfAddition(new Date());
         newPost.setHabitID(cmp.getHabitID());
-        newPost.setPostText("User " + user.getLogin() + " completed task: " + task.getDescription() + "!" + "" +
-                "\n\nComment:\n" + cmp.getComment());
+        newPost.setPostText("User " + user.getLogin() + " completed task: " + task.getDescription() + "!");
+        newPost.setUserComment(cmp.getComment());
+        newPost.setTaskPoints(task.getPoints());
         Post aS = postRepository.save(newPost);
 
-        PostDTO dto = new PostDTO(aS.getCreatorLogin(), aS.getPostText(), aS.getPostType(), aS.getDateOfAddition());
-        return dto;
+        //PostDTO dto = new PostDTO(aS.getCreatorLogin(), aS.getPostText(), aS.getPostType(), aS.getDateOfAddition());
+        return aS;
     }
 
     @Override
