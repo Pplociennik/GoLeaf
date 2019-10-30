@@ -133,7 +133,7 @@ public class HabitController {
         Notification ntf = new Notification();
         ntf.setDate(new Date());
         ntf.setRecipientID(searchingUser.getId());
-        ntf.setDescription(userService.findById(Integer.parseInt(claims.getSubject())).getLogin() + " invited you to habit " + habitService.findById(model.habitID).getHabitTitle() + "!");
+        ntf.setDescription(userService.findById(Integer.parseInt(claims.getSubject())).getLogin() + " invited you to group " + habitService.findById(model.habitID).getHabitTitle() + "!");
         ntf.setUrl((model.url.isEmpty() ? "EMPTY_URL" : model.url));
         notificationService.saveNotification(ntf);
 
