@@ -68,6 +68,7 @@ const rootReducer = (state = initState, action) => {
           }
 }
     if(action.type === 'ADD_POST'){
+        console.log(action.payload);
             return {
                 ...state,
                 posts: [action.payload, ...state.posts]

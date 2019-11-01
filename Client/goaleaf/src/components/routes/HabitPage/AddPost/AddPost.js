@@ -5,11 +5,20 @@ import { connect } from 'react-redux';
 import PhotoIcon from './../../../../assets/photo-icon.png';
 import {addPost} from '../../../../js/state';
 import Tasks from '../Tasks/Tasks';
+import Posts from '../Posts/Posts';
 class AddPost extends Component {
 
   state = {
-      postText: ''
+      postText: '',
+      showTasks: true
 
+  }
+
+  showTasks = e => {
+      this.setState({showTasks: true});
+  }
+  showPosts = e => {
+      this.setState({showTasks: false});
   }
 
   handleAddPost = e => {
@@ -38,8 +47,8 @@ class AddPost extends Component {
         <div className="add-post-con row">
             <div className="col s10 m8 offset-s1 offset-m2">
                 <ul className="tabs">
-                    <li className="post-tab tab col s6 l4 offset-l1"><a className="active" href="#post">Post</a></li>
-                    <li className="achievement-tab tab col s6 l4 offset-s1 offset-l2"><a  href="#achievement">Task</a></li>
+                    <li className="achievement-tab tab col s6 l4 offset-l1"><a className="active" href="#achievement" onClick={ this.showTasks }>tasks</a></li>
+                    <li className="post-tab tab col s6 l4 offset-s1 offset-l2"><a  href="#post" onClick={ this.showPosts }>discussion</a></li>
                 </ul>
             </div>
             <div id="post" className="col s10 offset-s1 m8 offset-m2">
@@ -60,9 +69,10 @@ class AddPost extends Component {
                 </form>
             </div>
             <div id="achievement" className="col s10 offset-s1 m8 offset-m2">
+                <h2 className="tasks-title">Complete task</h2>
                 <Tasks habitID={this.props.habitID}/>
             </div>
-
+            <Posts habitID={this.props.habitID} showTasks={this.state.showTasks}/>
         </div>
     )
   } 

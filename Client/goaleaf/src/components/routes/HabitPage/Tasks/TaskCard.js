@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 import Popup from "reactjs-popup"
 import './TaskCard.scss';
+import {addPost} from './../../../../js/state';
+import M from "materialize-css";
 
 class TaskCard extends Component {
 
@@ -26,10 +28,9 @@ class TaskCard extends Component {
             "token": localStorage.getItem("token")
         })
         .then(res => {
-            window.location.reload();
+            this.props.addPost(res.data);
         }
-        ).catch(err => console.log(err.response.data.message))
-
+        ).catch(err => console.log("Complete Task request failed"))
     }
 
     render() {
@@ -39,9 +40,12 @@ class TaskCard extends Component {
                 <Popup trigger={
 
                 <div className="task-card">
-                    <i className="task-icon">⚡</i>
-                    <span className="task-title">{this.props.description}</span>
-                    <span className="task-points">{this.props.points}</span>
+                    <a>⚡</a>
+                    <div className="task-text-con">
+                        <span className="task-title">{this.props.description}</span>
+                        <span className="task-points">+{this.props.points}</span>
+                    </div>
+                        
                 </div>
 
             } modal closeOnDocumentClick
@@ -57,14 +61,16 @@ class TaskCard extends Component {
                         background: "rgb(0,0,0, 0.4)"
                     }}
                 >
+                    {close => (
                     <div className="task-popup">
-                        <form className="task-popup-form" onSubmit={e => this.completeTask(e, this.props.id)}>
+                        <form className="task-popup-form" onSubmit={e => {this.completeTask(e, this.props.id); close()}}>
                             <span className="task-popup-title">{this.props.description}</span>
                             <span className="task-popup-points">🔥 {this.props.points} pts</span>
                             <input className="task-popup-input" id="taskComment" type="text" placeholder="Add a comment" autoComplete="off" onChange={this.handleChange} />
                             <button className="btn task-popup-btn" type="submit" value="Complete task">⚡ Task completed</button>
                         </form>
                     </div>
+                    )}
                 </Popup>
             )
         } else {
@@ -72,6 +78,10 @@ class TaskCard extends Component {
         }
     }
 }
+
+const mapDispatchToProps = dispatch => ({
+    addPost: post => dispatch(addPost(post))
+})
 
 const mapStateToProps = state => {
     return {
@@ -82,4 +92,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default withRouter(connect(mapStateToProps)(TaskCard));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TaskCard));

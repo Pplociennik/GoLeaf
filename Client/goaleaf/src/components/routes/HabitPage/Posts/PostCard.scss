@@ -1,7 +1,6 @@
 @import './../../../../global-styles.scss';
 
-.post-card {
-    background-color: $primary-color-light;
+.post-card, .post-task-card {
     margin-top: 3em;
     padding: 1.3em;
     border-radius: 30px;
@@ -16,7 +15,7 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            border: 3px solid $secondary-color;
+            border: 2px solid $text-color;
         }
         .post-card-owner-info {
             display: flex;
@@ -30,7 +29,7 @@
             }
             .post-card-date {
                 font-size: 0.8em;
-                color: lighten($text-color, 50%);
+                color: lighten($text-color, 30%);
             }
         }
     }
@@ -66,19 +65,12 @@
                     opacity: 0.4;
                 }
                 .reaction-counter {
-                    color: lighten($text-color, 40%);
+                    color: lighten($text-color, 20%);
                     margin-left: 3px;
                     font-size: 1.1em;
                 }
                 
             }
-        }
-        .show-comments-btn {
-            background-color: $primary-color-light;
-            color: $secondary-color;
-            border: none;
-            text-decoration: underline;
-            cursor: pointer;
         }
     }
 
@@ -132,7 +124,7 @@
                         font-size: 1.1em;
                     }
                     .comment-profile-date {
-                        color: lighten($text-color, 50%);
+                        color: lighten($text-color, 20%);
                         font-size: 0.9em;
                     }
                 }
@@ -173,4 +165,55 @@
     .dropdown-delete {
         color: #e41749;
     }
+}
+
+.post-card {
+    background-color: $primary-color-light;
+
+    .show-comments-btn {
+        background-color: $primary-color-light;
+        color: $secondary-color;
+        border: none;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
+
+.post-task-card {
+
+
+    background-color: #fff;
+    border: 3px solid #CAC531;
+
+    .post-task-content {
+        min-height: 100px;
+        padding: 1.6em;
+
+        .post-task-header {
+            letter-spacing: 1px;
+        }
+        .post-task-points {
+            margin-top: 8px;
+            font-size: 1.2em;
+        }
+
+        .post-task-text {
+            padding: 1em;
+            font-size: 1.8em;
+            line-height: 10px;
+        }
+    }
+    .add-comment-input::placeholder {
+        color: $text-color;
+    }
+
+    .show-comments-btn {
+        background-color: transparent;
+        color: $text-color;
+        border: none;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+
 }

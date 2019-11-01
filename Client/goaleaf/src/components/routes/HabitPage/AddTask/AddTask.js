@@ -12,20 +12,21 @@ class AddTask extends Component {
     taskPoints: 5
   }
 
-  addTask = (e, id) => {
-    e.preventDefault();
-
-    axios.post('/api/tasks/add', {
-        "description": this.state.task,
-        "habitID": id,
-        "points": this.state.taskPoints,
-        "token": localStorage.getItem("token")
-    })
-    .then(res => {
-        window.location.reload();
-    }
-    ).catch(err => console.log(err.response.data.message))
-
+    addTask = (e, id) => {
+        e.preventDefault();
+        console.log(this.state.task);
+        if (this.state.task !== null){
+            axios.post('/api/tasks/add', {
+                "description": this.state.task,
+                "habitID": id,
+                "points": this.state.taskPoints,
+                "token": localStorage.getItem("token")
+            })
+            .then(res => {
+                window.location.reload();
+            }
+            ).catch(err => console.log(err.response.data.message))
+        }   
     }
 
     addTaskPoint = e => {
@@ -62,7 +63,7 @@ class AddTask extends Component {
     render() {
 
     return (
-        <Popup trigger={<button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" ><span>🔥 Add Task</span></button>} modal closeOnDocumentClick
+        <Popup trigger={<button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" ><span>🔥 New Task</span></button>} modal closeOnDocumentClick
             onOpen={ this.clearMsg }
             contentStyle={{
                 maxWidth: '80%',

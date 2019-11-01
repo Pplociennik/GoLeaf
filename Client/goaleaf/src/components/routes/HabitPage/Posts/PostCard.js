@@ -100,7 +100,6 @@ class PostCard extends Component {
 
 
     componentDidMount() {
-        console.log(this.props.currentUserLogin)
         axios.get(`/api/posts/presentreaction?postID=${this.props.id}&userLogin=${this.props.currentUserLogin}`)
             .then(res => {
                 res ? this.setState({ userReaction: res.data.type.toUpperCase() })
@@ -144,8 +143,28 @@ class PostCard extends Component {
             finalCommentsToDisplay = commentsToDisplay;
         }
 
+        let postContent = '';
+        let postCommentBtn = '';
+        if(this.props.postType !== 'Task'){
+            if (!this.state.showComments){
+                postCommentBtn = <button className="show-comments-btn" onClick={() => this.showComments()}>Show comments</button>
+            } else {
+               postCommentBtn = <button className="show-comments-btn" onClick={() => this.setState({ showComments: false })}>Hide comments</button>
+            }
+            postContent = <div className="post-content">
+                             <p className="post-card-text">{this.props.postText}</p>
+                          </div>
+        } else {
+            postContent = <div className="post-task-content">
+                             <p className="post-task-header">🎈 Task completed 🎈</p>
+                             <p className="post-task-points">+{this.props.taskPoints} pts</p>
+                             <p className="post-task-text">{this.props.postText}</p>
+                             <p className="post-task-comment">{this.props.userComment}</p>
+                          </div>
+        }
+
         return (
-            <div className="post-card">
+            <div className={this.props.postType === 'Task' ? "post-task-card" : "post-card"}>
                 <div className="post-owner">
                     <img src={TempPic} alt="profile"></img>
                     <div className="post-card-owner-info">
@@ -153,9 +172,7 @@ class PostCard extends Component {
                         <span className="post-card-date">{changeDateFormat1(this.props.createdDate)}</span>
                     </div>
                 </div>
-                <div className="post-content">
-                    <p className="post-card-text">{this.props.postText}</p>
-                </div>
+                {postContent}
                 <div className="post-bottom-navigation">
                     <div className="post-reactions">
                         <div className="reaction">
@@ -175,7 +192,8 @@ class PostCard extends Component {
                             <span className="reaction-counter">{this.state.reactions.counter_TTD}</span>
                         </div>
                     </div>
-                    {!this.state.showComments ? <button className="show-comments-btn" onClick={() => this.showComments()}>Show comments</button> : <button className="show-comments-btn" onClick={() => this.setState({ showComments: false })}>Hide comments</button>}
+                    {postCommentBtn}
+                        
                 </div>
                 {this.state.showComments ?
                     <div className="comments-con">
@@ -184,7 +202,7 @@ class PostCard extends Component {
                         </ul>
                         <div className="add-comment-con row">
                             <form className="col s8 offset-s2" onSubmit={this.addComment}>
-                                <input id="comment" type="text" placeholder="add comment" autoComplete="off" value={this.state.comment} onChange={this.handleChange} />
+                                <input className="add-comment-input" id="comment" type="text" placeholder="add comment" autoComplete="off" value={this.state.comment} onChange={this.handleChange} />
                                 <input className="add-comment-btn btn center" type="submit" value="COMMENT" />
                             </form>
                         </div>

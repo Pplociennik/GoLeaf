@@ -38,7 +38,7 @@ class Tasks extends Component {
         let tasksToDisplay = taskCards;
 
         if (!foundTasks) {
-            tasksToDisplay = <div>There are no tasks yet</div>
+            tasksToDisplay = <li style={{display: 'flex', justifyContent: 'center', marginTop: '110px'}}>There are no tasks yet 🤷‍♂️</li>
         } 
 
         if (localStorage.getItem('token')) {
