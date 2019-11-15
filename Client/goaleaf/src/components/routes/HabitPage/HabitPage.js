@@ -6,6 +6,7 @@ import './HabitPage.scss'
 import InviteMember from './InviteMember/InviteMember'
 import AddTask from './AddTask/AddTask'
 import AddPost from './AddPost/AddPost'
+import AddPrize from './AddPrize/AddPrize'
 import { changeDateFormat1 } from '../../../js/helpers'
 import Posts from './Posts/Posts'
 import Tasks from './Tasks/Tasks'
@@ -98,6 +99,7 @@ class HabitPage extends Component {
                             <InviteMember habitID={habit.id} />
                             <Members habitID={habit.id}/>
                             <AddTask habitID={habit.id}/>
+                            <AddPrize habitID={habit.id}/>
                             <Leaderboard habitID={habit.id}/>
                         </div>
                     </section> : null}
