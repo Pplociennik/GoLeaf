@@ -61,14 +61,32 @@ class MyHabits extends Component {
 
     if (localStorage.getItem('token') && foundHabits) {
       return (
+        <div>
         <section className="my-habits">
-          <h1 className="my-habits-title" >My groups</h1>
+          <h1 className="my-habits-title" >My challenges</h1>
 
           <div className="habit-cards">
             {habitsToDisplay}
           </div>
           <button className={habitsToDisplay.length < habits.length ? 'my-habits-show-more-habits-btn' : 'my-habits-hide-show-more-habits-btn'} onClick={() => this.setState({ habitsToShow: this.state.habitsToShow + 20 })}>SHOW MORE</button>
         </section>
+        <section className="my-habits">
+          <h1 className="my-habits-title" >My ended challenges</h1>
+
+          <div className="habit-cards">
+            {/* {habitsToDisplay} */}
+          </div>
+          {/* <button className={habitsToDisplay.length < habits.length ? 'my-habits-show-more-habits-btn' : 'my-habits-hide-show-more-habits-btn'} onClick={() => this.setState({ habitsToShow: this.state.habitsToShow + 20 })}>SHOW MORE</button> */}
+        </section>
+        <section className="my-habits">
+          <h1 className="my-habits-title" >My winned challenges</h1>
+
+          <div className="habit-cards">
+            {/* {habitsToDisplay} */}
+          </div>
+          {/* <button className={habitsToDisplay.length < habits.length ? 'my-habits-show-more-habits-btn' : 'my-habits-hide-show-more-habits-btn'} onClick={() => this.setState({ habitsToShow: this.state.habitsToShow + 20 })}>SHOW MORE</button> */}
+        </section>
+        </div>
       )
     } else {
       return null
