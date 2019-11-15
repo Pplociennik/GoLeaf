@@ -53,7 +53,7 @@ class MyHabits extends Component {
 
 
     if (!foundHabits) {
-      habitsToDisplay = <div className="no-habits"> Join some groups to see them here</div>
+      habitsToDisplay = <div className="no-habits"> Join some challenges to see them here</div>
     }
 
     console.log(habitsToDisplay.length);
