@@ -1,13 +1,10 @@
 package com.goaleaf.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.goaleaf.entities.enums.Category;
 import com.goaleaf.entities.enums.Frequency;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "habits")

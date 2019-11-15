@@ -24,6 +24,7 @@ import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
@@ -84,7 +85,7 @@ public class HabitController {
         Habit resHabit = new Habit();
         resHabit = habitService.registerNewHabit(model, Integer.parseInt(claims.getSubject()));
 
-        if (!resHabit.getWinner().isEmpty() || resHabit.getWinner() != null) {
+        if (!StringUtils.isEmpty(resHabit.getWinner())) {
             habitDTO.isFinished = true;
             habitDTO.winner = resHabit.getWinner();
         } else {

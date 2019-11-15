@@ -31,7 +31,8 @@ public class HabitServiceImpl implements HabitService {
 
     @Override
     public Iterable<HabitDTO> listAllHabits() {
-        return convertManyToDTOs(habitRepository.findAll());
+        Iterable<Habit> input = habitRepository.findAll();
+        return convertManyToDTOs(input);
     }
 
     @Override
@@ -71,6 +72,9 @@ public class HabitServiceImpl implements HabitService {
         newHabit.setPrivate(model.isPrivate);
         newHabit.setCreatorID(creatorID);
         newHabit.setCreatorLogin(userService.findById(creatorID).getLogin());
+        newHabit.setFinished(false);
+        newHabit.setWinner("NONE");
+        newHabit.setPointsToWIn(0);
         newHabit.setFinished(false);
         newHabit = habitRepository.save(newHabit);
 
