@@ -1,5 +1,6 @@
 package com.goaleaf.services.servicesImpl;
 
+import com.goaleaf.entities.DTO.HabitDTO;
 import com.goaleaf.entities.Habit;
 import com.goaleaf.entities.Member;
 import com.goaleaf.entities.viewModels.habitsCreating.HabitViewModel;
@@ -12,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -27,8 +30,8 @@ public class HabitServiceImpl implements HabitService {
 
 
     @Override
-    public Iterable<Habit> listAllHabits() {
-        return habitRepository.findAll();
+    public Iterable<HabitDTO> listAllHabits() {
+        return convertManyToDTOs(habitRepository.findAll());
     }
 
     @Override
@@ -68,7 +71,7 @@ public class HabitServiceImpl implements HabitService {
         newHabit.setPrivate(model.isPrivate);
         newHabit.setCreatorID(creatorID);
         newHabit.setCreatorLogin(userService.findById(creatorID).getLogin());
-
+        newHabit.setFinished(false);
         newHabit = habitRepository.save(newHabit);
 
         Member creator = new Member();
@@ -89,8 +92,8 @@ public class HabitServiceImpl implements HabitService {
     }
 
     @Override
-    public Habit findById(Integer id) {
-        return habitRepository.findById(id);
+    public HabitDTO findById(Integer id) {
+        return convertToDTO(habitRepository.findById(id));
     }
 
     @Override
@@ -106,5 +109,52 @@ public class HabitServiceImpl implements HabitService {
     @Override
     public Map<Integer, Member> getRank(Integer habitID) {
         return memberService.getRank(habitID);
+    }
+
+    private HabitDTO convertToDTO(Habit entry) {
+
+        HabitDTO habitDTO = new HabitDTO();
+        habitDTO.category = entry.getCategory();
+        habitDTO.frequency = entry.getFrequency();
+//        habitDTO.members = model.members;
+        habitDTO.startDate = entry.getHabitStartDate();
+        habitDTO.isPrivate = entry.getPrivate();
+        habitDTO.title = entry.getHabitTitle();
+        habitDTO.creatorID = entry.getCreatorID();
+        habitDTO.pointsToWin = entry.getPointsToWIn();
+
+        if (!entry.getWinner().isEmpty() || entry.getWinner() != null) {
+            habitDTO.isFinished = true;
+            habitDTO.winner = entry.getWinner();
+        } else {
+            habitDTO.isFinished = false;
+            habitDTO.winner = "No one yet! :)";
+        }
+
+        return habitDTO;
+    }
+
+    private Iterable<HabitDTO> convertManyToDTOs(Iterable<Habit> habits) {
+        List<HabitDTO> resultList = new ArrayList<>(0);
+
+        for (Habit h : habits) {
+            HabitDTO dto = new HabitDTO();
+            dto = convertToDTO(h);
+            resultList.add(dto);
+        }
+
+        Iterable<HabitDTO> result = resultList;
+        return result;
+    }
+
+    @Override
+    public HabitDTO setPointsToWin(Integer habitID, Integer pointsToWin) {
+        Habit habit = habitRepository.findById(habitID);
+
+        habit.setPointsToWIn(pointsToWin);
+
+        HabitDTO result = new HabitDTO();
+        result = convertToDTO(habitRepository.save(habit));
+        return result;
     }
 }

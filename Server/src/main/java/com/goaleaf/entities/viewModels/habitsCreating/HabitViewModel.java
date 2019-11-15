@@ -22,4 +22,5 @@ public class HabitViewModel {
     public Date startDate;
 
     public String token;
+
 }

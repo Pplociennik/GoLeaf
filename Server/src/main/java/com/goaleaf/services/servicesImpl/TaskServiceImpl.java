@@ -2,14 +2,12 @@ package com.goaleaf.services.servicesImpl;
 
 import com.goaleaf.entities.DTO.CompleteTaskDTO;
 import com.goaleaf.entities.DTO.TaskDTO;
-import com.goaleaf.entities.Member;
-import com.goaleaf.entities.Post;
-import com.goaleaf.entities.Task;
-import com.goaleaf.entities.User;
+import com.goaleaf.entities.*;
 import com.goaleaf.entities.enums.PostTypes;
 import com.goaleaf.entities.viewModels.TaskViewModel;
 import com.goaleaf.repositories.*;
 import com.goaleaf.services.TaskService;
+import com.goaleaf.validators.exceptions.habitsProcessing.PointsNotSetException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import javassist.NotFoundException;
@@ -117,9 +115,35 @@ public class TaskServiceImpl implements TaskService {
         User user = userRepository.findById(Integer.parseInt(claims.getSubject()));
         Task task = taskRepository.getById(cmp.getTaskID());
         Member member = memberRepository.findByHabitIDAndUserID(cmp.getHabitID(), user.getId());
+        Habit habit = habitRepository.findById(cmp.getHabitID());
+
+        if (habit.getPointsToWIn() == null || habit.getPointsToWIn() == 0) {
+            throw new PointsNotSetException("Points to win have never been set!");
+        }
 
         member.addPoints(task.getPoints());
         memberRepository.save(member);
+
+        if (member.getPoints() >= habit.getPointsToWIn()) {
+            habit.setWinner(user.getLogin());
+            habit.setFinished(true);
+
+            task.setCompleted(true);
+            taskRepository.save(task);
+
+            Post newPost = new Post();
+            newPost.setPostType(PostTypes.HabitFinished);
+            newPost.setCreatorLogin(user.getLogin());
+            newPost.setDateOfAddition(new Date());
+            newPost.setHabitID(cmp.getHabitID());
+            newPost.setPostText("User " + user.getLogin() + " has won the competition " + habit.getHabitTitle() + " gaining " + member.getPoints() + " points! Congratulations!");
+            newPost.setUserComment(cmp.getComment());
+            newPost.setTaskPoints(task.getPoints());
+            Post aS = postRepository.save(newPost);
+
+            //PostDTO dto = new PostDTO(aS.getCreatorLogin(), aS.getPostText(), aS.getPostType(), aS.getDateOfAddition());
+            return aS;
+        }
 
         task.setCompleted(true);
         taskRepository.save(task);

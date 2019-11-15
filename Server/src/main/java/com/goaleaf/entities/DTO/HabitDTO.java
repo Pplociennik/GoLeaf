@@ -21,4 +21,10 @@ public class HabitDTO {
     public Date startDate;
 
     public Integer creatorID;
+
+    public Integer pointsToWin;
+
+    public Boolean isFinished;
+
+    public String winner;
 }
