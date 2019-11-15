@@ -121,7 +121,12 @@ public class HabitServiceImpl implements HabitService {
         habitDTO.isPrivate = entry.getPrivate();
         habitDTO.title = entry.getHabitTitle();
         habitDTO.creatorID = entry.getCreatorID();
-        habitDTO.pointsToWin = entry.getPointsToWIn();
+
+        if (entry.getPointsToWIn() != null) {
+            habitDTO.pointsToWin = entry.getPointsToWIn();
+        } else {
+            habitDTO.pointsToWin = 0;
+        }
 
         if (!entry.getWinner().isEmpty() || entry.getWinner() != null) {
             habitDTO.isFinished = true;
