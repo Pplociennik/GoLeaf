@@ -18,6 +18,7 @@ class NewHabit extends Component {
   handleSubmit = e => {
     e.preventDefault();
     console.log(this.state);
+    console.log(localStorage.getItem('token'))
     axios.post('/api/habits/new-habit', {
 
           "category": this.state.category,
@@ -35,7 +36,7 @@ class NewHabit extends Component {
     .then(res => {
                   console.log(res);
                   this.props.history.push('/');
-                   window.location.reload();
+                  //  window.location.reload();
                  }
     ).catch(err => {
                     this.setState({errorMsg: err.response.data.message});

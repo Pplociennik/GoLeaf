@@ -13,8 +13,11 @@ class AddPrize extends Component {
 
     addPrize = (e, id) => {
         e.preventDefault();
-
-        //TODO
+        axios.post(`/api/habits/habit/setPointsToWIn?habitID=${id}&pointsToWin=${this.state.prizePoints}`)
+        .then(res => {
+            window.location.reload();
+        }
+        ).catch(err => console.log(err.response.data.message))
 
     }
 

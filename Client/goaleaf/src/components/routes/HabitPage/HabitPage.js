@@ -65,6 +65,7 @@ class HabitPage extends Component {
                         permissions: res.data
                     })
             }).catch(err => console.log(err))
+            console.log(localStorage.getItem('token'))
     }
 
     render() {
@@ -79,11 +80,11 @@ class HabitPage extends Component {
                     <span className="habit-page-header-con">
                         <div className="habit-page-info-con">
                                 <div className="habit-page-text-con">
-                                    <h1 className="habit-page-title">{habit.habitTitle}</h1>
+                                    <h1 className="habit-page-title">{habit.title}</h1>
                                     <div className="habit-page-info-blocks">
-                                        <div className="habit-page-info-block started-date">📆<span className="date-span">  {changeDateFormat1(habit.habitStartDate)}</span></div>
+                                        <div className="habit-page-info-block started-date">📆<span className="date-span">  {changeDateFormat1(habit.startDate)}</span></div>
                                         <div className="habit-page-info-block created-by">🙍‍ <span> {habit.owner.login}</span></div>
-                                        <div className="habit-page-info-block privacy">🔒 <span> {habit.private ? 'Private' : 'Public'}</span></div>
+                                        <div className="habit-page-info-block privacy">🔒 <span> {habit.isPrivate ? 'Private' : 'Public'}</span></div>
                                         <div className={`habit-page-info-block category-${habit.category}`}>🚩 <span> {habit.category}</span></div>
                                         <div className="habit-page-info-block members-number">👭 <span> {habit.members.length}</span></div>
                                     </div>
@@ -102,6 +103,14 @@ class HabitPage extends Component {
                             <AddPrize habitID={habit.id}/>
                             <Leaderboard habitID={habit.id}/>
                         </div>
+                    </section> : null}
+                    {(habit.pointsToWin && !habit.isFinished) ?
+                    <section>
+                        <p>Get {habit.pointsToWin} points to win!</p>
+                    </section> : null}
+                    {(habit.pointsToWin && habit.isFinished) ?
+                    <section>
+                        <p>Challenge finished by {habit.winner}!</p>
                     </section> : null}
                     <section className="habit-page-dashboard">
                         {userIsMember ? <AddPost habitID = { habit.id } /> : null}

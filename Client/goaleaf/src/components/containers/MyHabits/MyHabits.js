@@ -45,7 +45,7 @@ class MyHabits extends Component {
     let habits = []
     habitCards.forEach(habit => {
       foundHabits = true;
-      habits.push(<HabitCard key={habit.id} id={habit.id} title={habit.habitTitle} category={habit.category} frequency={habit.frequency} startedOn={habit.habitStartDate} private={habit.private} login={habit.owner.login} membersNumber={habit.members.length} habitCardClicked={this.handleHabitCardClicked} />)
+      habits.push(<HabitCard key={habit.id} id={habit.id} title={habit.title} category={habit.category} frequency={habit.frequency} startedOn={habit.startDate} private={habit.isPrivate} login={habit.owner.login} membersNumber={habit.members.length} habitCardClicked={this.handleHabitCardClicked} />)
 
     })
 
