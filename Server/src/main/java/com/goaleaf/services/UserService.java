@@ -42,4 +42,6 @@ public interface UserService {
 
     Iterable<HabitDTO> getAllMyWonHabits(Integer userID);
 
+    Iterable<HabitDTO> getAllMyUnfinishedHabits(Integer userID);
+
     }

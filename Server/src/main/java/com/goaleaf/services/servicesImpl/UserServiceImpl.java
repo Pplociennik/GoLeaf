@@ -188,4 +188,21 @@ public class UserServiceImpl implements UserService {
         Iterable<HabitDTO> result = habitService.convertManyToDTOs(habits);
         return result;
     }
+
+    @Override
+    public Iterable<HabitDTO> getAllMyUnfinishedHabits(Integer userID) {
+        Iterable<Member> memberList = memberRepository.findAllByUserID(userID);
+        List<Habit> habits = new ArrayList<>(0);
+
+        for (Member m : memberList) {
+            Habit h = new Habit();
+            h = habitService.getHabitById(m.getHabitID());
+            if (!h.getFinished()) {
+                habits.add(h);
+            }
+        }
+
+        Iterable<HabitDTO> result = habitService.convertManyToDTOs(habits);
+        return result;
+    }
 }

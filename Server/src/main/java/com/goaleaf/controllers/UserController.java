@@ -200,4 +200,9 @@ public class UserController {
         return userService.getAllMyWonHabits(userID);
     }
 
+    @RequestMapping(value = "/myUnfinishedHabits", method = RequestMethod.GET)
+    public Iterable<HabitDTO> getMyUnfinishedHabits(@RequestParam Integer userID) {
+        return userService.getAllMyUnfinishedHabits(userID);
+    }
+
 }
