@@ -85,7 +85,7 @@ public class HabitController {
         Habit resHabit = new Habit();
         resHabit = habitService.registerNewHabit(model, Integer.parseInt(claims.getSubject()));
 
-        if (!StringUtils.isEmpty(resHabit.getWinner())) {
+        if (resHabit.getWinner() != "NONE") {
             habitDTO.isFinished = true;
             habitDTO.winner = resHabit.getWinner();
         } else {
