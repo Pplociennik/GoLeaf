@@ -3,6 +3,7 @@ package com.goaleaf.services.servicesImpl;
 import com.goaleaf.entities.DTO.HabitDTO;
 import com.goaleaf.entities.Habit;
 import com.goaleaf.entities.Member;
+import com.goaleaf.entities.User;
 import com.goaleaf.entities.viewModels.habitsCreating.HabitViewModel;
 import com.goaleaf.repositories.HabitRepository;
 import com.goaleaf.services.HabitService;
@@ -76,18 +77,20 @@ public class HabitServiceImpl implements HabitService {
         newHabit.setWinner("NONE");
         newHabit.setPointsToWIn(0);
         newHabit.setFinished(false);
-        newHabit = habitRepository.save(newHabit);
+
+        Habit added = new Habit();
+        added = habitRepository.save(newHabit);
 
         Member creator = new Member();
         creator.setUserID(creatorID);
-        creator.setHabitID(newHabit.getId());
+        creator.setHabitID(added.getId());
         creator.setUserLogin(userService.getUserById(creatorID).getLogin());
         creator.setImgName(userService.getUserById(creatorID).getImageName());
         creator.setPoints(0);
 
         memberService.saveMember(creator);
 
-        return habitRepository.save(newHabit);
+        return added;
     }
 
     @Override
@@ -117,6 +120,8 @@ public class HabitServiceImpl implements HabitService {
 
     private HabitDTO convertToDTO(Habit entry) {
 
+        User creator = userService.findById(entry.getCreatorID());
+
         HabitDTO habitDTO = new HabitDTO();
         habitDTO.id = entry.getId();
         habitDTO.category = entry.getCategory();
@@ -126,6 +131,8 @@ public class HabitServiceImpl implements HabitService {
         habitDTO.isPrivate = entry.getPrivate();
         habitDTO.title = entry.getHabitTitle();
         habitDTO.creatorID = entry.getCreatorID();
+        habitDTO.creatorLogin = creator.getLogin();
+        habitDTO.membersCount = memberService.countAllHabitMembers(entry.getId());
 
         if (entry.getPointsToWIn() != null) {
             habitDTO.pointsToWin = entry.getPointsToWIn();

@@ -29,4 +29,8 @@ public class HabitDTO {
     public Boolean isFinished;
 
     public String winner;
+
+    public String creatorLogin;
+
+    public Integer membersCount;
 }
