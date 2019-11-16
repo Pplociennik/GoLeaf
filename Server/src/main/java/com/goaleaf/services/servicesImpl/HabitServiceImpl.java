@@ -118,6 +118,7 @@ public class HabitServiceImpl implements HabitService {
     private HabitDTO convertToDTO(Habit entry) {
 
         HabitDTO habitDTO = new HabitDTO();
+        habitDTO.id = entry.getId();
         habitDTO.category = entry.getCategory();
         habitDTO.frequency = entry.getFrequency();
 //        habitDTO.members = model.members;

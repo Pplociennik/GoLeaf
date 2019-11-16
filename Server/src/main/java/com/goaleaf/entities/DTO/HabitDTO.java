@@ -8,6 +8,8 @@ import java.util.Date;
 
 public class HabitDTO {
 
+    public Integer id;
+
     public String title;
 
     public Category category;
