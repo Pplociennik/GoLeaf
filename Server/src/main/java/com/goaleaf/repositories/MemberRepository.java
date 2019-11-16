@@ -13,7 +13,7 @@ public interface MemberRepository extends CrudRepository<Member, Integer> {
 
     Iterable<Member> findAllByHabitID(Integer habitID);
 
-    Iterable<Habit> findAllByUserID(Integer userID);
+    Iterable<Member> findAllByUserID(Integer userID);
 
     Boolean existsByHabitIDAndAndUserID(Integer habitID, Integer userID);
 
@@ -24,4 +24,5 @@ public interface MemberRepository extends CrudRepository<Member, Integer> {
     Member findByHabitIDAndUserID(Integer habitID, Integer userID);
 
     Iterable<Member> getAllByHabitIDOrderByPointsDesc(Integer habitID);
+
 }

@@ -39,4 +39,6 @@ public interface HabitService {
     Map<Integer, Member> getRank(Integer habitID);
 
     HabitDTO setPointsToWin(Integer habitID, Integer pointsToWin);
+
+    Iterable<HabitDTO> convertManyToDTOs(Iterable<Habit> habits);
 }

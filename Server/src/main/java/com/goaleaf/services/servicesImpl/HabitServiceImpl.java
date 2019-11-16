@@ -143,7 +143,7 @@ public class HabitServiceImpl implements HabitService {
         return habitDTO;
     }
 
-    private Iterable<HabitDTO> convertManyToDTOs(Iterable<Habit> habits) {
+    public Iterable<HabitDTO> convertManyToDTOs(Iterable<Habit> habits) {
         List<HabitDTO> resultList = new ArrayList<>(0);
 
         for (Habit h : habits) {
