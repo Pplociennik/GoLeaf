@@ -7,7 +7,6 @@ class AddPrize extends Component {
 
   state = {
     msg: null,
-    prize: null,
     prizePoints: 50
   }
 
@@ -73,7 +72,6 @@ class AddPrize extends Component {
             <form className="col s10 offset-s1  l8 offset-l2 center-align" autoComplete="off">
                 <h4 className="">Set prize</h4>
                 <div className="input-field inline">
-                    <input id="task" type="text" placeholder="prize description" onChange={ this.handleChange } />
                     <button className="task-points-btn task-points-btn-subtract" onClick={ this.subtractPrizePoint }>-</button>
                     <span className="task-points">{ this.state.prizePoints }</span>
                     <button className="task-points-btn task-points-btn-add" onClick={ this.addPrizePoint }>+</button>

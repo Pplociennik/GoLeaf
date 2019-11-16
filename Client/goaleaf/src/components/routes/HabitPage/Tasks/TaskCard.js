@@ -29,6 +29,7 @@ class TaskCard extends Component {
         })
         .then(res => {
             this.props.addPost(res.data);
+            window.location.reload();
         }
         ).catch(err => console.log("Complete Task request failed"))
     }
@@ -44,8 +45,7 @@ class TaskCard extends Component {
                     <div className="task-text-con">
                         <span className="task-title">{this.props.description}</span>
                         <span className="task-points">+{this.props.points}</span>
-                    </div>
-                        
+                    </div>                       
                 </div>
 
             } modal closeOnDocumentClick

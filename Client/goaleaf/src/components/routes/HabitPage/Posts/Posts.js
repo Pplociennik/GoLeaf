@@ -44,11 +44,11 @@ class Posts extends Component {
         let postCards = []
         posts.forEach(post => {
 
-            if(this.props.showTasks && post.postType === "Task") {
+            if(this.props.showTasks && (post.postType === "Task" || post.postType === "HabitFinished")) {
                 foundPosts = true;
                 postCards.push(<PostCard key={post.id} id={post.id} userLogged={this.props.userLogged} currentUserLogin={this.props.userLoggedLogin} creatorLogin={post.creatorLogin} createdDate={post.dateOfAddition} postType={post.postType} taskPoints={post.taskPoints} postText={post.postText} userComment={post.userComment} imgName={post.imgName} counter_CLAPPING={post.counter_CLAPPING} counter_WOW={post.counter_WOW} counter_NS={post.counter_NS} counter_TTD={post.counter_TTD} handlePostCardDeleted={() => this.handlePostCardDeleted(post.id)} />)
             }
-            if(!this.props.showTasks && (post.postType === "JustText" || post.postType === "HabitFinished")) {
+            if(!this.props.showTasks && post.postType === "JustText") {
                 foundPosts = true;
                 postCards.push(<PostCard key={post.id} id={post.id} userLogged={this.props.userLogged} currentUserLogin={this.props.userLoggedLogin} creatorLogin={post.creatorLogin} createdDate={post.dateOfAddition} postType={post.postType} taskPoints={post.taskPoints} postText={post.postText} userComment={post.userComment} imgName={post.imgName} counter_CLAPPING={post.counter_CLAPPING} counter_WOW={post.counter_WOW} counter_NS={post.counter_NS} counter_TTD={post.counter_TTD} handlePostCardDeleted={() => this.handlePostCardDeleted(post.id)} />)
             }

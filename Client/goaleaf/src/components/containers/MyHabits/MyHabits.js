@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './MyHabits.scss'
+import axios from 'axios'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import HabitCard from './../../routes/HabitCard/HabitCard'
@@ -7,7 +8,9 @@ import HabitCard from './../../routes/HabitCard/HabitCard'
 class MyHabits extends Component {
 
   state = {
-    habitCards: [],
+    habitCardsFinished: [],
+    habitCardsUnfinished: [],
+    habitCardsWon: [],
     habitsToShow: 20,
     habitsSortBy: 'NEWEST'
   }
@@ -23,69 +26,139 @@ class MyHabits extends Component {
   }
 
   componentDidMount() {
-    this.setState({ habitCards: this.props.habits })
+    // this.setState({ habitCards: this.props.habits })
+    console.log(this.props.userLogged)
+    axios.get(`/api/users/myFinishedHabits?userID=${this.props.userLogged}`)
+    .then(res => {
+        this.setState({
+          habitCardsFinished: res.data
+        })
+    }).catch(err => console.log(err.response.data.message))
+
+    axios.get(`/api/users/myUnfinishedHabits?userID=${this.props.userLogged}`)
+    .then(res => {
+        this.setState({
+          habitCardsUnfinished: res.data
+        })
+    }).catch(err => console.log(err.response.data.message))
+
+    axios.get(`/api/users/myWonHabits?userID=${this.props.userLogged}`)
+    .then(res => {
+        this.setState({
+          habitCardsWon: res.data
+        })
+    }).catch(err => console.log(err.response.data.message))
   }
 
   render() {
 
-    let habitCards = this.props.habits;
+    let habitCardsUnfinished = this.state.habitCardsUnfinished;
+    let habitCardsFinished = this.state.habitCardsFinished;
+    let habitCardsWon = this.state.habitCardsWon;
 
-    habitCards = habitCards.filter(habitCard => habitCard.members.includes(this.props.userLogged));
+    // habitCards = habitCards.filter(habitCard => habitCard.members.includes(this.props.userLogged));
 
-    habitCards.sort(function (a, b) {
-      let keyA = new Date(a.habitStartDate),
-        keyB = new Date(b.habitStartDate);
+    habitCardsUnfinished.sort(function (a, b) {
+      let keyA = new Date(a.startDate),
+        keyB = new Date(b.startDate);
+      if (keyA > keyB) return -1;
+      if (keyA < keyB) return 1;
+      return 0;
+    });
+    habitCardsFinished.sort(function (a, b) {
+      let keyA = new Date(a.startDate),
+        keyB = new Date(b.startDate);
+      if (keyA > keyB) return -1;
+      if (keyA < keyB) return 1;
+      return 0;
+    });
+    habitCardsWon.sort(function (a, b) {
+      let keyA = new Date(a.startDate),
+        keyB = new Date(b.startDate);
       if (keyA > keyB) return -1;
       if (keyA < keyB) return 1;
       return 0;
     });
 
 
-    let foundHabits = false;
-    let habits = []
-    habitCards.forEach(habit => {
-      foundHabits = true;
-      habits.push(<HabitCard key={habit.id} id={habit.id} title={habit.title} category={habit.category} frequency={habit.frequency} startedOn={habit.startDate} private={habit.isPrivate} login={habit.owner.login} membersNumber={habit.members.length} habitCardClicked={this.handleHabitCardClicked} />)
+    let foundUnfinishedHabits = false;
+    let habitsUnfinished = []
+    habitCardsUnfinished.forEach(habit => {
+      foundUnfinishedHabits = true;
+      habitsUnfinished.push(<HabitCard key={habit.id} id={habit.id} title={habit.title} category={habit.category} frequency={habit.frequency} startedOn={habit.startDate} private={habit.isPrivate} login={habit.creatorLogin} membersNumber={habit.membersCount} habitCardClicked={this.handleHabitCardClicked} />)
 
     })
 
-    let habitsToDisplay = habits.slice(0, this.state.habitsToShow);
+    let habitsUnfinishedToDisplay = habitsUnfinished.slice(0, this.state.habitsToShow);
 
 
-    if (!foundHabits) {
-      habitsToDisplay = <div className="no-habits"> Join some challenges to see them here</div>
+
+    let foundFinishedHabits = false;
+    let habitsFinished = []
+    habitCardsFinished.forEach(habit => {
+      foundFinishedHabits = true;
+      habitsFinished.push(<HabitCard key={habit.id} id={habit.id} title={habit.title} category={habit.category} frequency={habit.frequency} startedOn={habit.startDate} private={habit.isPrivate} login={habit.creatorLogin} membersNumber={habit.membersCount} habitCardClicked={this.handleHabitCardClicked} />)
+
+    })
+
+    let habitsFinishedToDisplay = habitsFinished.slice(0, this.state.habitsToShow);
+
+
+
+    let foundWonHabits = false;
+    let habitsWon = []
+    habitCardsWon.forEach(habit => {
+      foundWonHabits = true;
+      habitsWon.push(<HabitCard key={habit.id} id={habit.id} title={habit.title} category={habit.category} frequency={habit.frequency} startedOn={habit.startDate} private={habit.isPrivate} login={habit.creatorLogin} membersNumber={habit.membersCount} habitCardClicked={this.handleHabitCardClicked} />)
+
+    })
+
+    let habitsWonToDisplay = habitsWon.slice(0, this.state.habitsToShow);
+
+
+    if (!foundUnfinishedHabits) {
+      habitsUnfinishedToDisplay = <div className="no-habits"> Join some challenges to see them here</div>
+    }
+    if (!foundFinishedHabits) {
+      habitsFinishedToDisplay = <div className="no-habits"> You haven't finished any challenges yet</div>
+    }
+    if (!foundWonHabits) {
+      habitsWonToDisplay = <div className="no-habits"> You haven't won any challenges yet</div>
     }
 
-    console.log(habitsToDisplay.length);
-    console.log(habits.length);
+    // console.log(habitsToDisplay.length);
+    // console.log(habits.length);
 
-    if (localStorage.getItem('token') && foundHabits) {
+    if (localStorage.getItem('token')) {
       return (
         <div>
+        {foundUnfinishedHabits ?
         <section className="my-habits">
-          <h1 className="my-habits-title" >My challenges</h1>
+          <h1 className="my-habits-title" >My active challenges</h1>
 
           <div className="habit-cards">
-            {habitsToDisplay}
+            {habitsUnfinishedToDisplay}
           </div>
-          <button className={habitsToDisplay.length < habits.length ? 'my-habits-show-more-habits-btn' : 'my-habits-hide-show-more-habits-btn'} onClick={() => this.setState({ habitsToShow: this.state.habitsToShow + 20 })}>SHOW MORE</button>
-        </section>
+          <button className={habitsUnfinishedToDisplay.length < habitsUnfinished.length ? 'my-habits-show-more-habits-btn' : 'my-habits-hide-show-more-habits-btn'} onClick={() => this.setState({ habitsToShow: this.state.habitsToShow + 20 })}>SHOW MORE</button>
+        </section> : null}
+        {foundFinishedHabits ?
         <section className="my-habits">
           <h1 className="my-habits-title" >My ended challenges</h1>
 
           <div className="habit-cards">
-            {/* {habitsToDisplay} */}
+            {habitsFinishedToDisplay}
           </div>
-          {/* <button className={habitsToDisplay.length < habits.length ? 'my-habits-show-more-habits-btn' : 'my-habits-hide-show-more-habits-btn'} onClick={() => this.setState({ habitsToShow: this.state.habitsToShow + 20 })}>SHOW MORE</button> */}
-        </section>
+          <button className={habitsFinishedToDisplay.length < habitsFinished.length ? 'my-habits-show-more-habits-btn' : 'my-habits-hide-show-more-habits-btn'} onClick={() => this.setState({ habitsToShow: this.state.habitsToShow + 20 })}>SHOW MORE</button>
+        </section> : null}
+        {foundWonHabits ?
         <section className="my-habits">
-          <h1 className="my-habits-title" >My winned challenges</h1>
+          <h1 className="my-habits-title" >My won challenges</h1>
 
           <div className="habit-cards">
-            {/* {habitsToDisplay} */}
+            {habitsWonToDisplay}
           </div>
-          {/* <button className={habitsToDisplay.length < habits.length ? 'my-habits-show-more-habits-btn' : 'my-habits-hide-show-more-habits-btn'} onClick={() => this.setState({ habitsToShow: this.state.habitsToShow + 20 })}>SHOW MORE</button> */}
-        </section>
+          <button className={habitsWonToDisplay.length < habitsWon.length ? 'my-habits-show-more-habits-btn' : 'my-habits-hide-show-more-habits-btn'} onClick={() => this.setState({ habitsToShow: this.state.habitsToShow + 20 })}>SHOW MORE</button>
+        </section> : null}
         </div>
       )
     } else {
