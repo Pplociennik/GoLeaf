@@ -140,12 +140,12 @@ public class HabitServiceImpl implements HabitService {
             habitDTO.pointsToWin = 0;
         }
 
-        if (!entry.getWinner().isEmpty() || entry.getWinner() != null) {
+        if (entry.getWinner() != "NONE") {
             habitDTO.isFinished = true;
             habitDTO.winner = entry.getWinner();
         } else {
             habitDTO.isFinished = false;
-            habitDTO.winner = "No one yet! :)";
+            habitDTO.winner = "NONE";
         }
 
         return habitDTO;
