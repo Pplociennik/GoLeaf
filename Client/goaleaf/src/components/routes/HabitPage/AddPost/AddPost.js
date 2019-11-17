@@ -70,7 +70,7 @@ class AddPost extends Component {
             </div>
             <div id="achievement" className="col s10 offset-s1 m8 offset-m2">
                 <h2 className="tasks-title">Complete task</h2>
-                <Tasks habitID={this.props.habitID}/>
+                <Tasks habitID={this.props.habitID} isFinished={this.props.isFinished}/>
             </div>
             <Posts habitID={this.props.habitID} showTasks={this.state.showTasks}/>
         </div>

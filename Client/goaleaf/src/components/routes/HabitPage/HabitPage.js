@@ -99,8 +99,8 @@ class HabitPage extends Component {
                         <div className="habit-page-navigation">
                             <InviteMember habitID={habit.id} />
                             <Members habitID={habit.id}/>
-                            <AddTask habitID={habit.id}/>
-                            <AddPrize habitID={habit.id}/>
+                            <AddTask habitID={habit.id} isFinished={habit.isFinished}/>
+                            <AddPrize habitID={habit.id} isFinished={habit.isFinished}/>
                             <Leaderboard habitID={habit.id}/>
                         </div>
                     </section> : null}
@@ -113,7 +113,7 @@ class HabitPage extends Component {
                         <p>Challenge finished by {habit.winner}!</p>
                     </section> : null}
                     <section className="habit-page-dashboard">
-                        {userIsMember ? <AddPost habitID = { habit.id } /> : null}
+                        {userIsMember ? <AddPost habitID = { habit.id } isFinished={habit.isFinished}/> : null}
                     </section>
                 </div>
             )

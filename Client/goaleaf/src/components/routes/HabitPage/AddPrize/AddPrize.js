@@ -53,8 +53,10 @@ class AddPrize extends Component {
 
     render() {
 
+    let button = this.props.isFinished ? <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" disabled><span>Set prize</span></button> : <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" ><span>Set prize</span></button>
+
     return (
-        <Popup trigger={<button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" ><span>Set prize</span></button>} modal closeOnDocumentClick
+        <Popup trigger={button} modal closeOnDocumentClick
             onOpen={ this.clearMsg }
             contentStyle={{
                 maxWidth: '80%',
