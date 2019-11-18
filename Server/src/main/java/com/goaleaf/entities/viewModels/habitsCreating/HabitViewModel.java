@@ -15,11 +15,12 @@ public class HabitViewModel {
 
     public Boolean isPrivate;
 
-    public Set<Member> members;
+//    public Set<Member> members;
 
     public Frequency frequency;
 
     public Date startDate;
 
     public String token;
+
 }

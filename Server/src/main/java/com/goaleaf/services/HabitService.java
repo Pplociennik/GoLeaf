@@ -1,5 +1,6 @@
 package com.goaleaf.services;
 
+import com.goaleaf.entities.DTO.HabitDTO;
 import com.goaleaf.entities.Habit;
 import com.goaleaf.entities.Member;
 import com.goaleaf.entities.viewModels.habitsCreating.HabitViewModel;
@@ -11,7 +12,7 @@ import java.util.Map;
 @Service
 public interface HabitService {
 
-    Iterable<Habit> listAllHabits();
+    Iterable<HabitDTO> listAllHabits();
 
 //    Iterable<Habit> listAllUsersHabits(Integer userID);
 
@@ -29,11 +30,15 @@ public interface HabitService {
 
     Habit findByTitle(String title);
 
-    Habit findById(Integer id);
+    HabitDTO findById(Integer id);
 
     Habit findByOwnerName(String ownerName);
 
     Iterable<Habit> findHabitsByCreatorID(Integer creatorID);
 
     Map<Integer, Member> getRank(Integer habitID);
+
+    HabitDTO setPointsToWin(Integer habitID, Integer pointsToWin);
+
+    Iterable<HabitDTO> convertManyToDTOs(Iterable<Habit> habits);
 }

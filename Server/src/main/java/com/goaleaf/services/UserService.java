@@ -1,5 +1,6 @@
 package com.goaleaf.services;
 
+import com.goaleaf.entities.DTO.HabitDTO;
 import com.goaleaf.entities.User;
 
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditImageViewModel;
@@ -36,5 +37,11 @@ public interface UserService {
     void updateUserImage(EditImageViewModel model);
 
     User findByEmailAddress(String email);
+
+    Iterable<HabitDTO> getUserFinishedHabits(Integer userID);
+
+    Iterable<HabitDTO> getAllMyWonHabits(Integer userID);
+
+    Iterable<HabitDTO> getAllMyUnfinishedHabits(Integer userID);
 
     }

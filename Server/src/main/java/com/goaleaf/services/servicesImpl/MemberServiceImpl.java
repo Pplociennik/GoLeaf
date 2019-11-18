@@ -1,17 +1,23 @@
 package com.goaleaf.services.servicesImpl;
 
+import com.goaleaf.entities.Habit;
 import com.goaleaf.entities.Member;
+import com.goaleaf.repositories.HabitRepository;
 import com.goaleaf.repositories.MemberRepository;
 import com.goaleaf.services.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MemberServiceImpl implements MemberService {
 
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private HabitRepository habitRepository;
 
     @Override
     public Member getByUserID(Integer id) {

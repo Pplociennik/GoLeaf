@@ -50,8 +50,8 @@ class BrowseHabits extends Component {
       habitCards.forEach(habit => {
 
           if(!habit.private && !habit.members.find(member => member === this.props.userLogged) && (this.state.category === 'ALL' || habit.category === this.state.category)){
-            foundHabits = true;
-          habits.push(<HabitCard key={ habit.id } id={ habit.id } title={ habit.habitTitle } category={ habit.category } frequency={ habit.frequency } startedOn={ habit.habitStartDate } private={ habit.private } login={habit.owner.login} membersNumber={habit.members.length} habitCardClicked={ this.handleHabitCardClicked } />)
+          foundHabits = true;
+          habits.push(<HabitCard key={ habit.id } id={ habit.id } title={ habit.title } category={ habit.category } frequency={ habit.frequency } startedOn={ habit.startDate } private={ habit.isPrivate } login={habit.owner.login} membersNumber={habit.members.length} habitCardClicked={ this.handleHabitCardClicked } />)
           }
       })
 
@@ -59,13 +59,13 @@ class BrowseHabits extends Component {
 
 
       if(!foundHabits){
-     habitsToDisplay = <div className="no-habits"> No groups were found</div>
+     habitsToDisplay = <div className="no-habits"> No challenges were found</div>
       }
 
 
     return (
       <section className="browse-habits">
-      <h1 className="browse-habits-title" >Browse groups</h1>
+      <h1 className="browse-habits-title" >Browse challenges</h1>
       <div className="browse-habits-navigation">
         <div className="browse-habits-navigation-filters">
             <button className={this.state.category === 'ALL' ? 'category all-chosen all' : ' category all'} value="ALL" onClick={ this.handleFilter }>all</button>

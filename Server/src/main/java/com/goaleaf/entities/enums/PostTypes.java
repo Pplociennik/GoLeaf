@@ -4,5 +4,6 @@ public enum PostTypes {
     JustText(),
     JustPhoto(),
     TextAndPhoto(),
-    Task()
+    Task(),
+    HabitFinished()
 }

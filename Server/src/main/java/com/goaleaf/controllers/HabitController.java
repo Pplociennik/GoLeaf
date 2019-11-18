@@ -24,6 +24,7 @@ import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
@@ -81,21 +82,30 @@ public class HabitController {
         habitDTO.title = model.title;
         habitDTO.creatorID = Integer.parseInt(claims.getSubject());
 
-        habitService.registerNewHabit(model, Integer.parseInt(claims.getSubject()));
+        Habit resHabit = new Habit();
+        resHabit = habitService.registerNewHabit(model, Integer.parseInt(claims.getSubject()));
+
+        if (resHabit.getWinner() != "NONE") {
+            habitDTO.isFinished = true;
+            habitDTO.winner = resHabit.getWinner();
+        } else {
+            habitDTO.isFinished = false;
+            habitDTO.winner = "No one yet! :)";
+        }
 
         return habitDTO;
     }
 
     @PermitAll
     @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Iterable<Habit> list(/*String token*/) {
+    public Iterable<HabitDTO> list(/*String token*/) {
 
         return habitService.listAllHabits();
     }
 
     @PermitAll
     @RequestMapping(value = "/getHabit/{id}", method = RequestMethod.GET)
-    public Habit getHabitById(Integer id) {
+    public HabitDTO getHabitById(Integer id) {
         if (habitService.findById(id) == null)
             throw new HabitNotExistsException("Habit does not exist!");
 
@@ -133,13 +143,13 @@ public class HabitController {
         Notification ntf = new Notification();
         ntf.setDate(new Date());
         ntf.setRecipientID(searchingUser.getId());
-        ntf.setDescription(userService.findById(Integer.parseInt(claims.getSubject())).getLogin() + " invited you to group " + habitService.findById(model.habitID).getHabitTitle() + "!");
+        ntf.setDescription(userService.findById(Integer.parseInt(claims.getSubject())).getLogin() + " invited you to group " + habitService.findById(model.habitID).title + "!");
         ntf.setUrl((model.url.isEmpty() ? "EMPTY_URL" : model.url));
         notificationService.saveNotification(ntf);
 
         if (searchingUser.getNotifications()) {
             EmailNotificationsSender sender = new EmailNotificationsSender();
-            sender.sendInvitationNotification(searchingUser.getEmailAddress(), searchingUser.getLogin(), userService.findById(Integer.parseInt(claims.getSubject())).getLogin(), habitService.findById(model.habitID).getHabitTitle());
+            sender.sendInvitationNotification(searchingUser.getEmailAddress(), searchingUser.getLogin(), userService.findById(Integer.parseInt(claims.getSubject())).getLogin(), habitService.findById(model.habitID).title);
         }
 
         return HttpStatus.OK;
@@ -167,7 +177,7 @@ public class HabitController {
         Member memberToCheck = memberService.findSpecifiedMember(habitID, userID);
         Notification notificationToCheck = notificationService.findSpecifiedNtf(userID, "http://localhost:3000/habit/" + habitID);
 
-        if (!habitService.findById(habitID).getPrivate())
+        if (!habitService.findById(habitID).isPrivate)
             return true;
 
         return memberToCheck != null || notificationToCheck != null;
@@ -220,6 +230,11 @@ public class HabitController {
     @RequestMapping(value = "/rank", method = RequestMethod.GET)
     public Map<Integer, Member> getHabitMembersRank(@RequestParam Integer habitID) {
         return habitService.getRank(habitID);
+    }
+
+    @RequestMapping(value = "/habit/setPointsToWIn", method = RequestMethod.POST)
+    public HabitDTO setPointsToWin(@RequestParam Integer habitID, Integer pointsToWin) {
+        return habitService.setPointsToWin(habitID,pointsToWin);
     }
 
 }

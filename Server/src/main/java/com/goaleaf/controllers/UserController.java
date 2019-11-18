@@ -2,7 +2,9 @@ package com.goaleaf.controllers;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.goaleaf.entities.DTO.HabitDTO;
 import com.goaleaf.entities.DTO.UserDto;
+import com.goaleaf.entities.Habit;
 import com.goaleaf.entities.User;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.*;
 import com.goaleaf.repositories.UserRepository;
@@ -186,6 +188,21 @@ public class UserController {
         User temp = userService.findById(model.userID);
         temp.setNotifications(model.newNotificationsStatus);
         return userRepository.save(temp);
+    }
+
+    @RequestMapping(value = "/myFinishedHabits", method = RequestMethod.GET)
+    public Iterable<HabitDTO> getMyFinishedHabits(@RequestParam Integer userID) {
+        return userService.getUserFinishedHabits(userID);
+    }
+
+    @RequestMapping(value = "/myWonHabits", method = RequestMethod.GET)
+    public Iterable<HabitDTO> getMyWonHabits(@RequestParam Integer userID) {
+        return userService.getAllMyWonHabits(userID);
+    }
+
+    @RequestMapping(value = "/myUnfinishedHabits", method = RequestMethod.GET)
+    public Iterable<HabitDTO> getMyUnfinishedHabits(@RequestParam Integer userID) {
+        return userService.getAllMyUnfinishedHabits(userID);
     }
 
 }

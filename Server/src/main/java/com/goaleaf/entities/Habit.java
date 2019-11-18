@@ -1,13 +1,10 @@
 package com.goaleaf.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.goaleaf.entities.enums.Category;
 import com.goaleaf.entities.enums.Frequency;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "habits")
@@ -41,6 +38,15 @@ public class Habit {
 
     @Column
     private String creatorLogin;
+
+    @Column
+    private Integer pointsToWIn;
+
+    @Column
+    private String winner;
+
+    @Column
+    private Boolean finished;
 
     public Habit() {
     }
@@ -120,5 +126,29 @@ public class Habit {
 
     public void setCreatorLogin(String creatorLogin) {
         this.creatorLogin = creatorLogin;
+    }
+
+    public Integer getPointsToWIn() {
+        return pointsToWIn;
+    }
+
+    public void setPointsToWIn(Integer pointsToWIn) {
+        this.pointsToWIn = pointsToWIn;
+    }
+
+    public String getWinner() {
+        return winner;
+    }
+
+    public void setWinner(String winner) {
+        this.winner = winner;
+    }
+
+    public Boolean getFinished() {
+        return finished;
+    }
+
+    public void setFinished(Boolean finished) {
+        this.finished = finished;
     }
 }

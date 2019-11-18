@@ -27,4 +27,5 @@ public interface MemberService {
     Member findSpecifiedMember(Integer habitID, Integer userID);
 
     Map<Integer, Member> getRank(Integer habitID);
+
 }

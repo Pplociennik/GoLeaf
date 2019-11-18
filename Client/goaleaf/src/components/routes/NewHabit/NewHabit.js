@@ -18,6 +18,7 @@ class NewHabit extends Component {
   handleSubmit = e => {
     e.preventDefault();
     console.log(this.state);
+    console.log(localStorage.getItem('token'))
     axios.post('/api/habits/new-habit', {
 
           "category": this.state.category,
@@ -35,7 +36,7 @@ class NewHabit extends Component {
     .then(res => {
                   console.log(res);
                   this.props.history.push('/');
-                   window.location.reload();
+                  //  window.location.reload();
                  }
     ).catch(err => {
                     this.setState({errorMsg: err.response.data.message});
@@ -61,7 +62,7 @@ class NewHabit extends Component {
     return (
       <div className="new-habit">
         <form className="new-habit-form" onSubmit={ this.handleSubmit } autoComplete="off" >
-          <h1 className="new-habit-title">New group</h1>
+          <h1 className="new-habit-title">New challenge</h1>
           <input className="new-habit-title-input" type="text" id="title" placeholder="title" onChange={ this.handleChange } maxLength="49" autoFocus />
           <div className="new-habit-categories">
             <button className={this.state.category === 'NONE' ? 'new-habit-category none-chosen none' : ' new-habit-category none'} value="NONE" type="button" onClick={ this.handleChangeCategory }><i className="fas fa-minus fa-lg"></i></button>
@@ -78,7 +79,7 @@ class NewHabit extends Component {
             <button className={this.state.private === false ? 'privacy-btn privacy-chosen' : 'privacy-btn'} type="button" value="public" onClick={ this.handleChangePrivacy }><i className="fas fa-lock-open fa-sm"></i> Public</button>
             <button className={this.state.private === true ? 'privacy-btn privacy-chosen' : 'privacy-btn'} type="button" value="private" onClick={ this.handleChangePrivacy }><i className="fas fa-lock fa-sm"></i> Private</button>
           </div>
-          <input className="new-habit-submit-btn" type="submit" value="Create habit" />
+          <input className="new-habit-submit-btn" type="submit" value="Create challenge" />
           { errorMsg }
         </form>
       </div>

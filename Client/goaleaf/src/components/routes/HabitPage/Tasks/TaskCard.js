@@ -29,26 +29,37 @@ class TaskCard extends Component {
         })
         .then(res => {
             this.props.addPost(res.data);
+            window.location.reload();
         }
         ).catch(err => console.log("Complete Task request failed"))
     }
 
     render() {
 
+    let message = this.props.isFinished ? 'Challenge finished, you can\'t complete more tasks!' : ''
+
         if (localStorage.getItem('token')) {
             return (
                 <Popup trigger={
 
-                <div className="task-card">
+                <div className="task-card" onMouseEnter={e => {
+                    if (this.props.isFinished) {
+                        this.refs.displayDescription.textContent = message
+                        this.refs.displayPoints.textContent = ''
+                    }}}
+                    onMouseLeave={e => {
+                        this.refs.displayDescription.textContent = this.props.description
+                        this.refs.displayPoints.textContent = '+'+this.props.points}}
+                    >
                     <a>⚡</a>
                     <div className="task-text-con">
-                        <span className="task-title">{this.props.description}</span>
-                        <span className="task-points">+{this.props.points}</span>
-                    </div>
-                        
+                        <span className="task-title" ref="displayDescription">{this.props.description}</span>
+                        <span className="task-points" ref="displayPoints">+{this.props.points}</span>
+                    </div>                       
                 </div>
 
             } modal closeOnDocumentClick
+                    disabled={this.props.isFinished}
                     contentStyle={{
                         maxWidth: '80%',
                         width: '500px',

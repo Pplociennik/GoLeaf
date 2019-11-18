@@ -1,10 +1,15 @@
 package com.goaleaf.services.servicesImpl;
 
+import com.goaleaf.entities.DTO.HabitDTO;
 import com.goaleaf.entities.Habit;
+import com.goaleaf.entities.Member;
 import com.goaleaf.entities.User;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditImageViewModel;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditUserViewModel;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.RegisterViewModel;
+import com.goaleaf.repositories.MemberRepository;
 import com.goaleaf.repositories.RoleRepository;
+import com.goaleaf.repositories.UserRepository;
 import com.goaleaf.services.HabitService;
 import com.goaleaf.services.MemberService;
 import com.goaleaf.services.UserService;
@@ -12,13 +17,14 @@ import com.goaleaf.validators.UserCredentialsValidator;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.BadCredentialsException;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.EmailExistsException;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.LoginExistsException;
-import com.goaleaf.entities.viewModels.accountsAndAuthorization.RegisterViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.goaleaf.repositories.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -32,6 +38,8 @@ public class UserServiceImpl implements UserService {
     private HabitService habitService;
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private MemberRepository memberRepository;
 
     private UserCredentialsValidator userCredentialsValidator = new UserCredentialsValidator();
 
@@ -144,5 +152,57 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByEmailAddress(String email) {
         return userRepository.findByEmailAddress(email);
+    }
+
+    @Override
+    public Iterable<HabitDTO> getUserFinishedHabits(Integer userID) {
+        Iterable<Member> memberList = memberRepository.findAllByUserID(userID);
+        List<Habit> habits = new ArrayList<>(0);
+
+        for (Member m : memberList) {
+            Habit h = new Habit();
+            h = habitService.getHabitById(m.getHabitID());
+            if (h.getFinished()) {
+                habits.add(h);
+            }
+        }
+
+        Iterable<HabitDTO> result = habitService.convertManyToDTOs(habits);
+        return result;
+    }
+
+    @Override
+    public Iterable<HabitDTO> getAllMyWonHabits(Integer userID) {
+        User user = userRepository.findById(userID);
+        Iterable<Member> members = memberRepository.findAllByUserID(userID);
+        List<Habit> habits = new ArrayList<>(0);
+
+        for (Member m : members) {
+            Habit h = new Habit();
+            h = habitService.getHabitById(m.getHabitID());
+            if (h.getWinner().equals(user.getLogin())) {
+                habits.add(h);
+            }
+        }
+
+        Iterable<HabitDTO> result = habitService.convertManyToDTOs(habits);
+        return result;
+    }
+
+    @Override
+    public Iterable<HabitDTO> getAllMyUnfinishedHabits(Integer userID) {
+        Iterable<Member> memberList = memberRepository.findAllByUserID(userID);
+        List<Habit> habits = new ArrayList<>(0);
+
+        for (Member m : memberList) {
+            Habit h = new Habit();
+            h = habitService.getHabitById(m.getHabitID());
+            if (!h.getFinished()) {
+                habits.add(h);
+            }
+        }
+
+        Iterable<HabitDTO> result = habitService.convertManyToDTOs(habits);
+        return result;
     }
 }
