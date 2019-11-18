@@ -101,19 +101,11 @@ class HabitPage extends Component {
                             <Members habitID={habit.id}/>
                             <AddTask habitID={habit.id} isFinished={habit.isFinished}/>
                             <AddPrize habitID={habit.id} isFinished={habit.isFinished}/>
-                            <Leaderboard habitID={habit.id}/>
+                            <Leaderboard habitID={habit.id} pointsToWin={habit.pointsToWin}/>
                         </div>
                     </section> : null}
-                    {(habit.pointsToWin && !habit.isFinished) ?
-                    <section>
-                        <p>Get {habit.pointsToWin} points to win!</p>
-                    </section> : null}
-                    {(habit.pointsToWin && habit.isFinished) ?
-                    <section>
-                        <p>Challenge finished by {habit.winner}!</p>
-                    </section> : null}
                     <section className="habit-page-dashboard">
-                        {userIsMember ? <AddPost habitID = { habit.id } isFinished={habit.isFinished}/> : null}
+                        {userIsMember ? <AddPost habitID = { habit.id } isFinished={habit.isFinished} pointsToWin={habit.pointsToWin} winner={habit.winner}/> : null}
                     </section>
                 </div>
             )

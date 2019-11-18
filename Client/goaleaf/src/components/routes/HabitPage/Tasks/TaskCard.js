@@ -77,7 +77,6 @@ class TaskCard extends Component {
                         <form className="task-popup-form" onSubmit={e => {this.completeTask(e, this.props.id); close()}}>
                             <span className="task-popup-title">{this.props.description}</span>
                             <span className="task-popup-points">🔥 {this.props.points} pts</span>
-                            <input className="task-popup-input" id="taskComment" type="text" placeholder="Add a comment" autoComplete="off" onChange={this.handleChange} />
                             <button className="btn task-popup-btn" type="submit" value="Complete task">⚡ Task completed</button>
                         </form>
                     </div>

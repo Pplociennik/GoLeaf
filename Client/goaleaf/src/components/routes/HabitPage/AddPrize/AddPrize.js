@@ -53,7 +53,7 @@ class AddPrize extends Component {
 
     render() {
 
-    let button = this.props.isFinished ? <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" disabled><span>Set prize</span></button> : <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" ><span>Set prize</span></button>
+    let button = this.props.isFinished ? <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" disabled><span>🏆 Set prize</span></button> : <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" ><span>🏆 Set prize</span></button>
 
     return (
         <Popup trigger={button} modal closeOnDocumentClick
@@ -80,7 +80,7 @@ class AddPrize extends Component {
                     <span className={this.state.msg === 'Prize set' ? "helper-text green-text" : "helper-text red-text "}>{this.state.msg}</span>
                 </div>
                 <button className="btn" onClick={(e) => this.addPrize(e, this.props.habitID)} type="submit" value="Set prize">
-                    <span>Set prize</span>
+                    <span>Submit</span>
                 </button>
             </form>
             </div>
