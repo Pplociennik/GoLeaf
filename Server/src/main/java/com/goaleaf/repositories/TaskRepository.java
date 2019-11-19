@@ -22,4 +22,6 @@ public interface TaskRepository extends CrudRepository<Task, Integer> {
     Task getById(Integer taskID);
 
     Iterable<Task> findAllByIsCompleted(Boolean isCompleted);
+
+    Iterable<Task> getAllByHabitIDAndExecutorID(Integer habitID, Integer executorID);
 }
