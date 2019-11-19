@@ -11,10 +11,10 @@
     .my-habits-title {
         color: $text-color;
         margin: 0.5em 0.5em;
-        font-size: 2.4em;
+        font-size: 2em;
         font-weight: 200;
         @include md {
-            font-size: 3.4em;
+            font-size: 3em;
         }
     }
     .habit-cards {

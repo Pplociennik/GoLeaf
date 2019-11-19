@@ -5,7 +5,7 @@ import {changeDateFormat} from '../../../js/helpers'
 function HabitCard(props) {
 
     return (
-      <div className={`habit-card ${props.category}`} onClick={ () => props.habitCardClicked(props.id)}>
+      <div className={`habit-card habit-card-${props.status} ${props.category}`} onClick={ () => props.habitCardClicked(props.id)}>
           <h2 className="habit-card-title">{props.title}</h2>
           <div className="habit-card-info-con">
             <div className="habit-card-info">

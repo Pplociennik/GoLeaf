@@ -28,7 +28,7 @@ class TaskCard extends Component {
             "token": localStorage.getItem("token")
         })
         .then(res => {
-            this.props.addPost(res.data);
+            //this.props.addPost(res.data);
             window.location.reload();
         }
         ).catch(err => console.log("Complete Task request failed"))

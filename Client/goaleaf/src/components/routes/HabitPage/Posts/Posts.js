@@ -71,9 +71,6 @@ class Posts extends Component {
                 </div>
             </div>
         }
-        if (!foundPosts) {
-            postsToDisplay = <div className="center" style={{marginTop: '50px'}}>There are no posts yet 💁‍♀️</div>
-        }
 
         return (
                 <section className="posts row">

@@ -43,15 +43,15 @@ class MyHabits extends Component {
         <div>
         <section className="my-habits">
           <h1 className="my-habits-title" >My active challenges</h1>
-          <Habits habitCards={this.state.habitCardsUnfinished} />
-        </section>
-        <section className="my-habits">
-          <h1 className="my-habits-title" >My finished challenges</h1>
-          <Habits habitCards={this.state.habitCardsFinished} />
+          <Habits habitCards={this.state.habitCardsUnfinished} status="active" />
         </section>
         <section className="my-habits">
           <h1 className="my-habits-title" >My won challenges</h1>
-          <Habits habitCards={this.state.habitCardsWon} />
+          <Habits habitCards={this.state.habitCardsWon} status="won" />
+        </section>
+        <section className="my-habits">
+          <h1 className="my-habits-title" >My ended challenges</h1>
+          <Habits habitCards={this.state.habitCardsFinished} status="ended" />
         </section>
         </div>
       )

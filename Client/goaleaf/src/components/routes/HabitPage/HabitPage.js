@@ -69,12 +69,17 @@ class HabitPage extends Component {
     }
 
     render() {
+
         let habit = this.props.habits.find(habit => habit.id === parseInt(this.props.match.params.id));
 
         let userIsMember;
 
         if (habit && this.state.permissions) {
             habit.members.find(member => member === this.props.userLogged) ? userIsMember = true : userIsMember = false;
+            let isAdmin = false;
+            if(this.props.userLogged === habit.creatorID){
+                isAdmin = true;
+            }
             return (
                 <div className={`habit-page ${habit.category}-category`}>
                     <span className="habit-page-header-con">
@@ -99,13 +104,13 @@ class HabitPage extends Component {
                         <div className="habit-page-navigation">
                             <InviteMember habitID={habit.id} />
                             <Members habitID={habit.id}/>
-                            <AddTask habitID={habit.id} isFinished={habit.isFinished}/>
-                            <AddPrize habitID={habit.id} isFinished={habit.isFinished}/>
+                            <AddTask habitID={habit.id} isFinished={habit.isFinished} isAdmin={isAdmin}/>
+                            <AddPrize habitID={habit.id} isFinished={habit.isFinished} isAdmin={isAdmin}/>
                             <Leaderboard habitID={habit.id} pointsToWin={habit.pointsToWin}/>
                         </div>
                     </section> : null}
                     <section className="habit-page-dashboard">
-                        {userIsMember ? <AddPost habitID = { habit.id } isFinished={habit.isFinished} pointsToWin={habit.pointsToWin} winner={habit.winner}/> : null}
+                        {userIsMember ? <AddPost habitID = { habit.id } isFinished={habit.isFinished} pointsToWin={habit.pointsToWin} winner={habit.winner} isAdmin={isAdmin}/> : null}
                     </section>
                 </div>
             )

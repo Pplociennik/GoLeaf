@@ -9,7 +9,9 @@ class AddTask extends Component {
   state = {
     msg: null,
     task: null,
-    taskPoints: 5
+    taskPoints: 5,
+    setOnce: true,
+    days: 1
   }
 
     addTask = (e, id) => {
@@ -31,16 +33,27 @@ class AddTask extends Component {
 
     addTaskPoint = e => {
         e.preventDefault();
-
         if(this.state.taskPoints < 10) {
             this.setState({taskPoints: this.state.taskPoints + 1})
         }
     }
     subtractTaskPoint = e => {
         e.preventDefault();
-
         if(this.state.taskPoints > 1) {
             this.setState({taskPoints: this.state.taskPoints - 1})
+        }
+    }
+
+    addTaskDays = e => {
+        e.preventDefault();
+        if(this.state.days < 14) {
+            this.setState({days: this.state.days + 1})
+        }
+    }
+    subtractTaskDays = e => {
+        e.preventDefault();
+        if(this.state.days > 1) {
+            this.setState({days: this.state.days - 1})
         }
     }
 
@@ -60,12 +73,39 @@ class AddTask extends Component {
         M.AutoInit();
     }
 
+
+    setOnceTrue = e => {
+        this.setState({
+            setOnce: true
+        })
+    }
+
+    setOnceFalse = e => {
+        this.setState({
+            setOnce: false
+        })
+    }
+
     render() {
+    
+    let customRecurrence;
+    if(!this.state.setOnce) {
+        customRecurrence = <div>
+                               <div>
+                                   <button className="task-points-btn task-points-btn-subtract" onClick={ this.subtractTaskDays }>-</button>
+                                   <span className="task-points">every { this.state.days } {this.state.days === 1 ? 'day' : 'days'}</span>
+                                   <button className="task-points-btn task-points-btn-add" onClick={ this.addTaskDays }>+</button>
+                               </div>
+                           </div>
+    }
 
-    let button = this.props.isFinished ? <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" disabled><span>🔥 New Task</span></button> : <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn"><span>🔥 New Task</span></button>
 
+    let addTaskBtn;
+    if(this.props.isAdmin){
+        addTaskBtn = this.props.isFinished ? <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" disabled><span>🔥 New Task</span></button> : <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn"><span>🔥 New Task</span></button>
+    }
     return (
-        <Popup trigger={button} modal closeOnDocumentClick
+        <Popup trigger={addTaskBtn} modal closeOnDocumentClick
             onOpen={ this.clearMsg }
             contentStyle={{
                 maxWidth: '80%',
@@ -85,9 +125,19 @@ class AddTask extends Component {
                 <div className="input-field inline">
                     <input id="task" type="text" placeholder="task description" onChange={ this.handleChange } />
                     <button className="task-points-btn task-points-btn-subtract" onClick={ this.subtractTaskPoint }>-</button>
-                    <span className="task-points">{ this.state.taskPoints }</span>
+                    <span className="task-points">{ this.state.taskPoints } {this.state.taskPoints === 1 ? 'point' : 'points'}</span>
                     <button className="task-points-btn task-points-btn-add" onClick={ this.addTaskPoint }>+</button>
                     <span className={this.state.msg === 'Task added' ? "helper-text green-text" : "helper-text red-text "}>{this.state.msg}</span>
+                </div>
+                <div className="input-field inline task-recurrence-con">
+                    <span className="set-recurrence-title">Set recurrence</span>
+                    <div>
+                        <div>
+                            <button type="button" className={this.state.setOnce ? 'new-task-recurrence-active' : 'new-task-recurrence-inactive'} onClick={this.setOnceTrue}>can finish once</button>
+                            <button type="button" className={!this.state.setOnce ? 'new-task-recurrence-active' : 'new-task-recurrence-inactive'} onClick={this.setOnceFalse}>Custom</button>
+                        </div>
+                        {customRecurrence}
+                    </div>
                 </div>
                 <button className="btn" onClick={(e) => this.addTask(e, this.props.habitID)} type="submit" value="Add Task">
                     <span>Add Task</span>

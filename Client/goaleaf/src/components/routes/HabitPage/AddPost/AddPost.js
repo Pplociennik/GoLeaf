@@ -42,12 +42,13 @@ class AddPost extends Component {
   }
 
   render() {
-
     let tasksToShow;
-    if(!this.props.pointsToWin){
-        tasksToShow = <div className="noTasksInfo">Please set the prize before adding tasks 💪</div>  
+    if(!this.props.isAdmin && !this.props.pointsToWin){
+        tasksToShow = <div className="noTasksInfo">No tasks to complete 🤷‍♂️</div>  
     } else if (this.props.isFinished) {
-    tasksToShow = <div className="noTasksInfo">🏆 Challenge ended, {this.props.winner} has won! 🏆</div>
+    tasksToShow = <div className="noTasksInfo">🏆 Challenge has ended, {this.props.winner} has won! 🏆</div>
+    } else if (!this.props.pointsToWin) {
+        tasksToShow = <div className="noTasksInfo">Please set the prize before adding tasks 💪</div>
     }
     else {  
 

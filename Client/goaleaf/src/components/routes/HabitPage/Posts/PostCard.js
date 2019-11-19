@@ -219,7 +219,6 @@ class PostCard extends Component {
 
                 {this.props.currentUserLogin === this.props.creatorLogin ?
                     <Dropdown trigger={<a href="#!" className='post-card-more-btn dropdown-trigger' data-target={this.props.id}><img src={MoreIcon}></img></a>}>
-                        <a className="dropdown-item dropdown-edit" href="#!" >Edit</a>
                         <a className="dropdown-item dropdown-delete" href="#!" onClick={() => this.props.handlePostCardDeleted(this.props.id)}>Delete</a>
                     </Dropdown>
                     : null}

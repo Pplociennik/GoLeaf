@@ -52,11 +52,12 @@ class AddPrize extends Component {
     }
 
     render() {
-
-    let button = this.props.isFinished ? <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" disabled><span>🏆 Set prize</span></button> : <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" ><span>🏆 Set prize</span></button>
-
+        let addPrizeBtn;
+    if(this.props.isAdmin){
+        addPrizeBtn = this.props.isFinished ? <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" disabled><span>🏆 Set goal</span></button> : <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" ><span>🏆 Set goal</span></button>
+    }
     return (
-        <Popup trigger={button} modal closeOnDocumentClick
+        <Popup trigger={addPrizeBtn} modal closeOnDocumentClick
             onOpen={ this.clearMsg }
             contentStyle={{
                 maxWidth: '80%',
@@ -72,14 +73,14 @@ class AddPrize extends Component {
         <div className="add-task-box">
         <div className="row">
             <form className="col s10 offset-s1  l8 offset-l2 center-align" autoComplete="off">
-                <h4 className="">Set prize</h4>
+                <h4 className="">Set goal</h4>
                 <div className="input-field inline">
                     <button className="task-points-btn task-points-btn-subtract" onClick={ this.subtractPrizePoint }>-</button>
                     <span className="task-points">{ this.state.prizePoints }</span>
                     <button className="task-points-btn task-points-btn-add" onClick={ this.addPrizePoint }>+</button>
-                    <span className={this.state.msg === 'Prize set' ? "helper-text green-text" : "helper-text red-text "}>{this.state.msg}</span>
+                    <span className={this.state.msg === 'Goal set' ? "helper-text green-text" : "helper-text red-text "}>{this.state.msg}</span>
                 </div>
-                <button className="btn" onClick={(e) => this.addPrize(e, this.props.habitID)} type="submit" value="Set prize">
+                <button className="btn" onClick={(e) => this.addPrize(e, this.props.habitID)} type="submit" value="Set goal">
                     <span>Submit</span>
                 </button>
             </form>
