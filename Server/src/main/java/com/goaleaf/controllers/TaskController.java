@@ -1,12 +1,12 @@
 package com.goaleaf.controllers;
 
 import com.goaleaf.entities.DTO.CompleteTaskDTO;
-import com.goaleaf.entities.DTO.PostDTO;
 import com.goaleaf.entities.DTO.TaskDTO;
 import com.goaleaf.entities.Post;
+import com.goaleaf.entities.TasksHistoryEntity;
 import com.goaleaf.entities.viewModels.TaskViewModel;
-import com.goaleaf.entities.viewModels.habitsManaging.postsCreating.NewPostViewModel;
 import com.goaleaf.services.TaskService;
+import com.goaleaf.services.TasksHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +16,9 @@ public class TaskController {
 
     @Autowired
     private TaskService taskService;
+
+    @Autowired
+    private TasksHistoryService tasksHistoryService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public Iterable<TaskViewModel> getAll() {
@@ -62,4 +65,23 @@ public class TaskController {
         return taskService.completeTask(cmp);
     }
 
+    @RequestMapping(value = "/history", method = RequestMethod.GET)
+    public Iterable<TasksHistoryEntity> getAllHabitHistory(@RequestParam Integer habitID) {
+        return tasksHistoryService.getAllHabitHistory(habitID);
+    }
+
+    @RequestMapping(value = "/history/user", method = RequestMethod.GET)
+    public Iterable<TasksHistoryEntity> getUserHabitHistory(@RequestParam Integer habitID, Integer userID) {
+        return tasksHistoryService.getUserHabitHistory(habitID, userID);
+    }
+
+    @RequestMapping(value = "/history/task", method = RequestMethod.GET)
+    public Iterable<TasksHistoryEntity> getAllTaskHistory(@RequestParam Integer taskID) {
+        return tasksHistoryService.getAllByTaskID(taskID);
+    }
+
+    @RequestMapping(value = "/list/available", method = RequestMethod.GET)
+    public Iterable<TaskViewModel> getAvailableTasks(@RequestParam Integer habitID, Integer userID) {
+        return taskService.getAvailableTasks(habitID, userID);
+    }
 }
