@@ -34,11 +34,11 @@ class Tasks extends Component {
             taskCards.push(<TaskCard key={task.id} id={task.id} description={task.description} points={task.points} creator={task.creator} habitID={this.props.habitID} isFinished={this.props.isFinished}/>)
 
         })
-
+        taskCards.reverse();
         let tasksToDisplay = taskCards;
 
         if (!foundTasks) {
-            tasksToDisplay = <li style={{display: 'flex', justifyContent: 'center', marginTop: '110px'}}>There are no tasks yet 🤷‍♂️</li>
+            tasksToDisplay = <li style={{display: 'flex', justifyContent: 'center', marginTop: '60px'}}>There are no tasks yet 🤷‍♂️</li>
         } 
 
         if (localStorage.getItem('token')) {

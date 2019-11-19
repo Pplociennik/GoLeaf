@@ -156,15 +156,22 @@ class PostCard extends Component {
                           </div>
         } else {
             postContent = <div className="post-task-content">
-                             <p className="post-task-header">🎈 Task completed 🎈</p>
-                             <p className="post-task-points">+{this.props.taskPoints} pts</p>
                              <p className="post-task-text">{this.props.postText}</p>
-                             <p className="post-task-comment">{this.props.userComment}</p>
+                             <p className="post-task-points">+{this.props.taskPoints} pts</p>
                           </div>
         }
 
+        let taskType;
+        if(this.props.postType === 'Task'){
+            taskType = 'post-task-card'
+        } else if (this.props.postType === 'HabitFinished') {
+            taskType = 'post-won-task-card'
+        } else {
+            taskType = 'post-card'
+        }
+
         return (
-            <div className={this.props.postType === 'Task' ? "post-task-card" : "post-card"}>
+            <div className={ taskType }>
                 <div className="post-owner">
                     <img src={TempPic} alt="profile"></img>
                     <div className="post-card-owner-info">

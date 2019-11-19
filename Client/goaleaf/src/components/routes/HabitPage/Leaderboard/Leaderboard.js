@@ -32,7 +32,12 @@ class Leaderboard extends Component {
 
             foundMembers = true;
             let member = this.state.members[pos];
-            memberCards.push(<LeaderboardCard key={member.id} position={pos} userID={member.userID} userLogin={member.userLogin} profilePic={member.imgName} points={member.points}/>)
+
+            let scorePercentage = Math.round(member.points / this.props.pointsToWin * 100);
+            console.log(scorePercentage);
+            
+
+            memberCards.push(<LeaderboardCard key={member.id} scorePercentage={scorePercentage} position={pos} userID={member.userID} userLogin={member.userLogin} profilePic={member.imgName} points={member.points}/>)
         
         })
 
@@ -47,7 +52,7 @@ class Leaderboard extends Component {
                 <Popup trigger={<button className="btn waves-effect waves-light invite-user-btn habit-page-navigation-btn" ><span>⚡ Leaderboard</span></button>} modal closeOnDocumentClick
                     contentStyle={{
                         maxWidth: '80%',
-                        width: '500px',
+                        width: '600px',
                         backgroundColor: '#f2f2f2',
                         borderRadius: '30px',
                         border: "none"
@@ -57,7 +62,10 @@ class Leaderboard extends Component {
                     }}
                 >
                     <div className="members-section row">
-                        <h4>Leaderboard</h4>
+                        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                            <h4>Leaderboard</h4>
+                            <span style={{fontSize: '1.6em'}}>{this.props.pointsToWin}pts 🏁</span>
+                        </div>
                         <ul className="collection">
                             {membersToDisplay}
                         </ul>

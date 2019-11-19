@@ -42,6 +42,23 @@ class AddPost extends Component {
   }
 
   render() {
+
+    let tasksToShow;
+    if(!this.props.pointsToWin){
+        tasksToShow = <div className="noTasksInfo">Please set the prize before adding tasks 💪</div>  
+    } else if (this.props.isFinished) {
+    tasksToShow = <div className="noTasksInfo">🏆 Challenge ended, {this.props.winner} has won! 🏆</div>
+    }
+    else {  
+
+        tasksToShow = <div>
+                        <div className="pointsToWinInfo" style={{fontSize: "2em"}}>🏁{this.props.pointsToWin} points 🏁</div>
+                        <h2 className="tasks-title">Complete task</h2>
+                        <Tasks habitID={this.props.habitID} isFinished={this.props.isFinished}/>
+                      </div>
+    }
+
+
     
     return (
         <div className="add-post-con row">
@@ -69,8 +86,7 @@ class AddPost extends Component {
                 </form>
             </div>
             <div id="achievement" className="col s10 offset-s1 m8 offset-m2">
-                <h2 className="tasks-title">Complete task</h2>
-                <Tasks habitID={this.props.habitID} isFinished={this.props.isFinished}/>
+                {tasksToShow}
             </div>
             <Posts habitID={this.props.habitID} showTasks={this.state.showTasks}/>
         </div>
