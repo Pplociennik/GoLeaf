@@ -30,4 +30,6 @@ public interface TaskService {
 
     Post completeTask(CompleteTaskDTO cmp);
 
+    Iterable<TaskViewModel> getAvailableTasks(Integer habitID, Integer userID);
+
 }

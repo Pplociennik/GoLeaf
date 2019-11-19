@@ -3,6 +3,7 @@ package com.goaleaf.services.servicesImpl;
 import com.goaleaf.entities.DTO.CompleteTaskDTO;
 import com.goaleaf.entities.DTO.TaskDTO;
 import com.goaleaf.entities.*;
+import com.goaleaf.entities.enums.Frequency;
 import com.goaleaf.entities.enums.PostTypes;
 import com.goaleaf.entities.viewModels.TaskViewModel;
 import com.goaleaf.repositories.*;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +40,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private TaskHistoryRepository taskHistoryRepository;
 
 
     @Override
@@ -82,6 +87,20 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public Iterable<TaskViewModel> getAvailableTasks(Integer habitID, Integer userID) {
+        Iterable<Task> input = taskRepository.findAllByIsCompleted(true);
+        List<TaskViewModel> output = new ArrayList<>(0);
+
+        for (Task t : input) {
+            if (t.getHabitID() == habitID && t.getExecutorID() == userID) {
+                output.add(convertToViewModel(t));
+            }
+        }
+        Iterable<TaskViewModel> result = output;
+        return result;
+    }
+
+    @Override
     public Integer countUserTasks(Integer userID) {
         return taskRepository.countAllByCreatorID(userID);
     }
@@ -97,7 +116,7 @@ public class TaskServiceImpl implements TaskService {
                 .setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8))
                 .parseClaimsJws(newTask.getToken()).getBody();
 
-        Task newT = new Task(Integer.parseInt(claims.getSubject()), newTask.getHabitID(), newTask.getDescription(), newTask.getPoints(), false);
+        Task newT = new Task(Integer.parseInt(claims.getSubject()), newTask.getHabitID(), newTask.getDescription(), newTask.getPoints(), false, newTask.getFrequency(), Integer.parseInt(claims.getSubject()), newTask.getDaysInterval());
 
         Task returned = taskRepository.save(newT);
 
@@ -128,38 +147,54 @@ public class TaskServiceImpl implements TaskService {
             habit.setWinner(user.getLogin());
             habit.setFinished(true);
 
-            task.setCompleted(true);
-            taskRepository.save(task);
+            Post post = setTaskAsCompleted(task, user, cmp, PostTypes.Task, habit, member);
+            TasksHistoryEntity ent = createNewHistoryEntity(user, habit, task);
 
-            Post newPost = new Post();
-            newPost.setPostType(PostTypes.HabitFinished);
-            newPost.setCreatorLogin(user.getLogin());
-            newPost.setDateOfAddition(new Date());
-            newPost.setHabitID(cmp.getHabitID());
-            newPost.setPostText("User " + user.getLogin() + " has won the competition " + habit.getHabitTitle() + " gaining " + member.getPoints() + " points! Congratulations!");
-            newPost.setUserComment(cmp.getComment());
-            newPost.setTaskPoints(task.getPoints());
-            Post aS = postRepository.save(newPost);
+            Post result = setTaskAsCompleted(task, user, cmp, PostTypes.HabitFinished, habit, member);
 
             //PostDTO dto = new PostDTO(aS.getCreatorLogin(), aS.getPostText(), aS.getPostType(), aS.getDateOfAddition());
-            return aS;
+            return result;
         }
 
-        task.setCompleted(true);
+        Post result = setTaskAsCompleted(task, user, cmp, PostTypes.Task, habit, member);
+
+        //PostDTO dto = new PostDTO(aS.getCreatorLogin(), aS.getPostText(), aS.getPostType(), aS.getDateOfAddition());
+        return result;
+    }
+
+    private Post setTaskAsCompleted(Task task, User user, CompleteTaskDTO cmp, PostTypes type, Habit habit, Member member) {
+
+        if (task.getFrequency().equals(Frequency.Daily)) {
+            task.setCompleted(false);
+        } else {
+            task.setCompleted(true);
+        }
+        task.setExecutor(user.getLogin());
+        task.setLastDone(new Date());
         taskRepository.save(task);
 
         Post newPost = new Post();
-        newPost.setPostType(PostTypes.Task);
+        newPost.setPostType(type);
         newPost.setCreatorLogin(user.getLogin());
         newPost.setDateOfAddition(new Date());
         newPost.setHabitID(cmp.getHabitID());
-        newPost.setPostText(task.getDescription());
+        newPost.setPostText((type.equals(PostTypes.Task) ? task.getDescription() : "User " + user.getLogin() + " has won the competition " + habit.getHabitTitle() + " gaining " + member.getPoints() + " points! Congratulations!"));
+        newPost.setUserComment(cmp.getComment());
         newPost.setUserComment(cmp.getComment());
         newPost.setTaskPoints(task.getPoints());
-        Post aS = postRepository.save(newPost);
+        return postRepository.save(newPost);
+    }
 
-        //PostDTO dto = new PostDTO(aS.getCreatorLogin(), aS.getPostText(), aS.getPostType(), aS.getDateOfAddition());
-        return aS;
+    private TasksHistoryEntity createNewHistoryEntity(User user, Habit habit, Task task) {
+        TasksHistoryEntity ent = new TasksHistoryEntity();
+        ent.setExecutionDate(new Date());
+        ent.setHabitID(habit.getId());
+        ent.setPoints(task.getPoints());
+        ent.setTaskDescription(task.getDescription());
+        ent.setTaskID(task.getId());
+        ent.setUserID(user.getId());
+        ent.setUserName(user.getLogin());
+        return taskHistoryRepository.save(ent);
     }
 
     @Override
@@ -171,7 +206,20 @@ public class TaskServiceImpl implements TaskService {
         List resultList = new ArrayList<TaskViewModel>(0);
         for (Task t : input) {
             User u = userRepository.findById(t.getCreatorID());
-            TaskViewModel model = new TaskViewModel(t.getId(), u.getLogin(), t.getDescription(), t.getPoints());
+            Calendar c = new Calendar.Builder()
+                    .build();
+            c.setTime(t.getLastDone());
+            c.add(Calendar.DATE, 1);
+            Date refreshDate = c.getTime();
+
+            Boolean active = false;
+            if (t.getFrequency().equals(Frequency.Daily)) {
+                active = new Date().after(refreshDate);
+            } else {
+                active = false;
+            }
+
+            TaskViewModel model = new TaskViewModel(t.getId(), u.getLogin(), t.getDescription(), t.getPoints(), t.getFrequency(), refreshDate, active, u.getLogin(), t.getDaysInterval());
             resultList.add(model);
         }
         Iterable<TaskViewModel> outputList = resultList;
@@ -180,6 +228,19 @@ public class TaskServiceImpl implements TaskService {
 
     TaskViewModel convertToViewModel(Task task) {
         User u = userRepository.findById(task.getCreatorID());
-        return new TaskViewModel(task.getId(), u.getLogin(), task.getDescription(), task.getPoints());
+
+        Calendar c = new Calendar.Builder()
+                .build();
+        c.setTime(task.getLastDone());
+        c.add(Calendar.DATE, 1);
+        Date refreshDate = c.getTime();
+
+        Boolean active = false;
+        if (task.getFrequency().equals(Frequency.Daily)) {
+            active = new Date().after(refreshDate);
+        } else {
+            active = false;
+        }
+        return new TaskViewModel(task.getId(), u.getLogin(), task.getDescription(), task.getPoints(), task.getFrequency(), refreshDate, active, u.getLogin(), task.getDaysInterval());
     }
 }
