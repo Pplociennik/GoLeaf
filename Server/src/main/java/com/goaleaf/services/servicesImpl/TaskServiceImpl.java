@@ -226,11 +226,7 @@ public class TaskServiceImpl implements TaskService {
         Date refreshDate = c.getTime();
 
         Boolean active = false;
-        if (task.getFrequency().equals(Frequency.Daily)) {
             active = new Date().after(refreshDate);
-        } else {
-            active = false;
-        }
 
         return new TaskViewModel(task.getId(), u.getLogin(), task.getDescription(), task.getPoints(), task.getFrequency(), task.getDaysInterval(), refreshDate, active, task.getExecutor());
     }
