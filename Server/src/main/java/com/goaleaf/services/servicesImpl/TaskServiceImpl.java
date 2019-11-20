@@ -172,6 +172,7 @@ public class TaskServiceImpl implements TaskService {
             task.setCompleted(true);
         }
         task.setExecutor(user.getLogin());
+        task.setExecutorID(user.getId());
         task.setLastDone(new Date());
         taskRepository.save(task);
 
@@ -184,6 +185,7 @@ public class TaskServiceImpl implements TaskService {
         newPost.setUserComment(cmp.getComment());
         newPost.setUserComment(cmp.getComment());
         newPost.setTaskPoints(task.getPoints());
+        newPost.setTaskID(task.getId());
         return postRepository.save(newPost);
     }
 

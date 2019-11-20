@@ -54,6 +54,8 @@ public class Post {
     @Column
     private Integer taskPoints;
 
+    private Integer taskID;
+
 
     public Post() {
         this.counter_CLAPPING = 0;
@@ -164,5 +166,13 @@ public class Post {
 
     public void setTaskPoints(Integer taskPoints) {
         this.taskPoints = taskPoints;
+    }
+
+    public Integer getTaskID() {
+        return taskID;
+    }
+
+    public void setTaskID(Integer taskID) {
+        this.taskID = taskID;
     }
 }
