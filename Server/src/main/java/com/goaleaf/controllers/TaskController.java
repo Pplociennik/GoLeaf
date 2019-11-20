@@ -8,6 +8,7 @@ import com.goaleaf.entities.viewModels.TaskViewModel;
 import com.goaleaf.services.TaskService;
 import com.goaleaf.services.TasksHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -83,5 +84,10 @@ public class TaskController {
     @RequestMapping(value = "/list/available", method = RequestMethod.GET)
     public Iterable<TaskViewModel> getAvailableTasks(@RequestParam Integer habitID, Integer userID) {
         return taskService.getAvailableTasks(habitID, userID);
+    }
+
+    @RequestMapping(value = "task/remove", method = RequestMethod.DELETE)
+    public HttpStatus removeTaskFromDatabase(@RequestParam Integer taskID) {
+        return taskService.removeTaskByID(taskID);
     }
 }
