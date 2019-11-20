@@ -7,6 +7,7 @@ import com.goaleaf.entities.Post;
 import com.goaleaf.entities.Task;
 import com.goaleaf.entities.viewModels.TaskViewModel;
 import com.goaleaf.entities.viewModels.habitsManaging.postsCreating.NewPostViewModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,5 +32,7 @@ public interface TaskService {
     Post completeTask(CompleteTaskDTO cmp);
 
     Iterable<TaskViewModel> getAvailableTasks(Integer habitID, Integer userID);
+
+    HttpStatus removeTaskByID(Integer taskID);
 
 }

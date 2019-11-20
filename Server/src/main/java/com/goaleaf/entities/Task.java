@@ -37,6 +37,8 @@ public class Task {
 
     private Integer daysInterval;
 
+    private Date creationDate;
+
 
     public Task() {
     }
@@ -52,6 +54,7 @@ public class Task {
         this.executor = "";
         this.executorID = executorID;
         this.daysInterval = daysInterval;
+        this.creationDate = new Date();
     }
 
     public Integer getId() {
@@ -140,5 +143,13 @@ public class Task {
 
     public void setDaysInterval(Integer daysInterval) {
         this.daysInterval = daysInterval;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 }

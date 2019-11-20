@@ -13,11 +13,10 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -246,6 +245,21 @@ public class TaskServiceImpl implements TaskService {
         } else {
             active = false;
         }
+
+        if (task.getCreationDate().equals(new Date()) && task.getLastDone().equals(new Date(Long.MIN_VALUE))) {
+            active = true;
+        }
+
         return new TaskViewModel(task.getId(), u.getLogin(), task.getDescription(), task.getPoints(), task.getFrequency(), task.getDaysInterval(), refreshDate, active, task.getExecutor());
+    }
+
+    @Override
+    public HttpStatus removeTaskByID(Integer taskID) {
+        taskRepository.delete(taskID);
+
+        if (taskRepository.getById(taskID) == null) {
+            return HttpStatus.OK;
+        }
+        return HttpStatus.INTERNAL_SERVER_ERROR;
     }
 }
