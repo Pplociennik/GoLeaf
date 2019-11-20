@@ -55,7 +55,7 @@ public class Task {
         Calendar c = Calendar.getInstance();
 
         c.setTime(new Date());
-        c.add(Calendar.DATE, -2);
+        c.add(Calendar.DATE, -20);
         Date refreshDate = c.getTime();
 
         this.lastDone = refreshDate;
