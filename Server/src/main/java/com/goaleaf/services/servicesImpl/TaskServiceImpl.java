@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -206,10 +208,11 @@ public class TaskServiceImpl implements TaskService {
         List resultList = new ArrayList<TaskViewModel>(0);
         for (Task t : input) {
             User u = userRepository.findById(t.getCreatorID());
-            Calendar c = new Calendar.Builder()
-                    .build();
+
+            Calendar c = Calendar.getInstance();
+
             c.setTime(t.getLastDone());
-            c.add(Calendar.DATE, 1);
+            c.add(Calendar.DAY_OF_MONTH, t.getDaysInterval());
             Date refreshDate = c.getTime();
 
             Boolean active = false;
@@ -219,7 +222,7 @@ public class TaskServiceImpl implements TaskService {
                 active = false;
             }
 
-            TaskViewModel model = new TaskViewModel(t.getId(), u.getLogin(), t.getDescription(), t.getPoints(), t.getFrequency(), refreshDate, active, u.getLogin(), t.getDaysInterval());
+            TaskViewModel model = new TaskViewModel(t.getId(), u.getLogin(), t.getDescription(), t.getPoints(), t.getFrequency(), t.getDaysInterval(), refreshDate, active, t.getExecutor());
             resultList.add(model);
         }
         Iterable<TaskViewModel> outputList = resultList;
@@ -229,10 +232,10 @@ public class TaskServiceImpl implements TaskService {
     TaskViewModel convertToViewModel(Task task) {
         User u = userRepository.findById(task.getCreatorID());
 
-        Calendar c = new Calendar.Builder()
-                .build();
+        Calendar c = Calendar.getInstance();
+
         c.setTime(task.getLastDone());
-        c.add(Calendar.DATE, 1);
+        c.add(Calendar.DAY_OF_MONTH, task.getDaysInterval());
         Date refreshDate = c.getTime();
 
         Boolean active = false;
@@ -241,6 +244,6 @@ public class TaskServiceImpl implements TaskService {
         } else {
             active = false;
         }
-        return new TaskViewModel(task.getId(), u.getLogin(), task.getDescription(), task.getPoints(), task.getFrequency(), refreshDate, active, u.getLogin(), task.getDaysInterval());
+        return new TaskViewModel(task.getId(), u.getLogin(), task.getDescription(), task.getPoints(), task.getFrequency(), task.getDaysInterval(), refreshDate, active, task.getExecutor());
     }
 }

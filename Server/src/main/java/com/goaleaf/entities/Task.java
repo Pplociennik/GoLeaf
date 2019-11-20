@@ -48,7 +48,7 @@ public class Task {
         this.points = points;
         this.isCompleted = isCompleted;
         this.frequency = frequency;
-        this.lastDone = new Date(0);
+        this.lastDone = new Date(Long.MIN_VALUE);
         this.executor = "";
         this.executorID = executorID;
         this.daysInterval = daysInterval;
