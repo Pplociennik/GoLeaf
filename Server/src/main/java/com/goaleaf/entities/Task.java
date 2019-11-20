@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.goaleaf.entities.enums.Frequency;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
@@ -50,7 +51,14 @@ public class Task {
         this.points = points;
         this.isCompleted = isCompleted;
         this.frequency = frequency;
-        this.lastDone = new Date(Long.MIN_VALUE);
+
+        Calendar c = Calendar.getInstance();
+
+        c.setTime(new Date());
+        c.add(Calendar.DATE, -2);
+        Date refreshDate = c.getTime();
+
+        this.lastDone = refreshDate;
         this.executor = "";
         this.executorID = executorID;
         this.daysInterval = daysInterval;

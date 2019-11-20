@@ -208,29 +208,15 @@ public class TaskServiceImpl implements TaskService {
     Iterable<TaskViewModel> convertToViewModel(Iterable<Task> input) {
         List resultList = new ArrayList<TaskViewModel>(0);
         for (Task t : input) {
-            User u = userRepository.findById(t.getCreatorID());
-
-            Calendar c = Calendar.getInstance();
-
-            c.setTime(t.getLastDone());
-            c.add(Calendar.DAY_OF_MONTH, t.getDaysInterval());
-            Date refreshDate = c.getTime();
-
-            Boolean active = false;
-            if (t.getFrequency().equals(Frequency.Daily)) {
-                active = new Date().after(refreshDate);
-            } else {
-                active = false;
-            }
-
-            TaskViewModel model = new TaskViewModel(t.getId(), u.getLogin(), t.getDescription(), t.getPoints(), t.getFrequency(), t.getDaysInterval(), refreshDate, active, t.getExecutor());
+            TaskViewModel model = convertToViewModel(t);
+            //TaskViewModel model = new TaskViewModel(t.getId(), u.getLogin(), t.getDescription(), t.getPoints(), t.getFrequency(), t.getDaysInterval(), refreshDate, active, t.getExecutor());
             resultList.add(model);
         }
         Iterable<TaskViewModel> outputList = resultList;
         return outputList;
     }
 
-    TaskViewModel convertToViewModel(Task task) {
+    public TaskViewModel convertToViewModel(Task task) {
         User u = userRepository.findById(task.getCreatorID());
 
         Calendar c = Calendar.getInstance();
@@ -244,10 +230,6 @@ public class TaskServiceImpl implements TaskService {
             active = new Date().after(refreshDate);
         } else {
             active = false;
-        }
-
-        if (task.getCreationDate().equals(new Date()) && task.getLastDone().equals(new Date(Long.MIN_VALUE))) {
-            active = true;
         }
 
         return new TaskViewModel(task.getId(), u.getLogin(), task.getDescription(), task.getPoints(), task.getFrequency(), task.getDaysInterval(), refreshDate, active, task.getExecutor());
