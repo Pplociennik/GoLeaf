@@ -72,5 +72,11 @@ public class MemberServiceImpl implements MemberService {
         return member.getPoints();
     }
 
+    @Override
+    public Integer getLeaderPoints(Integer habitID) {
+        Member member = memberRepository.getFirstByHabitIDOrderByPointsDesc(habitID);
+        return member.getPoints();
+    }
+
 
 }
