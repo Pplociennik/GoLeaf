@@ -30,7 +30,7 @@ class AddPrize extends Component {
     subtractPrizePoint = e => {
         e.preventDefault();
 
-        if(this.state.prizePoints > 1) {
+        if(this.state.prizePoints > 1 && this.state.prizePoints ) {
             this.setState({prizePoints: this.state.prizePoints - 1})
         }
     }
@@ -46,19 +46,26 @@ class AddPrize extends Component {
             msg: null
         })
     }
+    clearMsg = () => {
+        this.setState({
+            prizePoints: this.props.pointsToWin
+        })
+    }
 
     componentDidMount() {
         M.AutoInit();
+            this.setState({prizePoints: this.props.pointsToWin})
     }
 
     render() {
         let addPrizeBtn;
     if(this.props.isAdmin){
-        addPrizeBtn = this.props.isFinished ? <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" disabled><span>🏆 Set goal</span></button> : <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" ><span>🏆 Set goal</span></button>
+    addPrizeBtn = this.props.isFinished ? <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" disabled><span>🏆 set goal</span></button> : <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" ><span>🏆 {this.state.prizePoints < 1 ? 'set' : 'update'} goal</span></button>
     }
     return (
         <Popup trigger={addPrizeBtn} modal closeOnDocumentClick
             onOpen={ this.clearMsg }
+            onClose={ this.clearPoints }
             contentStyle={{
                 maxWidth: '80%',
                 width: '500px',

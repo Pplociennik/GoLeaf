@@ -10,7 +10,8 @@ class AddPost extends Component {
 
   state = {
       postText: '',
-      showTasks: true
+      showTasks: true,
+      userPoints: 0
 
   }
 
@@ -41,7 +42,17 @@ class AddPost extends Component {
     this.setState({[e.target.id]: e.target.value})
   }
 
+  componentDidMount() {
+    axios.get(`/api/members/member/points?habitsID=${this.props.habitID}&userID=${this.props.user}`)
+    .then(res => {
+        this.setState({userPoints: res.data});
+    }
+    ).catch(err => console.log(err.response.data.message))
+  }
+
   render() {
+
+
     let tasksToShow;
     if(!this.props.isAdmin && !this.props.pointsToWin){
         tasksToShow = <div className="noTasksInfo">No tasks to complete 🤷‍♂️</div>  
@@ -53,7 +64,7 @@ class AddPost extends Component {
     else {  
 
         tasksToShow = <div>
-                        <div className="pointsToWinInfo" style={{fontSize: "2em"}}>🏁{this.props.pointsToWin} points 🏁</div>
+    <div className="pointsToWinInfo" style={{fontSize: "2em"}}>{this.state.userPoints} / {this.props.pointsToWin} pts 🏁</div>
                         <h2 className="tasks-title">Complete task</h2>
                         <Tasks habitID={this.props.habitID} isFinished={this.props.isFinished}/>
                       </div>

@@ -105,12 +105,12 @@ class HabitPage extends Component {
                             <InviteMember habitID={habit.id} />
                             <Members habitID={habit.id}/>
                             <AddTask habitID={habit.id} isFinished={habit.isFinished} isAdmin={isAdmin}/>
-                            <AddPrize habitID={habit.id} isFinished={habit.isFinished} isAdmin={isAdmin}/>
+                            <AddPrize habitID={habit.id} isFinished={habit.isFinished} isAdmin={isAdmin} pointsToWin={habit.pointsToWin}/>
                             <Leaderboard habitID={habit.id} pointsToWin={habit.pointsToWin}/>
                         </div>
                     </section> : null}
                     <section className="habit-page-dashboard">
-                        {userIsMember ? <AddPost habitID = { habit.id } isFinished={habit.isFinished} pointsToWin={habit.pointsToWin} winner={habit.winner} isAdmin={isAdmin}/> : null}
+                        {userIsMember ? <AddPost habitID = { habit.id } user={this.props.userLogged} isFinished={habit.isFinished} pointsToWin={habit.pointsToWin} winner={habit.winner} isAdmin={isAdmin}/> : null}
                     </section>
                 </div>
             )

@@ -13,7 +13,7 @@ class Tasks extends Component {
     }
 
     componentDidMount() {
-        axios.get(`/api/tasks/habit?habitID=${this.props.habitID}`)
+        axios.get(`/api/tasks/list/available?habitID=${this.props.habitID}&userID=${this.props.userLogged}`)
             .then(res => {
                 this.setState({
                     tasks: res.data
@@ -24,6 +24,10 @@ class Tasks extends Component {
     render() {
 
         let tasks = this.state.tasks;
+        tasks.reverse();
+        tasks.sort((b, a) => (a.active > b.active) ? 1 : ((b.active > a.active) ? -1 : 0));
+        console.log(tasks);
+
 
         let foundTasks = false;
         let taskCards = [];
@@ -31,10 +35,10 @@ class Tasks extends Component {
         tasks.forEach(task => {
 
             foundTasks = true;
-            taskCards.push(<TaskCard key={task.id} id={task.id} description={task.description} points={task.points} creator={task.creator} habitID={this.props.habitID} isFinished={this.props.isFinished}/>)
-
+            if(!(!task.active && task.frequency === 'Once')){
+                taskCards.push(<TaskCard key={task.id} id={task.id} description={task.description} points={task.points} creator={task.creator} habitID={this.props.habitID} isFinished={this.props.isFinished} active={task.active} frequency={task.frequency} days={task.daysInterval} refreshDate={task.refreshDate}/>)
+            }
         })
-        taskCards.reverse();
         let tasksToDisplay = taskCards;
 
         if (!foundTasks) {

@@ -10,7 +10,7 @@ class AddTask extends Component {
     msg: null,
     task: null,
     taskPoints: 5,
-    setOnce: true,
+    frequency: "Once",
     days: 1
   }
 
@@ -20,6 +20,8 @@ class AddTask extends Component {
         if (this.state.task !== null){
             axios.post('/api/tasks/add', {
                 "description": this.state.task,
+                "frequency": this.state.frequency,
+                "daysInterval": this.state.days,
                 "habitID": id,
                 "points": this.state.taskPoints,
                 "token": localStorage.getItem("token")
@@ -76,20 +78,20 @@ class AddTask extends Component {
 
     setOnceTrue = e => {
         this.setState({
-            setOnce: true
+            frequency: "Once"
         })
     }
 
     setOnceFalse = e => {
         this.setState({
-            setOnce: false
+            frequency: "Daily"
         })
     }
 
     render() {
     
     let customRecurrence;
-    if(!this.state.setOnce) {
+    if(this.state.frequency === 'Daily') {
         customRecurrence = <div>
                                <div>
                                    <button className="task-points-btn task-points-btn-subtract" onClick={ this.subtractTaskDays }>-</button>
@@ -133,8 +135,8 @@ class AddTask extends Component {
                     <span className="set-recurrence-title">Set recurrence</span>
                     <div>
                         <div>
-                            <button type="button" className={this.state.setOnce ? 'new-task-recurrence-active' : 'new-task-recurrence-inactive'} onClick={this.setOnceTrue}>can finish once</button>
-                            <button type="button" className={!this.state.setOnce ? 'new-task-recurrence-active' : 'new-task-recurrence-inactive'} onClick={this.setOnceFalse}>Custom</button>
+                            <button type="button" className={this.state.frequency === 'Once' ? 'new-task-recurrence-active' : 'new-task-recurrence-inactive'} onClick={this.setOnceTrue}>can finish once</button>
+                            <button type="button" className={this.state.frequency === 'Daily' ? 'new-task-recurrence-active' : 'new-task-recurrence-inactive'} onClick={this.setOnceFalse}>custom</button>
                         </div>
                         {customRecurrence}
                     </div>

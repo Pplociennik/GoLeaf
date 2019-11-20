@@ -1,7 +1,10 @@
+@import './../../../../global-styles.scss';
+
 .task-card {
 
-    border: 2px solid #CAC531;
-    color: #000;    
+    min-height: 90px;
+    border-left: 20px solid #CAC531;
+    color: #000;
     margin: 1.2em 3em;
     padding: 0.4em;
     border-radius: 20px;
@@ -23,7 +26,7 @@
         align-items: center;
     }
     .task-title {
-        margin-left: 1em;
+        margin-left: 0.6em;
         max-width: 70%;
         overflow: hidden;
     }
@@ -32,10 +35,14 @@
         margin-right: 10px;
         margin-left: 20px;
         font-size: 1.4em;
-        letter-spacing: 1px;
         i {
             font-size: 0.6em;
         }
+    }
+    .task-card-frequency, .task-card-date {
+        font-size: 0.7em;
+        margin-left: 10px;
+        color: lighten($text-color, 20%);
     }
 }
 .task-card:hover {
@@ -45,6 +52,15 @@
     background: -webkit-linear-gradient(to right, #CAC531, #F3F9A7);
     background: linear-gradient(to right, #CAC531, #F3F9A7);
     color: #fff;
+}
+
+.task-card-inactive {
+    opacity: 0.7;
+    border-left: 20px solid $text-color;
+}
+.task-card-inactive:hover {
+    background: #fff;
+    color: $text-color;
 }
 
 .task-popup {

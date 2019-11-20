@@ -6,6 +6,7 @@ import Popup from "reactjs-popup"
 import './TaskCard.scss';
 import {addPost} from './../../../../js/state';
 import M from "materialize-css";
+import {changeDateFormat1} from '../../../../js/helpers';
 
 class TaskCard extends Component {
 
@@ -36,26 +37,37 @@ class TaskCard extends Component {
 
     render() {
 
-    let message = this.props.isFinished ? 'Challenge finished, you can\'t complete more tasks!' : ''
+        let frequency;
+        let date;
+
+        if(this.props.frequency === 'Once') {
+            frequency = <span title="This task can be done once" className="task-card-frequency">🔁 once</span>
+        } else {
+        frequency = <span title="Task recurrence" className="task-card-frequency">🔁 every {this.props.days} {this.props.days === 1 ? 'day' : 'days'}</span>
+        }
+
+        if(this.props.frequency === 'Daily' && !this.props.active) {
+            date = <span title="On this day task will be active again" className="task-card-date">📆 {changeDateFormat1(this.props.refreshDate)}</span>
+        }
+
+        let message = this.props.isFinished ? 'Challenge finished, you can\'t complete more tasks!' : ''
 
         if (localStorage.getItem('token')) {
             return (
                 <Popup trigger={
 
-                <div className="task-card" onMouseEnter={e => {
-                    if (this.props.isFinished) {
-                        this.refs.displayDescription.textContent = message
-                        this.refs.displayPoints.textContent = ''
-                    }}}
-                    onMouseLeave={e => {
-                        this.refs.displayDescription.textContent = this.props.description
-                        this.refs.displayPoints.textContent = '+'+this.props.points}}
-                    >
-                    <a>⚡</a>
-                    <div className="task-text-con">
-                        <span className="task-title" ref="displayDescription">{this.props.description}</span>
-                        <span className="task-points" ref="displayPoints">+{this.props.points}</span>
-                    </div>                       
+                <div className={this.props.active ? 'task-card' : 'task-card task-card-inactive'}>
+                        <div className="task-text-con">
+                            <div>
+                                <span className="task-title">{this.props.description}</span>
+                                <div>
+                                    {frequency}
+                                    {date}
+                                </div>
+                                
+                            </div>
+                        </div>  
+                        <div className="task-points">+{this.props.points}</div>                     
                 </div>
 
             } modal closeOnDocumentClick
@@ -77,7 +89,7 @@ class TaskCard extends Component {
                         <form className="task-popup-form" onSubmit={e => {this.completeTask(e, this.props.id); close()}}>
                             <span className="task-popup-title">{this.props.description}</span>
                             <span className="task-popup-points">🔥 {this.props.points} pts</span>
-                            <button className="btn task-popup-btn" type="submit" value="Complete task">⚡ Task completed</button>
+                            <button disabled={this.props.active ? '' : 'disabled'} className="btn task-popup-btn" type="submit" value="Complete task">⚡ Task completed</button>
                         </form>
                     </div>
                     )}
