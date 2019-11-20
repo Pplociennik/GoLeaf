@@ -28,4 +28,6 @@ public interface MemberService {
 
     Map<Integer, Member> getRank(Integer habitID);
 
+    Integer getUserPoints(Integer habitID, Integer userID);
+
 }
