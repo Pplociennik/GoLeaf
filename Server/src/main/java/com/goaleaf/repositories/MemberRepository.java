@@ -25,4 +25,6 @@ public interface MemberRepository extends CrudRepository<Member, Integer> {
 
     Iterable<Member> getAllByHabitIDOrderByPointsDesc(Integer habitID);
 
+    Member getFirstByHabitIDOrderByPointsDesc(Integer habitID);
+
 }

@@ -30,4 +30,6 @@ public interface MemberService {
 
     Integer getUserPoints(Integer habitID, Integer userID);
 
+    Integer getLeaderPoints(Integer habitID);
+
 }

@@ -23,4 +23,9 @@ public class MemberController {
         return memberService.getUserPoints(habitsID, userID);
     }
 
+    @RequestMapping(value = "/leader/points", method = RequestMethod.GET)
+    public Integer getLeaderPointsResult(@RequestParam Integer habitID) {
+       return memberService.getLeaderPoints(habitID);
+    }
+
 }
