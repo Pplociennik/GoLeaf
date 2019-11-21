@@ -66,7 +66,7 @@ class AddPost extends Component {
         tasksToShow = <div>
     <div className="pointsToWinInfo" style={{fontSize: "2em"}}>{this.state.userPoints} / {this.props.pointsToWin} pts 🏁</div>
                         <h2 className="tasks-title">Complete task</h2>
-                        <Tasks habitID={this.props.habitID} isFinished={this.props.isFinished}/>
+                        <Tasks habitID={this.props.habitID} isFinished={this.props.isFinished} isAdmin={this.props.isAdmin}/>
                       </div>
     }
 

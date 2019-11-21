@@ -36,7 +36,7 @@ class Tasks extends Component {
 
             foundTasks = true;
             if(!(!task.active && task.frequency === 'Once')){
-                taskCards.push(<TaskCard key={task.id} id={task.id} description={task.description} points={task.points} creator={task.creator} habitID={this.props.habitID} isFinished={this.props.isFinished} active={task.active} frequency={task.frequency} days={task.daysInterval} refreshDate={task.refreshDate}/>)
+                taskCards.push(<TaskCard key={task.id} id={task.id} description={task.description} points={task.points} creator={task.creator} habitID={this.props.habitID} isFinished={this.props.isFinished} active={task.active} frequency={task.frequency} days={task.daysInterval} refreshDate={task.refreshDate} isAdmin={this.props.isAdmin}/>)
             }
         })
         let tasksToDisplay = taskCards;
