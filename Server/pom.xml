@@ -317,7 +317,7 @@
       <id>offlineMode</id>  
       <properties> 
         <value.spring.datasource.url>jdbc:h2:file:./bazaDanych</value.spring.datasource.url>  
-        <value.hibernate.hbm2ddl.auto>update</value.hibernate.hbm2ddl.auto>  
+        <value.hibernate.hbm2ddl.auto>create-drop</value.hibernate.hbm2ddl.auto>
         <value.database.driver/>  
         <value.database.platform>org.hibernate.dialect.H2Dialect</value.database.platform>  
         <value.spring.datasource.username>sa</value.spring.datasource.username>  

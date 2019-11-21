@@ -233,6 +233,13 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public HttpStatus removeTaskByID(Integer taskID) {
+        Task task = taskRepository.getById(taskID);
+        Member member = memberRepository.getByUserID(task.getExecutorID());
+
+        member.decreasePoints(task.getPoints());
+
+        memberRepository.save(member);
+
         taskRepository.delete(taskID);
 
         if (taskRepository.getById(taskID) == null) {

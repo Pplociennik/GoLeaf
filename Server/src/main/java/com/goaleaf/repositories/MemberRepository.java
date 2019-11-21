@@ -27,4 +27,6 @@ public interface MemberRepository extends CrudRepository<Member, Integer> {
 
     Member getFirstByHabitIDOrderByPointsDesc(Integer habitID);
 
+    Member getByUserID(Integer userID);
+
 }
