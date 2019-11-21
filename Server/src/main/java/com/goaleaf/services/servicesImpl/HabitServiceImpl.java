@@ -10,6 +10,7 @@ import com.goaleaf.services.HabitService;
 import com.goaleaf.services.MemberService;
 import com.goaleaf.services.UserService;
 import com.goaleaf.validators.exceptions.habitsCreating.WrongTitleException;
+import com.goaleaf.validators.exceptions.habitsProcessing.BadGoalValueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -75,7 +76,7 @@ public class HabitServiceImpl implements HabitService {
         newHabit.setCreatorLogin(userService.findById(creatorID).getLogin());
         newHabit.setFinished(false);
         newHabit.setWinner("NONE");
-        newHabit.setPointsToWIn(0);
+        newHabit.setPointsToWIn(1001);
         newHabit.setFinished(false);
 
         Habit added = new Habit();
@@ -166,6 +167,11 @@ public class HabitServiceImpl implements HabitService {
 
     @Override
     public HabitDTO setPointsToWin(Integer habitID, Integer pointsToWin) {
+
+        if (pointsToWin < 1 || pointsToWin > 1000) {
+            throw new BadGoalValueException("Goal value has to be > 0 and <= 1000!");
+        }
+
         Habit habit = habitRepository.findById(habitID);
 
         habit.setPointsToWIn(pointsToWin);

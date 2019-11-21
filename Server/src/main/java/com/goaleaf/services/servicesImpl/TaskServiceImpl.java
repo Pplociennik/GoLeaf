@@ -89,7 +89,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Iterable<TaskViewModel> getAvailableTasks(Integer habitID, Integer userID) {
-        Iterable<Task> input = taskRepository.getAllByHabitIDAndExecutorID(habitID, userID);
+        Iterable<Task> input = taskRepository.getAllByHabitID(habitID);
         List<TaskViewModel> output = new ArrayList<>(0);
 
         for (Task t : input) {
