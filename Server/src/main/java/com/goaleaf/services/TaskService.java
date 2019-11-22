@@ -33,6 +33,8 @@ public interface TaskService {
 
     Iterable<TaskViewModel> getAvailableTasks(Integer habitID, Integer userID);
 
-    HttpStatus removeTaskByID(Integer taskID);
+    HttpStatus pushBachTaskCompletion(Integer taskID);
+
+    HttpStatus justRemoveTaskFromDatabase(Integer taskID);
 
 }

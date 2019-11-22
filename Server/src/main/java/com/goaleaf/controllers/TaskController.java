@@ -86,9 +86,14 @@ public class TaskController {
         return taskService.getAvailableTasks(habitID, userID);
     }
 
-    @RequestMapping(value = "task/remove", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/task/pushback", method = RequestMethod.DELETE)
     public HttpStatus removeTaskFromDatabase(@RequestParam Integer taskID) {
-        return taskService.removeTaskByID(taskID);
+        return taskService.pushBachTaskCompletion(taskID);
+    }
+
+    @RequestMapping(value = "/task/remove", method = RequestMethod.DELETE)
+    public HttpStatus justRemoveTask(@RequestParam Integer taskID) {
+        return taskService.justRemoveTaskFromDatabase(taskID);
     }
 
 }

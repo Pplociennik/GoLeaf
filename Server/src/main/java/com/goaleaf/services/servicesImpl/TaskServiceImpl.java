@@ -7,11 +7,14 @@ import com.goaleaf.entities.enums.Frequency;
 import com.goaleaf.entities.enums.PostTypes;
 import com.goaleaf.entities.viewModels.TaskViewModel;
 import com.goaleaf.repositories.*;
+import com.goaleaf.security.SecurityConstants;
+import com.goaleaf.services.JwtService;
 import com.goaleaf.services.TaskService;
 import com.goaleaf.validators.exceptions.habitsProcessing.PointsNotSetException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import javassist.NotFoundException;
+import org.joda.time.DateTimeComparator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -44,6 +47,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Autowired
     private TaskHistoryRepository taskHistoryRepository;
+
+    @Autowired
+    private JwtService jwtService;
 
 
     @Override
@@ -94,7 +100,7 @@ public class TaskServiceImpl implements TaskService {
 
         for (Task t : input) {
             if (!t.getCompleted()) {
-                output.add(convertToViewModel(t));
+                output.add(convertToViewModel(t, userID));
             }
         }
         Iterable<TaskViewModel> result = output;
@@ -121,7 +127,7 @@ public class TaskServiceImpl implements TaskService {
 
         Task returned = taskRepository.save(newT);
 
-        return convertToViewModel(returned);
+        return convertToViewModel(returned, null);
 
     }
 
@@ -144,12 +150,13 @@ public class TaskServiceImpl implements TaskService {
         member.addPoints(task.getPoints());
         memberRepository.save(member);
 
+        TasksHistoryEntity ent = createNewHistoryEntity(user, habit, task);
+
         if (member.getPoints() >= habit.getPointsToWIn()) {
             habit.setWinner(user.getLogin());
             habit.setFinished(true);
 
             Post post = setTaskAsCompleted(task, user, cmp, PostTypes.Task, habit, member);
-            TasksHistoryEntity ent = createNewHistoryEntity(user, habit, task);
 
             Post result = setTaskAsCompleted(task, user, cmp, PostTypes.HabitFinished, habit, member);
 
@@ -202,13 +209,13 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskViewModel getTaskByID(Integer taskID) {
-        return convertToViewModel(taskRepository.getById(taskID));
+        return convertToViewModel(taskRepository.getById(taskID), null);
     }
 
     Iterable<TaskViewModel> convertToViewModel(Iterable<Task> input) {
         List resultList = new ArrayList<TaskViewModel>(0);
         for (Task t : input) {
-            TaskViewModel model = convertToViewModel(t);
+            TaskViewModel model = convertToViewModel(t, null);
             //TaskViewModel model = new TaskViewModel(t.getId(), u.getLogin(), t.getDescription(), t.getPoints(), t.getFrequency(), t.getDaysInterval(), refreshDate, active, t.getExecutor());
             resultList.add(model);
         }
@@ -216,8 +223,19 @@ public class TaskServiceImpl implements TaskService {
         return outputList;
     }
 
-    public TaskViewModel convertToViewModel(Task task) {
+    public TaskViewModel convertToViewModel(Task task, Integer id) {
+
         User u = userRepository.findById(task.getCreatorID());
+        TasksHistoryEntity tempHistoryEntity = null;
+        Iterable<TasksHistoryEntity> historyList = taskHistoryRepository.findAllByTaskIDAndUserID(task.getId(), id);
+        DateTimeComparator dateTimeComparator = DateTimeComparator.getDateOnlyInstance();
+        Date currentDate = new Date();
+
+        for (TasksHistoryEntity h : historyList) {
+            if (dateTimeComparator.compare(currentDate, h.getExecutionDate()) == 0) {
+                tempHistoryEntity = h;
+            }
+        }
 
         Calendar c = Calendar.getInstance();
 
@@ -226,13 +244,13 @@ public class TaskServiceImpl implements TaskService {
         Date refreshDate = c.getTime();
 
         Boolean active = false;
-            active = new Date().after(refreshDate);
+        active = (tempHistoryEntity == null ? true : false);
 
         return new TaskViewModel(task.getId(), u.getLogin(), task.getDescription(), task.getPoints(), task.getFrequency(), task.getDaysInterval(), refreshDate, active, task.getExecutor());
     }
 
     @Override
-    public HttpStatus removeTaskByID(Integer taskID) {
+    public HttpStatus pushBachTaskCompletion(Integer taskID) {
         Task task = taskRepository.getById(taskID);
         Member member = memberRepository.getByUserID(task.getExecutorID());
 
@@ -245,6 +263,16 @@ public class TaskServiceImpl implements TaskService {
         if (taskRepository.getById(taskID) == null) {
             return HttpStatus.OK;
         }
-        return HttpStatus.INTERNAL_SERVER_ERROR;
+        return HttpStatus.EXPECTATION_FAILED;
+    }
+
+    public HttpStatus justRemoveTaskFromDatabase(Integer taskID) {
+        taskRepository.delete(taskID);
+
+        if (taskRepository.getById(taskID) == null) {
+            return HttpStatus.OK;
+        }
+
+        return HttpStatus.EXPECTATION_FAILED;
     }
 }
