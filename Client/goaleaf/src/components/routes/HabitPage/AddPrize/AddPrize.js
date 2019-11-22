@@ -7,7 +7,7 @@ class AddPrize extends Component {
 
   state = {
     msg: null,
-    prizePoints: 50
+    prizePoints: 100
   }
 
     addPrize = (e, id) => {
@@ -48,19 +48,22 @@ class AddPrize extends Component {
     }
     clearMsg = () => {
         this.setState({
-            prizePoints: this.props.pointsToWin
+            //prizePoints: this.props.pointsToWin
         })
     }
 
     componentDidMount() {
         M.AutoInit();
-            this.setState({prizePoints: this.props.pointsToWin})
+            console.log(this.state);
+            if(this.props.pointsToWin !== 1001){
+                this.setState({prizePoints: this.props.pointsToWin})
+            }
     }
 
     render() {
         let addPrizeBtn;
     if(this.props.isAdmin){
-    addPrizeBtn = this.props.isFinished ? <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" disabled><span>🏆 set goal</span></button> : <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" ><span>🏆 {this.state.prizePoints < 1 ? 'set' : 'update'} goal</span></button>
+    addPrizeBtn = this.props.isFinished ? <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" disabled><span>🏆 set goal</span></button> : <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" ><span>🏆 {this.props.pointsToWin === 1001 ? 'set' : 'update'} goal</span></button>
     }
     return (
         <Popup trigger={addPrizeBtn} modal closeOnDocumentClick
@@ -80,15 +83,15 @@ class AddPrize extends Component {
         <div className="add-task-box">
         <div className="row">
             <form className="col s10 offset-s1  l8 offset-l2 center-align" autoComplete="off">
-                <h4 className="">Set goal</h4>
+                <h4 className="">{this.props.pointsToWin === 1001 ? 'Set' : 'Update'} goal</h4>
                 <div className="input-field inline">
                     <button className="task-points-btn task-points-btn-subtract" onClick={ this.subtractPrizePoint }>-</button>
-                    <span className="task-points">{ this.state.prizePoints }</span>
+                    <span className="task-points">{ this.state.prizePoints  }</span>
                     <button className="task-points-btn task-points-btn-add" onClick={ this.addPrizePoint }>+</button>
                     <span className={this.state.msg === 'Goal set' ? "helper-text green-text" : "helper-text red-text "}>{this.state.msg}</span>
                 </div>
                 <button className="btn" onClick={(e) => this.addPrize(e, this.props.habitID)} type="submit" value="Set goal">
-                    <span>Submit</span>
+                    <span>submit</span>
                 </button>
             </form>
             </div>

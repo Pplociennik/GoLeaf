@@ -37,15 +37,6 @@ class TaskCard extends Component {
         ).catch(err => console.log("Complete Task request failed"))
     }
 
-    handleTaskDeleted = (e, id) => {
-        axios.delete(`/api/tasks/task/remove?taskID=${id}`)
-        .then(res => {
-            console.log(`Deleted task ${id}`);
-            window.location.reload();
-        }).catch(err => { console.log(err) })
-    }
-
-
     render() {
 
         console.log("Task: " + this.props.id)
@@ -109,11 +100,6 @@ class TaskCard extends Component {
                     )}
                 </Popup>
                 <div>                     
-                {this.props.isAdmin ?
-                    <Dropdown trigger={<a href="#!" className='post-card-more-btn dropdown-trigger' data-target={this.props.id}><img src={MoreIcon}></img></a>}>
-                        <a className="dropdown-item dropdown-delete" href="#!" onClick={(e) => this.handleTaskDeleted(e, this.props.id)}>Delete</a>
-                    </Dropdown>
-                    : null} 
                 </div>   
                 </div>   
             )

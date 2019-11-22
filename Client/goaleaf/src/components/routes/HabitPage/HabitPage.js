@@ -13,6 +13,8 @@ import Tasks from './Tasks/Tasks'
 import Members from './Members/Members'
 import Loader from './../Loader/Loader'
 import Leaderboard from './Leaderboard/Leaderboard'
+import TasksAll from './TasksAll/TasksAll'
+import Popup from "reactjs-popup"
 
 class HabitPage extends Component {
 
@@ -82,7 +84,7 @@ class HabitPage extends Component {
             }
             return (
                 <div className={`habit-page ${habit.category}-category`}>
-                    <span className="habit-page-header-con">
+                    <div className="habit-page-header-con">
                         <div className="habit-page-info-con">
                                 <div className="habit-page-text-con">
                                     <h1 className="habit-page-title">{habit.title}</h1>
@@ -98,13 +100,42 @@ class HabitPage extends Component {
                                     {userIsMember ? <button className="btn-floating btn-large habit-page-header-btn leave-habit-btn" onClick={() => this.leaveHabit(habit.id)}>🏃‍♀️ leave</button> : <button className="btn-floating btn-large pulse habit-page-header-btn join-habit-btn" onClick={() => this.joinHabit(habit.id)}>🙋‍♂️ join</button>}
                                 </div>
                         </div>
-                    </span>
+                    {isAdmin ?
+                    <Popup trigger={
+                        <span className="habit-card-delete-btn">❌</span>
+                    } modal closeOnDocumentClick
+                            disabled={this.props.isFinished}
+                            contentStyle={{
+                                maxWidth: '80%',
+                                width: '500px',
+                                backgroundColor: '#f2f2f2',
+                                borderRadius: '30px',
+                                border: "none",
+                                minHeight: '200px'
+                            }}
+                            overlayStyle={{
+                                background: "rgb(0,0,0, 0.4)"
+                            }}
+                        >
+                            {close => (
+                            <div className="habit-popup">
+                                <div className="delete-habit-title">Are you sure you want to delete this challenge?</div>
+                                <div className="delete-habit-buttons">
+                                    <button className="delete-habit-btn">Delete</button>
+                                    <button className="delete-habit-back" onClick={close}>Back</button>
+                                </div>
+                            </div>
+                            )}
+                        </Popup>
+                    : null} 
+                    </div>
                     {userIsMember ?
                     <section className="habit-page-navigation-con">
                         <div className="habit-page-navigation">
                             <InviteMember habitID={habit.id} />
                             <Members habitID={habit.id}/>
-                            <AddTask habitID={habit.id} isFinished={habit.isFinished} isAdmin={isAdmin}/>
+                            {habit.pointsToWin !== 1001 ? <AddTask habitID={habit.id} isFinished={habit.isFinished} isAdmin={isAdmin}/> : null}
+                            {habit.pointsToWin !== 1001 ? <TasksAll habitID={habit.id} isAdmin={isAdmin}/> : null}
                             <AddPrize habitID={habit.id} isFinished={habit.isFinished} isAdmin={isAdmin} pointsToWin={habit.pointsToWin}/>
                             <Leaderboard habitID={habit.id} pointsToWin={habit.pointsToWin}/>
                         </div>
