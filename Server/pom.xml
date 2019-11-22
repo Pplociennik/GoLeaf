@@ -47,6 +47,7 @@
         <version.org.apache.maven.plugin.maven-assembly-plugin>2.4.1
         </version.org.apache.maven.plugin.maven-assembly-plugin>
         <version.org.postgresql.postgresql>9.4-1201-jdbc4</version.org.postgresql.postgresql>
+        <version.joda-time.joda-time>2.10.5</version.joda-time.joda-time>
     </properties>
     <dependencies>
         <dependency>
@@ -193,6 +194,11 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${version.org.postgresql.postgresql}</version>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>${version.joda-time.joda-time}</version>
         </dependency>
     </dependencies>
     <build>
