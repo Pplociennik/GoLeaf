@@ -12,7 +12,7 @@
     </parent>
     <groupId>com.goaleaf.engine</groupId>
     <artifactId>GoaLeaf</artifactId>
-    <version>0.7.0-SNAPSHOT</version>
+    <version>0.5.0</version>
     <name>GoaLeaf</name>
     <description>GoaLeaf</description>
     <packaging>jar</packaging>
@@ -46,7 +46,7 @@
         <version.com.microsoft.azure-webapp-maven-plugin>1.7.0</version.com.microsoft.azure-webapp-maven-plugin>
         <version.org.apache.maven.plugin.maven-assembly-plugin>2.4.1
         </version.org.apache.maven.plugin.maven-assembly-plugin>
-        <version.joda-time.joda-time>2.10.5</version.joda-time.joda-time>
+        <version.org.postgresql.postgresql>9.4-1201-jdbc4</version.org.postgresql.postgresql>
     </properties>
     <dependencies>
         <dependency>
@@ -190,40 +190,13 @@
             <version>${version.org.springframework.spring-test}</version>
         </dependency>
         <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>${version.joda-time.joda-time}</version>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${version.org.postgresql.postgresql}</version>
         </dependency>
     </dependencies>
     <build>
         <plugins>
-            <plugin>
-                <groupId>com.microsoft.azure</groupId>
-                <artifactId>azure-webapp-maven-plugin</artifactId>
-                <version>${version.com.microsoft.azure-webapp-maven-plugin}</version>
-                <configuration>
-                    <schemaVersion>V2</schemaVersion>
-                    <resourceGroup>Goaleaf</resourceGroup>
-                    <appName>glf-api</appName>
-                    <pricingTier>D1</pricingTier>
-                    <region>westeurope</region>
-                    <runtime>
-                        <os>windows</os>
-                        <javaVersion>1.8</javaVersion>
-                        <webContainer>tomcat 9.0.8</webContainer>
-                    </runtime>
-                    <deployment>
-                        <resources>
-                            <resource>
-                                <directory>${project.basedir}/target</directory>
-                                <includes>
-                                    <include>*.jar</include>
-                                </includes>
-                            </resource>
-                        </resources>
-                    </deployment>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -299,6 +272,7 @@
                 <!--                </includes>-->
             </resource>
         </resources>
+
     </build>
     <!-- Add Spring repositories -->
     <!-- (you don't need this if you are using a .RELEASE version) -->
@@ -325,16 +299,17 @@
             <url>http://repo.spring.io/milestone</url>
         </pluginRepository>
     </pluginRepositories>
+
     <profiles>
         <profile>
             <id>offlineMode</id>
             <properties>
                 <value.spring.datasource.url>jdbc:h2:file:./bazaDanych</value.spring.datasource.url>
-                <value.hibernate.hbm2ddl.auto>create-drop</value.hibernate.hbm2ddl.auto>
-                <value.database.driver/>
+                <value.hibernate.hbm2ddl.auto>update</value.hibernate.hbm2ddl.auto>
+                <value.database.driver></value.database.driver>
                 <value.database.platform>org.hibernate.dialect.H2Dialect</value.database.platform>
                 <value.spring.datasource.username>sa</value.spring.datasource.username>
-                <value.spring.datasource.password/>
+                <value.spring.datasource.password></value.spring.datasource.password>
                 <value.database.driver>org.h2.Driver</value.database.driver>
             </properties>
             <activation>
@@ -344,20 +319,23 @@
             </activation>
         </profile>
         <profile>
-            <id>mssql-azure</id>
+            <id>heroku-postgresql</id>
             <properties>
                 <value.spring.datasource.url>
-                    jdbc:sqlserver://goaleaf.database.windows.net:1433;database=goaleaf_mssql_database;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+                    jdbc:postgresql://ec2-107-21-126-201.compute-1.amazonaws.com:5432/d8br41v2tl8a6p
                 </value.spring.datasource.url>
-                <value.hibernate.hbm2ddl.auto>update</value.hibernate.hbm2ddl.auto>
-                <value.spring.datasource.username>glfAdminPrms@goaleaf</value.spring.datasource.username>
-                <value.spring.datasource.password>Placuszkiowocowe2215</value.spring.datasource.password>
-                <value.database.driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</value.database.driver>
-                <value.database.platform>org.hibernate.dialect.SQLServerDialect</value.database.platform>
+                <value.hibernate.hbm2ddl.auto>create</value.hibernate.hbm2ddl.auto>
+                <value.spring.datasource.username>cegdtcqjxqtsxp
+                </value.spring.datasource.username>
+                <value.spring.datasource.password>d9580c750a51b42aab833a8a7a43d5f9dd50e454b12d57d5d521d321026f4ba5
+                </value.spring.datasource.password>
+                <value.database.driver>org.postgresql.Driver</value.database.driver>
+                <value.database.platform>org.hibernate.dialect.PostgreSQL82Dialect</value.database.platform>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
         </profile>
     </profiles>
+
 </project>
