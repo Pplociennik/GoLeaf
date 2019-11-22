@@ -1,8 +1,13 @@
 package com.goaleaf.services.servicesImpl;
 
-import com.goaleaf.entities.*;
+import com.goaleaf.entities.Member;
+import com.goaleaf.entities.Post;
+import com.goaleaf.entities.Task;
 import com.goaleaf.entities.enums.PostTypes;
-import com.goaleaf.repositories.*;
+import com.goaleaf.repositories.HabitRepository;
+import com.goaleaf.repositories.MemberRepository;
+import com.goaleaf.repositories.PostRepository;
+import com.goaleaf.repositories.TaskRepository;
 import com.goaleaf.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -32,12 +37,17 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void removePostFromDatabase(Integer id) {
-        Task task = taskRepository.getById(id);
-        Member member = memberRepository.findByHabitIDAndUserID(task.getHabitID(), task.getExecutorID());
+        Post post = postRepository.findById(id);
 
-        member.decreasePoints(task.getPoints());
+        if (post.getPostType().equals(PostTypes.Task)) {
+            Task task = taskRepository.getById(id);
+            Member member = memberRepository.findByHabitIDAndUserID(task.getHabitID(), task.getExecutorID());
 
-        memberRepository.save(member);
+            member.decreasePoints(task.getPoints());
+
+            memberRepository.save(member);
+        }
+
         postRepository.delete(id);
     }
 
