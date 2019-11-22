@@ -29,7 +29,7 @@ class TasksAll extends Component {
         let taskCards = [];
 
         tasks.forEach(task => {
-            taskCards.push(<Task isAdmin={this.props.isAdmin}key={task.id} creator={task.creator} description={task.description} points={task.points} frequency={task.frequency} days={task.daysInterval} date={task.refreshDate} active={task.active}/>) 
+            taskCards.push(<Task isAdmin={this.props.isAdmin} id={task.id} key={task.id} creator={task.creator} description={task.description} points={task.points} frequency={task.frequency} days={task.daysInterval} date={task.refreshDate} active={task.active}/>) 
         })
 
         let tasksToDisplay = taskCards;

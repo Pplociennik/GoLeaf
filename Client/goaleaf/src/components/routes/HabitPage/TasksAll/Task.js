@@ -1,10 +1,18 @@
 import React, { Component } from 'react'
 import './Task.scss';
+import axios from 'axios';
 import { Dropdown } from 'react-materialize';
 import MoreIcon from './../../../../assets/more.png';
 import Popup from "reactjs-popup"
 
 class Task extends Component {
+
+    deleteTask = (e, id) => {
+        axios.delete(`/api/tasks/task/remove?taskID=${id}`)
+        .then(res => {
+            window.location.reload();
+        }).catch(err => { console.log(err) })
+    }
 
     render() {
         let frequency;
@@ -47,7 +55,7 @@ class Task extends Component {
                             <div className="task-popup">
                                 <div className="delete-task-title">Are you sure you want to delete this task?</div>
                                 <div className="delete-task-buttons">
-                                    <button className="delete-task-btn">Delete</button>
+                                    <button className="delete-task-btn" onClick={(e) => this.deleteTask(e, this.props.id)}>Delete</button>
                                     <button className="delete-task-back" onClick={close}>Back</button>
                                 </div>
                             </div>
