@@ -38,7 +38,7 @@ import static com.goaleaf.security.SecurityConstants.SECRET;
 
 @RestController
 @RequestMapping("/api/habits")
-@CrossOrigin(origins = "https://goaleaf1.azurewebsites.net")
+@CrossOrigin(origins = "*")
 public class HabitController {
 
     @Autowired
@@ -175,7 +175,7 @@ public class HabitController {
     @RequestMapping(value = "/habit/checkPermissions", method = RequestMethod.GET)
     public boolean checkIfAccessAllowed(@RequestParam Integer userID, @RequestParam Integer habitID) {
         Member memberToCheck = memberService.findSpecifiedMember(habitID, userID);
-        Notification notificationToCheck = notificationService.findSpecifiedNtf(userID, "https://goaleaf1.azurewebsites.net/habit/" + habitID);
+        Notification notificationToCheck = notificationService.findSpecifiedNtf(userID, "*/habit/" + habitID);
 
         if (!habitService.findById(habitID).isPrivate)
             return true;

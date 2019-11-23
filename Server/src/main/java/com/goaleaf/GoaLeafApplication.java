@@ -85,7 +85,7 @@ public class GoaLeafApplication extends SpringBootServletInitializer {
 //        return new WebMvcConfigurerAdapter() {
 //            @Override
 //            public void addCorsMappings(CorsRegistry registry) {
-//                registry.addMapping("/api/users/edit").allowedOrigins("https://goaleaf1.azurewebsites.net").allowedHeaders("https://goaleaf1.azurewebsites.net").exposedHeaders("Authorization");
+//                registry.addMapping("/api/users/edit").allowedOrigins("*").allowedHeaders("*").exposedHeaders("Authorization");
 //            }
 //        };
 //    }
@@ -93,7 +93,7 @@ public class GoaLeafApplication extends SpringBootServletInitializer {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://goaleaf1.azurewebsites.net"));
+        configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT", "OPTIONS"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

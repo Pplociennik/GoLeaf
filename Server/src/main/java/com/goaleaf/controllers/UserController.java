@@ -33,7 +33,7 @@ import static com.goaleaf.security.SecurityConstants.*;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "https://goaleaf1.azurewebsites.net")
+@CrossOrigin(origins = "*")
 public class UserController {
 
     @Autowired
@@ -81,7 +81,7 @@ public class UserController {
 //        return userService.getUserById(publicId);
 //    }
 
-    @CrossOrigin("https://goaleaf1.azurewebsites.net")
+    @CrossOrigin("*")
     @RequestMapping(method = RequestMethod.PUT, value = "/edit")
     public void updateUser(@RequestBody EditUserViewModel model) throws BadCredentialsException {
 
@@ -108,7 +108,7 @@ public class UserController {
         sender.addRecipient(model.emailAddress);
         sender.setSubject("GoaLeaf Password Reset Request");
         sender.setBody("Hello " + userService.findByEmailAddress(model.emailAddress).getLogin() + "!\n\n" +
-                "Here's your confirmation link: https://goaleaf1.azurewebsites.net/resetpassword/" + resetPasswordToken + "\n\n" +
+                "Here's your confirmation link: */resetpassword/" + resetPasswordToken + "\n\n" +
                 "If you have not requested a password reset, ignore this message.\n\n" +
                 "Thank you and have a nice day! :)\n\n" +
                 "GoaLeaf group");
@@ -156,7 +156,7 @@ public class UserController {
         return userDto;
     }
 
-    @CrossOrigin("https://goaleaf1.azurewebsites.net")
+    @CrossOrigin("*")
     @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
     public HttpStatus removeUserFromDatabase(@PathVariable Integer id) {
         userService.removeUser(id);
