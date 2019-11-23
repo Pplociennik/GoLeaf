@@ -85,7 +85,7 @@ public class GoaLeafApplication extends SpringBootServletInitializer {
 //        return new WebMvcConfigurerAdapter() {
 //            @Override
 //            public void addCorsMappings(CorsRegistry registry) {
-//                registry.addMapping("/api/users/edit").allowedOrigins("http://localhost:3000").allowedHeaders("http://localhost:3000").exposedHeaders("Authorization");
+//                registry.addMapping("/api/users/edit").allowedOrigins("https://goaleaf1.azurewebsites.net/").allowedHeaders("https://goaleaf1.azurewebsites.net/").exposedHeaders("Authorization");
 //            }
 //        };
 //    }

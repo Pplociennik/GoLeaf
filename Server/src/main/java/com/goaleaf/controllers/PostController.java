@@ -32,7 +32,7 @@ import static com.goaleaf.security.SecurityConstants.SECRET;
 
 @RestController
 @RequestMapping(value = "/api/posts")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://goaleaf1.azurewebsites.net/")
 public class PostController {
 
     @Autowired

@@ -17,7 +17,7 @@ import java.util.Date;
 
 @RestController
 @RequestMapping(value = "/api/comments")
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "https://goaleaf1.azurewebsites.net/")
 public class CommentController {
 
     @Autowired
