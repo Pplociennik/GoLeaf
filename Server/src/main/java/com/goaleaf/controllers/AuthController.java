@@ -58,10 +58,10 @@ public class AuthController {
 
         register.password = (bCryptPasswordEncoder.encode(register.password));
 
-        EmailNotificationsSender sender = new EmailNotificationsSender();
+        //EmailNotificationsSender sender = new EmailNotificationsSender();
 
         User user = userService.registerNewUserAccount(register);
-        sender.sayHello(register.emailAddress, register.login);
+        //sender.sayHello(register.emailAddress, register.login);
 
         UserDto userDto = new UserDto();
         userDto.login = user.getLogin();
