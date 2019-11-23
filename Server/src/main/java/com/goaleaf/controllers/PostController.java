@@ -32,7 +32,6 @@ import static com.goaleaf.security.SecurityConstants.SECRET;
 
 @RestController
 @RequestMapping(value = "/api/posts")
-@CrossOrigin(origins = "*")
 public class PostController {
 
     @Autowired

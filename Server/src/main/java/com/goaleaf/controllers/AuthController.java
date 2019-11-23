@@ -29,7 +29,6 @@ import static com.goaleaf.security.SecurityConstants.EXPIRATION_TIME;
 import static com.goaleaf.security.SecurityConstants.SECRET;
 
 @RestController
-@CrossOrigin(maxAge = 3600, origins = "*")
 public class AuthController {
 
     @Autowired
@@ -95,6 +94,7 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/validatetoken", method = RequestMethod.POST)
+    @CrossOrigin
     public HttpStatus validateToken(@RequestBody AuthorizeViewModel model) throws TimeoutException {
         String token = model.Token;
 

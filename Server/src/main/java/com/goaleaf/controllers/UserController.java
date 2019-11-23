@@ -33,7 +33,7 @@ import static com.goaleaf.security.SecurityConstants.*;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "*")
+
 public class UserController {
 
     @Autowired

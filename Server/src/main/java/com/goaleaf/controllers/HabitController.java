@@ -38,7 +38,6 @@ import static com.goaleaf.security.SecurityConstants.SECRET;
 
 @RestController
 @RequestMapping("/api/habits")
-@CrossOrigin(origins = "*")
 public class HabitController {
 
     @Autowired
