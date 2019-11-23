@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api/members")
-@CrossOrigin(origins = "https://goaleaf1.azurewebsites.net/")
+@CrossOrigin(origins = "https://goaleaf1.azurewebsites.net")
 public class MemberController {
 
     @Autowired

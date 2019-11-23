@@ -21,7 +21,7 @@ public class EmailNotificationsSender {
         sender.setSubject("You have a new notification!");
         sender.setBody("Hello " + recipientName + "!\n\n" +
                 "User " + inviterName + " invited you to joining a new contest: " + habitTitle + " \n\n" +
-                "If you want to take a challenge just log in to your GoaLeaf account: " + "https://goaleaf1.azurewebsites.net//login" + "\n\n" +
+                "If you want to take a challenge just log in to your GoaLeaf account: " + "https://goaleaf1.azurewebsites.net/login" + "\n\n" +
                 "We wish you great results! :)\n\n" +
                 "Your Sincerely\n" +
                 "GoaLeaf group");
