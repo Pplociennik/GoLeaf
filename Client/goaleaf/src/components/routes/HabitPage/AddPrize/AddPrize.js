@@ -12,12 +12,13 @@ class AddPrize extends Component {
 
     addPrize = (e, id) => {
         e.preventDefault();
-        axios.post(`https://glf-api.herokuapp.com/api/habits/habit/setPointsToWIn?habitID=${id}&pointsToWin=${this.state.prizePoints}`)
-        .then(res => {
-            window.location.reload();
+        if(this.state.prizePoints > 0 && this.state.prizePoints < 1001){
+            axios.post(`https://glf-api.herokuapp.com/api/habits/habit/setPointsToWIn?habitID=${id}&pointsToWin=${this.state.prizePoints}`)
+            .then(res => {
+                window.location.reload();
+            }
+            ).catch(err => console.log(err.response.data.message))
         }
-        ).catch(err => console.log(err.response.data.message))
-
     }
 
     addPrizePoint = e => {
@@ -85,10 +86,11 @@ class AddPrize extends Component {
             <form className="col s10 offset-s1  l8 offset-l2 center-align" autoComplete="off">
                 <h4 className="">{this.props.pointsToWin === 1001 ? 'Set' : 'Update'} goal</h4>
                 <div className="input-field inline">
-                    <button className="task-points-btn task-points-btn-subtract" onClick={ this.subtractPrizePoint }>-</button>
-                    {/* <span className="task-points">{ this.state.prizePoints  }</span> */}
-                    <input type="number" id="prizePoints" min="1" max="1000" value={this.state.prizePoints} onChange={this.handleChange}/>
-                    <button className="task-points-btn task-points-btn-add" onClick={ this.addPrizePoint }>+</button>
+                <div style={{display: 'flex', justifyContent: 'center', marginTop: '30px'}}>
+                        <button className="task-points-btn task-points-btn-subtract" onClick={ this.subtractPrizePoint }>-</button>
+                        <input title="Set goal between 1 and 1000" id="prizePoints" maxLength="4" style={{width: '50px', textDecoration: 'none', textAlign: 'center' }} className="task-points" value={this.state.prizePoints} onChange={(e) => {this.handleChange(e)}}/>
+                        <button className="task-points-btn task-points-btn-add" onClick={ this.addPrizePoint }>+</button>
+                    </div>
                     <span className={this.state.msg === 'Goal set' ? "helper-text green-text" : "helper-text red-text "}>{this.state.msg}</span>
                 </div>
                 <button className="btn" onClick={(e) => this.addPrize(e, this.props.habitID)} type="submit" value="Set goal">

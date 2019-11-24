@@ -17,7 +17,7 @@ class AddTask extends Component {
     addTask = (e, id) => {
         e.preventDefault();
         console.log(this.state.task);
-        if (this.state.task !== null){
+        if (this.state.task !== null && (this.state.taskPoints > 0 && this.state.taskPoints < 11)){
             axios.post('https://glf-api.herokuapp.com/api/tasks/add', {
                 "description": this.state.task,
                 "frequency": this.state.frequency,
@@ -126,11 +126,11 @@ class AddTask extends Component {
                 <h4 className="">New Task</h4>
                 <div className="input-field inline">
                     <input id="task" type="text" placeholder="task description" onChange={ this.handleChange } />
-                    <button className="task-points-btn task-points-btn-subtract" onClick={ this.subtractTaskPoint }>-</button>
-                    {/* <span className="task-points">{ this.state.taskPoints } {this.state.taskPoints === 1 ? 'point' : 'points'}</span> */}
-                    <input type="number" id="taskPoints" min="1" max="10" value={this.state.taskPoints} onChange={this.handleChange}/>
-                    <span>{this.state.taskPoints === 1 ? 'point' : 'points'}</span>
-                    <button className="task-points-btn task-points-btn-add" onClick={ this.addTaskPoint }>+</button>
+                    <div style={{display: 'flex', justifyContent: 'center', marginTop: '30px'}}>
+                        <button className="task-points-btn task-points-btn-subtract" onClick={ this.subtractTaskPoint }>-</button>
+                        <input title="Set task points between 1 and 10" id="taskPoints" maxLength="2" style={{width: '30px', textDecoration: 'none', textAlign: 'center' }} className="task-points" value={this.state.taskPoints} onChange={(e) => {this.handleChange(e)}}/>
+                        <button className="task-points-btn task-points-btn-add" onClick={ this.addTaskPoint }>+</button>
+                    </div>
                     <span className={this.state.msg === 'Task added' ? "helper-text green-text" : "helper-text red-text "}>{this.state.msg}</span>
                 </div>
                 <div className="input-field inline task-recurrence-con">
