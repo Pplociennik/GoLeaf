@@ -35,14 +35,14 @@ class AddTask extends Component {
 
     addTaskPoint = e => {
         e.preventDefault();
-        if(this.state.taskPoints < 10) {
-            this.setState({taskPoints: this.state.taskPoints + 1})
+        if(parseInt(this.state.taskPoints) < 10) {
+            this.setState({taskPoints: parseInt(this.state.taskPoints) + 1})
         }
     }
     subtractTaskPoint = e => {
         e.preventDefault();
-        if(this.state.taskPoints > 1) {
-            this.setState({taskPoints: this.state.taskPoints - 1})
+        if(parseInt(this.state.taskPoints) > 1) {
+            this.setState({taskPoints: parseInt(this.state.taskPoints) - 1})
         }
     }
 
@@ -127,7 +127,9 @@ class AddTask extends Component {
                 <div className="input-field inline">
                     <input id="task" type="text" placeholder="task description" onChange={ this.handleChange } />
                     <button className="task-points-btn task-points-btn-subtract" onClick={ this.subtractTaskPoint }>-</button>
-                    <span className="task-points">{ this.state.taskPoints } {this.state.taskPoints === 1 ? 'point' : 'points'}</span>
+                    {/* <span className="task-points">{ this.state.taskPoints } {this.state.taskPoints === 1 ? 'point' : 'points'}</span> */}
+                    <input type="number" id="taskPoints" min="1" max="10" value={this.state.taskPoints} onChange={this.handleChange}/>
+                    <span>{this.state.taskPoints === 1 ? 'point' : 'points'}</span>
                     <button className="task-points-btn task-points-btn-add" onClick={ this.addTaskPoint }>+</button>
                     <span className={this.state.msg === 'Task added' ? "helper-text green-text" : "helper-text red-text "}>{this.state.msg}</span>
                 </div>
