@@ -14,7 +14,7 @@ class Members extends Component {
     }
 
     componentDidMount() {
-        axios.get(`/api/habits/habit/members?habitID=${this.props.habitID}`)
+        axios.get(`https://glf-api.herokuapp.com/api/habits/habit/members?habitID=${this.props.habitID}`)
             .then(res => {
                 this.setState({
                     members: res.data

@@ -20,7 +20,7 @@ class Notifications extends Component {
     }
 
     handleNtfCardDeleted = (id, url) => {
-        axios.delete(`/api/notifications/ntf/{id}?ntfID=${id}`)
+        axios.delete(`https://glf-api.herokuapp.com/api/notifications/ntf/{id}?ntfID=${id}`)
             .then(res => {
                 console.log(`Deleted notification ${id}`);
                 this.setState({notifications: this.state.notifications.filter(ntf => ntf.id !== id)})
@@ -30,7 +30,7 @@ class Notifications extends Component {
     }
 
     componentDidMount() {
-        axios.get(`/api/notifications/usersntf?userID=${this.props.userLogged}`)
+        axios.get(`https://glf-api.herokuapp.com/api/notifications/usersntf?userID=${this.props.userLogged}`)
             .then(res => {
                 res.data.forEach(ntf => {
                     let notifications = [...this.state.notifications, ntf]

@@ -30,13 +30,13 @@ class Profile extends Component {
             const formData = new FormData();
             formData.append('file', blob);
 
-            axios.post(`/uploadImage?token=${localStorage.getItem("token")}?type=PROFILE`, formData, {
+            axios.post(`https://glf-api.herokuapp.com/uploadImage?token=${localStorage.getItem("token")}?type=PROFILE`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             })
                 .then(res => {
-                    axios.get(`/downloadFile/${this.props.userLogged}`, { responseType: 'arraybuffer' })
+                    axios.get(`https://glf-api.herokuapp.com/downloadFile/${this.props.userLogged}`, { responseType: 'arraybuffer' })
                         .then(res => {
                             const base64 = btoa(
                                 new Uint8Array(res.data).reduce(
@@ -56,7 +56,7 @@ class Profile extends Component {
     handlePasswordChange = e => {
         console.log(this.state)
         e.preventDefault();
-        axios.put('/api/users/edit', {
+        axios.put('https://glf-api.herokuapp.com/api/users/edit', {
             "token": localStorage.getItem("token"),
             "emailAddress": '',
             "id": this.state.id,
@@ -78,7 +78,7 @@ class Profile extends Component {
     }
 
     handleDelete = event => {
-        axios.delete(`/api/users/user/${this.props.userLogged}`)
+        axios.delete(`https://glf-api.herokuapp.com/api/users/user/${this.props.userLogged}`)
             .then(res => window.location.reload()
             ).catch(err => { })
     }
@@ -86,7 +86,7 @@ class Profile extends Component {
     setNotifications = () => {
         let notificationsStatus;
         this.state.notifications ? notificationsStatus = false : notificationsStatus = true
-        axios.post('/api/users/setntf', {
+        axios.post('https://glf-api.herokuapp.com/api/users/setntf', {
             "newNotificationsStatus": notificationsStatus,
             "token": localStorage.getItem("token"),
             "userID": this.props.userLogged
@@ -98,7 +98,7 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        axios.get(`/api/users/user/${this.props.userLogged}`)
+        axios.get(`https://glf-api.herokuapp.com/api/users/user/${this.props.userLogged}`)
             .then(res => {
                 console.log(res.data)
                 this.setState({

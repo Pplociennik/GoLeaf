@@ -24,7 +24,7 @@ class TaskCard extends Component {
 
     completeTask = (e, id) => {
         e.preventDefault();
-        axios.post('/api/tasks/complete', {
+        axios.post('https://glf-api.herokuapp.com/api/tasks/complete', {
             "comment": this.state.taskComment,
             "habitID": this.props.habitID,
             "taskID": id,

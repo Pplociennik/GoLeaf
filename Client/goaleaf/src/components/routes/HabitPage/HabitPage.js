@@ -25,7 +25,7 @@ class HabitPage extends Component {
     }
 
     joinHabit = id => {
-        axios.post('/api/habits/habit/join', {
+        axios.post('https://glf-api.herokuapp.com/api/habits/habit/join', {
             "habitID": id,
             "token": localStorage.getItem("token"),
             "userID": this.props.userLogged
@@ -38,7 +38,7 @@ class HabitPage extends Component {
 
     leaveHabit = id => {
 
-        axios.delete('/api/habits/removemember', {
+        axios.delete('https://glf-api.herokuapp.com/api/habits/removemember', {
             data: {
                 "habitID": id,
                 "token": localStorage.getItem("token"),
@@ -61,7 +61,7 @@ class HabitPage extends Component {
     }
 
     componentDidMount() {
-        axios.get(`/api/habits/habit/checkPermissions?userID=${this.props.userLogged}&habitID=${parseInt(this.props.match.params.id)}`)
+        axios.get(`https://glf-api.herokuapp.com/api/habits/habit/checkPermissions?userID=${this.props.userLogged}&habitID=${parseInt(this.props.match.params.id)}`)
             .then(res => {
                     this.setState({
                         permissions: res.data

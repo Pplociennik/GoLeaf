@@ -15,21 +15,21 @@ class MyHabits extends Component {
   }
 
   componentDidMount() {
-    axios.get(`/api/users/myFinishedHabits?userID=${this.props.userLogged}`)
+    axios.get(`https://glf-api.herokuapp.com/api/users/myFinishedHabits?userID=${this.props.userLogged}`)
     .then(res => {
         this.setState({
           habitCardsFinished: res.data
         })
     }).catch(err => console.log(err.response.data.message))
 
-    axios.get(`/api/users/myUnfinishedHabits?userID=${this.props.userLogged}`)
+    axios.get(`https://glf-api.herokuapp.com/api/users/myUnfinishedHabits?userID=${this.props.userLogged}`)
     .then(res => {
         this.setState({
           habitCardsUnfinished: res.data
         })
     }).catch(err => console.log(err.response.data.message))
 
-    axios.get(`/api/users/myWonHabits?userID=${this.props.userLogged}`)
+    axios.get(`https://glf-api.herokuapp.com/api/users/myWonHabits?userID=${this.props.userLogged}`)
     .then(res => {
         this.setState({
           habitCardsWon: res.data

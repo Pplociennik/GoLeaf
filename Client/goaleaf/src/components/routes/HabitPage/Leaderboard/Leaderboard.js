@@ -12,7 +12,7 @@ class Leaderboard extends Component {
     }
 
     componentDidMount() {
-        axios.get(`/api/habits/rank?habitID=${this.props.habitID}`)
+        axios.get(`https://glf-api.herokuapp.com/api/habits/rank?habitID=${this.props.habitID}`)
             .then(res => {
                 this.setState({
                     members: res.data

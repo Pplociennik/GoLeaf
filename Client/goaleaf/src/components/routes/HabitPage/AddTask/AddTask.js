@@ -18,7 +18,7 @@ class AddTask extends Component {
         e.preventDefault();
         console.log(this.state.task);
         if (this.state.task !== null){
-            axios.post('/api/tasks/add', {
+            axios.post('https://glf-api.herokuapp.com/api/tasks/add', {
                 "description": this.state.task,
                 "frequency": this.state.frequency,
                 "daysInterval": this.state.days,

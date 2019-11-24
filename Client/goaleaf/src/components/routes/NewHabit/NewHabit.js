@@ -19,7 +19,7 @@ class NewHabit extends Component {
     e.preventDefault();
     console.log(this.state);
     console.log(localStorage.getItem('token'))
-    axios.post('/api/habits/new-habit', {
+    axios.post('https://glf-api.herokuapp.com/api/habits/new-habit', {
 
           "category": this.state.category,
           "frequency": "Daily",

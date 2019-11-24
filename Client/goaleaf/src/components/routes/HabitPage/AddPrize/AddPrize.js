@@ -12,7 +12,7 @@ class AddPrize extends Component {
 
     addPrize = (e, id) => {
         e.preventDefault();
-        axios.post(`/api/habits/habit/setPointsToWIn?habitID=${id}&pointsToWin=${this.state.prizePoints}`)
+        axios.post(`https://glf-api.herokuapp.com/api/habits/habit/setPointsToWIn?habitID=${id}&pointsToWin=${this.state.prizePoints}`)
         .then(res => {
             window.location.reload();
         }

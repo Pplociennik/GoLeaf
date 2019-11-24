@@ -27,7 +27,7 @@ class PostCard extends Component {
     }
 
     addReaction = reaction => {
-        axios.post('/api/posts/post/addreaction', {
+        axios.post('https://glf-api.herokuapp.com/api/posts/post/addreaction', {
             "postID": this.props.id,
             "token": localStorage.getItem('token'),
             "type": reaction
@@ -44,7 +44,7 @@ class PostCard extends Component {
     }
 
     handleCommentCardDeleted = (id) => {
-        axios.delete(`/api/comments/remove?id=${id}`)
+        axios.delete(`https://glf-api.herokuapp.com/api/comments/remove?id=${id}`)
             .then(res => {
                 console.log(`Deleted comment ${id}`);
                     let comments = this.state.comments.filter( comment => {
@@ -60,7 +60,7 @@ class PostCard extends Component {
     addComment = e => {
         e.preventDefault();
         this.clearMsg();
-        axios.post('/api/comments/addcomment', {
+        axios.post('https://glf-api.herokuapp.com/api/comments/addcomment', {
             "creatorID": this.props.userLogged,
             "postID": this.props.id,
             "text": this.state.comment
@@ -73,7 +73,7 @@ class PostCard extends Component {
     }
 
     showComments = () => {
-        axios.get(`/api/comments/getcomments?postID=${this.props.id}`)
+        axios.get(`https://glf-api.herokuapp.com/api/comments/getcomments?postID=${this.props.id}`)
             .then(res => {
                 this.setState({
                     comments: res.data
@@ -100,7 +100,7 @@ class PostCard extends Component {
 
 
     componentDidMount() {
-        axios.get(`/api/posts/presentreaction?postID=${this.props.id}&userLogin=${this.props.currentUserLogin}`)
+        axios.get(`https://glf-api.herokuapp.com/api/posts/presentreaction?postID=${this.props.id}&userLogin=${this.props.currentUserLogin}`)
             .then(res => {
                 res ? this.setState({ userReaction: res.data.type.toUpperCase() })
                     : this.setState({ userReaction: null })

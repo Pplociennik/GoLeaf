@@ -8,7 +8,7 @@ import Popup from "reactjs-popup"
 class Task extends Component {
 
     deleteTask = (e, id) => {
-        axios.delete(`/api/tasks/task/remove?taskID=${id}`)
+        axios.delete(`https://glf-api.herokuapp.com/api/tasks/task/remove?taskID=${id}`)
         .then(res => {
             window.location.reload();
         }).catch(err => { console.log(err) })

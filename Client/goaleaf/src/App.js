@@ -16,7 +16,7 @@ class App extends Component {
 
   componentDidMount() {
 
-    axios.post('/validatetoken', {
+    axios.post('https://glf-api.herokuapp.com/validatetoken', {
       "Token": localStorage.getItem('token')
     }).then(res => { this.props.validateUser() }
      ).catch(err => { this.props.invalidateUser()})

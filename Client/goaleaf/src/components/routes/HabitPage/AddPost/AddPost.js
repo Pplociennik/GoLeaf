@@ -24,7 +24,7 @@ class AddPost extends Component {
 
   handleAddPost = e => {
       e.preventDefault();    
-      axios.post('/api/posts/addpost', {
+      axios.post('https://glf-api.herokuapp.com/api/posts/addpost', {
             "habitID": this.props.habitID,
             "postText": this.state.postText.replace(/\n\s*\n/g, '\n'),
             "token": localStorage.getItem('token'),
@@ -43,7 +43,7 @@ class AddPost extends Component {
   }
 
   componentDidMount() {
-    axios.get(`/api/members/member/points?habitsID=${this.props.habitID}&userID=${this.props.user}`)
+    axios.get(`https://glf-api.herokuapp.com/api/members/member/points?habitsID=${this.props.habitID}&userID=${this.props.user}`)
     .then(res => {
         this.setState({userPoints: res.data});
     }

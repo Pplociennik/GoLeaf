@@ -13,7 +13,7 @@ class Tasks extends Component {
     }
 
     componentDidMount() {
-        axios.get(`/api/tasks/list/available?habitID=${this.props.habitID}&userID=${this.props.userLogged}`)
+        axios.get(`https://glf-api.herokuapp.com/api/tasks/list/available?habitID=${this.props.habitID}&userID=${this.props.userLogged}`)
             .then(res => {
                 this.setState({
                     tasks: res.data
