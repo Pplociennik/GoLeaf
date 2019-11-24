@@ -29,7 +29,6 @@ import static com.goaleaf.security.SecurityConstants.EXPIRATION_TIME;
 import static com.goaleaf.security.SecurityConstants.SECRET;
 
 @RestController
-@CrossOrigin(maxAge = 3600)
 public class AuthController {
 
     @Autowired
@@ -59,10 +58,10 @@ public class AuthController {
 
         register.password = (bCryptPasswordEncoder.encode(register.password));
 
-        EmailNotificationsSender sender = new EmailNotificationsSender();
+        //EmailNotificationsSender sender = new EmailNotificationsSender();
 
         User user = userService.registerNewUserAccount(register);
-        sender.sayHello(register.emailAddress, register.login);
+        //sender.sayHello(register.emailAddress, register.login);
 
         UserDto userDto = new UserDto();
         userDto.login = user.getLogin();
@@ -95,6 +94,7 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/validatetoken", method = RequestMethod.POST)
+    @CrossOrigin
     public HttpStatus validateToken(@RequestBody AuthorizeViewModel model) throws TimeoutException {
         String token = model.Token;
 

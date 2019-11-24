@@ -23,15 +23,15 @@ class AddPrize extends Component {
     addPrizePoint = e => {
         e.preventDefault();
 
-        if(this.state.prizePoints < 1000) {
-            this.setState({prizePoints: this.state.prizePoints + 1})
+        if(parseInt(this.state.prizePoints) < 1000) {
+            this.setState({prizePoints: parseInt(this.state.prizePoints) + 1})
         }
     }
     subtractPrizePoint = e => {
         e.preventDefault();
 
-        if(this.state.prizePoints > 1 && this.state.prizePoints ) {
-            this.setState({prizePoints: this.state.prizePoints - 1})
+        if(parseInt(this.state.prizePoints) > 1 && this.state.prizePoints) {
+            this.setState({prizePoints: parseInt(this.state.prizePoints) - 1})
         }
     }
 
@@ -86,12 +86,13 @@ class AddPrize extends Component {
                 <h4 className="">{this.props.pointsToWin === 1001 ? 'Set' : 'Update'} goal</h4>
                 <div className="input-field inline">
                     <button className="task-points-btn task-points-btn-subtract" onClick={ this.subtractPrizePoint }>-</button>
-                    <span className="task-points">{ this.state.prizePoints  }</span>
+                    {/* <span className="task-points">{ this.state.prizePoints  }</span> */}
+                    <input type="number" id="prizePoints" min="1" max="1000" value={this.state.prizePoints} onChange={this.handleChange}/>
                     <button className="task-points-btn task-points-btn-add" onClick={ this.addPrizePoint }>+</button>
                     <span className={this.state.msg === 'Goal set' ? "helper-text green-text" : "helper-text red-text "}>{this.state.msg}</span>
                 </div>
                 <button className="btn" onClick={(e) => this.addPrize(e, this.props.habitID)} type="submit" value="Set goal">
-                    <span>submit</span>
+                    <span>Set goal</span>
                 </button>
             </form>
             </div>

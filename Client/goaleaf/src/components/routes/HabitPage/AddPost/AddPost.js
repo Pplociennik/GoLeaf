@@ -89,7 +89,7 @@ class AddPost extends Component {
                     </div>
                     <div className="add-post-buttons-con">
                         <div className="add-post-left-buttons">
-                            <img src={ PhotoIcon } alt="add image"></img>
+                            {/* <img src={ PhotoIcon } alt="add image"></img> */}
                         </div>
                         <div>
                             <button className="add-post-btn btn" type="submit">Post</button>
