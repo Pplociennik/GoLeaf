@@ -95,7 +95,6 @@ public class UserServiceImpl implements UserService {
 
         User user = new User();
         user.setLogin(register.login);
-        user.setUserName(register.userName);
         user.setPassword(register.password);
         user.setEmailAddress(register.emailAddress);
         user.setImageName("def_goaleaf_avatar.png");

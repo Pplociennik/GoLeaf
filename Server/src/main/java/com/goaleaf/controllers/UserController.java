@@ -151,7 +151,6 @@ public class UserController {
         userDto.userID = user.getId();
         userDto.emailAddress = user.getEmailAddress();
         userDto.login = user.getLogin();
-        userDto.userName = user.getUserName();
 
         return userDto;
     }
