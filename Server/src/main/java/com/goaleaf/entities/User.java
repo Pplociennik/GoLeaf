@@ -17,9 +17,6 @@ public class User {
     private Integer id;
 
     @Column
-    private String userName;
-
-    @Column
     private String login;
 
     @Column
@@ -34,16 +31,12 @@ public class User {
     @Column
     private boolean notifications;
 
-    @ManyToMany
-    private Set<Role> roles;
-
     public User() {
         notifications = true;
     }
 
-    public User(Integer id, String userName, String login, String password, String emailAddress, String imageName) {
+    public User(Integer id, String login, String password, String emailAddress, String imageName) {
         this.id = id;
-        this.userName = userName;
         this.login = login;
         this.password = password;
         this.emailAddress = emailAddress;
@@ -76,14 +69,6 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public String getLogin() {
         return login;
     }
@@ -108,11 +93,4 @@ public class User {
         this.emailAddress = emailAddress;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
 }
