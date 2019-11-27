@@ -21,9 +21,14 @@
     .nav-item {
         margin-bottom: 4em;
     }
+    .nav-item-profile {
+        display: flex;
+    }
     a {
         color: $text-color;
         font-size: 2em;
+        font-weight: 500;
+        letter-spacing: 1px;
         text-decoration: none;
     }
     a:hover {
