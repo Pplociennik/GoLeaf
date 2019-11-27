@@ -140,9 +140,9 @@ class Profile extends Component {
                 <section className="change-password">
                     <form className="change-password-form" onSubmit={this.handlePasswordChange} autoComplete="off">
                         <h5 className="change-password-title">Change password</h5>
-                        <input className="password-input" id="oldPassword" type="password" placeholder="old password" onChange={this.handleChange} />
-                        <input className="password-input" id="newPassword" type="password" placeholder="new password" onChange={this.handleChange} />
-                        <input className="password-input" id="matchingNewPassword" type="password" placeholder="repeat new password" onChange={this.handleChange} />
+                        <input className="password-input" maxLength="20" id="oldPassword" type="password" placeholder="old password" onChange={this.handleChange} />
+                        <input className="password-input" maxLength="20" id="newPassword" type="password" placeholder="new password" onChange={this.handleChange} />
+                        <input className="password-input" maxLength="20" id="matchingNewPassword" type="password" placeholder="repeat new password" onChange={this.handleChange} />
                         <input className="change-password-btn" type="submit" value="Submit" />
                         {errorMsg}
                     </form>

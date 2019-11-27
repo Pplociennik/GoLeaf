@@ -7,7 +7,7 @@ class AddPrize extends Component {
 
   state = {
     msg: null,
-    prizePoints: 100
+    prizePoints: 0
   }
 
     addPrize = (e, id) => {
@@ -56,7 +56,7 @@ class AddPrize extends Component {
     componentDidMount() {
         M.AutoInit();
             console.log(this.state);
-            if(this.props.pointsToWin !== 1001){
+            if(this.props.pointsToWin !== 0){
                 this.setState({prizePoints: this.props.pointsToWin})
             }
     }
@@ -64,7 +64,7 @@ class AddPrize extends Component {
     render() {
         let addPrizeBtn;
     if(this.props.isAdmin){
-    addPrizeBtn = this.props.isFinished ? <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" disabled><span>🏆 set goal</span></button> : <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" ><span>🏆 {this.props.pointsToWin === 1001 ? 'set' : 'update'} goal</span></button>
+    addPrizeBtn = this.props.isFinished ? <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" disabled><span>🏆 set goal</span></button> : <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" ><span>🏆 {this.props.pointsToWin === 0 ? 'set' : 'update'} goal</span></button>
     }
     return (
         <Popup trigger={addPrizeBtn} modal closeOnDocumentClick
@@ -84,7 +84,7 @@ class AddPrize extends Component {
         <div className="add-task-box">
         <div className="row">
             <form className="col s10 offset-s1  l8 offset-l2 center-align" autoComplete="off">
-                <h4 className="">{this.props.pointsToWin === 1001 ? 'Set' : 'Update'} goal</h4>
+                <h4 className="">{this.props.pointsToWin === 0 ? 'Set' : 'Update'} goal</h4>
                 <div className="input-field inline">
                 <div style={{display: 'flex', justifyContent: 'center', marginTop: '30px'}}>
                         <button className="task-points-btn task-points-btn-subtract" onClick={ this.subtractPrizePoint }>-</button>

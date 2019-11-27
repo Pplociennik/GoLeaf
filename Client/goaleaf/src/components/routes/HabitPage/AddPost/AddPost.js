@@ -54,11 +54,11 @@ class AddPost extends Component {
 
 
     let tasksToShow;
-    if(!this.props.isAdmin && this.props.pointsToWin === 1001){
+    if(!this.props.isAdmin && this.props.pointsToWin === 0){
         tasksToShow = <div className="noTasksInfo">No tasks to complete 🤷‍♂️</div>  
     } else if (this.props.isFinished) {
     tasksToShow = <div className="noTasksInfo">🏆 Challenge has ended, {this.props.winner} has won! 🏆</div>
-    } else if (this.props.pointsToWin === 1001) {
+    } else if (this.props.pointsToWin === 0) {
         tasksToShow = <div className="noTasksInfo">Please set the prize before adding tasks 💪</div>
     }
     else {  
@@ -84,7 +84,7 @@ class AddPost extends Component {
                 <form className="" onSubmit={ this.handleAddPost }>
                     <div className="">
                         <div className="input-field">
-                            <textarea id="postText" className="materialize-textarea" placeholder="what's on your mind?" value={ this.state.postText } onChange={ this.handleChange }></textarea>
+                            <textarea id="postText" maxLength="600" className="materialize-textarea" placeholder="what's on your mind?" value={ this.state.postText } onChange={ this.handleChange }></textarea>
                         </div>
                     </div>
                     <div className="add-post-buttons-con">
@@ -100,7 +100,7 @@ class AddPost extends Component {
             <div id="achievement" className="col s10 offset-s1 m8 offset-m2">
                 {tasksToShow}
             </div>
-            <Posts habitID={this.props.habitID} showTasks={this.state.showTasks}/>
+            <Posts habitID={this.props.habitID} isFinished={this.props.isFinished} admin={this.props.admin} showTasks={this.state.showTasks}/>
         </div>
     )
   } 
