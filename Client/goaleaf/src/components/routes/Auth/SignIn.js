@@ -59,10 +59,10 @@ class SignIn extends Component {
       <div className="auth-container">
       <form className="auth-form" onSubmit={ this.handleSubmit } autoComplete="off">
         <h1 className="auth-title"> Sign In </h1>
-          <input className="auth-input" maxLength="15" type="text" id="login" placeholder="login" onChange={ this.handleChange } /> 
+          <input className="auth-input" maxLength="30" type="text" id="login" placeholder="login" onChange={ this.handleChange } /> 
           <input className="auth-input" maxLength="30" type="email" id="email" placeholder="email" onChange={ this.handleChange } />
-          <input className="auth-input" maxLength="20" type="password" id="password" placeholder="password" onChange={ this.handleChange } />
-          <input className="auth-input" maxLength="20" type="password" id="repeat_password" placeholder="repeat password" onChange={ this.handleChange } />
+          <input className="auth-input" maxLength="25" type="password" id="password" placeholder="password" onChange={ this.handleChange } />
+          <input className="auth-input" maxLength="25" type="password" id="repeat_password" placeholder="repeat password" onChange={ this.handleChange } />
         { errorMsg }
           <div className="auth-buttons">
             <input className="auth-btn" type="submit" value="Sign in" />
