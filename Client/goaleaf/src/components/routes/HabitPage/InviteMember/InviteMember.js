@@ -8,7 +8,8 @@ class InviteMember extends Component {
 
   state = {
     msg: null,
-    userInvited: null
+    userInvited: null,
+    disableBtn: false
   }
 
   addMember = (e, id) => {
@@ -25,10 +26,12 @@ class InviteMember extends Component {
         "userLogin": this.state.userInvited
     })
         .then(res => {
-            this.setState({ msg: "Invitation sent" })
+            this.setState({ msg: "Invitation sent" });
+            this.setState({ disableBtn: false });
         }
         ).catch(err => {
-            this.setState({ msg: err.response.data.message })
+            this.setState({ msg: err.response.data.message });
+            this.setState({ disableBtn: false})
         })
 
     }
@@ -44,6 +47,10 @@ class InviteMember extends Component {
             msg: null
         })
     }
+
+    handleDisableBtn = () => {
+        this.setState({disableBtn: true});
+      }
 
     componentDidMount() {
         M.AutoInit();
@@ -73,7 +80,7 @@ class InviteMember extends Component {
                     <input id="userInvited" maxLength="30" type="text" placeholder="username" onChange={ this.handleChange } />
                     <span className={this.state.msg === 'Invitation sent' ? "helper-text green-text" : "helper-text red-text "}>{this.state.msg}</span>
                 </div>
-                <button className="btn" type="submit" value="Invite user">
+                <button className={this.props.disableBtn ? "btn disable-btn" : "btn"} onClick={ this.handleDisableBtn } type="submit" value="Invite user">
                     <span>Invite user</span>
                 </button>
             </form>

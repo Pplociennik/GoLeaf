@@ -11,10 +11,12 @@ class AddTask extends Component {
     task: null,
     taskPoints: 5,
     frequency: "Once",
-    days: 1
+    days: 1,
+    disableBtn: false
   }
 
     addTask = (e, id) => {
+        this.handleDisableBtn();
         e.preventDefault();
         console.log(this.state.task);
         if (this.state.task !== null && (this.state.taskPoints > 0 && this.state.taskPoints < 11)){
@@ -29,7 +31,10 @@ class AddTask extends Component {
             .then(res => {
                 window.location.reload();
             }
-            ).catch(err => console.log(err.response.data.message))
+            ).catch(err => {
+                console.log(err.response.data.message);
+                this.setState({disableBtn: false});
+            })
         }   
     }
 
@@ -69,6 +74,10 @@ class AddTask extends Component {
         this.setState({
             msg: null
         })
+    }
+
+    handleDisableBtn = () => {
+        this.setState({disableBtn: true});
     }
 
     componentDidMount() {
@@ -143,7 +152,7 @@ class AddTask extends Component {
                         {customRecurrence}
                     </div>
                 </div>
-                <button className="btn" onClick={(e) => this.addTask(e, this.props.habitID)} type="submit" value="Add Task">
+                <button className={this.state.disableBtn ? "btn disable-btn" : "btn"} onClick={(e) => this.addTask(e, this.props.habitID)} type="submit" value="Add Task">
                     <span>Add Task</span>
                 </button>
             </form>

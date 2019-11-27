@@ -50,3 +50,7 @@ $screen-xl-min: 1200px;
         @content;
     }
  }
+
+ .disable-btn {
+    pointer-events: none;
+ }

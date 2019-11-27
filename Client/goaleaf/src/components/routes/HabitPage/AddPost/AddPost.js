@@ -11,7 +11,8 @@ class AddPost extends Component {
   state = {
       postText: '',
       showTasks: true,
-      userPoints: 0
+      userPoints: 0,
+      disableBtn: false
 
   }
 
@@ -30,12 +31,16 @@ class AddPost extends Component {
             "token": localStorage.getItem('token'),
             "type": "JustText"
       }).then(res => {
-          this.setState({postText: ''})
-          console.log(res)
+          this.setState({postText: ''});
+          this.setState({disableBtn: false});
           this.props.addPost(res.data);
 
         }
-       ).catch(err => console.log(err))
+       ).catch(err => {
+           this.setState({disableBtn: false});
+           console.log(err);
+
+    })
   }
 
   handleChange = e => {
@@ -48,6 +53,10 @@ class AddPost extends Component {
         this.setState({userPoints: res.data});
     }
     ).catch(err => console.log(err.response.data.message))
+  }
+
+  handleDisableBtn = () => {
+    this.setState({disableBtn: true});
   }
 
   render() {
@@ -92,7 +101,7 @@ class AddPost extends Component {
                             {/* <img src={ PhotoIcon } alt="add image"></img> */}
                         </div>
                         <div>
-                            <button className="add-post-btn btn" type="submit">Post</button>
+                            <button className={this.state.disableBtn ? "add-post-btn btn disable-btn" : "add-post-btn btn"} onClick={ this.handleDisableBtn } type="submit">Post</button>
                         </div>
                     </div>
                 </form>
