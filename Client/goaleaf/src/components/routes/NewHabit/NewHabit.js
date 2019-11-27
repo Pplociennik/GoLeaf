@@ -82,7 +82,7 @@ class NewHabit extends Component {
             <button className={this.state.private === false ? 'privacy-btn privacy-chosen' : 'privacy-btn'} type="button" value="public" onClick={ this.handleChangePrivacy }><i className="fas fa-lock-open fa-sm"></i> Public</button>
             <button className={this.state.private === true ? 'privacy-btn privacy-chosen' : 'privacy-btn'} type="button" value="private" onClick={ this.handleChangePrivacy }><i className="fas fa-lock fa-sm"></i> Private</button>
           </div>
-          <input className={this.state.disableBtn ? "new-habit-submit-btn disable-btn" : "new-habit-submit-btn"} onClick={ this.handleDisableBtn } type="submit" value="Create challenge" />
+          <input className={this.state.disableBtn ? "new-habit-submit-btn disable-btn" : "new-habit-submit-btn"} onClick={ this.handleDisableBtn } type="submit" value="submit" />
           { errorMsg }
         </form>
       </div>
