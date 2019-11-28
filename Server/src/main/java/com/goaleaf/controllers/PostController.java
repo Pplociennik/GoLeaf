@@ -75,7 +75,7 @@ public class PostController {
             throw new TokenExpiredException("You have to be logged in!");
         if (memberService.findSpecifiedMember(model.habitID, Integer.parseInt(claims.getSubject())) == null)
             throw new MemberDoesNotExistException("You are not a member!");
-        if (model.postText.isEmpty())
+        if (model.postText.trim().isEmpty())
             throw new EmptyPostException("Post cannot be empty!");
 
         Post newPost = new Post();
