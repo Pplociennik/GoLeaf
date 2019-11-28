@@ -6,6 +6,7 @@ import com.goaleaf.entities.User;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.AuthorizeViewModel;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.LoginViewModel;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.RegisterViewModel;
+import com.goaleaf.security.EmailNotificationsSender;
 import com.goaleaf.services.UserService;
 import com.goaleaf.services.servicesImpl.JwtServiceImpl;
 import com.goaleaf.validators.UserCredentialsValidator;
@@ -59,10 +60,10 @@ public class AuthController {
 
         register.password = (bCryptPasswordEncoder.encode(register.password));
 
-        //EmailNotificationsSender sender = new EmailNotificationsSender();
+        EmailNotificationsSender sender = new EmailNotificationsSender();
 
         User user = userService.registerNewUserAccount(register);
-        //sender.sayHello(register.emailAddress, register.login);
+        sender.sayHello(register.emailAddress, register.login);
 
         UserDto userDto = new UserDto();
         userDto.login = user.getLogin();
