@@ -23,7 +23,10 @@
 }
 
 .add-task-box {
-    padding: 20px;
+    @include md {
+        padding: 20px;
+    }
+    
     h4 {
         font-weight: 400;
         color: lighten($text-color, 10%);

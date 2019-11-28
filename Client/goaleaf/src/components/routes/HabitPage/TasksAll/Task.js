@@ -36,7 +36,7 @@ class Task extends Component {
                         <div className="task-points">+{this.props.points}</div> 
                 {this.props.isAdmin ?
                     <Popup trigger={
-                        <span className="task-card-delete-btn">❌</span>
+                        <button className={!this.props.isFinished ? "task-card-delete-btn" : "hide"}>❌</button>
                     } modal closeOnDocumentClick
                             disabled={this.props.isFinished}
                             contentStyle={{

@@ -6,8 +6,11 @@
     position: relative;
 
     .task-title {
-        font-size: 3em;
+        font-size: 2em;
         line-height: 30px;
+        @include md {
+            font-size: 3em;
+        }
     }
     .task-card-frequency {
         font-size: 1.6em;

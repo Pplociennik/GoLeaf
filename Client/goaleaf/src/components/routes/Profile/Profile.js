@@ -119,7 +119,7 @@ class Profile extends Component {
         if (this.state.confirmDelete === true) {
             deleteAccount = <div className="confirm-delete-profile">
                 <span>Are you sure you want to delete your account?</span>
-                <button className="confirm-delete-profile-btn" onClick={this.handleDelete}>Delete my account <i className="far fa-frown"></i></button>
+                <button className="confirm-delete-profile-btn" onClick={this.handleDelete}>delete my account</button>
             </div>
         }
         let errorMsg = <div className="error-msg">{this.state.errorMsg}</div>
@@ -140,15 +140,15 @@ class Profile extends Component {
                 <section className="change-password">
                     <form className="change-password-form" onSubmit={this.handlePasswordChange} autoComplete="off">
                         <h5 className="change-password-title">Change password</h5>
-                        <input className="password-input" id="oldPassword" type="password" placeholder="old password" onChange={this.handleChange} />
-                        <input className="password-input" id="newPassword" type="password" placeholder="new password" onChange={this.handleChange} />
-                        <input className="password-input" id="matchingNewPassword" type="password" placeholder="repeat new password" onChange={this.handleChange} />
-                        <input className="change-password-btn" type="submit" value="Submit" />
+                        <input className="password-input" maxLength="25" id="oldPassword" type="password" placeholder="old password" onChange={this.handleChange} />
+                        <input className="password-input" maxLength="25" id="newPassword" type="password" placeholder="new password" onChange={this.handleChange} />
+                        <input className="password-input" maxLength="25" id="matchingNewPassword" type="password" placeholder="repeat new password" onChange={this.handleChange} />
+                        <input className="change-password-btn" type="submit" value="submit" />
                         {errorMsg}
                     </form>
                 </section>
                 <section className="delete-profile">
-                    <input className="delete-profile-btn" type="button" value="Delete profile" onClick={e => this.setState({ confirmDelete: true })} />
+                    <input className="delete-profile-btn" type="button" value="delete profile" onClick={e => this.setState({ confirmDelete: true })} />
                     {deleteAccount}
                 </section>
             </div>

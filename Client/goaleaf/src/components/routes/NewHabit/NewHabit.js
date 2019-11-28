@@ -12,7 +12,8 @@ class NewHabit extends Component {
     invite: [],
     private: false,
     recurrence: 'daily',
-    errorMsg: ''
+    errorMsg: '',
+    disableBtn: false
   }
 
   handleSubmit = e => {
@@ -34,11 +35,11 @@ class NewHabit extends Component {
         }
     )
     .then(res => {
-                  console.log(res);
                   this.props.history.push('/');
                   window.location.reload();
                  }
     ).catch(err => {
+                    this.setState({disableBtn: false});
                     this.setState({errorMsg: err.response.data.message});
                     console.log(err.response.data.message)
      } )
@@ -49,11 +50,13 @@ class NewHabit extends Component {
   }
   handleChangeCategory = e => {
     this.setState({category: e.currentTarget.value})
-
-
   }
   handleChangePrivacy = e => {
     e.currentTarget.value === 'private' ? this.setState({private: true}) : this.setState({private: false});
+  }
+
+  handleDisableBtn = () => {
+    this.setState({disableBtn: true});
   }
 
   render() {
@@ -79,7 +82,7 @@ class NewHabit extends Component {
             <button className={this.state.private === false ? 'privacy-btn privacy-chosen' : 'privacy-btn'} type="button" value="public" onClick={ this.handleChangePrivacy }><i className="fas fa-lock-open fa-sm"></i> Public</button>
             <button className={this.state.private === true ? 'privacy-btn privacy-chosen' : 'privacy-btn'} type="button" value="private" onClick={ this.handleChangePrivacy }><i className="fas fa-lock fa-sm"></i> Private</button>
           </div>
-          <input className="new-habit-submit-btn" type="submit" value="Create challenge" />
+          <input className={this.state.disableBtn ? "new-habit-submit-btn disable-btn" : "new-habit-submit-btn"} onClick={ this.handleDisableBtn } type="submit" value="submit" />
           { errorMsg }
         </form>
       </div>

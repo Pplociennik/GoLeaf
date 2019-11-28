@@ -73,7 +73,7 @@ class Notifications extends Component {
         if (localStorage.getItem('token')) {
             return (
                 <section className="dashboard-nav">
-                <Popup trigger={<button className={foundNtfs ? "btn waves-effect waves-light notifications-modal-btn" : "btn disabled notifications-modal-btn"} >🔔 <span> Notifications</span></button>} modal closeOnDocumentClick
+                <Popup trigger={<button className={foundNtfs ? "btn waves-effect waves-light notifications-modal-btn" : "btn disabled notifications-modal-btn"} >🔔</button>} modal closeOnDocumentClick
                 onOpen={ this.clearMsg }
                 contentStyle={{
                     maxWidth: '90%',

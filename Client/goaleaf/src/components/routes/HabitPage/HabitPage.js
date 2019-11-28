@@ -134,14 +134,14 @@ class HabitPage extends Component {
                         <div className="habit-page-navigation">
                             <InviteMember habitID={habit.id} />
                             <Members habitID={habit.id}/>
-                            {habit.pointsToWin !== 1001 ? <AddTask habitID={habit.id} isFinished={habit.isFinished} isAdmin={isAdmin}/> : null}
-                            {habit.pointsToWin !== 1001 ? <TasksAll habitID={habit.id} isAdmin={isAdmin}/> : null}
                             <AddPrize habitID={habit.id} isFinished={habit.isFinished} isAdmin={isAdmin} pointsToWin={habit.pointsToWin}/>
+                            {habit.pointsToWin !== 1001 ? <AddTask habitID={habit.id} isFinished={habit.isFinished} isAdmin={isAdmin} pointsToWin={habit.pointsToWin}/> : null}
+                            {habit.pointsToWin !== 1001 ? <TasksAll habitID={habit.id} isAdmin={isAdmin} isFinished={habit.isFinished} pointsToWin={habit.pointsToWin}/> : null}
                             <Leaderboard habitID={habit.id} pointsToWin={habit.pointsToWin}/>
                         </div>
                     </section> : null}
                     <section className="habit-page-dashboard">
-                        {userIsMember ? <AddPost habitID = { habit.id } user={this.props.userLogged} isFinished={habit.isFinished} pointsToWin={habit.pointsToWin} winner={habit.winner} isAdmin={isAdmin}/> : null}
+                        {userIsMember ? <AddPost habitID = { habit.id } admin={habit.creatorLogin} user={this.props.userLogged} isFinished={habit.isFinished} pointsToWin={habit.pointsToWin} winner={habit.winner} isAdmin={isAdmin}/> : null}
                     </section>
                 </div>
             )

@@ -11,10 +11,12 @@ class AddTask extends Component {
     task: null,
     taskPoints: 5,
     frequency: "Once",
-    days: 1
+    days: 1,
+    disableBtn: false
   }
 
     addTask = (e, id) => {
+        this.handleDisableBtn();
         e.preventDefault();
         console.log(this.state.task);
         if (this.state.task !== null && (this.state.taskPoints > 0 && this.state.taskPoints < 11)){
@@ -29,7 +31,10 @@ class AddTask extends Component {
             .then(res => {
                 window.location.reload();
             }
-            ).catch(err => console.log(err.response.data.message))
+            ).catch(err => {
+                console.log(err.response.data.message);
+                this.setState({disableBtn: false});
+            })
         }   
     }
 
@@ -71,6 +76,10 @@ class AddTask extends Component {
         })
     }
 
+    handleDisableBtn = () => {
+        this.setState({disableBtn: true});
+    }
+
     componentDidMount() {
         M.AutoInit();
     }
@@ -104,7 +113,7 @@ class AddTask extends Component {
 
     let addTaskBtn;
     if(this.props.isAdmin){
-        addTaskBtn = this.props.isFinished ? <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" disabled><span>🔥 New Task</span></button> : <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn"><span>🔥 New Task</span></button>
+        addTaskBtn = (this.props.isFinished || this.props.pointsToWin === 0) ? <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" disabled><span>🔥 New Task</span></button> : <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn"><span>🔥 New Task</span></button>
     }
     return (
         <Popup trigger={addTaskBtn} modal closeOnDocumentClick
@@ -125,7 +134,7 @@ class AddTask extends Component {
             <form className="col s10 offset-s1  l8 offset-l2 center-align" autoComplete="off">
                 <h4 className="">New Task</h4>
                 <div className="input-field inline">
-                    <input id="task" type="text" placeholder="task description" onChange={ this.handleChange } />
+                    <input id="task" maxLength="60" type="text" placeholder="task description" onChange={ this.handleChange } />
                     <div style={{display: 'flex', justifyContent: 'center', marginTop: '30px'}}>
                         <button className="task-points-btn task-points-btn-subtract" onClick={ this.subtractTaskPoint }>-</button>
                         <input title="Set task points between 1 and 10" id="taskPoints" maxLength="2" style={{width: '30px', textDecoration: 'none', textAlign: 'center' }} className="task-points" value={this.state.taskPoints} onChange={(e) => {this.handleChange(e)}}/>
@@ -143,7 +152,7 @@ class AddTask extends Component {
                         {customRecurrence}
                     </div>
                 </div>
-                <button className="btn" onClick={(e) => this.addTask(e, this.props.habitID)} type="submit" value="Add Task">
+                <button className={this.state.disableBtn ? "btn disable-btn" : "btn"} onClick={(e) => this.addTask(e, this.props.habitID)} type="submit" value="Add Task">
                     <span>Add Task</span>
                 </button>
             </form>

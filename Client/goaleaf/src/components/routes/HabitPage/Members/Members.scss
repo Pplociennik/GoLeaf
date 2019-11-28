@@ -4,6 +4,7 @@
     width: 100%;
     max-height: calc(100vh - 210px);
     overflow-y: auto;
+    padding: 1em;
 
     @include md {
         padding: 2em;

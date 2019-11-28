@@ -8,7 +8,8 @@ class InviteMember extends Component {
 
   state = {
     msg: null,
-    userInvited: null
+    userInvited: null,
+    disableBtn: false
   }
 
   addMember = (e, id) => {
@@ -25,10 +26,12 @@ class InviteMember extends Component {
         "userLogin": this.state.userInvited
     })
         .then(res => {
-            this.setState({ msg: "Invitation sent" })
+            this.setState({ msg: "Invitation sent" });
+            this.setState({ disableBtn: false });
         }
         ).catch(err => {
-            this.setState({ msg: err.response.data.message })
+            this.setState({ msg: err.response.data.message });
+            this.setState({ disableBtn: false})
         })
 
     }
@@ -44,6 +47,10 @@ class InviteMember extends Component {
             msg: null
         })
     }
+
+    handleDisableBtn = () => {
+        this.setState({disableBtn: true});
+      }
 
     componentDidMount() {
         M.AutoInit();
@@ -70,10 +77,10 @@ class InviteMember extends Component {
             <form className="col s10 offset-s1  l8 offset-l2 center-align" onSubmit={(e) => this.addMember(e, this.props.habitID)} autoComplete="off">
                 <h4 className="">Send invitation</h4>
                 <div className="input-field inline">
-                    <input id="userInvited" type="text" placeholder="username" onChange={ this.handleChange } />
+                    <input id="userInvited" maxLength="30" type="text" placeholder="username" onChange={ this.handleChange } />
                     <span className={this.state.msg === 'Invitation sent' ? "helper-text green-text" : "helper-text red-text "}>{this.state.msg}</span>
                 </div>
-                <button className="btn" type="submit" value="Invite user">
+                <button className={this.props.disableBtn ? "btn disable-btn" : "btn"} onClick={ this.handleDisableBtn } type="submit" value="Invite user">
                     <span>Invite user</span>
                 </button>
             </form>

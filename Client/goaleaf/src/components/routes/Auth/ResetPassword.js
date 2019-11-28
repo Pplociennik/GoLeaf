@@ -51,7 +51,7 @@ class ResetPassword extends Component {
           <input className="auth-input" type="email" id="email" placeholder="email" onChange={ this.handleChange } />
         { errorMsg }
           <div className="auth-buttons">
-            <input className="auth-btn" type="submit" value="Submit" />
+            <input className="auth-btn" maxLength="30" type="submit" value="Submit" />
             <Link to='/login'><input className="auth-btn" type="button" value="Log in" /></Link>
           </div>
       </form>

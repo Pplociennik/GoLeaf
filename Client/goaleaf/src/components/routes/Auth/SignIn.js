@@ -10,7 +10,8 @@ class SignIn extends Component {
     email: '',
     password: '',
     repeat_password: '',
-    errorMsg: ''
+    errorMsg: '',
+    disableBtn: false
   }
   handleChange = e => {
     this.setState({[e.target.id]: e.target.value})
@@ -45,7 +46,14 @@ class SignIn extends Component {
                      }
         ).catch(err => this.setState({errorMsg: err.response.data.message}))
     }
-     ).catch(err => this.setState({errorMsg: err.response.data.message}));
+     ).catch(err => {
+       this.setState({errorMsg: err.response.data.message});
+       this.setState({disableBtn: false});
+      });
+  }
+
+  handleDisableBtn = () => {
+    this.setState({disableBtn: true});
   }
 
   render() {
@@ -59,13 +67,13 @@ class SignIn extends Component {
       <div className="auth-container">
       <form className="auth-form" onSubmit={ this.handleSubmit } autoComplete="off">
         <h1 className="auth-title"> Sign In </h1>
-          <input className="auth-input" type="text" id="login" placeholder="login" onChange={ this.handleChange } /> 
-          <input className="auth-input" type="email" id="email" placeholder="email" onChange={ this.handleChange } />
-          <input className="auth-input" type="password" id="password" placeholder="password" onChange={ this.handleChange } />
-          <input className="auth-input" type="password" id="repeat_password" placeholder="repeat password" onChange={ this.handleChange } />
+          <input className="auth-input" maxLength="30" type="text" id="login" placeholder="login" onChange={ this.handleChange } /> 
+          <input className="auth-input" maxLength="30" type="email" id="email" placeholder="email" onChange={ this.handleChange } />
+          <input className="auth-input" maxLength="25" type="password" id="password" placeholder="password" onChange={ this.handleChange } />
+          <input className="auth-input" maxLength="25" type="password" id="repeat_password" placeholder="repeat password" onChange={ this.handleChange } />
         { errorMsg }
           <div className="auth-buttons">
-            <input className="auth-btn" type="submit" value="Sign in" />
+            <input className={this.state.disableBtn ? "auth-btn disable-btn" : "auth-btn"} onClick={ this.handleDisableBtn } type="submit" value="Sign in" />
             <Link to='/login'><input className="auth-btn" type="button" value="Log in" /></Link>
           </div>
       </form>
