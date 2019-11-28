@@ -42,11 +42,11 @@ public class User {
         return imageName;
     }
 
-    public boolean getNotifications() {
+    public Boolean getNotifications() {
         return notifications;
     }
 
-    public void setNotifications(boolean notifications) {
+    public void setNotifications(Boolean notifications) {
         this.notifications = notifications;
     }
 
