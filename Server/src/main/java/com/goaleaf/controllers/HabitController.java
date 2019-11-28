@@ -80,6 +80,7 @@ public class HabitController {
         habitDTO.isPrivate = model.isPrivate;
         habitDTO.title = model.title;
         habitDTO.creatorID = Integer.parseInt(claims.getSubject());
+        habitDTO.canUsersInvite = model.canUsersInvite;
 
         Habit resHabit = new Habit();
         resHabit = habitService.registerNewHabit(model, Integer.parseInt(claims.getSubject()));
@@ -234,6 +235,11 @@ public class HabitController {
     @RequestMapping(value = "/habit/setPointsToWIn", method = RequestMethod.POST)
     public HabitDTO setPointsToWin(@RequestParam Integer habitID, Integer pointsToWin) {
         return habitService.setPointsToWin(habitID,pointsToWin);
+    }
+
+    @RequestMapping(value = "/habit/setInvitingPermissions", method = RequestMethod.POST)
+    public Boolean setInvitingPermissions(@RequestParam Boolean allowed, Integer habitID) {
+        return habitService.setInvitingPermissions(allowed, habitID);
     }
 
 }
