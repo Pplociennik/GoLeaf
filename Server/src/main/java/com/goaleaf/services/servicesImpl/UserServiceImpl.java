@@ -46,10 +46,10 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Override
-    public Iterable<User> listAllUsersPaging(Integer pageNr, Integer howManyOnPage) {
-        return userRepository.findAll(new PageRequest(pageNr, howManyOnPage));
-    }
+//    @Override
+//    public Iterable<User> listAllUsersPaging(Integer pageNr, Integer howManyOnPage) {
+//        return userRepository.findAll(new PageRequest(pageNr, howManyOnPage));
+//    }
 
     @Override
     public Iterable<User> listAllUsers() {
@@ -156,12 +156,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public Iterable<HabitDTO> getUserFinishedHabits(Integer userID) {
         Iterable<Member> memberList = memberRepository.findAllByUserID(userID);
+        User user = userRepository.findById(userID);
         List<Habit> habits = new ArrayList<>(0);
 
         for (Member m : memberList) {
             Habit h = new Habit();
             h = habitService.getHabitById(m.getHabitID());
-            if (h.getFinished()) {
+            if (h.getFinished() && !h.getWinner().equals(user.getLogin())) {
                 habits.add(h);
             }
         }

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
         property = "refId", scope = User.class)
@@ -16,23 +15,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column
     private String login;
 
-    @Column
     private String password;
 
-    @Column
     private String emailAddress;
 
-    @Column
     private String imageName;
 
-    @Column
-    private boolean notifications;
+    private Boolean notifications;
 
     public User() {
-        notifications = true;
     }
 
     public User(Integer id, String login, String password, String emailAddress, String imageName) {
