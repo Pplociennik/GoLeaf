@@ -3,6 +3,7 @@ package com.goaleaf.services.servicesImpl;
 import com.goaleaf.entities.*;
 import com.goaleaf.entities.DTO.HabitDTO;
 import com.goaleaf.entities.DTO.UserDto;
+import com.goaleaf.entities.enums.Category;
 import com.goaleaf.entities.viewModels.habitsCreating.AddMemberViewModel;
 import com.goaleaf.entities.viewModels.habitsCreating.HabitViewModel;
 import com.goaleaf.repositories.*;
@@ -356,6 +357,11 @@ public class HabitServiceImpl implements HabitService {
         }
 
         return HttpStatus.OK;
+    }
+
+    @Override
+    public Iterable<HabitDTO> getAllHabitsByCategory(Category category) {
+        return convertManyToDTOs(habitRepository.findAllByCategory(category));
     }
 
 }
