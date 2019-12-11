@@ -19,7 +19,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import static com.goaleaf.security.SecurityConstants.SECRET;
 
@@ -230,8 +233,7 @@ public class TaskServiceImpl implements TaskService {
         if (task.getFrequency().equals(Frequency.Once4All)) {
             if (!historyList.iterator().hasNext()) {
                 return new TaskViewModel(task.getId(), u.getLogin(), task.getDescription(), task.getPoints(), task.getFrequency(), null, null, true, null);
-            }
-            else {
+            } else {
                 tempHistoryEntity = historyList.iterator().next();
             }
         }

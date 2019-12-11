@@ -47,4 +47,6 @@ public interface HabitService {
     Boolean setInvitingPermissions(Boolean allowed, Integer habitID);
 
     HttpStatus inviteNewMember(AddMemberViewModel model);
+
+    HttpStatus deleteHabit(Integer habitID, String token);
 }

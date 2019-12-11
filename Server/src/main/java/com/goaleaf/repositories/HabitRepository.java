@@ -18,7 +18,10 @@ public interface HabitRepository extends CrudRepository<Habit, Integer>, PagingA
 
     Iterable<Habit> findAllByCreatorID(Integer creatorID);
 
-//    Habit findByUserName(String userName);
+    @Override
+    void delete(Integer integer);
+
+    //    Habit findByUserName(String userName);
 
 //    Habit findByLogin(String login);
 }

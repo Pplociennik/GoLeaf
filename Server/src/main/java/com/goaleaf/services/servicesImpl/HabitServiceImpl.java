@@ -1,13 +1,11 @@
 package com.goaleaf.services.servicesImpl;
 
+import com.goaleaf.entities.*;
 import com.goaleaf.entities.DTO.HabitDTO;
 import com.goaleaf.entities.DTO.UserDto;
-import com.goaleaf.entities.Habit;
-import com.goaleaf.entities.Member;
-import com.goaleaf.entities.Notification;
 import com.goaleaf.entities.viewModels.habitsCreating.AddMemberViewModel;
 import com.goaleaf.entities.viewModels.habitsCreating.HabitViewModel;
-import com.goaleaf.repositories.HabitRepository;
+import com.goaleaf.repositories.*;
 import com.goaleaf.security.EmailNotificationsSender;
 import com.goaleaf.services.HabitService;
 import com.goaleaf.services.MemberService;
@@ -43,6 +41,18 @@ public class HabitServiceImpl implements HabitService {
     private UserService userService;
     @Autowired
     private NotificationService notificationService;
+    @Autowired
+    private TaskRepository taskRepository;
+    @Autowired
+    private PostRepository postRepository;
+    @Autowired
+    private CommentRepository commentRepository;
+    @Autowired
+    private ReactionRepository reactionRepository;
+    @Autowired
+    private TaskHistoryRepository taskHistoryRepository;
+    @Autowired
+    private MemberRepository memberRepository;
 
 
     @Override
@@ -251,6 +261,98 @@ public class HabitServiceImpl implements HabitService {
             } catch (MessagingException e) {
                 e.printStackTrace();
             }
+        }
+
+        return HttpStatus.OK;
+    }
+
+    @Override
+    public HttpStatus deleteHabit(Integer habitID, String token) {
+
+        if (habitRepository.findById(habitID) == null) {
+            return HttpStatus.NOT_FOUND;
+        }
+
+        Habit toDelete = habitRepository.findById(habitID);
+        Claims claims = Jwts.parser()
+                .setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8))
+                .parseClaimsJws(token).getBody();
+
+        if (toDelete.getCreatorID() != Integer.parseInt(claims.getSubject())) {
+            throw new RuntimeException("Deleting of a challenge may only be performed by its creator!");
+        }
+
+        Iterable<Post> postsList = postRepository.getAllByHabitIDOrderByDateOfAdditionDesc(habitID);
+
+        List<Comment> commentsArrayList = new ArrayList<>(0);
+        List<PostReaction> reactionsArrayList = new ArrayList<>(0);
+
+        if (postsList.iterator().hasNext()) {
+            for (Post p : postsList) {
+                Iterable<Comment> cmds = commentRepository.getAllByPostIDOrderByCreationDateDesc(p.getId());
+                cmds.forEach(commentsArrayList::add);
+            }
+            for (Post p : postsList) {
+                Iterable<PostReaction> pstr = reactionRepository.getAllByPostID(p.getId());
+                pstr.forEach(reactionsArrayList::add);
+            }
+        }
+
+        Iterable<Comment> commentsList = commentsArrayList;
+        Iterable<PostReaction> reactionsList = reactionsArrayList;
+        Iterable<TasksHistoryEntity> tasksHistoryEntities = taskHistoryRepository.findAllByHabitID(habitID);
+        Iterable<Task> tasksList = taskRepository.getAllByHabitID(habitID);
+        Iterable<Member> membersList = memberRepository.findAllByHabitID(habitID);
+
+        if (commentsList.iterator().hasNext()) {
+            commentRepository.delete(commentsList);
+            for (Post p : postsList) {
+                if (commentRepository.getAllByPostIDOrderByCreationDateDesc(p.getId()).iterator().hasNext()) {
+                    throw new RuntimeException("Comments were not deleted properly! POST_ID: " + p.getId());
+                }
+            }
+        }
+
+        if (reactionsList.iterator().hasNext()) {
+            reactionRepository.delete(reactionsList);
+            for (Post p : postsList) {
+                if (reactionRepository.getAllByPostID(p.getId()).iterator().hasNext()) {
+                    throw new RuntimeException("Reactions were not deleted properly! POST_ID: " + p.getId());
+                }
+            }
+        }
+
+        if (postsList.iterator().hasNext()) {
+            postRepository.delete(postsList);
+            if (postRepository.getAllByHabitIDOrderByDateOfAdditionDesc(habitID).iterator().hasNext()) {
+                throw new RuntimeException("Posts were not deleted properly! CHALLENGE_ID: " + habitID);
+            }
+        }
+
+        if (tasksHistoryEntities.iterator().hasNext()) {
+            taskHistoryRepository.delete(tasksHistoryEntities);
+            if (taskHistoryRepository.findAllByHabitID(habitID).iterator().hasNext()) {
+                throw new RuntimeException("Tasks History were not deleted properly! CHALLENGE_ID: " + habitID);
+            }
+        }
+
+        if (tasksList.iterator().hasNext()) {
+            taskRepository.delete(tasksList);
+            if (taskRepository.getAllByHabitID(habitID).iterator().hasNext()) {
+                throw new RuntimeException("Tasks were not deleted properly! CHALLENGE_ID: " + habitID);
+            }
+        }
+
+        if (membersList.iterator().hasNext()) {
+            memberRepository.delete(membersList);
+            if (memberRepository.findAllByHabitID(habitID).iterator().hasNext()) {
+                throw new RuntimeException("Members were not deleted properly! CHALLENGE_ID: " + habitID);
+            }
+        }
+
+        habitRepository.delete(habitID);
+        if (habitRepository.findById(habitID) != null) {
+            throw new RuntimeException("Challenge was not deleted properly! CHALLENGE_ID: " + habitID);
         }
 
         return HttpStatus.OK;
