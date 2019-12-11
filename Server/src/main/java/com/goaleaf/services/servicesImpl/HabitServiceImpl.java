@@ -90,7 +90,7 @@ public class HabitServiceImpl implements HabitService {
         newHabit.setCreatorLogin(userService.findById(creatorID).getLogin());
         newHabit.setWinner("NONE");
         newHabit.setPointsToWIn(1001);
-        newHabit.setCanUsersInvite(model.canUsersInvite);
+        newHabit.setCanUsersInvite(model.canUsersInvite == null ? true : model.canUsersInvite);
         newHabit.setFinished(false);
 
         Habit added = new Habit();
@@ -213,6 +213,13 @@ public class HabitServiceImpl implements HabitService {
                 .setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8))
                 .parseClaimsJws(model.token).getBody();
 
+        UserDto inviter = userService.findById(Integer.parseInt(claims.getSubject()));
+        Habit habit = habitRepository.findById(model.habitID);
+
+        if (habit.getCreatorLogin().equals(inviter.getLogin())) {
+            throw new RuntimeException("You are not allowed to invite members!");
+        }
+
         UserDto searchingUser = userService.findByLogin(model.userLogin);
 
         Member newMember = new Member();
@@ -223,7 +230,8 @@ public class HabitServiceImpl implements HabitService {
         newMember.setPoints(0);
 
         if (memberService.checkIfExist(newMember)) {
-            throw new UserAlreadyInHabitException("User already participating!"); }
+            throw new UserAlreadyInHabitException("User already participating!");
+        }
 
 //        memberService.saveMember(newMember);
 
