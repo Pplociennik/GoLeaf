@@ -7,6 +7,7 @@ import com.goaleaf.entities.Habit;
 import com.goaleaf.entities.Member;
 import com.goaleaf.entities.Notification;
 import com.goaleaf.entities.enums.Category;
+import com.goaleaf.entities.enums.Sorting;
 import com.goaleaf.entities.viewModels.habitsCreating.AddMemberViewModel;
 import com.goaleaf.entities.viewModels.habitsCreating.HabitViewModel;
 import com.goaleaf.entities.viewModels.habitsManaging.DeleteMemberViewModel;
@@ -224,9 +225,14 @@ public class HabitController {
         return habitService.deleteHabit(habitID, token);
     }
 
-    @RequestMapping(value = "/all/sorted", method = RequestMethod.GET)
+    @RequestMapping(value = "/all/by-category", method = RequestMethod.GET)
     public Iterable<HabitDTO> getAllHabitsSortedByCategory(@RequestParam Category category) {
         return habitService.getAllHabitsByCategory(category);
+    }
+
+    @RequestMapping(value = "/all/sorted", method = RequestMethod.GET)
+    public Iterable<HabitDTO> getAllHabitsByDateOrPopularity(@RequestParam Sorting sorting) {
+        return habitService.getAllHabitsBySorting(sorting);
     }
 
 }

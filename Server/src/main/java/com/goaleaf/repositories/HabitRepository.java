@@ -24,6 +24,8 @@ public interface HabitRepository extends CrudRepository<Habit, Integer>, PagingA
 
     Iterable<Habit> findAllByCategory(Category category);
 
+    Iterable<Habit> findAllByOrderByHabitStartDateDesc();
+
     //    Habit findByUserName(String userName);
 
 //    Habit findByLogin(String login);

@@ -4,6 +4,7 @@ import com.goaleaf.entities.*;
 import com.goaleaf.entities.DTO.HabitDTO;
 import com.goaleaf.entities.DTO.UserDto;
 import com.goaleaf.entities.enums.Category;
+import com.goaleaf.entities.enums.Sorting;
 import com.goaleaf.entities.viewModels.habitsCreating.AddMemberViewModel;
 import com.goaleaf.entities.viewModels.habitsCreating.HabitViewModel;
 import com.goaleaf.repositories.*;
@@ -24,10 +25,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.goaleaf.security.SecurityConstants.SECRET;
 
@@ -362,6 +360,38 @@ public class HabitServiceImpl implements HabitService {
     @Override
     public Iterable<HabitDTO> getAllHabitsByCategory(Category category) {
         return convertManyToDTOs(habitRepository.findAllByCategory(category));
+    }
+
+    @Override
+    public Iterable<HabitDTO> getAllHabitsBySorting(Sorting sorting) {
+        if (sorting.equals(Sorting.Popular)) {
+            Iterable<HabitDTO> list = listAllHabits();
+            Iterator<HabitDTO> i = list.iterator();
+            if (i.hasNext()) {
+                List resultList = new ArrayList(0);
+                Integer temp;
+                HabitDTO tempHabit = null;
+
+                while (i.hasNext()) {
+                    temp = 0;
+                    for (HabitDTO h : list) {
+                        if (h.membersCount > temp) {
+                            tempHabit = h;
+                            temp = h.membersCount;
+                        }
+                    }
+                    resultList.add(tempHabit);
+                    i.next();
+                    i.remove();
+                }
+                Iterable<HabitDTO> result = resultList;
+                return result;
+            }
+            return null;
+        } else if (sorting.equals(Sorting.Newest)) {
+            return convertManyToDTOs(habitRepository.findAllByOrderByHabitStartDateDesc());
+        }
+        return null;
     }
 
 }
