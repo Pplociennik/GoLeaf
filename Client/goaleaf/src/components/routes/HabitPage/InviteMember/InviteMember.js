@@ -30,6 +30,7 @@ class InviteMember extends Component {
             this.setState({ disableBtn: false });
         }
         ).catch(err => {
+            console.log(err.response.data)
             this.setState({ msg: err.response.data.message });
             this.setState({ disableBtn: false})
         })

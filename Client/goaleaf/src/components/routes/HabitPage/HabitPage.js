@@ -91,6 +91,14 @@ class HabitPage extends Component {
 
         let habit = this.props.habits.find(habit => habit.id === parseInt(this.props.match.params.id));
 
+        if(!habit) {
+            return(
+                <div>
+                    Challenge not found!
+                </div>
+            )
+        }
+
         let userIsMember;
 
         if (habit && this.state.permissions) {

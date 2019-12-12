@@ -6,14 +6,15 @@ import PhotoIcon from './../../../../assets/photo-icon.png';
 import {addPost} from '../../../../js/state';
 import Tasks from '../Tasks/Tasks';
 import Posts from '../Posts/Posts';
+import { string } from 'prop-types';
 class AddPost extends Component {
 
   state = {
       postText: '',
       showTasks: true,
       userPoints: 0,
-      disableBtn: false
-
+      disableBtn: false,
+      postLengthLimit: 600
   }
 
   showTasks = e => {
@@ -24,7 +25,7 @@ class AddPost extends Component {
   }
 
   handleAddPost = e => {
-      e.preventDefault();    
+      e.preventDefault();   
       axios.post('https://glf-api.herokuapp.com/api/posts/addpost', {
             "habitID": this.props.habitID,
             "postText": this.state.postText.replace(/\n\s*\n/g, '\n'),
@@ -41,6 +42,7 @@ class AddPost extends Component {
            console.log(err);
 
     })
+    
   }
 
   handleChange = e => {
@@ -93,7 +95,7 @@ class AddPost extends Component {
                 <form className="" onSubmit={ this.handleAddPost }>
                     <div className="">
                         <div className="input-field">
-                            <textarea id="postText" maxLength="600" className="materialize-textarea" placeholder="what's on your mind?" value={ this.state.postText } onChange={ this.handleChange }></textarea>
+                            <textarea id="postText" maxLength={this.state.postLengthLimit} className="materialize-textarea" placeholder="what's on your mind?" value={ this.state.postText } onChange={ this.handleChange }></textarea>
                         </div>
                     </div>
                     <div className="add-post-buttons-con">
@@ -102,6 +104,7 @@ class AddPost extends Component {
                         </div>
                         <div>
                             <button className={this.state.disableBtn ? "add-post-btn btn disable-btn" : "add-post-btn btn"} onClick={ this.handleDisableBtn } type="submit">Post</button>
+                            {this.state.postText.length.toString() + ' / ' + this.state.postLengthLimit.toString() + ' characters'}
                         </div>
                     </div>
                 </form>
