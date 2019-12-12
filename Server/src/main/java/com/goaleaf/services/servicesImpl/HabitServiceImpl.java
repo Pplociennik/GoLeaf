@@ -144,6 +144,10 @@ public class HabitServiceImpl implements HabitService {
 
     private HabitDTO convertToDTO(Habit entry) {
 
+        if (entry == null) {
+            return null;
+        }
+
         UserDto creator = userService.findById(entry.getCreatorID());
 
         HabitDTO habitDTO = new HabitDTO();
