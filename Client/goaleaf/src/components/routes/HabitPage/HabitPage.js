@@ -53,6 +53,15 @@ class HabitPage extends Component {
 
     }
 
+    deleteHabit = id => {
+        axios.delete(`https://glf-api.herokuapp.com/api/habits/habit/remove?habitID=${id}&token=${localStorage.getItem("token")}`)
+            .then(res => {
+                this.props.history.push('/');
+                window.location.reload();
+            }
+            ).catch(err => console.log(err.response.data.message))
+    }
+
     handleChange = e => {
         e.preventDefault();
         this.setState({
@@ -121,7 +130,7 @@ class HabitPage extends Component {
                             <div className="habit-popup">
                                 <div className="delete-habit-title">Are you sure you want to delete this challenge?</div>
                                 <div className="delete-habit-buttons">
-                                    <button className="delete-habit-btn">Delete</button>
+                                    <button className="delete-habit-btn" onClick={() => this.deleteHabit(habit.id)}>Delete</button>
                                     <button className="delete-habit-back" onClick={close}>Back</button>
                                 </div>
                             </div>
