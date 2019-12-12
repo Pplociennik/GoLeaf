@@ -274,6 +274,11 @@ public class UserServiceImpl implements UserService {
     }
 
     private UserDto convertToDTO(User user) {
+
+        if (user == null) {
+            return null;
+        }
+
         UserDto dto = new UserDto();
 
         dto.setEmailAddress(user.getEmailAddress());
