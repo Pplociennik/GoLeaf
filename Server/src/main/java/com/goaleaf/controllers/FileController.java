@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import com.goaleaf.entities.User;
 
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -44,7 +45,7 @@ public class FileController {
 
     @PostMapping("/uploadImage")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response uploadProfilePic(@RequestParam("file") MultipartFile file, @RequestParam("token") String token) {
+    public String uploadProfilePic(@RequestParam("file") MultipartFile file, @RequestParam("token") String token) {
         if (!jwtService.Validate(token, SECRET))
             throw new TokenExpiredException("You have to be logged in to send a photo!");
 
@@ -62,9 +63,11 @@ public class FileController {
             throw new FormatNotAllowedException("Wrong file format!");
 
         java.io.File result = userService.uploadProfileImage(file, token);
-        return Response.ok(result, MediaType.APPLICATION_OCTET_STREAM)
-                .header("Content-Disposition", "attachment; filename=\"" + result.getName() + "\"") //optional
-                .build();
+//        return Response.ok(result, MediaType.APPLICATION_OCTET_STREAM)
+//                .header("Content-Disposition", "attachment; filename=\"" + result.getName() + "\"") //optional
+//                .build();
+        User user = userService.findById(Integer.parseInt(claims.getSubject()));
+        return user.getImageCode();
 
     }
 
@@ -95,5 +98,15 @@ public class FileController {
         return Response.ok(result, MediaType.APPLICATION_OCTET_STREAM)
                 .header("Content-Disposition", "attachment; filename=\"" + result.getName() + "\"") //optional
                 .build();
+    }
+
+    @GetMapping("/getProfilePicString")
+    public String getProfilePictureBaseString(@RequestParam Integer userID) {
+        return userService.getUserImageCode(userID);
+    }
+
+    @GetMapping("/getPostPicString")
+    public String getPostPictureBaseString(@RequestParam Integer postID) {
+        return postService.getPostImageCode(postID);
     }
 }
