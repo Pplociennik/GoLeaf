@@ -5,7 +5,13 @@ import com.goaleaf.entities.DTO.UserDto;
 import com.goaleaf.entities.Habit;
 import com.goaleaf.entities.Member;
 import com.goaleaf.entities.User;
-import com.goaleaf.entities.viewModels.accountsAndAuthorization.*;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.ChangeNotificationsViewModel;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditImageViewModel;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditUserViewModel;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.LoginViewModel;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.PasswordViewModel;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.RegisterViewModel;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.SetEmailNotificationsViewModel;
 import com.goaleaf.repositories.MemberRepository;
 import com.goaleaf.repositories.UserRepository;
 import com.goaleaf.security.EmailNotificationsSender;
@@ -323,6 +329,16 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("This user has no profile picture!");
         }
         return FileConverter.decodeFileFromBase64Binary(user.getImageCode());
+    }
+
+    @Override
+    public String getUserImageCode(Integer userID) {
+        if (userRepository.findById(userID) == null) {
+            throw new RuntimeException("User does not exist!");
+        }
+
+        User user = userRepository.findById(userID);
+        return user.getImageCode();
     }
 
     private UserDto convertToDTO(User user) {
