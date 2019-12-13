@@ -7,6 +7,7 @@ import InviteMember from './InviteMember/InviteMember'
 import AddTask from './AddTask/AddTask'
 import AddPost from './AddPost/AddPost'
 import AddPrize from './AddPrize/AddPrize'
+import Options from './Options/Options'
 import { changeDateFormat1 } from '../../../js/helpers'
 import Posts from './Posts/Posts'
 import Tasks from './Tasks/Tasks'
@@ -69,14 +70,6 @@ class HabitPage extends Component {
         })
     }
 
-    changeInvitationPermissions = (e, id) => {
-        axios.post(`https://glf-api.herokuapp.com/api/habits/habit/setInvitingPermissions?allowed=${e.target.value}&habitID=${id}`)
-            .then(res => {
-                window.location.reload();
-            }
-            ).catch(err => console.log(err.response.data.message))
-    }
-
     componentDidMount() {
         axios.get(`https://glf-api.herokuapp.com/api/habits/habit/checkPermissions?userID=${this.props.userLogged}&habitID=${parseInt(this.props.match.params.id)}`)
             .then(res => {
@@ -84,7 +77,6 @@ class HabitPage extends Component {
                         permissions: res.data
                     })
             }).catch(err => console.log(err))
-            console.log(localStorage.getItem('token'))
     }
 
     render() {
@@ -163,15 +155,8 @@ class HabitPage extends Component {
                             {habit.pointsToWin !== 1001 ? <AddTask habitID={habit.id} isFinished={habit.isFinished} isAdmin={isAdmin} pointsToWin={habit.pointsToWin}/> : null}
                             {habit.pointsToWin !== 1001 ? <TasksAll habitID={habit.id} isAdmin={isAdmin} isFinished={habit.isFinished} pointsToWin={habit.pointsToWin}/> : null}
                             <Leaderboard habitID={habit.id} pointsToWin={habit.pointsToWin}/>
+                            {isAdmin ? <Options habitID={habit.id} canUSersInvite={habit.canUsersInvite} /> : null}
                         </div>
-                    </section> : null}
-                    {isAdmin ?
-                    <section>
-                        <p>Who can invite users to challenge</p>
-                        <select value={habit.canUsersInvite} onChange={(e) => this.changeInvitationPermissions(e, habit.id)}>
-                            <option value="false">Only admin</option>
-                            <option value="true">All members</option>
-                        </select>
                     </section> : null}
                     <section className="habit-page-dashboard">
                         {userIsMember ? <AddPost habitID = { habit.id } admin={habit.creatorLogin} user={this.props.userLogged} isFinished={habit.isFinished} pointsToWin={habit.pointsToWin} winner={habit.winner} isAdmin={isAdmin}/> : null}

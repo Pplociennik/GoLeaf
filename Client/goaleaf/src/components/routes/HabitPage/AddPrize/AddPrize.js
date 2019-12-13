@@ -55,7 +55,6 @@ class AddPrize extends Component {
 
     componentDidMount() {
         M.AutoInit();
-            console.log(this.state);
             if(this.props.pointsToWin !== 0){
                 this.setState({prizePoints: this.props.pointsToWin})
             }
