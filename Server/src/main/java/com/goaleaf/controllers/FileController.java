@@ -1,6 +1,7 @@
 package com.goaleaf.controllers;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.goaleaf.entities.DTO.UserDto;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditImageViewModel;
 import com.goaleaf.security.uploadingFiles.FileStorageProperties;
 import com.goaleaf.services.JwtService;
@@ -66,7 +67,7 @@ public class FileController {
 //        return Response.ok(result, MediaType.APPLICATION_OCTET_STREAM)
 //                .header("Content-Disposition", "attachment; filename=\"" + result.getName() + "\"") //optional
 //                .build();
-        User user = userService.findById(Integer.parseInt(claims.getSubject()));
+        UserDto user = userService.findById(Integer.parseInt(claims.getSubject()));
         return user.getImageCode();
 
     }
