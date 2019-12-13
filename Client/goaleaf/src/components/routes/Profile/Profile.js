@@ -16,10 +16,9 @@ class Profile extends Component {
         id: '',
         emailAddress: '',
         errorMsg: '',
-        picture: null,
-        picPreview: null,
         confirmDelete: false,
-        notifications: true
+        notifications: true,
+        profilePic: null
     };
 
     handleChangeAvatar = e => {
@@ -29,25 +28,15 @@ class Profile extends Component {
             const blob = new Blob([e.target.files[0]], { type: "image/png" });
             const formData = new FormData();
             formData.append('file', blob);
+            console.log(blob,formData);
 
-            axios.post(`https://glf-api.herokuapp.com/uploadImage?token=${localStorage.getItem("token")}?type=PROFILE`, formData, {
+            axios.post(`https://glf-api.herokuapp.com/uploadImage?token=${localStorage.getItem("token")}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             })
                 .then(res => {
-                    axios.get(`https://glf-api.herokuapp.com/downloadFile/${this.props.userLogged}`, { responseType: 'arraybuffer' })
-                        .then(res => {
-                            const base64 = btoa(
-                                new Uint8Array(res.data).reduce(
-                                    (data, byte) => data + String.fromCharCode(byte),
-                                    '',
-                                ),
-                            );
-                            this.setState({ picture: res.data, picPreview: "data:;base64," + base64 });
-                        })
-
-                        .catch(err => { })
+                    window.location.reload();
                 }
                 ).catch(err => { })
         }
@@ -106,7 +95,8 @@ class Profile extends Component {
                     emailAddress: res.data.emailAddress,
                     login: res.data.login,
                     id: res.data.id,
-                    notifications: res.data.notifications
+                    notifications: res.data.notifications,
+                    profilePic: res.data.imageName
                 })
             }
             ).catch(err => this.setState({ errorMsg: err.response.data.message }))
@@ -126,7 +116,7 @@ class Profile extends Component {
         return (
             <div className="profile">
                 <section className="profile-photo">
-                    <img className="profile-img" src={ TempPic } alt="user avatar" title="Change avatar" onClick={() => this.refs.uploadPhoto.click()} />
+                    <img className="profile-img" src={`${this.state.profilePic}`} alt="user avatar" title="Change avatar" onClick={() => this.refs.uploadPhoto.click()} />
                     <input className="profile-img-input" type="file" accept="image/x-png,image/gif,image/jpeg" onChange={this.handleChangeAvatar} ref="uploadPhoto" style={{ display: "none" }} />
                 </section>
                 <section className="profile-info">

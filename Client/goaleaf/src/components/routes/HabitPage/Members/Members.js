@@ -54,9 +54,8 @@ class Members extends Component {
         let memberCards = [];
 
         members.forEach(member => {
-
             foundMembers = true;
-            memberCards.push(<MemberCard key={member.id} userID={member.userID} userLogin={member.userLogin} profilePic={member.imgName} />)
+            memberCards.push(<MemberCard key={member.id} userID={member.userID} userLogin={member.userLogin} profilePic={member.imageCode} />)
 
         })
 

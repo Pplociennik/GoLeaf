@@ -37,7 +37,7 @@ class Leaderboard extends Component {
             console.log(scorePercentage);
             
 
-            memberCards.push(<LeaderboardCard key={member.id} scorePercentage={scorePercentage} position={pos} userID={member.userID} userLogin={member.userLogin} profilePic={member.imgName} points={member.points}/>)
+            memberCards.push(<LeaderboardCard key={member.id} scorePercentage={scorePercentage} position={pos} userID={member.userID} userLogin={member.userLogin} profilePic={member.imageCode} points={member.points}/>)
         
         })
 
