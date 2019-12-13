@@ -52,10 +52,12 @@ public class PostServiceImpl implements PostService {
             memberRepository.save(member);
         }
 
-        Iterable<Comment> comments = commentRepository.getAllByPostIDOrderByCreationDateDesc(id);
-        commentRepository.delete(comments);
         if (commentRepository.getAllByPostIDOrderByCreationDateDesc(id).iterator().hasNext()) {
-            throw new RuntimeException("Comments were not deleted properly!");
+            Iterable<Comment> comments = commentRepository.getAllByPostIDOrderByCreationDateDesc(id);
+            commentRepository.delete(comments);
+            if (commentRepository.getAllByPostIDOrderByCreationDateDesc(id).iterator().hasNext()) {
+                throw new RuntimeException("Comments were not deleted properly!");
+            }
         }
 
         postRepository.delete(id);
