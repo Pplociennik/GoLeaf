@@ -130,7 +130,7 @@ class PostCard extends Component {
             console.log(comments)
             comments.forEach(comment => {
                 foundComments = true;
-                commentCards.push(<CommentCard key={comment.id} id={comment.id} currentUserLogin={this.props.currentUserLogin} userLogin={comment.userLogin} date={comment.creationDate} commentText={comment.commentText} handleCommentCardDeleted={() => this.handleCommentCardDeleted(comment.id)} />)
+                commentCards.push(<CommentCard key={comment.id} id={comment.id} currentUserLogin={this.props.currentUserLogin} creatorImage={comment.creatorImage} userLogin={comment.userLogin} date={comment.creationDate} commentText={comment.commentText} handleCommentCardDeleted={() => this.handleCommentCardDeleted(comment.id)} />)
             })
 
             console.log(commentCards);
@@ -173,7 +173,7 @@ class PostCard extends Component {
         return (
             <div className={ taskType }>
                 <div className="post-owner">
-                    <img src={TempPic} alt="profile"></img>
+                    <img src={`data:image/png;base64,${this.props.creatorImage}`} alt="profile"></img>
                     <div className="post-card-owner-info">
                         <span className="post-card-owner">{this.props.creatorLogin}</span>
                         <span className="post-card-date">{changeDateFormat1(this.props.createdDate)}</span>

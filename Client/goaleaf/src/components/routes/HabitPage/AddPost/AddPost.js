@@ -14,7 +14,7 @@ class AddPost extends Component {
       showTasks: true,
       userPoints: 0,
       disableBtn: false,
-      postLengthLimit: 600
+      postLengthLimit: 300
   }
 
   showTasks = e => {
@@ -96,6 +96,7 @@ class AddPost extends Component {
                     <div className="">
                         <div className="input-field">
                             <textarea id="postText" maxLength={this.state.postLengthLimit} className="materialize-textarea" placeholder="what's on your mind?" value={ this.state.postText } onChange={ this.handleChange }></textarea>
+                            {this.state.postText.length.toString() + ' / ' + this.state.postLengthLimit.toString() + ' characters'} 
                         </div>
                     </div>
                     <div className="add-post-buttons-con">
@@ -104,7 +105,6 @@ class AddPost extends Component {
                         </div>
                         <div>
                             <button className={this.state.disableBtn ? "add-post-btn btn disable-btn" : "add-post-btn btn"} onClick={ this.handleDisableBtn } type="submit">Post</button>
-                            {this.state.postText.length.toString() + ' / ' + this.state.postLengthLimit.toString() + ' characters'}
                         </div>
                     </div>
                 </form>

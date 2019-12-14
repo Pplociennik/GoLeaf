@@ -14,7 +14,7 @@ class CommentCard extends Component {
         return (
             <li className="comment-card collection-item col s10 offset-s2">
                 <div className="comment-profile">
-                    <img className="comment-profile-pic" src={TempPic} alt="User avatar" title="User avatar" />
+                    <img className="comment-profile-pic" src={`data:image/png;base64,${this.props.creatorImage}`} alt="User avatar" title="User avatar" style={{border: "1px solid #1D976C"}} />
                     <p className="comment-profile-login">{this.props.userLogin}</p>
                     <p className="comment-profile-date">{changeDateFormat1(this.props.date)}</p>
                 </div>
