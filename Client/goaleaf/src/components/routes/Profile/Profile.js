@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import TempPic from './../../../assets/default-profile-pic.png'
+import Resizer from 'react-image-file-resizer';
 
 class Profile extends Component {
 
@@ -18,32 +19,60 @@ class Profile extends Component {
         errorMsg: '',
         confirmDelete: false,
         notifications: true,
-        profilePic: null
+        profilePic: null,
+        convertedPic: null
     };
+
+    fileChangedHandler(event, callback) {
+            Resizer.imageFileResizer(
+                event.target.files[0],
+                100,
+                100,
+                'PNG',
+                100,
+                0,
+                uri => {
+                    this.setState({convertedPic: uri});
+                    callback();
+                },
+                'base64'
+            );
+    }
+
+    b64toBlob = dataURI => {
+        var byteString = atob(dataURI.split(',')[1]);
+        var ab = new ArrayBuffer(byteString.length);
+        var ia = new Uint8Array(ab);
+    
+        for (var i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+        return new Blob([ab], { type: 'image/png' });
+    }
 
     handleChangeAvatar = e => {
 
         if (e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)) {
 
-            const blob = new Blob([e.target.files[0]], { type: "image/png" });
-            const formData = new FormData();
-            formData.append('file', blob);
-            console.log(blob,formData);
+            this.fileChangedHandler(e, () => {
+                const blob = this.b64toBlob(this.state.convertedPic);
+                const formData = new FormData();
+                formData.append('file', blob);
 
-            axios.post(`https://glf-api.herokuapp.com/uploadImage?token=${localStorage.getItem("token")}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
+                axios.post(`https://glf-api.herokuapp.com/uploadImage?token=${localStorage.getItem("token")}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                    .then(res => {
+                        window.location.reload();
+                    }
+                    ).catch(err => { })
             })
-                .then(res => {
-                    window.location.reload();
-                }
-                ).catch(err => { })
         }
     }
 
     handlePasswordChange = e => {
-        console.log(this.state)
         e.preventDefault();
         axios.put('https://glf-api.herokuapp.com/api/users/edit', {
             "token": localStorage.getItem("token"),
@@ -96,7 +125,7 @@ class Profile extends Component {
                     login: res.data.login,
                     id: res.data.id,
                     notifications: res.data.notifications,
-                    profilePic: res.data.imageName
+                    profilePic: res.data.imageCode
                 })
             }
             ).catch(err => this.setState({ errorMsg: err.response.data.message }))
@@ -116,7 +145,7 @@ class Profile extends Component {
         return (
             <div className="profile">
                 <section className="profile-photo">
-                    <img className="profile-img" src={`${this.state.profilePic}`} alt="user avatar" title="Change avatar" onClick={() => this.refs.uploadPhoto.click()} />
+                    <img className="profile-img" src={`data:image/png;base64,${this.state.profilePic}`} alt="user avatar" title="Change avatar" onClick={() => this.refs.uploadPhoto.click()} />
                     <input className="profile-img-input" type="file" accept="image/x-png,image/gif,image/jpeg" onChange={this.handleChangeAvatar} ref="uploadPhoto" style={{ display: "none" }} />
                 </section>
                 <section className="profile-info">
