@@ -173,7 +173,7 @@ class PostCard extends Component {
         return (
             <div className={ taskType }>
                 <div className="post-owner">
-                    <img src={this.props.creatorImage} alt="profile"></img>
+                    <img src={`data:image/png;base64,${this.props.creatorImage}`} alt="profile"></img>
                     <div className="post-card-owner-info">
                         <span className="post-card-owner">{this.props.creatorLogin}</span>
                         <span className="post-card-date">{changeDateFormat1(this.props.createdDate)}</span>
