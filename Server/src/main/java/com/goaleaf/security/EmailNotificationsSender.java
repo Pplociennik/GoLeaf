@@ -183,7 +183,7 @@ public class EmailNotificationsSender {
         sender.setBody("Welcome " + recipientName + "!\n\n" +
                 "Challenge \"" + habit.getHabitTitle() + "\" has been deleted!\n\n" +
                 "It is no longer available to any user.\n " +
-                "Any data like posts, reactions or comments has been also deleted permanently.\n" +
+                "All the data like posts, reactions or comments has been also deleted permanently.\n" +
                 "For more details, please, contact the challenge administrator.\n\n" +
                 "Your Sincerely\n" +
                 "GoaLeaf group");
