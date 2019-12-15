@@ -155,7 +155,7 @@ class HabitPage extends Component {
                             {habit.pointsToWin !== 1001 ? <AddTask habitID={habit.id} isFinished={habit.isFinished} isAdmin={isAdmin} pointsToWin={habit.pointsToWin}/> : null}
                             {habit.pointsToWin !== 1001 ? <TasksAll habitID={habit.id} isAdmin={isAdmin} isFinished={habit.isFinished} pointsToWin={habit.pointsToWin}/> : null}
                             <Leaderboard habitID={habit.id} pointsToWin={habit.pointsToWin}/>
-                            {isAdmin ? <Options habitID={habit.id} canUSersInvite={habit.canUsersInvite} /> : null}
+                            {isAdmin ? <Options habitID={habit.id} canUsersInvite={habit.canUsersInvite} /> : null}
                         </div>
                     </section> : null}
                     <section className="habit-page-dashboard">
