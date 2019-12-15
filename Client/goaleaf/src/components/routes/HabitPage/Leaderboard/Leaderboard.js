@@ -25,6 +25,8 @@ class Leaderboard extends Component {
 
         let members = this.state.members;
 
+        console.log(members)
+
         let foundMembers = false;
         let memberCards = [];
 

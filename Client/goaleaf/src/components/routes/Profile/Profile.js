@@ -134,6 +134,9 @@ class Profile extends Component {
 
 
     render() {
+
+        console.log(this.state.profilePic)
+
         let deleteAccount = ''
         if (this.state.confirmDelete === true) {
             deleteAccount = <div className="confirm-delete-profile">
