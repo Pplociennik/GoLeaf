@@ -13,6 +13,7 @@ import NewHabit from './../../routes/NewHabit/NewHabit'
 import Profile from './../../routes/Profile/Profile'
 import HabitPage from './../../routes/HabitPage/HabitPage'
 import BrowseHabits from '../BrowseHabits/BrowseHabits'
+import Help from './../../routes/Help/Help'
 
 
 class Main extends Component {
@@ -33,6 +34,7 @@ class Main extends Component {
             <PrivateRoute exact path='/profile' component={Profile}/>
             <PrivateRoute exact path='/habit/:id' component={HabitPage}/>
             <Route exact path='/browse' component={BrowseHabits}/>
+            <Route exact path='/help' component={Help}/>
 
             <Route path="*" component={Dashboard} />
         </Switch>
