@@ -77,7 +77,7 @@ class Notifications extends Component {
                 onOpen={ this.clearMsg }
                 contentStyle={{
                     maxWidth: '90%',
-                    width: '700px',
+                    width: '800px',
                     backgroundColor: '#f2f2f2',
                     padding: "10px",
                     borderRadius: '30px',

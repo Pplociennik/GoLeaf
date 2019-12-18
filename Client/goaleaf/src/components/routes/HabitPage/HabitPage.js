@@ -85,9 +85,7 @@ class HabitPage extends Component {
 
         if(!habit) {
             return(
-                <div>
-                    Challenge not found!
-                </div>
+                <Redirect to='/' />
             )
         }
 

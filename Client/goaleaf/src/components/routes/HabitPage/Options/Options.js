@@ -7,19 +7,22 @@ class Options extends Component {
 
   state = {
     msg: null,
-    prizePoints: 0
+    prizePoints: 0,
+    canUserInvite: this.props.canUsersInvite
   }
 
   changeInvitationPermissions = (e, id) => {
     axios.post(`https://glf-api.herokuapp.com/api/habits/habit/setInvitingPermissions?allowed=${e.target.value}&habitID=${id}`)
         .then(res => {
-            //window.location.reload();
+            window.location.reload();
+            //this.setState({canUserInvite: e.target.value});
         }
         ).catch(err => console.log(err.response.data.message))
     }
 
     
     componentDidMount() {
+        console.log(this.props.canUsersInvite);
         M.AutoInit();
     }
 
@@ -40,7 +43,7 @@ class Options extends Component {
         <div className="add-task-box">
         <div className="row">
             <p>Who can invite users to challenge</p>
-            <select className="browser-default" value={this.props.canUsersInvite} onChange={(e) => this.changeInvitationPermissions(e, this.props.habitID)}>
+            <select defaultValue={this.props.canUsersInvite} className="browser-default" onChange={(e) => this.changeInvitationPermissions(e, this.props.habitID)}>
                 <option value="false">Only admin</option>
                 <option value="true">All members</option>
             </select>

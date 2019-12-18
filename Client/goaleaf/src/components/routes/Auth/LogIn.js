@@ -31,8 +31,8 @@ class LogIn extends Component {
     })
     .then(res => {
                   localStorage.setItem('token', res.data);
-                  this.props.history.push('/');
                   window.location.reload();
+                  this.props.history.push('/');
                  }
     ).catch(err => this.setState({errorMsg: err.response.data.message}))
   }

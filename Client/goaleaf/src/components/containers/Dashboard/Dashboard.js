@@ -13,7 +13,7 @@ class Dashboard extends Component {
         <MyHabits />
       </div>
     ) } else return (
-      <Redirect to='/browse' />
+      <Redirect to='/help' />
     )
   }
 }
