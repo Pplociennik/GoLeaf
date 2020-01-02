@@ -26,23 +26,24 @@ class BrowseHabits extends Component {
   render() {
     let habitCards = this.props.habits;
 
-    habitCards.sort(function(a, b){
-      let keyA = new Date(a.habitStartDate),
-          keyB = new Date(b.habitStartDate);
-      if(keyA > keyB) return -1;
-      if(keyA < keyB) return 1;
-      return 0;
-  });
-
-  if(this.state.habitsSortBy === 'POPULAR'){
+    if(this.state.habitsSortBy === 'NEWEST') {
       habitCards.sort(function(a, b){
-        let keyA = a.members.length,
-            keyB = b.members.length;  
+        let keyA = new Date(a.startDate),
+            keyB = new Date(b.startDate);
         if(keyA > keyB) return -1;
         if(keyA < keyB) return 1;
         return 0;
     });
-  }
+    }
+    else if(this.state.habitsSortBy === 'POPULAR'){
+        habitCards.sort(function(a, b){
+          let keyA = a.members.length,
+              keyB = b.members.length;  
+          if(keyA > keyB) return -1;
+          if(keyA < keyB) return 1;
+          return 0;
+      });
+    }
 
       let foundHabits = false;
       let habits = []
