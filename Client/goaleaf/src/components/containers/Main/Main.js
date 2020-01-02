@@ -30,9 +30,9 @@ class Main extends Component {
             <Route exact path='/resetpassword/:token' component={ResetPasswordValidate}/>
             <Route exact path='/new-password' component={NewPassword}/>
 
-            <PrivateRoute exact path='/new-habit' component={NewHabit}/>
+            <PrivateRoute exact path='/new-challenge' component={NewHabit}/>
             <PrivateRoute exact path='/profile' component={Profile}/>
-            <PrivateRoute exact path='/habit/:id' component={HabitPage}/>
+            <PrivateRoute exact path='/challenge/:id' component={HabitPage}/>
             <Route exact path='/browse' component={BrowseHabits}/>
             <Route exact path='/help' component={Help}/>
 
