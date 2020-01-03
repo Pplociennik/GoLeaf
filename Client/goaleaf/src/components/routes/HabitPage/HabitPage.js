@@ -22,7 +22,8 @@ class HabitPage extends Component {
     state = {
         newMemberLogin: '',
         errorMsg: '',
-        permissions: false
+        permissions: false,
+        userBanned: false
     }
 
     joinHabit = id => {
@@ -70,24 +71,38 @@ class HabitPage extends Component {
         })
     }
 
+    checkIfUserBanned = id => {
+        axios.get(`https://glf-api.herokuapp.com/api/habits/ban/check?userID=${this.props.userLogged}&habitID=${id}`)
+        .then(res => {
+            this.setState({
+                userBanned: res.data
+            })
+        }
+        ).catch(err => console.log(err.response.data.message))
+    }
+
     componentDidMount() {
         axios.get(`https://glf-api.herokuapp.com/api/habits/habit/checkPermissions?userID=${this.props.userLogged}&habitID=${parseInt(this.props.match.params.id)}`)
             .then(res => {
                     this.setState({
                         permissions: res.data
                     })
-            }).catch(err => console.log(err))
+            }).catch(err => console.log(err.response.data))
     }
 
     render() {
 
         let habit = this.props.habits.find(habit => habit.id === parseInt(this.props.match.params.id));
 
+        console.log(habit)
+
         if(!habit) {
             return(
                 <Redirect to='/' />
             )
         }
+
+        this.checkIfUserBanned(habit.id)
 
         let userIsMember;
 
@@ -112,7 +127,7 @@ class HabitPage extends Component {
                                     </div>
                                 </div>
                                 <div className="habit-page-header-btn-con col s12 l4 center">
-                                    {userIsMember ? <button className="btn-floating btn-large habit-page-header-btn leave-habit-btn" onClick={() => this.leaveHabit(habit.id)}>🏃‍♀️ leave</button> : <button className="btn-floating btn-large pulse habit-page-header-btn join-habit-btn" onClick={() => this.joinHabit(habit.id)}>🙋‍♂️ join</button>}
+                                    {userIsMember ? <button className="btn-floating btn-large habit-page-header-btn leave-habit-btn" onClick={() => this.leaveHabit(habit.id)}>🏃‍♀️ leave</button> : <button className="btn-floating btn-large pulse habit-page-header-btn join-habit-btn" disabled={this.state.userBanned} onClick={() => this.joinHabit(habit.id)}>🙋‍♂️ join</button>}
                                 </div>
                         </div>
                     {isAdmin ?
