@@ -52,7 +52,7 @@ class BrowseHabits extends Component {
 
           if(!habit.isPrivate && !habit.isFinished && !habit.members.find(member => member === this.props.userLogged) && (this.state.category === 'ALL' || habit.category === this.state.category)){
           foundHabits = true;
-          habits.push(<HabitCard key={ habit.id } id={ habit.id } title={ habit.title } category={ habit.category } frequency={ habit.frequency } startedOn={ habit.startDate } private={ habit.isPrivate } login={habit.creatorLogin} membersNumber={habit.members.length} habitCardClicked={ this.handleHabitCardClicked } />)
+          habits.push(<HabitCard key={ habit.id } id={ habit.id } title={ habit.title } category={ habit.category } frequency={ habit.frequency } startedOn={ habit.startDate } private={ habit.isPrivate } login={habit.creatorLogin} membersNumber={habit.membersCount} habitCardClicked={ this.handleHabitCardClicked } />)
           }
       })
 

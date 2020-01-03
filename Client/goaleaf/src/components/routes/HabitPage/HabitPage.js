@@ -23,7 +23,8 @@ class HabitPage extends Component {
         newMemberLogin: '',
         errorMsg: '',
         permissions: false,
-        userBanned: false
+        userBanned: false,
+        members: []
     }
 
     joinHabit = id => {
@@ -82,27 +83,32 @@ class HabitPage extends Component {
     }
 
     componentDidMount() {
+        this.checkIfUserBanned(this.props.match.params.id);
+
         axios.get(`https://glf-api.herokuapp.com/api/habits/habit/checkPermissions?userID=${this.props.userLogged}&habitID=${parseInt(this.props.match.params.id)}`)
             .then(res => {
                     this.setState({
                         permissions: res.data
                     })
             }).catch(err => console.log(err.response.data))
+
+        axios.get(`https://glf-api.herokuapp.com/api/habits/habit/members?habitID=${this.props.match.params.id}`)
+            .then(res => {
+                    this.setState({
+                          members: res.data
+                    })
+        }).catch(err => console.log(err.response.data))
     }
 
     render() {
 
         let habit = this.props.habits.find(habit => habit.id === parseInt(this.props.match.params.id));
 
-        console.log(habit)
-
         if(!habit) {
             return(
                 <Redirect to='/' />
             )
         }
-
-        this.checkIfUserBanned(habit.id)
 
         let userIsMember;
 
