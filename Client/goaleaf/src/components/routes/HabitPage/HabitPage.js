@@ -163,7 +163,7 @@ class HabitPage extends Component {
                     <section className="habit-page-navigation-con">
                         <div className="habit-page-navigation">
                             {habit.canUsersInvite || isAdmin ? <InviteMember habitID={habit.id} /> : null}
-                            <Members habitID={habit.id}/>
+                            <Members habitID={habit.id} isAdmin={isAdmin}/>
                             <AddPrize habitID={habit.id} isFinished={habit.isFinished} isAdmin={isAdmin} pointsToWin={habit.pointsToWin}/>
                             {habit.pointsToWin !== 1001 ? <AddTask habitID={habit.id} isFinished={habit.isFinished} isAdmin={isAdmin} pointsToWin={habit.pointsToWin}/> : null}
                             {habit.pointsToWin !== 1001 ? <TasksAll habitID={habit.id} isAdmin={isAdmin} isFinished={habit.isFinished} pointsToWin={habit.pointsToWin}/> : null}

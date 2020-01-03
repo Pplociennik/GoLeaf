@@ -35,6 +35,13 @@ class Members extends Component {
         })
     }
 
+    banUser = (habitID, userID) => {
+        axios.post(`https://glf-api.herokuapp.com/api/habits/ban?userID=${userID}&habitID=${habitID}`)
+        .then(res => {
+            window.location.reload()
+        }).catch(err => console.log(err.response.data.message))
+    }
+
     render() {
 
         let members = this.state.members;
@@ -55,7 +62,7 @@ class Members extends Component {
 
         members.forEach(member => {
             foundMembers = true;
-            memberCards.push(<MemberCard key={member.id} userID={member.userID} userLogin={member.userLogin} profilePic={member.imageCode} />)
+            memberCards.push(<MemberCard key={member.id} habitID={this.props.habitID} userID={member.userID} userLogin={member.userLogin} isAdmin={this.props.isAdmin} profilePic={member.imageCode} banUser={this.banUser} />)
 
         })
 
