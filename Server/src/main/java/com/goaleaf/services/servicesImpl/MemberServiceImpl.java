@@ -53,6 +53,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     public MemberDTO findSpecifiedMember(Integer habitID, Integer userID) {
+        Member member = memberRepository.findByHabitIDAndUserID(habitID, userID);
+
+        if (member == null) {
+            return null;
+        }
         return convertOneToDTO(memberRepository.findByHabitIDAndUserID(habitID, userID));
     }
 
@@ -107,7 +112,7 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findByHabitIDAndUserID(habitID, userID);
 
         if (member == null) {
-            throw new RuntimeException("Member not found!");
+            return false;
         }
 
         return member.getBanned();
