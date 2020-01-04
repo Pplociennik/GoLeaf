@@ -62,7 +62,7 @@ class Members extends Component {
 
         members.forEach(member => {
             foundMembers = true;
-            memberCards.push(<MemberCard key={member.id} habitID={this.props.habitID} userID={member.userID} userLogin={member.userLogin} isAdmin={this.props.isAdmin} profilePic={member.imageCode} banUser={this.banUser} />)
+            memberCards.push(<MemberCard key={member.id} habitID={this.props.habitID} userID={member.userID} userLogin={member.userLogin} isAdmin={this.props.isAdmin} currentUser={this.props.userLogged} profilePic={member.imageCode} banUser={this.banUser} />)
 
         })
 
@@ -107,9 +107,6 @@ class Members extends Component {
 
 const mapStateToProps = state => {
     return {
-        habits: state.habits,
-        users: state.users,
-        members: state.members,
         userLogged: state.userLogged
     }
 }

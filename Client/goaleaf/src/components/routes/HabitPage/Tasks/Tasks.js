@@ -61,9 +61,6 @@ class Tasks extends Component {
 
 const mapStateToProps = state => {
     return {
-        habits: state.habits,
-        users: state.users,
-        members: state.members,
         userLogged: state.userLogged
     }
 }

@@ -25,8 +25,6 @@ class Leaderboard extends Component {
 
         let members = this.state.members;
 
-        console.log(members)
-
         let foundMembers = false;
         let memberCards = [];
 
@@ -82,9 +80,6 @@ class Leaderboard extends Component {
 
 const mapStateToProps = state => {
     return {
-        habits: state.habits,
-        users: state.users,
-        members: state.members,
         userLogged: state.userLogged
     }
 }

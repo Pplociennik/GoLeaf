@@ -78,7 +78,6 @@ class PostCard extends Component {
                 this.setState({
                     comments: res.data
                 })
-                console.log(this.state.comments)
             }).catch(err => console.log(err))
 
         this.setState({
@@ -127,13 +126,11 @@ class PostCard extends Component {
             let foundComments = false;
             let commentCards = [];
 
-            console.log(comments)
             comments.forEach(comment => {
                 foundComments = true;
-                commentCards.push(<CommentCard key={comment.id} id={comment.id} currentUserLogin={this.props.currentUserLogin} creatorImage={comment.creatorImage} userLogin={comment.userLogin} date={comment.creationDate} commentText={comment.commentText} handleCommentCardDeleted={() => this.handleCommentCardDeleted(comment.id)} />)
+                commentCards.push(<CommentCard key={comment.id} id={comment.id} currentUserLogin={this.props.currentUserLogin} creatorImage={comment.creatorImage} userLogin={comment.creatorLogin} date={comment.creationDate} commentText={comment.text} handleCommentCardDeleted={() => this.handleCommentCardDeleted(comment.id)} />)
             })
 
-            console.log(commentCards);
             let commentsToDisplay = commentCards.reverse();
 
             if (!foundComments) {

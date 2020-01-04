@@ -9,6 +9,7 @@ import AddPost from './AddPost/AddPost'
 import AddPrize from './AddPrize/AddPrize'
 import Options from './Options/Options'
 import { changeDateFormat1 } from '../../../js/helpers'
+import { fetchHabit } from '../../../js/state'
 import Posts from './Posts/Posts'
 import Tasks from './Tasks/Tasks'
 import Members from './Members/Members'
@@ -85,8 +86,10 @@ class HabitPage extends Component {
     componentDidMount() {
         this.checkIfUserBanned(this.props.match.params.id);
 
+        this.props.fetchHabit(this.props.match.params.id);
+
         axios.get(`https://glf-api.herokuapp.com/api/habits/habit/checkPermissions?userID=${this.props.userLogged}&habitID=${parseInt(this.props.match.params.id)}`)
-            .then(res => {
+           .then(res => {
                     this.setState({
                         permissions: res.data
                     })
@@ -102,18 +105,12 @@ class HabitPage extends Component {
 
     render() {
 
-        let habit = this.props.habits.find(habit => habit.id === parseInt(this.props.match.params.id));
-
-        if(!habit) {
-            return(
-                <Redirect to='/' />
-            )
-        }
+        let habit = this.props.habit;
 
         let userIsMember;
 
         if (habit && this.state.permissions) {
-            habit.members.find(member => member === this.props.userLogged) ? userIsMember = true : userIsMember = false;
+            this.state.members.find(member => member.userID === this.props.userLogged) ? userIsMember = true : userIsMember = false;
             let isAdmin = false;
             if(this.props.userLogged === habit.creatorID){
                 isAdmin = true;
@@ -129,7 +126,7 @@ class HabitPage extends Component {
                                         <div className="habit-page-info-block created-by">🙍‍ <span> {habit.creatorLogin}</span></div>
                                         <div className="habit-page-info-block privacy">🔒 <span> {habit.isPrivate ? 'Private' : 'Public'}</span></div>
                                         <div className={`habit-page-info-block category-${habit.category}`}>🚩 <span> {habit.category}</span></div>
-                                        <div className="habit-page-info-block members-number">👭 <span> {habit.members.length}</span></div>
+                                        <div className="habit-page-info-block members-number">👭 <span> {habit.membersCount}</span></div>
                                     </div>
                                 </div>
                                 <div className="habit-page-header-btn-con col s12 l4 center">
@@ -140,7 +137,7 @@ class HabitPage extends Component {
                     <Popup trigger={
                         <span className="habit-card-delete-btn">❌</span>
                     } modal closeOnDocumentClick
-                            disabled={this.props.isFinished}
+                            disabled={habit.finished}
                             contentStyle={{
                                 maxWidth: '80%',
                                 width: '500px',
@@ -170,15 +167,15 @@ class HabitPage extends Component {
                         <div className="habit-page-navigation">
                             {habit.canUsersInvite || isAdmin ? <InviteMember habitID={habit.id} /> : null}
                             <Members habitID={habit.id} isAdmin={isAdmin}/>
-                            <AddPrize habitID={habit.id} isFinished={habit.isFinished} isAdmin={isAdmin} pointsToWin={habit.pointsToWin}/>
-                            {habit.pointsToWin !== 1001 ? <AddTask habitID={habit.id} isFinished={habit.isFinished} isAdmin={isAdmin} pointsToWin={habit.pointsToWin}/> : null}
-                            {habit.pointsToWin !== 1001 ? <TasksAll habitID={habit.id} isAdmin={isAdmin} isFinished={habit.isFinished} pointsToWin={habit.pointsToWin}/> : null}
+                            <AddPrize habitID={habit.id} isFinished={habit.finished} isAdmin={isAdmin} pointsToWin={habit.pointsToWin}/>
+                            {habit.pointsToWin !== 1001 ? <AddTask habitID={habit.id} isFinished={habit.finished} isAdmin={isAdmin} pointsToWin={habit.pointsToWin}/> : null}
+                            {habit.pointsToWin !== 1001 ? <TasksAll habitID={habit.id} isAdmin={isAdmin} isFinished={habit.finished} pointsToWin={habit.pointsToWin}/> : null}
                             <Leaderboard habitID={habit.id} pointsToWin={habit.pointsToWin}/>
                             {isAdmin ? <Options habitID={habit.id} canUsersInvite={habit.canUsersInvite} /> : null}
                         </div>
                     </section> : null}
                     <section className="habit-page-dashboard">
-                        {userIsMember ? <AddPost habitID = { habit.id } admin={habit.creatorLogin} user={this.props.userLogged} isFinished={habit.isFinished} pointsToWin={habit.pointsToWin} winner={habit.winner} isAdmin={isAdmin}/> : null}
+                        {userIsMember ? <AddPost habitID = { habit.id } admin={habit.creatorLogin} user={this.props.userLogged} isFinished={habit.finished} pointsToWin={habit.pointsToWin} winner={habit.winner} isAdmin={isAdmin}/> : null}
                     </section>
                 </div>
             )
@@ -191,7 +188,10 @@ class HabitPage extends Component {
 
 const mapStateToProps = state => ({
     userLogged: state.userLogged,
-    habits: state.habits
+    habit: state.habit
+})
+const mapDispatchToProps = dispatch => ({
+    fetchHabit: habitID => dispatch(fetchHabit(habitID))
 })
 
-export default connect(mapStateToProps)(HabitPage);
+export default connect(mapStateToProps, mapDispatchToProps)(HabitPage);

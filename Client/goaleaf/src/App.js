@@ -24,8 +24,6 @@ class App extends Component {
      // TEMPORARY CALLS
     Promise.all([
     this.props.fetchHabits(),
-    this.props.fetchMembers(),
-    this.props.fetchUsers(),
     ]).then(() => this.props.isLoaded() )
   }
   render() {
@@ -39,25 +37,6 @@ class App extends Component {
       </BrowserRouter>
       )
     }
-
-    // TEMPORARY ACTION, WILL CHANGE THAT AFTER SERVER CHANGES
-    this.props.habits.forEach(habit => {
-      habit.members = [];
-      habit.owner = this.props.users.find(user => habit.creatorID === user.id)
-      if(habit.owner === undefined){
-        habit.owner = {login: 'user deleted'}
-      }
-      this.props.members.forEach(member => {
-        if(habit.id === member.habitID){
-          habit.members.push(member.userID)
-        }
-      })
-    })
-    this.props.habits.forEach(habit => {
-      habit.membersObj = [];
-      habit.members.forEach(memberId => habit.membersObj.push(this.props.users.find(user => memberId === user.id)
-    ))});
-
     
     return (
       <BrowserRouter>
@@ -73,8 +52,6 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     habits: state.habits,
-    users: state.users,
-    members: state.members,
     isLoading: state.isLoading
   }
 }
@@ -83,8 +60,6 @@ const mapDispatchToProps = dispatch => ({
   validateUser: () => dispatch({ type: 'VALIDATE_USER', token: localStorage.getItem('token')}),
   invalidateUser: () => dispatch({ type: 'INVALIDATE_USER' }),
   fetchHabits: () => dispatch(fetchHabits()),
-  fetchMembers: () => dispatch(fetchMembers()),
-  fetchUsers: () => dispatch(fetchUsers()),
   isLoaded: () => dispatch(isLoaded())
 
 })

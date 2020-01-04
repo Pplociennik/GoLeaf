@@ -3,6 +3,7 @@ import './BrowseHabits.scss'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import HabitCard from './../../routes/HabitCard/HabitCard'
+import { fetchHabits } from './../../../js/state';
 
 class BrowseHabits extends Component {
 
@@ -21,6 +22,10 @@ class BrowseHabits extends Component {
     if(this.state.category !== e.currentTarget.value){
       this.setState({category: e.currentTarget.value, habitsToShow: 20})
     }
+  }
+
+  componentDidMount(){
+    this.props.fetchHabits();
   }
 
   render() {
@@ -47,10 +52,9 @@ class BrowseHabits extends Component {
 
       let foundHabits = false;
       let habits = []
-      console.log(habitCards)
       habitCards.forEach(habit => {
 
-          if(!habit.isPrivate && !habit.isFinished && !habit.members.find(member => member === this.props.userLogged) && (this.state.category === 'ALL' || habit.category === this.state.category)){
+          if(!habit.private && !habit.finished && (habit.creatorID !== this.props.userLogged) && (this.state.category === 'ALL' || habit.category === this.state.category)){
           foundHabits = true;
           habits.push(<HabitCard key={ habit.id } id={ habit.id } title={ habit.title } category={ habit.category } frequency={ habit.frequency } startedOn={ habit.startDate } private={ habit.isPrivate } login={habit.creatorLogin} membersNumber={habit.membersCount} habitCardClicked={ this.handleHabitCardClicked } />)
           }
@@ -100,5 +104,8 @@ const mapStateToProps = state => {
     userLogged: state.userLogged
   }
 }
+const mapDispatchToProps = dispatch => ({
+  fetchHabits: () => dispatch(fetchHabits())
+})
 
-export default withRouter(connect(mapStateToProps)(BrowseHabits));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BrowseHabits));

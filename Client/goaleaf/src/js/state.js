@@ -21,6 +21,13 @@ export function fetchMembers(){
     })
 };
 
+export function fetchHabit(habitID){
+  return dispatch => axios.get(`https://glf-api.herokuapp.com/api/habits/getHabit/{id}?id=${habitID}`)
+    .then(res => {
+      dispatch({ type: 'GET_HABIT', payload: res.data});
+    })
+};
+
 export function fetchPosts(habitID){
   return dispatch =>  axios.get(`https://glf-api.herokuapp.com/api/posts/all?token=${localStorage.getItem("token")}&habitID=${habitID}`)
     .then(res => {

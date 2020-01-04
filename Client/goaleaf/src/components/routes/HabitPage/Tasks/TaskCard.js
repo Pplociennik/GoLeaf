@@ -119,9 +119,6 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => {
     return {
-        habits: state.habits,
-        users: state.users,
-        members: state.members,
         userLogged: state.userLogged
     }
 }
