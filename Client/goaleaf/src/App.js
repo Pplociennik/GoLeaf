@@ -15,16 +15,10 @@ import axios from 'axios';
 class App extends Component {
 
   componentDidMount() {
-
     axios.post('https://glf-api.herokuapp.com/validatetoken', {
-      "Token": localStorage.getItem('token')
-    }).then(res => { this.props.validateUser() }
-     ).catch(err => { this.props.invalidateUser()})
-
-     // TEMPORARY CALLS
-    Promise.all([
-    this.props.fetchHabits(),
-    ]).then(() => this.props.isLoaded() )
+        "Token": localStorage.getItem('token')
+      }).then(res => { this.props.validateUser() }
+      ).catch(err => { this.props.invalidateUser()})
   }
   render() {
     if(this.props.isLoading){
