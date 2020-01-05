@@ -1,6 +1,6 @@
 package com.goaleaf.entities.DTO;
 
-public class UsersDTO {
+public class UserDTO {
 
     private Integer userID;
 
@@ -12,7 +12,7 @@ public class UsersDTO {
 
     private Boolean notifications;
 
-    public UsersDTO() {
+    public UserDTO() {
     }
 
     public Integer getUserID() {
