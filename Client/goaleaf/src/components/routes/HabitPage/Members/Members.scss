@@ -19,6 +19,7 @@
             display: flex;
             align-items: center;
             flex-direction: row;
+            justify-content: flex-start;
             
             img { 
                 height: 50px;
@@ -42,4 +43,57 @@
             font-weight: 600;
         }
     }
+}
+
+.member-popup {
+
+    .delete-member-title {
+        font-size: 1.4em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+        text-align: center;
+        line-height: 30px;
+
+    }
+    .delete-member-buttons {
+        font-size: 2.2em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+
+        button {
+            margin: 20px;
+            border-radius: 30px;
+            padding: 8px 20px;
+            cursor: pointer;
+            font-weight: 400;
+            letter-spacing: 1px;
+            font-size: 0.6em;
+            background: $primary-color;
+            color: $text-color;
+            border: none;
+        }
+        .delete-member-btn {
+            background: #c40b13;
+            color: #fff;
+        }
+        .delete-member-back {
+            background: $secondary-color;
+            color: #fff;
+        }
+    }
+}
+
+.kick-user-btn {
+    margin-left: auto;
+    background-color: $error-color;
+    border: none;
+    padding: 4px 8px;
+    color: #fff;
+    letter-spacing: 1px;
+    border-radius: 30px;
+    cursor: pointer;
 }

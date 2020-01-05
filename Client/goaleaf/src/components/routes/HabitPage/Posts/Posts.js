@@ -10,7 +10,7 @@ class Posts extends Component {
 
     state = {
         posts: [],
-        postsToShow: 20,
+        postsToShow: 10,
         postsLoading: true
     }
 
@@ -57,7 +57,7 @@ class Posts extends Component {
 
         if (this.state.postsLoading) {
             postsToDisplay =   
-            <div className="preloader-wrapper small active">
+            <div className="preloader-wrapper small active" style={{marginTop: "50px"}}>
                 <div className="spinner-layer spinner-green-only">
                 <div className="circle-clipper left">
                     <div className="circle"></div>
