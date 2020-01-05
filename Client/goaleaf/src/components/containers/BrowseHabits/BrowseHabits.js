@@ -42,8 +42,8 @@ class BrowseHabits extends Component {
     }
     else if(this.state.habitsSortBy === 'POPULAR'){
         habitCards.sort(function(a, b){
-          let keyA = a.members.length,
-              keyB = b.members.length;  
+          let keyA = a.membersCount,
+              keyB = b.membersCount;  
           if(keyA > keyB) return -1;
           if(keyA < keyB) return 1;
           return 0;
