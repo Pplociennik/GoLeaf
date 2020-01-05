@@ -34,8 +34,6 @@ class Leaderboard extends Component {
             let member = this.state.members[pos];
 
             let scorePercentage = Math.round(member.points / this.props.pointsToWin * 100);
-            console.log(scorePercentage);
-            
 
             memberCards.push(<LeaderboardCard key={member.id} scorePercentage={scorePercentage} position={pos} userID={member.userID} userLogin={member.userLogin} profilePic={member.imageCode} points={member.points}/>)
         
