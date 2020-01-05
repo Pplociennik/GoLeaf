@@ -8,7 +8,8 @@ class Options extends Component {
   state = {
     msg: null,
     prizePoints: 0,
-    canUserInvite: this.props.canUsersInvite
+    canUserInvite: this.props.canUsersInvite,
+    private: this.props.private
   }
 
   changeInvitationPermissions = (e, id) => {
@@ -19,7 +20,17 @@ class Options extends Component {
         }
         ).catch(err => console.log(err.response.data.message))
     }
-
+    
+    setHabitPrivacy = (e, id) => {
+        if(e.target.value !== this.state.private){
+            axios.post(`https://glf-api.herokuapp.com/api/habits/privacy/change?habitID=${id}`)
+                .then(res => {
+                    window.location.reload();
+                    //this.setState({canUserInvite: e.target.value});
+                }
+                ).catch(err => console.log(err.response.data.message))
+            }
+        }
     
     componentDidMount() {
         console.log(this.props.canUsersInvite);
@@ -41,13 +52,20 @@ class Options extends Component {
             }}
         >
         <div className="add-task-box">
-        <div className="row">
-            <p>Who can invite users to challenge</p>
-            <select defaultValue={this.props.canUsersInvite} className="browser-default" onChange={(e) => this.changeInvitationPermissions(e, this.props.habitID)}>
-                <option value="false">Only admin</option>
-                <option value="true">All members</option>
-            </select>
-            </div>
+            <div className="row">
+                <p>Who can invite users to challenge</p>
+                <select defaultValue={this.props.canUsersInvite} className="browser-default" onChange={(e) => this.changeInvitationPermissions(e, this.props.habitID)}>
+                    <option value="false">Only admin</option>
+                    <option value="true">All members</option>
+                </select>
+            </div> 
+            <div className="row">
+                <p>Change challenge privacy</p>
+                <select defaultValue={this.props.private} className="browser-default" onChange={(e) => this.setHabitPrivacy(e, this.props.habitID)}>
+                    <option value="true">Private</option>
+                    <option value="false">Public</option>
+                </select>
+            </div>            
         </div>
     </Popup>
     )
