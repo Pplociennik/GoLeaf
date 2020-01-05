@@ -25,7 +25,7 @@ class Posts extends Component {
             .then(res => {
                 console.log(`Deleted post ${id}`);
                 this.props.deletePost(id);
-                window.location.reload();
+                //window.location.reload();
 
             })
             .catch(err => console.log(err))
