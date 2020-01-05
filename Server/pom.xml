@@ -304,7 +304,7 @@
         <profile>
             <id>offlineMode</id>
             <properties>
-                <value.spring.datasource.url>jdbc:h2:file:./bazaDanych</value.spring.datasource.url>
+                <value.spring.datasource.url>jdbc:h2:mem:testdb</value.spring.datasource.url>
                 <value.hibernate.hbm2ddl.auto>update</value.hibernate.hbm2ddl.auto>
                 <value.database.driver></value.database.driver>
                 <value.database.platform>org.hibernate.dialect.H2Dialect</value.database.platform>
