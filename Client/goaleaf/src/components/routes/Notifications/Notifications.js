@@ -32,7 +32,8 @@ class Notifications extends Component {
     clearNotifications = e => {
         axios.delete(`https://glf-api.herokuapp.com/api/notifications/clear?userID=${this.props.userLogged}`)
         .then(res => {
-            window.location.reload()
+            this.setState({notifications: []})
+            //window.location.reload()
 
     }).catch(err => console.log(err))
     }
@@ -96,8 +97,10 @@ class Notifications extends Component {
                 }}
             >
                     <div className="notifications-section row">
-                        <h4>My notifications</h4>
-                        <button className="btn delete-ntf-btn" onClick={() => this.clearNotifications()}>Clear notifications</button>
+                        <div className="notifications-header">
+                            <h4>My notifications</h4>
+                            <button className="btn delete-ntf-btn" onClick={() => this.clearNotifications()}>delete all</button>
+                        </div>
                         <ul className="collection">
                             {ntfsToDisplay}
                         </ul>
