@@ -166,7 +166,6 @@ class PostCard extends Component {
         } else {
             taskType = 'post-card'
         }
-
         return (
             <div className={ taskType }>
                 <div className="post-owner">

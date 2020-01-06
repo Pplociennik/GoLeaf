@@ -16,8 +16,6 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            border: 1px solid #1D976C;
-
         }
         .post-card-owner-info {
             display: flex;
@@ -40,6 +38,7 @@
         min-height: 100px;
 
         .post-card-text {
+            margin-right: auto;
             text-align: left;
             width: 90%;
             padding: 1em;
@@ -199,7 +198,8 @@
         }
 
         .post-task-text {
-
+            margin-right: auto;
+            text-align: left;
         }
     }
     .add-comment-input::placeholder {

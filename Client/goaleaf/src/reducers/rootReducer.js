@@ -39,6 +39,7 @@ const rootReducer = (state = initState, action) => {
             ...state,
             authenticated: false,
             userLogged: null,
+            userLoggedLogin: null,
             isLoading: false
         }
     }

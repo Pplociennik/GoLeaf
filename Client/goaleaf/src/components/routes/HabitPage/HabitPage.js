@@ -109,12 +109,13 @@ class HabitPage extends Component {
 
         let userIsMember;
 
-        if (habit && this.state.permissions) {
+        if (habit) {
             this.state.members.find(member => member.userID === this.props.userLogged) ? userIsMember = true : userIsMember = false;
             let isAdmin = false;
             if(this.props.userLogged === habit.creatorID){
                 isAdmin = true;
             }
+
             return (
                 <div className={`habit-page ${habit.category}-category`}>
                     <div className="habit-page-header-con">
@@ -162,6 +163,7 @@ class HabitPage extends Component {
                         </Popup>
                     : null} 
                     </div>
+                    {this.state.userBanned ? <div style={{marginTop: "100px", fontSize: "1.4em"}}>You were kicked from this challenge 🖐</div> : null}
                     {userIsMember ?
                     <section className="habit-page-navigation-con">
                         <div className="habit-page-navigation">
