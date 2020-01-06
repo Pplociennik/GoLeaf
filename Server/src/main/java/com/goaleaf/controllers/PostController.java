@@ -80,7 +80,7 @@ public class PostController {
             throw new TokenExpiredException("You have to be logged in!");
         if (memberService.findSpecifiedMember(model.habitID, Integer.parseInt(claims.getSubject())) == null)
             throw new MemberDoesNotExistException("You are not a member!");
-        if (!postDTO.getCreatorLogin().equals(tempUser.getLogin()) || habitDTO.getCreatorID().compareTo(Integer.parseInt(claims.getSubject())) != 0)
+        if (!postDTO.getCreatorLogin().equals(tempUser.getLogin()) && habitDTO.getCreatorID().compareTo(Integer.parseInt(claims.getSubject())) != 0)
             throw new UserIsNotCreatorException("You cannot delete posts which were not posted by you!");
 
         postService.removePostFromDatabase(model.postID);
