@@ -115,4 +115,9 @@ public class UserController {
         return userService.getFinishedHabitsPaging(pageNr, objectsNr, token);
     }
 
+    @GetMapping(value = "/won/paging")
+    public SliceDTO getWonPaging(@RequestParam Integer pageNr, @RequestParam Integer objectsNr, @RequestParam String token) {
+        return userService.getWonHabitsPaging(pageNr, objectsNr, token);
+    }
+
 }

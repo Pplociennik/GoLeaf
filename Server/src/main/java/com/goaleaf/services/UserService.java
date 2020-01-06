@@ -60,4 +60,6 @@ public interface UserService {
     void resetPassword(EmailViewModel model) throws AccountNotExistsException, MessagingException;
 
     SliceDTO getFinishedHabitsPaging(Integer pageNr, Integer objectsNr, String token);
+
+    SliceDTO getWonHabitsPaging(Integer pageNr, Integer objectsNr, String token);
 }
