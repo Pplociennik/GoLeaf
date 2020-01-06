@@ -171,7 +171,7 @@ public class HabitServiceImpl implements HabitService {
         return memberService.getRank(habitID);
     }
 
-    private HabitDTO convertToDTO(Habit entry) {
+    public HabitDTO convertToDTO(Habit entry) {
 
         if (entry == null) {
             return null;

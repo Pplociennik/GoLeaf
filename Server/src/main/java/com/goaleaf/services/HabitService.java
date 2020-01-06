@@ -69,4 +69,6 @@ public interface HabitService {
     Category changeHabitCategory(Integer habitID, Category category);
 
     SliceDTO getAllByCategoryPaging(Integer pageNr, Integer objectsNr, Category category);
+
+    HabitDTO convertToDTO(Habit entry);
 }

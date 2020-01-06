@@ -1,6 +1,7 @@
 package com.goaleaf.services;
 
 import com.goaleaf.entities.DTO.HabitDTO;
+import com.goaleaf.entities.DTO.SliceDTO;
 import com.goaleaf.entities.DTO.UserDTO;
 import com.goaleaf.entities.User;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.*;
@@ -57,4 +58,6 @@ public interface UserService {
     String getUserImageCode(Integer userID);
 
     void resetPassword(EmailViewModel model) throws AccountNotExistsException, MessagingException;
+
+    SliceDTO getFinishedHabitsPaging(Integer pageNr, Integer objectsNr, String token);
 }
