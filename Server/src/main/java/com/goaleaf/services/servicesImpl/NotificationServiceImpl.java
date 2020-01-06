@@ -1,7 +1,7 @@
 package com.goaleaf.services.servicesImpl;
 
 import com.goaleaf.entities.DTO.NotificationDTO;
-import com.goaleaf.entities.DTO.NotificationPageDTO;
+import com.goaleaf.entities.DTO.pagination.NotificationPageDTO;
 import com.goaleaf.entities.Notification;
 import com.goaleaf.repositories.NotificationRepository;
 import com.goaleaf.services.NotificationService;

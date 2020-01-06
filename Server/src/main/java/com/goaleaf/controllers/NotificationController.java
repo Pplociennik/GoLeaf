@@ -1,7 +1,7 @@
 package com.goaleaf.controllers;
 
 import com.goaleaf.entities.DTO.NotificationDTO;
-import com.goaleaf.entities.DTO.NotificationPageDTO;
+import com.goaleaf.entities.DTO.pagination.NotificationPageDTO;
 import com.goaleaf.services.NotificationService;
 import com.goaleaf.services.UserService;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.AccountNotExistsException;

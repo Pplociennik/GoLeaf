@@ -1,11 +1,14 @@
 package com.goaleaf.repositories;
 
 import com.goaleaf.entities.Member;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
-public interface MemberRepository extends CrudRepository<Member, Integer> {
+public interface MemberRepository extends CrudRepository<Member, Integer>, PagingAndSortingRepository<Member, Integer> {
 
     Member findByUserID(Integer id);
 
@@ -29,4 +32,6 @@ public interface MemberRepository extends CrudRepository<Member, Integer> {
 
     @Override
     void delete(Iterable<? extends Member> entities);
+
+    Page<Member> findAllByHabitID(Integer habitID, Pageable pageable);
 }

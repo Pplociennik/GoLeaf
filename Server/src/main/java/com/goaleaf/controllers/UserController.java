@@ -2,7 +2,7 @@ package com.goaleaf.controllers;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.goaleaf.entities.DTO.HabitDTO;
-import com.goaleaf.entities.DTO.HabitPageDTO;
+import com.goaleaf.entities.DTO.pagination.HabitPageDTO;
 import com.goaleaf.entities.DTO.UserDTO;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.*;
 import com.goaleaf.services.UserService;

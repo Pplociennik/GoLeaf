@@ -3,6 +3,7 @@ package com.goaleaf.services.servicesImpl;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.goaleaf.entities.*;
 import com.goaleaf.entities.DTO.*;
+import com.goaleaf.entities.DTO.pagination.PostPageDTO;
 import com.goaleaf.entities.enums.PostTypes;
 import com.goaleaf.entities.viewModels.habitsManaging.postsCreating.NewPostViewModel;
 import com.goaleaf.entities.viewModels.habitsManaging.postsManaging.AddReactionViewModel;

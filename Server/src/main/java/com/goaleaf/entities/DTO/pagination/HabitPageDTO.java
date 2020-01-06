@@ -1,4 +1,6 @@
-package com.goaleaf.entities.DTO;
+package com.goaleaf.entities.DTO.pagination;
+
+import com.goaleaf.entities.DTO.HabitDTO;
 
 public class HabitPageDTO {
 

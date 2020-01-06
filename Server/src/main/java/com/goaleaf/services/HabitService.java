@@ -2,7 +2,7 @@ package com.goaleaf.services;
 
 import com.goaleaf.entities.DTO.HabitDTO;
 import com.goaleaf.entities.DTO.MemberDTO;
-import com.goaleaf.entities.DTO.HabitPageDTO;
+import com.goaleaf.entities.DTO.pagination.HabitPageDTO;
 import com.goaleaf.entities.Habit;
 import com.goaleaf.entities.enums.Category;
 import com.goaleaf.entities.enums.Sorting;

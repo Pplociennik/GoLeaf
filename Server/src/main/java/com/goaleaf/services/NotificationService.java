@@ -1,9 +1,8 @@
 package com.goaleaf.services;
 
 import com.goaleaf.entities.DTO.NotificationDTO;
-import com.goaleaf.entities.DTO.NotificationPageDTO;
+import com.goaleaf.entities.DTO.pagination.NotificationPageDTO;
 import com.goaleaf.entities.Notification;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 @Service
