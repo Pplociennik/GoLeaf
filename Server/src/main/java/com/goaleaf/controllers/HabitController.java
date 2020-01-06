@@ -4,6 +4,7 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.goaleaf.entities.DTO.HabitDTO;
 import com.goaleaf.entities.DTO.MemberDTO;
 import com.goaleaf.entities.DTO.NotificationDTO;
+import com.goaleaf.entities.DTO.SliceDTO;
 import com.goaleaf.entities.Member;
 import com.goaleaf.entities.enums.Category;
 import com.goaleaf.entities.enums.Sorting;
@@ -129,8 +130,12 @@ public class HabitController {
         MemberDTO memberToCheck = memberService.findSpecifiedMember(habitID, userID);
         NotificationDTO notificationToCheck = notificationService.findSpecifiedNtf(userID, "*/habit/" + habitID);
 
-        if (!habitService.findById(habitID).getPrivate())
+        if (!habitService.findById(habitID).getPrivate()) {
+            if (memberToCheck != null && memberToCheck.getBanned()) {
+                return false;
+            }
             return true;
+        }
 
         return memberToCheck != null || notificationToCheck != null;
 
@@ -217,6 +222,16 @@ public class HabitController {
     @PostMapping(value = "/category/change")
     public Category changeHabitCategory(@RequestParam Integer habitID, Category category) {
         return habitService.changeHabitCategory(habitID, category);
+    }
+
+    @GetMapping(value = "/all/paging")
+    public SliceDTO getAllHabitsPaging(@RequestParam Integer pageNr, @RequestParam Integer objectsNr) {
+        return habitService.listAllHabitsPaging(pageNr, objectsNr);
+    }
+
+    @GetMapping(value = "/category/paging")
+    public SliceDTO getByCategoryPaging(@RequestParam Integer pageNr, @RequestParam Integer objectsNr, @RequestParam Category category) {
+        return habitService.getAllByCategoryPaging(pageNr, objectsNr, category);
     }
 
 }
