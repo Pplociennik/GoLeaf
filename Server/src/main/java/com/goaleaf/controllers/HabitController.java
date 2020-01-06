@@ -4,7 +4,7 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.goaleaf.entities.DTO.HabitDTO;
 import com.goaleaf.entities.DTO.MemberDTO;
 import com.goaleaf.entities.DTO.NotificationDTO;
-import com.goaleaf.entities.DTO.SliceDTO;
+import com.goaleaf.entities.DTO.HabitPageDTO;
 import com.goaleaf.entities.Member;
 import com.goaleaf.entities.enums.Category;
 import com.goaleaf.entities.enums.Sorting;
@@ -225,12 +225,12 @@ public class HabitController {
     }
 
     @GetMapping(value = "/all/paging")
-    public SliceDTO getAllHabitsPaging(@RequestParam Integer pageNr, @RequestParam Integer objectsNr) {
+    public HabitPageDTO getAllHabitsPaging(@RequestParam Integer pageNr, @RequestParam Integer objectsNr) {
         return habitService.listAllHabitsPaging(pageNr, objectsNr);
     }
 
     @GetMapping(value = "/category/paging")
-    public SliceDTO getByCategoryPaging(@RequestParam Integer pageNr, @RequestParam Integer objectsNr, @RequestParam Category category) {
+    public HabitPageDTO getByCategoryPaging(@RequestParam Integer pageNr, @RequestParam Integer objectsNr, @RequestParam Category category) {
         return habitService.getAllByCategoryPaging(pageNr, objectsNr, category);
     }
 

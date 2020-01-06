@@ -1,8 +1,11 @@
 package com.goaleaf.services;
 
 import com.goaleaf.entities.DTO.PostDTO;
+import com.goaleaf.entities.DTO.PostPageDTO;
 import com.goaleaf.entities.DTO.PostReactionsNrDTO;
+import com.goaleaf.entities.DTO.HabitPageDTO;
 import com.goaleaf.entities.Post;
+import com.goaleaf.entities.enums.PostTypes;
 import com.goaleaf.entities.viewModels.habitsManaging.postsCreating.NewPostViewModel;
 import com.goaleaf.entities.viewModels.habitsManaging.postsManaging.AddReactionViewModel;
 import com.goaleaf.entities.viewModels.habitsManaging.postsManaging.EditPostViewModel;
@@ -33,4 +36,6 @@ public interface PostService {
     HttpStatus editPost(EditPostViewModel model);
 
     PostReactionsNrDTO addReaction(AddReactionViewModel model);
+
+    PostPageDTO getAllByTypePaging(Integer pageNr, Integer objectsNr, Integer habitID, PostTypes type);
 }

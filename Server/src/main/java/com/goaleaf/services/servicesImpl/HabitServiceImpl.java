@@ -3,7 +3,7 @@ package com.goaleaf.services.servicesImpl;
 import com.goaleaf.entities.*;
 import com.goaleaf.entities.DTO.HabitDTO;
 import com.goaleaf.entities.DTO.MemberDTO;
-import com.goaleaf.entities.DTO.SliceDTO;
+import com.goaleaf.entities.DTO.HabitPageDTO;
 import com.goaleaf.entities.DTO.UserDTO;
 import com.goaleaf.entities.enums.Category;
 import com.goaleaf.entities.enums.Sorting;
@@ -85,13 +85,13 @@ public class HabitServiceImpl implements HabitService {
     }
 
     @Override
-    public SliceDTO listAllHabitsPaging(Integer pageNr, Integer howManyOnPage) {
+    public HabitPageDTO listAllHabitsPaging(Integer pageNr, Integer howManyOnPage) {
         Pageable pageable = new PageRequest(pageNr, howManyOnPage);
         Page<Habit> page = habitRepository.findAll(pageable);
         List<Habit> input = page.getContent();
 
         Iterable<HabitDTO> output = convertManyToDTOs(input, false);
-        return new SliceDTO(output, page.getNumber());
+        return new HabitPageDTO(output, page.getNumber());
     }
 
     @Override
@@ -560,13 +560,13 @@ public class HabitServiceImpl implements HabitService {
     }
 
     @Override
-    public SliceDTO getAllByCategoryPaging(Integer pageNr, Integer objectsNr, Category category) {
+    public HabitPageDTO getAllByCategoryPaging(Integer pageNr, Integer objectsNr, Category category) {
         Pageable pageable = new PageRequest(pageNr, objectsNr);
         Page<Habit> input = habitRepository.findAllByCategory(category, pageable);
 
         Iterable<HabitDTO> output = convertManyToDTOs(input.getContent(), false);
 
-        return new SliceDTO(output, input.getNumber());
+        return new HabitPageDTO(output, input.getNumber());
     }
 
 }

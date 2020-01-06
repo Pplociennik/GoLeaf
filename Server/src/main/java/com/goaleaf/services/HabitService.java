@@ -2,7 +2,7 @@ package com.goaleaf.services;
 
 import com.goaleaf.entities.DTO.HabitDTO;
 import com.goaleaf.entities.DTO.MemberDTO;
-import com.goaleaf.entities.DTO.SliceDTO;
+import com.goaleaf.entities.DTO.HabitPageDTO;
 import com.goaleaf.entities.Habit;
 import com.goaleaf.entities.enums.Category;
 import com.goaleaf.entities.enums.Sorting;
@@ -10,8 +10,6 @@ import com.goaleaf.entities.viewModels.habitsCreating.AddMemberViewModel;
 import com.goaleaf.entities.viewModels.habitsCreating.HabitViewModel;
 import com.goaleaf.entities.viewModels.habitsManaging.JoinHabitViewModel;
 import com.goaleaf.validators.exceptions.habitsCreating.WrongTitleException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +30,7 @@ public interface HabitService {
 
     Boolean checkIfExists(Integer id);
 
-    SliceDTO listAllHabitsPaging(Integer pageNr, Integer howManyOnPage);
+    HabitPageDTO listAllHabitsPaging(Integer pageNr, Integer howManyOnPage);
 
     Habit registerNewHabit(HabitViewModel model, Integer id) throws WrongTitleException;
 
@@ -68,7 +66,7 @@ public interface HabitService {
 
     Category changeHabitCategory(Integer habitID, Category category);
 
-    SliceDTO getAllByCategoryPaging(Integer pageNr, Integer objectsNr, Category category);
+    HabitPageDTO getAllByCategoryPaging(Integer pageNr, Integer objectsNr, Category category);
 
     HabitDTO convertToDTO(Habit entry);
 }

@@ -2,11 +2,9 @@ package com.goaleaf.controllers;
 
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.goaleaf.entities.DTO.HabitDTO;
-import com.goaleaf.entities.DTO.PostDTO;
-import com.goaleaf.entities.DTO.PostReactionsNrDTO;
-import com.goaleaf.entities.DTO.UserDTO;
+import com.goaleaf.entities.DTO.*;
 import com.goaleaf.entities.PostReaction;
+import com.goaleaf.entities.enums.PostTypes;
 import com.goaleaf.entities.viewModels.habitsManaging.postsCreating.NewPostViewModel;
 import com.goaleaf.entities.viewModels.habitsManaging.postsManaging.AddReactionViewModel;
 import com.goaleaf.entities.viewModels.habitsManaging.postsManaging.EditPostViewModel;
@@ -108,5 +106,10 @@ public class PostController {
         }
 
         return reactionService.getReactionByPostIdAndUserLogin(postID, userLogin);
+    }
+
+    @GetMapping(value = "/type/paging")
+    public PostPageDTO getAllByTypePaging(@RequestParam Integer pageNr, @RequestParam Integer objectsNr, @RequestParam Integer habitID, @RequestParam PostTypes type) {
+        return postService.getAllByTypePaging(pageNr, objectsNr, habitID, type);
     }
 }

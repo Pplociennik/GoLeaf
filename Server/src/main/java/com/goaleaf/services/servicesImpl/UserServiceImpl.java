@@ -3,7 +3,7 @@ package com.goaleaf.services.servicesImpl;
 import com.auth0.jwt.JWT;
 import com.goaleaf.entities.*;
 import com.goaleaf.entities.DTO.HabitDTO;
-import com.goaleaf.entities.DTO.SliceDTO;
+import com.goaleaf.entities.DTO.HabitPageDTO;
 import com.goaleaf.entities.DTO.UserDTO;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.*;
 import com.goaleaf.repositories.*;
@@ -406,7 +406,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public SliceDTO getFinishedHabitsPaging(Integer pageNr, Integer objectsNr, String token) {
+    public HabitPageDTO getFinishedHabitsPaging(Integer pageNr, Integer objectsNr, String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8))
                 .parseClaimsJws(token).getBody();
@@ -423,11 +423,11 @@ public class UserServiceImpl implements UserService {
             }
         }
 
-        return new SliceDTO(output, page.getNumber());
+        return new HabitPageDTO(output, page.getNumber());
     }
 
     @Override
-    public SliceDTO getWonHabitsPaging(Integer pageNr, Integer objectsNr, String token) {
+    public HabitPageDTO getWonHabitsPaging(Integer pageNr, Integer objectsNr, String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8))
                 .parseClaimsJws(token).getBody();
@@ -444,11 +444,11 @@ public class UserServiceImpl implements UserService {
             }
         }
 
-        return new SliceDTO(output, page.getNumber());
+        return new HabitPageDTO(output, page.getNumber());
     }
 
     @Override
-    public SliceDTO getUnFinishedHabitsPaging(Integer pageNr, Integer objectsNr, String token) {
+    public HabitPageDTO getUnFinishedHabitsPaging(Integer pageNr, Integer objectsNr, String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8))
                 .parseClaimsJws(token).getBody();
@@ -465,7 +465,7 @@ public class UserServiceImpl implements UserService {
             }
         }
 
-        return new SliceDTO(output, page.getNumber());
+        return new HabitPageDTO(output, page.getNumber());
     }
 
     private UserDTO convertToDTO(User user) {

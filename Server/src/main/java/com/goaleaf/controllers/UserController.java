@@ -2,7 +2,7 @@ package com.goaleaf.controllers;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.goaleaf.entities.DTO.HabitDTO;
-import com.goaleaf.entities.DTO.SliceDTO;
+import com.goaleaf.entities.DTO.HabitPageDTO;
 import com.goaleaf.entities.DTO.UserDTO;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.*;
 import com.goaleaf.services.UserService;
@@ -111,17 +111,17 @@ public class UserController {
     }
 
     @GetMapping(value = "/finished/paging")
-    public SliceDTO getFinishedPaging(@RequestParam Integer pageNr, @RequestParam Integer objectsNr, @RequestParam String token) {
+    public HabitPageDTO getFinishedPaging(@RequestParam Integer pageNr, @RequestParam Integer objectsNr, @RequestParam String token) {
         return userService.getFinishedHabitsPaging(pageNr, objectsNr, token);
     }
 
     @GetMapping(value = "/won/paging")
-    public SliceDTO getWonPaging(@RequestParam Integer pageNr, @RequestParam Integer objectsNr, @RequestParam String token) {
+    public HabitPageDTO getWonPaging(@RequestParam Integer pageNr, @RequestParam Integer objectsNr, @RequestParam String token) {
         return userService.getWonHabitsPaging(pageNr, objectsNr, token);
     }
 
     @GetMapping(value = "/unfinished/paging")
-    public SliceDTO getUnfinishedPaging(@RequestParam Integer pageNr, @RequestParam Integer objectsNr, @RequestParam String token) {
+    public HabitPageDTO getUnfinishedPaging(@RequestParam Integer pageNr, @RequestParam Integer objectsNr, @RequestParam String token) {
         return userService.getUnFinishedHabitsPaging(pageNr, objectsNr, token);
     }
 }

@@ -1,15 +1,15 @@
 package com.goaleaf.entities.DTO;
 
-public class SliceDTO {
+public class HabitPageDTO {
 
     private Iterable<HabitDTO> list;
 
     private Integer pageNr;
 
-    public SliceDTO() {
+    public HabitPageDTO() {
     }
 
-    public SliceDTO(Iterable<HabitDTO> list, Integer pageNr) {
+    public HabitPageDTO(Iterable<HabitDTO> list, Integer pageNr) {
         this.list = list;
         this.pageNr = pageNr;
     }
