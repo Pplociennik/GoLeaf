@@ -4,6 +4,9 @@ const initState = {
     userLoggedLogin: null,
     users: [],
     habits: [],
+    finishedHabits: [],
+    unfinishedHabits: [],
+    wonHabits: [],
     habit: null,
     members: [],
     posts: [],
@@ -44,6 +47,24 @@ const rootReducer = (state = initState, action) => {
         return {
             ...state,
             habits: action.payload
+          }
+    }
+    if(action.type === 'GET_FINISHED_HABITS'){
+        return {
+            ...state,
+            finishedHabits: action.payload
+          }
+    }
+    if(action.type === 'GET_UNFINISHED_HABITS'){
+        return {
+            ...state,
+            unfinishedHabits: action.payload
+          }
+    }
+    if(action.type === 'GET_WON_HABITS'){
+        return {
+            ...state,
+            wonHabits: action.payload
           }
     }
     if(action.type === 'GET_HABIT'){

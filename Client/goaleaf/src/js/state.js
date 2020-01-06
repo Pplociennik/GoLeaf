@@ -14,6 +14,27 @@ export function fetchHabits(){
     })
 };
 
+export function fetchFinishedHabits(userID){
+  return dispatch => axios.get(`https://glf-api.herokuapp.com/api/users/myFinishedHabits?userID=${userID}`)
+    .then(res => {
+      dispatch({ type: 'GET_FINISHED_HABITS', payload: res.data});
+    })
+};
+
+export function fetchUnfinishedHabits(userID){
+  return dispatch => axios.get(`https://glf-api.herokuapp.com/api/users/myUnfinishedHabits?userID=${userID}`)
+    .then(res => {
+      dispatch({ type: 'GET_UNFINISHED_HABITS', payload: res.data});
+    })
+};
+
+export function fetchWonHabits(userID){
+  return dispatch => axios.get(`https://glf-api.herokuapp.com/api/users/myWonHabits?userID=${userID}`)
+    .then(res => {
+      dispatch({ type: 'GET_WON_HABITS', payload: res.data});
+    })
+};
+
 export function fetchMembers(){
   return dispatch => axios.get(`https://glf-api.herokuapp.com/api/members/all`)
     .then(res => {
