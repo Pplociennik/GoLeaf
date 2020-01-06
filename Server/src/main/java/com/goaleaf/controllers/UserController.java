@@ -120,4 +120,8 @@ public class UserController {
         return userService.getWonHabitsPaging(pageNr, objectsNr, token);
     }
 
+    @GetMapping(value = "/unfinished/paging")
+    public SliceDTO getUnfinishedPaging(@RequestParam Integer pageNr, @RequestParam Integer objectsNr, @RequestParam String token) {
+        return userService.getUnFinishedHabitsPaging(pageNr, objectsNr, token);
+    }
 }

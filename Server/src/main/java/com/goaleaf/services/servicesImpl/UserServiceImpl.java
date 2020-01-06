@@ -447,6 +447,27 @@ public class UserServiceImpl implements UserService {
         return new SliceDTO(output, page.getNumber());
     }
 
+    @Override
+    public SliceDTO getUnFinishedHabitsPaging(Integer pageNr, Integer objectsNr, String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8))
+                .parseClaimsJws(token).getBody();
+
+        Pageable pageable = new PageRequest(pageNr, objectsNr);
+        Page<Habit> page = habitRepository.findAllByFinished(true, pageable);
+        Iterable<Habit> list = page.getContent();
+
+        List<HabitDTO> output = new ArrayList<>(0);
+        for (Habit h : list) {
+            Member member = memberRepository.findByHabitIDAndUserID(h.getId(), Integer.parseInt(claims.getSubject()));
+            if (member != null && !h.getFinished()) {
+                output.add(habitService.convertToDTO(h));
+            }
+        }
+
+        return new SliceDTO(output, page.getNumber());
+    }
+
     private UserDTO convertToDTO(User user) {
 
         if (user == null) {

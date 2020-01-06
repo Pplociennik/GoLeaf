@@ -62,4 +62,6 @@ public interface UserService {
     SliceDTO getFinishedHabitsPaging(Integer pageNr, Integer objectsNr, String token);
 
     SliceDTO getWonHabitsPaging(Integer pageNr, Integer objectsNr, String token);
+
+    SliceDTO getUnFinishedHabitsPaging(Integer pageNr, Integer objectsNr, String token);
 }
