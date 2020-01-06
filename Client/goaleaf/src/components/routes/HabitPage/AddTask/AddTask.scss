@@ -89,16 +89,13 @@
     }
 
     .btn {
-        height: 50px;
-        margin-top: 40px;
+        width: 90px;
         background-color: $secondary-color;
         border-radius: 30px;
-        font-weight: 500;
-        font-size: 1.2em;
+        font-weight: 400;
+        font-size: 1em;
         text-transform: lowercase;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        margin: 40px auto 0 auto;
         i { margin-right: 10px }
     }
     .input-field input[type=text]:focus + label {

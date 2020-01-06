@@ -124,7 +124,7 @@ class HabitPage extends Component {
                                     <div className="habit-page-info-blocks">
                                         <div className="habit-page-info-block started-date">📆<span className="date-span">  {changeDateFormat1(habit.startDate)}</span></div>
                                         <div className="habit-page-info-block created-by">🙍‍ <span> {habit.creatorLogin}</span></div>
-                                        <div className="habit-page-info-block privacy">🔒 <span> {habit.isPrivate ? 'Private' : 'Public'}</span></div>
+                                        <div className="habit-page-info-block privacy">🔒 <span> {habit.private ? 'Private' : 'Public'}</span></div>
                                         <div className={`habit-page-info-block category-${habit.category}`}>🚩 <span> {habit.category}</span></div>
                                         <div className="habit-page-info-block members-number">👭 <span> {habit.membersCount}</span></div>
                                     </div>
@@ -171,7 +171,7 @@ class HabitPage extends Component {
                             {habit.pointsToWin !== 1001 ? <AddTask habitID={habit.id} isFinished={habit.finished} isAdmin={isAdmin} pointsToWin={habit.pointsToWin}/> : null}
                             {habit.pointsToWin !== 1001 ? <TasksAll habitID={habit.id} isAdmin={isAdmin} isFinished={habit.finished} pointsToWin={habit.pointsToWin}/> : null}
                             <Leaderboard habitID={habit.id} pointsToWin={habit.pointsToWin}/>
-                            {isAdmin ? <Options habitID={habit.id} canUsersInvite={habit.canUsersInvite} /> : null}
+                            {isAdmin ? <Options habitID={habit.id} canUsersInvite={habit.canUsersInvite} private={habit.private} /> : null}
                         </div>
                     </section> : null}
                     <section className="habit-page-dashboard">

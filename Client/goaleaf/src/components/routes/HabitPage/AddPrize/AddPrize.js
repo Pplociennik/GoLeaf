@@ -92,9 +92,7 @@ class AddPrize extends Component {
                     </div>
                     <span className={this.state.msg === 'Goal set' ? "helper-text green-text" : "helper-text red-text "}>{this.state.msg}</span>
                 </div>
-                <button className="btn" onClick={(e) => this.addPrize(e, this.props.habitID)} type="submit" value="Set goal">
-                    <span>Set goal</span>
-                </button>
+                <button className="btn" onClick={(e) => this.addPrize(e, this.props.habitID)} type="submit" value="Set goal">submit</button>
             </form>
             </div>
         </div>

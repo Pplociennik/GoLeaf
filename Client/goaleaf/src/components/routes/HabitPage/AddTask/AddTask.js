@@ -159,8 +159,7 @@ class AddTask extends Component {
                         {customRecurrence}
                     </div>
                 </div>
-                <button className={this.state.disableBtn ? "btn disable-btn" : "btn"} onClick={(e) => this.addTask(e, this.props.habitID)} type="submit" value="Add Task">
-                    <span>Add Task</span>
+                <button className={this.state.disableBtn ? "btn disable-btn" : "btn"} onClick={(e) => this.addTask(e, this.props.habitID)} type="submit">submit
                 </button>
             </form>
             </div>

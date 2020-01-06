@@ -81,8 +81,7 @@ class InviteMember extends Component {
                     <input id="userInvited" maxLength="30" type="text" placeholder="username" onChange={ this.handleChange } />
                     <span className={this.state.msg === 'Invitation sent' ? "helper-text green-text" : "helper-text red-text "}>{this.state.msg}</span>
                 </div>
-                <button className={this.props.disableBtn ? "btn disable-btn" : "btn"} onClick={ this.handleDisableBtn } type="submit" value="Invite user">
-                    <span>Invite user</span>
+                <button className={this.props.disableBtn ? "btn disable-btn" : "btn"} onClick={ this.handleDisableBtn } type="submit">submit
                 </button>
             </form>
             </div>
