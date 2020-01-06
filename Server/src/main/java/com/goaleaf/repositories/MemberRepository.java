@@ -26,6 +26,8 @@ public interface MemberRepository extends CrudRepository<Member, Integer>, Pagin
 
     Iterable<Member> getAllByHabitIDOrderByPointsDesc(Integer habitID);
 
+    Page<Member> findAllByHabitIDOrderByPointsDesc(Integer habitID, Pageable pageable);
+
     Member getFirstByHabitIDOrderByPointsDesc(Integer habitID);
 
     Member getByUserID(Integer userID);

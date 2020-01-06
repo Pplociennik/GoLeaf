@@ -5,6 +5,7 @@ import com.goaleaf.entities.DTO.HabitDTO;
 import com.goaleaf.entities.DTO.MemberDTO;
 import com.goaleaf.entities.DTO.NotificationDTO;
 import com.goaleaf.entities.DTO.pagination.HabitPageDTO;
+import com.goaleaf.entities.DTO.pagination.RankPageDTO;
 import com.goaleaf.entities.Member;
 import com.goaleaf.entities.enums.Category;
 import com.goaleaf.entities.enums.Sorting;
@@ -232,6 +233,11 @@ public class HabitController {
     @GetMapping(value = "/category/paging")
     public HabitPageDTO getByCategoryPaging(@RequestParam Integer pageNr, @RequestParam Integer objectsNr, @RequestParam Category category) {
         return habitService.getAllByCategoryPaging(pageNr, objectsNr, category);
+    }
+
+    @GetMapping(value = "/rank/paging")
+    public RankPageDTO getMembersRankingPaging(@RequestParam Integer pageNr, @RequestParam Integer objectsNr, @RequestParam Integer habitID) {
+        return memberService.getHabitRankingPaging(pageNr, objectsNr, habitID);
     }
 
 }
