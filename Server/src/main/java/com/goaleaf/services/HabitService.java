@@ -67,4 +67,6 @@ public interface HabitService {
     Boolean changeHabitPrivacy(Integer habitID);
 
     Category changeHabitCategory(Integer habitID, Category category);
+
+    SliceDTO getAllByCategoryPaging(Integer pageNr, Integer objectsNr, Category category);
 }

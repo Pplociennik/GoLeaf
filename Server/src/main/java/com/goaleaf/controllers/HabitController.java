@@ -5,7 +5,6 @@ import com.goaleaf.entities.DTO.HabitDTO;
 import com.goaleaf.entities.DTO.MemberDTO;
 import com.goaleaf.entities.DTO.NotificationDTO;
 import com.goaleaf.entities.DTO.SliceDTO;
-import com.goaleaf.entities.Habit;
 import com.goaleaf.entities.Member;
 import com.goaleaf.entities.enums.Category;
 import com.goaleaf.entities.enums.Sorting;
@@ -27,8 +26,6 @@ import com.goaleaf.validators.exceptions.habitsProcessing.UserNotInHabitExceptio
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -228,8 +225,13 @@ public class HabitController {
     }
 
     @GetMapping(value = "/all/paging")
-    public SliceDTO getAllHabitsPaging(@RequestParam Integer pageNr, Integer objectsNr) {
+    public SliceDTO getAllHabitsPaging(@RequestParam Integer pageNr, @RequestParam Integer objectsNr) {
         return habitService.listAllHabitsPaging(pageNr, objectsNr);
+    }
+
+    @GetMapping(value = "/category/paging")
+    public SliceDTO getByCategoryPaging(@RequestParam Integer pageNr, @RequestParam Integer objectsNr, @RequestParam Category category) {
+        return habitService.getAllByCategoryPaging(pageNr, objectsNr, category);
     }
 
 }

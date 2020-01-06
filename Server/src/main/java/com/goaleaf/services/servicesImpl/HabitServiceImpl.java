@@ -559,4 +559,14 @@ public class HabitServiceImpl implements HabitService {
         return habitRepository.findById(habitID).getCategory();
     }
 
+    @Override
+    public SliceDTO getAllByCategoryPaging(Integer pageNr, Integer objectsNr, Category category) {
+        Pageable pageable = new PageRequest(pageNr, objectsNr);
+        Page<Habit> input = habitRepository.findAllByCategory(category, pageable);
+
+        Iterable<HabitDTO> output = convertManyToDTOs(input.getContent(), false);
+
+        return new SliceDTO(output, input.getNumber());
+    }
+
 }
