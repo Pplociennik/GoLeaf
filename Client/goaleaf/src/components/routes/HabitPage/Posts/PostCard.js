@@ -10,6 +10,7 @@ import NtIcon from './../../../../assets/nt.png'
 import TtdIcon from './../../../../assets/ttd.png'
 import axios from 'axios';
 import CommentCard from './Comments/CommentCard'
+import ReactPaginate from 'react-paginate';
 
 class PostCard extends Component {
 
@@ -22,8 +23,15 @@ class PostCard extends Component {
             counter_TTD: 0
         },
         comments: [],
+        pageNr: 0,
+        pagesAll: 0,
         showComments: false,
+        commentsToShow: 8,
         comment: ''
+    }
+
+    handlePageClick = data => {
+        this.showComments(data.selected, this.state.commentsToShow, this.props.id);
     }
 
     addReaction = reaction => {
@@ -53,6 +61,9 @@ class PostCard extends Component {
                     this.setState({
                         comments: comments
                     })
+                if(this.state.pageNr > 0 && this.state.comments.length === 0){
+                    this.showComments(this.state.pageNr - 1, this.state.commentsToShow, this.props.id);
+                }
             }).catch(err => { console.log(err) })
 
     }
@@ -66,17 +77,36 @@ class PostCard extends Component {
             "text": this.state.comment
         }).then(res => {
             this.setState({ comments: [res.data, ...this.state.comments] })
-            this.showComments();
+            this.showComments(this.state.pagesAll - 1, this.state.commentsToShow, this.props.id);
         }
         )
             .catch(err => console.log(err))
     }
 
-    showComments = () => {
-        axios.get(`https://glf-api.herokuapp.com/api/comments/getcomments?postID=${this.props.id}`)
+    showCommentsBtnPress = () => {
+        axios.get(`https://glf-api.herokuapp.com/api/comments/post/paging?pageNr=${0}&objectsNr=${this.state.commentsToShow}&postID=${this.props.id}`)
+        .then(res => {
+            this.setState({
+                comments: res.data.list,
+                pageNr: res.data.pageNr,
+                pagesAll: res.data.allPages
+            })
+            this.showComments(this.state.pagesAll - 1, this.state.commentsToShow, this.props.id);
+        }).catch(err => console.log(err))
+
+    this.setState({
+        showComments: true
+    })
+
+    }
+
+    showComments = (page, objectsNr, postID) => {
+        axios.get(`https://glf-api.herokuapp.com/api/comments/post/paging?pageNr=${page}&objectsNr=${objectsNr}&postID=${postID}`)
             .then(res => {
                 this.setState({
-                    comments: res.data
+                    comments: res.data.list,
+                    pageNr: res.data.pageNr,
+                    pagesAll: res.data.allPages
                 })
             }).catch(err => console.log(err))
 
@@ -144,7 +174,7 @@ class PostCard extends Component {
         let postCommentBtn = '';
         if(this.props.postType !== 'Task'){
             if (!this.state.showComments){
-                postCommentBtn = <button className="show-comments-btn" onClick={() => this.showComments()}>Show comments</button>
+                postCommentBtn = <button className="show-comments-btn" onClick={ this.showCommentsBtnPress }>Show comments</button>
             } else {
                postCommentBtn = <button className="show-comments-btn" onClick={() => this.setState({ showComments: false })}>Hide comments</button>
             }
@@ -203,6 +233,22 @@ class PostCard extends Component {
                         <ul className="comments row">
                             {finalCommentsToDisplay}
                         </ul>
+                        {this.state.pagesAll > 1 ?
+                        <ReactPaginate
+                            forcePage={this.state.pagesAll - 1}
+                            previousLabel={'previous'}
+                            nextLabel={'next'}
+                            breakLabel={'...'}
+                            breakClassName={'break-me'}
+                            pageCount={this.state.pagesAll}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={this.handlePageClick}
+                            containerClassName={'pagination'}
+                            subContainerClassName={'pages-pagination'}
+                            activeClassName={'active-pagination'}
+                            pageClassName={'page-pagination'}
+                        /> : null}
                         <div className="add-comment-con row">
                             <form className="col s8 offset-s2" onSubmit={this.addComment}>
                                 <input className="add-comment-input" id="comment" type="text" placeholder="add comment" autoComplete="off" value={this.state.comment} onChange={this.handleChange} />

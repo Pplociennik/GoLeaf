@@ -298,10 +298,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void checkUserCredentials(LoginViewModel userModel) throws AccountNotExistsException, BadCredentialsException {
         if (userRepository.findByLogin(userModel.login) == null) {
-            throw new AccountNotExistsException("Account with this login not exists!");
+            throw new AccountNotExistsException("Account with this login does not exists");
         }
         if (!bCryptPasswordEncoder.matches(userModel.password, userRepository.findByLogin(userModel.login).getPassword())) {
-            throw new BadCredentialsException("Wrong Password!!");
+            throw new BadCredentialsException("Wrong password");
         }
     }
 

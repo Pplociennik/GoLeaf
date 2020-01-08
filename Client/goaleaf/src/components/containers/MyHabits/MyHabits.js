@@ -8,13 +8,28 @@ import HabitCard from './../../routes/HabitCard/HabitCard'
 import { fetchFinishedHabits } from './../../../js/state';
 import { fetchUnfinishedHabits } from './../../../js/state';
 import { fetchWonHabits } from './../../../js/state';
+import ReactPaginate from 'react-paginate';
 
 class MyHabits extends Component {
 
+  state = {
+    habitsToShow: 16
+  }
+
+  handleUnfinishedHabitsPageClick = data => {
+    this.props.fetchUnfinishedHabits(data.selected, this.state.habitsToShow, localStorage.getItem('token'));
+  }
+  handleFinishedHabitsPageClick = data => {
+    this.props.fetchFinishedHabits(data.selected, this.state.habitsToShow, localStorage.getItem('token'));
+  }
+  handleWonHabitsPageClick = data => {
+    this.props.fetchWonHabits(data.selected, this.state.habitsToShow, localStorage.getItem('token'));
+  }
+
   componentDidMount() {
-        this.props.fetchFinishedHabits(this.props.userLogged);
-        this.props.fetchUnfinishedHabits(this.props.userLogged);
-        this.props.fetchWonHabits(this.props.userLogged);
+        this.props.fetchFinishedHabits(0, this.state.habitsToShow, localStorage.getItem('token'));
+        this.props.fetchUnfinishedHabits(0, this.state.habitsToShow, localStorage.getItem('token'));
+        this.props.fetchWonHabits(0, this.state.habitsToShow, localStorage.getItem('token'));
   }
 
   render() {
@@ -24,16 +39,61 @@ class MyHabits extends Component {
         <section className="my-habits">
           <h1 className="my-habits-title" >My active challenges</h1>
           <Habits habitCards={this.props.unfinishedHabits} status="active" />
+          {this.props.unfinishedHabitsPages > 1 ?
+                        <ReactPaginate
+                            previousLabel={'previous'}
+                            nextLabel={'next'}
+                            breakLabel={'...'}
+                            breakClassName={'break-me'}
+                            pageCount={this.props.unfinishedHabitsPages}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={this.handleUnfinishedHabitsPageClick}
+                            containerClassName={'pagination'}
+                            subContainerClassName={'pages-pagination'}
+                            activeClassName={'active-pagination'}
+                            pageClassName={'page-pagination'}
+                        /> : null}
         </section>
         { this.props.wonHabits.length > 0 ?
           <section className="my-habits">
             <h1 className="my-habits-title" >My won challenges</h1>
             <Habits habitCards={this.props.wonHabits} status="won" />
+            {this.props.wonHabitsPages > 1 ?
+                        <ReactPaginate
+                            previousLabel={'previous'}
+                            nextLabel={'next'}
+                            breakLabel={'...'}
+                            breakClassName={'break-me'}
+                            pageCount={this.props.wonHabitsPages}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={this.handleWonHabitsPageClick}
+                            containerClassName={'pagination'}
+                            subContainerClassName={'pages-pagination'}
+                            activeClassName={'active-pagination'}
+                            pageClassName={'page-pagination'}
+                        /> : null}
           </section> : null }
         { this.props.finishedHabits.length > 0 ?
         <section className="my-habits">
           <h1 className="my-habits-title" >My ended challenges</h1>
-          <Habits habitCards={this.state.finishedHabits} status="ended" />
+          <Habits habitCards={this.props.finishedHabits} status="ended" />
+          {this.props.finishedHabitsPages > 1 ?
+                        <ReactPaginate
+                            previousLabel={'previous'}
+                            nextLabel={'next'}
+                            breakLabel={'...'}
+                            breakClassName={'break-me'}
+                            pageCount={this.props.finishedHabitsPages}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={this.handleFinishedHabitsPageClick}
+                            containerClassName={'pagination'}
+                            subContainerClassName={'pages-pagination'}
+                            activeClassName={'active-pagination'}
+                            pageClassName={'page-pagination'}
+                        /> : null}
         </section> : null }
         </div>
       )
@@ -48,14 +108,17 @@ const mapStateToProps = state => {
     finishedHabits: state.finishedHabits,
     unfinishedHabits: state.unfinishedHabits,
     wonHabits: state.wonHabits,
+    finishedHabitsPages: state.finishedHabitsPages,
+    unfinishedHabitsPages: state.unfinishedHabitsPages,
+    wonHabitsPages: state.wonHabitsPages,
     userLogged: state.userLogged
 
   }
 }
 const mapDispatchToProps = dispatch => ({
-  fetchFinishedHabits: userID => dispatch(fetchFinishedHabits(userID)),
-  fetchUnfinishedHabits: userID => dispatch(fetchUnfinishedHabits(userID)),
-  fetchWonHabits: userID => dispatch(fetchWonHabits(userID)),
+  fetchFinishedHabits: (page, toShow, token) => dispatch(fetchFinishedHabits(page, toShow, token)),
+  fetchUnfinishedHabits: (page, toShow, token) => dispatch(fetchUnfinishedHabits(page, toShow, token)),
+  fetchWonHabits: (page, toShow, token) => dispatch(fetchWonHabits(page, toShow, token)),
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MyHabits));
