@@ -460,7 +460,7 @@ public class UserServiceImpl implements UserService {
         List<HabitDTO> output = new ArrayList<>(0);
         for (Habit h : input) {
             Member member = memberRepository.findByHabitIDAndUserID(h.getId(), Integer.parseInt(claims.getSubject()));
-            if (member != null && !h.getFinished()) {
+            if (member != null) {
                 output.add(habitService.convertToDTO(h));
             }
         }
