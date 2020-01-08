@@ -3,8 +3,8 @@ package com.goaleaf.services.servicesImpl;
 import com.goaleaf.entities.*;
 import com.goaleaf.entities.DTO.HabitDTO;
 import com.goaleaf.entities.DTO.MemberDTO;
-import com.goaleaf.entities.DTO.SliceDTO;
 import com.goaleaf.entities.DTO.UserDTO;
+import com.goaleaf.entities.DTO.pagination.HabitPageDTO;
 import com.goaleaf.entities.enums.Category;
 import com.goaleaf.entities.enums.Sorting;
 import com.goaleaf.entities.viewModels.habitsCreating.AddMemberViewModel;
@@ -20,6 +20,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -85,13 +86,65 @@ public class HabitServiceImpl implements HabitService {
     }
 
     @Override
-    public SliceDTO listAllHabitsPaging(Integer pageNr, Integer howManyOnPage) {
+    public HabitPageDTO listAllHabitsPaging(Integer pageNr, Integer howManyOnPage, Category category, Sorting sorting) {
         Pageable pageable = new PageRequest(pageNr, howManyOnPage);
-        Page<Habit> page = habitRepository.findAll(pageable);
-        List<Habit> input = page.getContent();
+        Iterable<Habit> input = null;
 
-        Iterable<HabitDTO> output = convertManyToDTOs(input, false);
-        return new SliceDTO(output, page.getNumber());
+        if (category.equals(Category.ALL)) {
+            input = habitRepository.findAll();
+        } else {
+            input = habitRepository.findAllByCategory(category);
+        }
+
+//        Iterable<Habit> list = input.getContent();
+
+        List<Habit> sortedList = new ArrayList<>(0);
+
+        List<HabitDTO> resultList = null;
+
+        if (sorting.equals(Sorting.Popular)) {
+            Iterator<Habit> i = input.iterator();
+            if (i.hasNext()) {
+                Integer temp;
+                Habit tempHabit = null;
+                while (i.hasNext()) {
+                    temp = 0;
+                    for (Habit h : input) {
+                        Integer count = memberService.countAllHabitMembers(h.getId());
+                        if (count > temp) {
+                            tempHabit = h;
+                            temp = count;
+                        }
+                    }
+                    sortedList.add(tempHabit);
+                    i.next();
+                    i.remove();
+                }
+                resultList = (List<HabitDTO>) convertManyToDTOs(sortedList, false);
+            }
+        } else if (sorting.equals(Sorting.Newest)) {
+            Iterable<HabitDTO> toFilter = convertManyToDTOs(habitRepository.findAllByOrderByHabitStartDateDesc(), false);
+            if (category.equals(Category.ALL)) {
+                resultList = (List<HabitDTO>) toFilter;
+            } else {
+                List<HabitDTO> filtered = new ArrayList<>(0);
+                for (HabitDTO h : toFilter) {
+                    if (h.getCategory().equals(category)) {
+                        filtered.add(h);
+                    }
+                }
+                resultList = filtered;
+            }
+        } else {
+            throw new RuntimeException("No such sorting!");
+        }
+
+        int start = pageable.getOffset();
+        int end = (start + pageable.getPageSize()) > resultList.size() ? resultList.size() : (start + pageable.getPageSize());
+        Page<HabitDTO> pages = new PageImpl<HabitDTO>(resultList.subList(start, end), pageable, resultList.size());
+
+
+        return new HabitPageDTO(pages.getContent(), pages.getNumber(), pages.hasPrevious(), pages.hasNext(), pages.getTotalPages());
     }
 
     @Override
@@ -171,7 +224,7 @@ public class HabitServiceImpl implements HabitService {
         return memberService.getRank(habitID);
     }
 
-    private HabitDTO convertToDTO(Habit entry) {
+    public HabitDTO convertToDTO(Habit entry) {
 
         if (entry == null) {
             return null;
@@ -560,13 +613,13 @@ public class HabitServiceImpl implements HabitService {
     }
 
     @Override
-    public SliceDTO getAllByCategoryPaging(Integer pageNr, Integer objectsNr, Category category) {
+    public HabitPageDTO getAllByCategoryPaging(Integer pageNr, Integer objectsNr, Category category) {
         Pageable pageable = new PageRequest(pageNr, objectsNr);
         Page<Habit> input = habitRepository.findAllByCategory(category, pageable);
 
         Iterable<HabitDTO> output = convertManyToDTOs(input.getContent(), false);
 
-        return new SliceDTO(output, input.getNumber());
+        return new HabitPageDTO(output, input.getNumber(), input.hasPrevious(), input.hasNext(), input.getTotalPages());
     }
 
 }

@@ -3,6 +3,7 @@ package com.goaleaf.services.servicesImpl;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.goaleaf.entities.*;
 import com.goaleaf.entities.DTO.*;
+import com.goaleaf.entities.DTO.pagination.PostPageDTO;
 import com.goaleaf.entities.enums.PostTypes;
 import com.goaleaf.entities.viewModels.habitsManaging.postsCreating.NewPostViewModel;
 import com.goaleaf.entities.viewModels.habitsManaging.postsManaging.AddReactionViewModel;
@@ -21,6 +22,10 @@ import com.goaleaf.validators.exceptions.habitsProcessing.postsProcessing.UserIs
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 
 import javax.mail.MessagingException;
@@ -317,6 +322,25 @@ public class PostServiceImpl implements PostService {
         dataToReturn.setCounter_WOW(post.getCounter_WOW());
 
         return dataToReturn;
+    }
+
+    @Override
+    public PostPageDTO getAllByTypePaging(Integer pageNr, Integer objectsNr, Integer habitID, PostTypes type) {
+        Pageable pageable = new PageRequest(pageNr, objectsNr);
+        List<Post> list = (List<Post>) postRepository.findAllByHabitIDAndPostType(habitID, type);
+        List<Post> input = new ArrayList<>(0);
+
+        for (int i = list.size() - 1; i >= 0; i--) {
+            input.add(list.get(i));
+        }
+
+        List<PostDTO> output = (List<PostDTO>) convertManyToDTOs(input);
+
+        int start = pageable.getOffset();
+        int end = (start + pageable.getPageSize()) > output.size() ? output.size() : (start + pageable.getPageSize());
+        Page<PostDTO> pages = new PageImpl<PostDTO>(output.subList(start, end), pageable, output.size());
+
+        return new PostPageDTO(pages.getContent(), pages.getNumber(), pages.hasPrevious(), pages.hasNext(), pages.getTotalPages());
     }
 
     private PostDTO convertOneToDTO(Post post) {
