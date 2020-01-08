@@ -5,22 +5,34 @@ import axios from 'axios'
 import Popup from "reactjs-popup"
 import Task from './Task'
 import './Task.scss'
+import ReactPaginate from 'react-paginate';
 
 class TasksAll extends Component {
 
     state = {
-        tasks: []
+        tasks: [],
+        page: 0,
+        pagesAll: 0,
+        tasksToShow: 5
+    }
+
+    handlePageClick = data => {
+        this.fetchTasks(this.props.habitID, data.selected, this.state.tasksToShow);
+    }
+
+    fetchTasks = (habitID, page, objectsNr) => {
+        axios.get(`https://glf-api.herokuapp.com/api/tasks/habit/paging?pageNr=${page}&objectsNr=${objectsNr}&habitID=${habitID}`)
+        .then(res => {
+            this.setState({
+                tasks: res.data.list,
+                page: res.data.pageNr,
+                pagesAll: res.data.allPages
+            })
+        }).catch(err => console.log(err.response.data.message))
     }
 
     componentDidMount() {
-        console.log(this.props.habitID);
-        axios.get(`https://glf-api.herokuapp.com/api/tasks/habit?habitID=${this.props.habitID}`)
-            .then(res => {
-                this.setState({
-                    tasks: res.data
-                })
-            }).catch(err => console.log(err.response.data.message))
-
+        this.fetchTasks(this.props.habitID, this.state.page, this.state.tasksToShow);
     }
 
     render() {
@@ -34,7 +46,6 @@ class TasksAll extends Component {
 
         let tasksToDisplay = taskCards;
 
-        console.log(taskCards.length)
         if (!taskCards.length) {
             tasksToDisplay = <div style={{textAlign: 'center'}}>There are no tasks yet 🤷‍♂️</div>
         } 
@@ -60,6 +71,22 @@ class TasksAll extends Component {
                         <ul className="collection" style={{overflow: 'visible'}}>
                             {tasksToDisplay}
                         </ul>
+                        {this.state.pagesAll > 1 ?
+                        <ReactPaginate
+                            forcePage={this.state.page}
+                            previousLabel={'previous'}
+                            nextLabel={'next'}
+                            breakLabel={'...'}
+                            breakClassName={'break-me'}
+                            pageCount={this.state.pagesAll}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={this.handlePageClick}
+                            containerClassName={'pagination'}
+                            subContainerClassName={'pages-pagination'}
+                            activeClassName={'active-pagination'}
+                            pageClassName={'page-pagination'}
+                        /> : null}
                     </div>
                 </Popup>
             )

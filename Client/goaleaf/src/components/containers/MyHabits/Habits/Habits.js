@@ -13,7 +13,7 @@ class Habits extends Component {
   }
 
   handleHabitCardClicked = id => {
-    this.props.history.push(`/habit/${id}`);
+    this.props.history.push(`/challenge/${id}`);
   }
 
   handleFilter = e => {

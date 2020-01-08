@@ -5,26 +5,32 @@ import NotificationCard from './NotificationCard'
 import './Notifications.scss';
 import axios from 'axios'
 import Popup from "reactjs-popup";
+import ReactPaginate from 'react-paginate';
 
 class Notifications extends Component {
 
     state = {
         notifications: [],
-        notificationsToShow: 20,
-        notificationsSortBy: 'NEWEST'
+        notificationsToShow: 5,
+        page: 0,
+        pagesAll: 0
+    }
+
+    handlePageClick = data => {
+        this.fetchNotifications(data.selected, this.state.notificationsToShow, localStorage.getItem('token'));
     }
 
     handleNtfCardClicked = (id, url) => {
-        console.log(url)
         this.props.history.push(url) 
     }
 
     handleNtfCardDeleted = (id, url) => {
         axios.delete(`https://glf-api.herokuapp.com/api/notifications/ntf/{id}?ntfID=${id}`)
             .then(res => {
-                console.log(`Deleted notification ${id}`);
                 this.setState({notifications: this.state.notifications.filter(ntf => ntf.id !== id)})
-
+                if(this.state.page > 0 && this.state.notifications.length === 0){
+                    this.fetchNotifications(this.state.page - 1, this.state.notificationsToShow, localStorage.getItem('token'));
+                }
         })
             .catch(err => console.log(err))
     }
@@ -33,46 +39,38 @@ class Notifications extends Component {
         axios.delete(`https://glf-api.herokuapp.com/api/notifications/clear?userID=${this.props.userLogged}`)
         .then(res => {
             this.setState({notifications: []})
-            //window.location.reload()
+        }).catch(err => console.log(err))
+    }
 
-    }).catch(err => console.log(err))
+    fetchNotifications(page, toShow, token){
+        axios.get(`https://glf-api.herokuapp.com/api/notifications/user/paging?pageNr=${page}&objectsNr=${toShow}&token=${token}`)
+        .then(res => {
+                this.setState({
+                    notifications: res.data.list,
+                    pagesAll: res.data.allPages,
+                    page: res.data.pageNr
+                })
+        })
+        .catch(err => {console.log('Error when downloading notifications')})
     }
 
     componentDidMount() {
-        axios.get(`https://glf-api.herokuapp.com/api/notifications/usersntf?userID=${this.props.userLogged}`)
-            .then(res => {
-                res.data.forEach(ntf => {
-                    let notifications = [...this.state.notifications, ntf]
-                    this.setState({
-                        notifications: notifications
-                    })
-                })
-            })
-            .catch(err => {console.log('Error when downloading notifications')})
+        this.fetchNotifications(this.state.page, this.state.notificationsToShow, localStorage.getItem('token'));
     }
 
     render() {
 
         let notifications = this.state.notifications;
 
-        notifications.sort(function (a, b) {
-            let keyA = new Date(a.date),
-                keyB = new Date(b.date);
-            if (keyA > keyB) return -1;
-            if (keyA < keyB) return 1;
-            return 0;
-        });
 
         let foundNtfs = false;
         let notificationCards = []
         notifications.forEach(ntf => {
-
             foundNtfs = true;
             notificationCards.push(<NotificationCard key={ntf.id} id={ntf.id} description={ntf.description} date={ntf.date} url={ntf.url} handleNtfCardClicked={() => this.handleNtfCardClicked(ntf.id, ntf.url)} handleNtfCardDeleted={() => this.handleNtfCardDeleted(ntf.id, ntf.url)}/>)
-
         })
 
-        let ntfsToDisplay = notificationCards.slice(0, this.state.notificationsToShow);
+        let ntfsToDisplay = notificationCards;
 
 
         if (!foundNtfs) {
@@ -104,9 +102,22 @@ class Notifications extends Component {
                         <ul className="collection">
                             {ntfsToDisplay}
                         </ul>
-                        <div className="show-more-btn-con">
-                            { notificationCards.length > this.state.notificationsToShow ? <button className="btn waves-effect waves-light show-more-btn" onClick={() => this.setState({ notificationsToShow: this.state.notificationsToShow + 20 })}>Show more</button> : null }
-                        </div>
+                        {this.state.pagesAll > 1 ?
+                        <ReactPaginate
+                            forcePage={this.state.page}
+                            previousLabel={'previous'}
+                            nextLabel={'next'}
+                            breakLabel={'...'}
+                            breakClassName={'break-me'}
+                            pageCount={this.state.pagesAll}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={this.handlePageClick}
+                            containerClassName={'pagination'}
+                            subContainerClassName={'pages-pagination'}
+                            activeClassName={'active-pagination'}
+                            pageClassName={'page-pagination'}
+                        /> : null}
                     </div>
                 </Popup>
             </section>
@@ -119,9 +130,6 @@ class Notifications extends Component {
 
 const mapStateToProps = state => {
     return {
-        habits: state.habits,
-        users: state.users,
-        members: state.members,
         userLogged: state.userLogged
     }
 }

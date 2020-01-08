@@ -5,20 +5,35 @@ import axios from 'axios'
 import Popup from "reactjs-popup"
 import TaskCard from './TaskCard'
 import './TaskCard.scss';
+import ReactPaginate from 'react-paginate';
 
 class Tasks extends Component {
 
     state = {
-        tasks: []
+        tasks: [],
+        pagesAll: 5,
+        page: 0,
+        tasksToShow: 4
+    }
+
+    handlePageClick = data => {
+        this.fetchTasks(data.selected, this.state.tasksToShow, this.props.habitID, this.props.userLogged);
+    }
+
+    fetchTasks = (page, toShow, habitID, userID) => {
+        axios.get(`https://glf-api.herokuapp.com/api/tasks/available/paging?pageNr=${page}&objectsNr=${toShow}&habitID=${habitID}&userID=${userID}`)
+
+            .then(res => {
+                this.setState({
+                    tasks: res.data.list,
+                    pagesAll: res.data.allPages,
+                    page: res.data.pageNr
+                })
+            }).catch(err => console.log(err.response.data.message))
     }
 
     componentDidMount() {
-        axios.get(`https://glf-api.herokuapp.com/api/tasks/list/available?habitID=${this.props.habitID}&userID=${this.props.userLogged}`)
-            .then(res => {
-                this.setState({
-                    tasks: res.data
-                })
-            }).catch(err => console.log(err.response.data.message))
+        this.fetchTasks(this.state.page, this.state.tasksToShow, this.props.habitID, this.props.userLogged);
     }
 
     render() {
@@ -51,6 +66,22 @@ class Tasks extends Component {
                         <ul className="tasks">
                             {tasksToDisplay}
                         </ul>
+                        {this.state.pagesAll > 1 ?
+                        <ReactPaginate
+                            forcePage={this.state.page}
+                            previousLabel={'previous'}
+                            nextLabel={'next'}
+                            breakLabel={'...'}
+                            breakClassName={'break-me'}
+                            pageCount={this.state.pagesAll}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={this.handlePageClick}
+                            containerClassName={'pagination'}
+                            subContainerClassName={'pages-pagination'}
+                            activeClassName={'active-pagination'}
+                            pageClassName={'page-pagination'}
+                        /> : null}
                     </div>
             )
         } else {

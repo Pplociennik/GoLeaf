@@ -4,6 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import PhotoIcon from './../../../../assets/photo-icon.png';
 import {addPost} from '../../../../js/state';
+import {fetchPosts} from '../../../../js/state';
 import Tasks from '../Tasks/Tasks';
 import Posts from '../Posts/Posts';
 import { string } from 'prop-types';
@@ -35,6 +36,7 @@ class AddPost extends Component {
           this.setState({postText: ''});
           this.setState({disableBtn: false});
           this.props.addPost(res.data);
+          this.props.fetchPosts(this.props.habitID, 0, 8, "JustText")
 
         }
        ).catch(err => {
@@ -119,7 +121,8 @@ class AddPost extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    addPost: post => dispatch(addPost(post))
+    addPost: post => dispatch(addPost(post)),
+    fetchPosts: (habitID, pageNr, objectsNr, type) =>  dispatch(fetchPosts(habitID, pageNr, objectsNr, type))
 })
 
 export default connect(null, mapDispatchToProps)(AddPost);

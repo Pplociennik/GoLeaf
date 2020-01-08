@@ -5,13 +5,30 @@ import PostCard from './PostCard'
 import './Posts.scss'
 import {fetchPosts} from '../../../../js/state'
 import {deletePost} from '../../../../js/state'
+import ReactPaginate from 'react-paginate';
 
 class Posts extends Component {
 
     state = {
-        posts: [],
-        postsToShow: 10,
-        postsLoading: true
+        postsLoading: true,
+        postsText: [],
+        postsTextPagesAll: 0,
+        postsTextPageNr: 0,
+        postsTextToShow: 8,
+        
+        postsTask: [],
+        postsTaskPageNr: 0,
+        postsTaskPagesAll: 0,
+        postsTaskToShow: 8,
+
+        postsToShow: []
+    }
+
+    handlePostTaskPageClick = data => {
+        this.fetchPostsTask(this.props.habitID, data.selected, this.state.postsTaskToShow, "Task");
+    }
+    handlePostTextPageClick = data => {
+        this.fetchPostsText(this.props.habitID, data.selected, this.state.postsTextToShow, "JustText");
     }
 
     handlePostCardDeleted = id => {
@@ -23,22 +40,35 @@ class Posts extends Component {
             }
         })
             .then(res => {
-                console.log(`Deleted post ${id}`);
-                this.props.deletePost(id);
-                //window.location.reload();
+                window.location.reload();
 
             })
             .catch(err => console.log(err))
     }
 
-    componentDidMount() {
-        
-        this.props.fetchPosts(this.props.habitID).then(res => this.setState({postsLoading: false}))
+    fetchPostsText = (habitID, pageNr, objectsNr, type) => {
+        this.setState({postsLoading: true});
+        this.props.fetchPosts(habitID, pageNr, objectsNr, type).then(res => this.setState({postsLoading: false}))
+    }
+    fetchPostsTask = (habitID, pageNr, objectsNr, type) => {
+        this.setState({postsLoading: true});
+        this.props.fetchPosts(habitID, pageNr, objectsNr, type).then(res => this.setState({postsLoading: false}))
+    }
+
+    componentDidMount() {  
+        this.fetchPostsTask(this.props.habitID, this.state.postsTaskPageNr, this.state.postsTaskToShow, "Task");
+        this.fetchPostsText(this.props.habitID, this.state.postsTextPageNr, this.state.postsTextToShow, "JustText");
     }
 
     render() {
+        let posts = [];
 
-        let posts = this.props.posts;
+        if(this.props.showTasks){
+            posts = this.props.postsTask;
+        } else {
+            posts = this.props.postsText;
+        }
+
         let foundPosts = false;
         let postCards = []
         posts.forEach(post => {
@@ -52,7 +82,7 @@ class Posts extends Component {
             }
         })
         
-        let postsToDisplay = postCards.slice(0, this.state.postsToShow);
+        let postsToDisplay = postCards;
 
 
         if (this.state.postsLoading) {
@@ -75,7 +105,39 @@ class Posts extends Component {
                     <div className="col s12 m8  offset-m2 center">
                         {postsToDisplay}
                     <div>
-                        {postCards.length > this.state.postsToShow ? <div className="show-more-posts-btn-con"><button className="show-more-posts-btn btn center" onClick={() => this.setState({ postsToShow: this.state.postsToShow + 20 })}>Show more</button></div> : null}
+                    {this.props.showTasks && this.props.postsTaskPagesAll > 1 ? 
+                        <ReactPaginate
+                            forcePage={this.props.postsTaskPage}
+                            previousLabel={'previous'}
+                            nextLabel={'next'}
+                            breakLabel={'...'}
+                            breakClassName={'break-me'}
+                            pageCount={this.props.postsTaskPagesAll}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={this.handlePostTaskPageClick}
+                            containerClassName={'pagination'}
+                            subContainerClassName={'pages-pagination'}
+                            activeClassName={'active-pagination'}
+                            pageClassName={'page-pagination'}
+                        /> : null}
+                        {!this.props.showTasks && this.props.postsTextPagesAll > 1 ?
+                        <ReactPaginate
+                            forcePage={this.props.postsTextPage}
+                            previousLabel={'previous'}
+                            nextLabel={'next'}
+                            breakLabel={'...'}
+                            breakClassName={'break-me'}
+                            pageCount={this.props.postsTextPagesAll}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={this.handlePostTextPageClick}
+                            containerClassName={'pagination'}
+                            subContainerClassName={'pages-pagination'}
+                            activeClassName={'active-pagination'}
+                            pageClassName={'page-pagination'}
+                        /> : null}
+                     
                     </div>
                     </div>
                 </section>
@@ -85,13 +147,19 @@ class Posts extends Component {
 
 const mapStateToProps = state => {
     return {
-        posts: state.posts,
+        postsTask: state.postsTask,
+        postsText: state.postsText,
         userLogged: state.userLogged,
-        userLoggedLogin: state.userLoggedLogin
+        userLoggedLogin: state.userLoggedLogin,
+
+        postsTaskPagesAll: state.postsTaskPagesAll,
+        postsTaskPage: state.postsTaskPage,
+        postsTextPagesAll: state.postsTextPagesAll,
+        postsTextPage: state.postsTextPage
     }
 }
 const mapDispatchToProps = dispatch => ({
-    fetchPosts: habitID =>  dispatch(fetchPosts(habitID)),
+    fetchPosts: (habitID, pageNr, objectsNr, type) =>  dispatch(fetchPosts(habitID, pageNr, objectsNr, type)),
     deletePost: habitID =>  dispatch(deletePost(habitID))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);

@@ -5,34 +5,34 @@ import axios from 'axios'
 import './Members.scss'
 import Popup from "reactjs-popup"
 import MemberCard from './MemberCard'
+import ReactPaginate from 'react-paginate';
 
 class Members extends Component {
 
     state = {
         members: [],
-        search: ''
+        page: 0,
+        membersToShow: 6,
+        pagesAll: 5
+    }
+
+    handlePageClick = data => {
+        this.fetchMembers(this.props.habitID, data.selected, this.state.membersToShow);
+    }
+
+    fetchMembers = (habitID, page, toShow) => {
+        axios.get(`https://glf-api.herokuapp.com/api/members/habit/paging?pageNr=${page}&objectsNr=${toShow}&habitID=${habitID}`)
+        .then(res => {
+            this.setState({
+                members: res.data.list,
+                page: res.data.pageNr,
+                pagesAll: res.data.allPages
+            })
+        }).catch(err => console.log(err.response.data.message))
     }
 
     componentDidMount() {
-        axios.get(`https://glf-api.herokuapp.com/api/habits/habit/members?habitID=${this.props.habitID}`)
-            .then(res => {
-                this.setState({
-                    members: res.data
-                })
-            }).catch(err => console.log(err.response.data.message))
-
-    }
-
-    clearSearch = () => {
-        this.setState({
-            search: ''
-        })
-    }
-
-    handleChange = e => {
-        this.setState({
-            [e.target.id]: e.target.value
-        })
+        this.fetchMembers(this.props.habitID, this.state.page, this.state.membersToShow);
     }
 
     banUser = (habitID, userID) => {
@@ -46,17 +46,6 @@ class Members extends Component {
 
         let members = this.state.members;
 
-        if (this.state.search !== '') {
-            members = members.filter(member => {
-                if (member.userLogin != null) {
-                    return member.userLogin.startsWith(this.state.search);
-                }
-                else {
-                    return false;
-                }
-            })
-        }
-
         let foundMembers = false;
         let memberCards = [];
 
@@ -67,13 +56,6 @@ class Members extends Component {
         })
 
         let membersToDisplay = memberCards;
-
-        if (!foundMembers && this.state.search === '') {
-            membersToDisplay = <div>There are no members yet</div>
-        } 
-        else if (!foundMembers && this.state.search !== '') {
-            membersToDisplay = <div>There are no members matching that name</div>
-        }
 
         if (localStorage.getItem('token')) {
             return (
@@ -92,10 +74,25 @@ class Members extends Component {
                 >
                     <div className="members-section row">
                         <h4>Members</h4>
-                        <input id="search" type="text" placeholder="Search user" autoComplete="off" onChange={this.handleChange} />
                         <ul className="collection">
                             {membersToDisplay}
                         </ul>
+                        {this.state.pagesAll > 1 ?
+                        <ReactPaginate
+                            forcePage={this.state.page}
+                            previousLabel={'previous'}
+                            nextLabel={'next'}
+                            breakLabel={'...'}
+                            breakClassName={'break-me'}
+                            pageCount={this.state.pagesAll}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={this.handlePageClick}
+                            containerClassName={'pagination'}
+                            subContainerClassName={'pages-pagination'}
+                            activeClassName={'active-pagination'}
+                            pageClassName={'page-pagination'}
+                        /> : null}
                     </div>
                 </Popup>
             )

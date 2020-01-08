@@ -4,67 +4,57 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import HabitCard from './../../routes/HabitCard/HabitCard'
 import { fetchHabits } from './../../../js/state';
+import ReactPaginate from 'react-paginate';
 
 class BrowseHabits extends Component {
 
   state = {
-      category: "ALL",
       habitCards: [],
-      habitsToShow: 20,
-      habitsSortBy: 'NEWEST'
+      category: "ALL",
+      habitsSortBy: 'Newest',
+      habitsToShow: 16,
+      pageNr: 0
   }
 
   handleHabitCardClicked = id => {
-    this.props.history.push(`/habit/${id}`);
+    this.props.history.push(`/challenge/${id}`);
   }
   
   handleFilter = e => {
-    if(this.state.category !== e.currentTarget.value){
-      this.setState({category: e.currentTarget.value, habitsToShow: 20})
-    }
+    this.setState({category: e.currentTarget.value});
+    this.props.fetchHabits(0, this.state.habitsToShow, e.currentTarget.value, this.state.habitsSortBy);
   }
 
+  handleSort = e => {
+    this.setState({habitsSortBy: e.currentTarget.value});
+    this.props.fetchHabits(0, this.state.habitsToShow, e.currentTarget.value, e.currentTarget.value);
+  }
+
+
+
+  handlePageClick = data => {
+    this.setState({pageNr: data.selected});
+    this.props.fetchHabits(data.selected, this.state.habitsToShow, this.state.category, this.state.habitsSortBy);
+  }
   componentDidMount(){
-    this.props.fetchHabits();
+    this.props.fetchHabits(this.state.pageNr, this.state.habitsToShow, this.state.category, this.state.habitsSortBy);
   }
 
   render() {
     let habitCards = this.props.habits;
 
-    if(this.state.habitsSortBy === 'NEWEST') {
-      habitCards.sort(function(a, b){
-        let keyA = new Date(a.startDate),
-            keyB = new Date(b.startDate);
-        if(keyA > keyB) return -1;
-        if(keyA < keyB) return 1;
-        return 0;
-    });
-    }
-    else if(this.state.habitsSortBy === 'POPULAR'){
-        habitCards.sort(function(a, b){
-          let keyA = a.membersCount,
-              keyB = b.membersCount;  
-          if(keyA > keyB) return -1;
-          if(keyA < keyB) return 1;
-          return 0;
-      });
-    }
-
       let foundHabits = false;
       let habits = []
       habitCards.forEach(habit => {
-
-          if(!habit.private && !habit.finished && (habit.creatorID !== this.props.userLogged) && (this.state.category === 'ALL' || habit.category === this.state.category)){
-          foundHabits = true;
-          habits.push(<HabitCard key={ habit.id } id={ habit.id } title={ habit.title } category={ habit.category } frequency={ habit.frequency } startedOn={ habit.startDate } private={ habit.isPrivate } login={habit.creatorLogin} membersNumber={habit.membersCount} habitCardClicked={ this.handleHabitCardClicked } />)
-          }
+        foundHabits = true;
+        habits.push(<HabitCard key={ habit.id } id={ habit.id } title={ habit.title } category={ habit.category } frequency={ habit.frequency } startedOn={ habit.startDate } private={ habit.isPrivate } login={habit.creatorLogin} membersNumber={habit.membersCount} habitCardClicked={ this.handleHabitCardClicked } />)
       })
 
-        let habitsToDisplay = habits.slice(0, this.state.habitsToShow);
+        let habitsToDisplay = habits;
 
 
       if(!foundHabits){
-     habitsToDisplay = <div className="no-habits"> No challenges were found</div>
+        habitsToDisplay = <div className="no-habits"> No challenges were found</div>
       }
 
 
@@ -85,14 +75,28 @@ class BrowseHabits extends Component {
             <button className={this.state.category === 'FAMILY' ? 'category family-chosen family' : 'category family'} value="FAMILY" onClick={ this.handleFilter }><i className="fas fa-home fa-lg"></i></button>
         </div>
         <div className="browse-habits-navigation-sorting">
-          <button className={this.state.habitsSortBy === 'NEWEST' ? "habit-cards-sort-btn active-habit-cards-sort-btn" : "habit-cards-sort-btn inactive-habit-cards-sort-btn"} onClick={() => this.setState({habitsSortBy: 'NEWEST', habitsToShow: 20})}><i className="far fa-calendar-alt"></i> NEWEST</button>
-          <button className={this.state.habitsSortBy === 'POPULAR' ? "habit-cards-sort-btn active-habit-cards-sort-btn" : "habit-cards-sort-btn inactive-habit-cards-sort-btn"} onClick={() => this.setState({habitsSortBy: 'POPULAR', habitsToShow: 20})}><i className="fas fa-user-friends"></i> POPULAR</button>
+          <button className={this.state.habitsSortBy === 'Newest' ? "habit-cards-sort-btn active-habit-cards-sort-btn" : "habit-cards-sort-btn inactive-habit-cards-sort-btn"} value="Newest" onClick={ this.handleSort }><i className="far fa-calendar-alt"></i> NEWEST</button>
+          <button className={this.state.habitsSortBy === 'Popular' ? "habit-cards-sort-btn active-habit-cards-sort-btn" : "habit-cards-sort-btn inactive-habit-cards-sort-btn"} value="Popular" onClick={ this.handleSort }><i className="fas fa-user-friends"></i> POPULAR</button>
         </div>      
       </div>
       <div className="habit-cards">
           { habitsToDisplay }
       </div>
-      <button className={habitsToDisplay.length < habits.length ? 'show-more-habits-btn' : 'hide-show-more-habits-btn'} onClick={() => this.setState({habitsToShow: this.state.habitsToShow + 20})}>SHOW MORE</button>
+      {this.props.habitsAllPages > 1 ? 
+      <ReactPaginate
+          previousLabel={'previous'}
+          nextLabel={'next'}
+          breakLabel={'...'}
+          breakClassName={'break-me'}
+          pageCount={this.props.habitsAllPages}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={this.handlePageClick}
+          containerClassName={'pagination'}
+          subContainerClassName={'pages-pagination'}
+          activeClassName={'active-pagination'}
+          pageClassName={'page-pagination'}
+        /> : null }
       </section>
     )
   }   
@@ -101,11 +105,13 @@ class BrowseHabits extends Component {
 const mapStateToProps = state => {
   return {
     habits: state.habits,
+    habitsAllPages: state.habitsAllPages,
+    habitsPage: state.habitsPage,
     userLogged: state.userLogged
   }
 }
 const mapDispatchToProps = dispatch => ({
-  fetchHabits: () => dispatch(fetchHabits())
+  fetchHabits: (pageNr, objectsNr, category, sorting) => dispatch(fetchHabits(pageNr, objectsNr, category, sorting))
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BrowseHabits));

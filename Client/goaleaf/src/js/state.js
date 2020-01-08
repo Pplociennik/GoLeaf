@@ -7,31 +7,38 @@ export function fetchUsers() {
       })
 };
 
-export function fetchHabits(){
-  return dispatch => axios.get(`https://glf-api.herokuapp.com/api/habits/all`)
+export function fetchHabits(pageNr, objectsNr, category, sorting){
+  return dispatch => axios.get(`https://glf-api.herokuapp.com/api/habits/all/paging?pageNr=${pageNr}&objectsNr=${objectsNr}&category=${category}&sorting=${sorting}`)
+  //return dispatch => axios.get(`https://glf-api.herokuapp.com/api/habits/all/`)
     .then(res => {
-      dispatch({ type: 'GET_HABITS', payload: res.data});
+      //dispatch({ type: 'GET_HABITS', payload: res.data });
+      dispatch({ type: 'GET_HABITS', payload: res.data.list });
+      dispatch({ type: 'GET_HABITS_ALL_PAGES', payload: res.data.allPages });
+      dispatch({ type: 'GET_HABITS_PAGE', payload: res.data.pageNr });
     })
 };
 
-export function fetchFinishedHabits(userID){
-  return dispatch => axios.get(`https://glf-api.herokuapp.com/api/users/myFinishedHabits?userID=${userID}`)
+export function fetchFinishedHabits(page, toShow, token){
+  return dispatch => axios.get(`https://glf-api.herokuapp.com/api/users/finished/paging?pageNr=${page}&objectsNr=${toShow}&token=${token}`)
     .then(res => {
-      dispatch({ type: 'GET_FINISHED_HABITS', payload: res.data});
+      dispatch({ type: 'GET_FINISHED_HABITS', payload: res.data.list});
+      dispatch({ type: 'GET_FINISHED_HABITS_PAGES', payload: res.data.allPages});
     })
 };
 
-export function fetchUnfinishedHabits(userID){
-  return dispatch => axios.get(`https://glf-api.herokuapp.com/api/users/myUnfinishedHabits?userID=${userID}`)
+export function fetchUnfinishedHabits(page, toShow, token){
+  return dispatch => axios.get(`https://glf-api.herokuapp.com/api/users/unfinished/paging?pageNr=${page}&objectsNr=${toShow}&token=${token}`)
     .then(res => {
-      dispatch({ type: 'GET_UNFINISHED_HABITS', payload: res.data});
+      dispatch({ type: 'GET_UNFINISHED_HABITS', payload: res.data.list});
+      dispatch({ type: 'GET_UNFINISHED_HABITS_PAGES', payload: res.data.allPages});
     })
 };
 
-export function fetchWonHabits(userID){
-  return dispatch => axios.get(`https://glf-api.herokuapp.com/api/users/myWonHabits?userID=${userID}`)
+export function fetchWonHabits(page, toShow, token){
+  return dispatch => axios.get(`https://glf-api.herokuapp.com/api/users/won/paging?pageNr=${page}&objectsNr=${toShow}&token=${token}`)
     .then(res => {
-      dispatch({ type: 'GET_WON_HABITS', payload: res.data});
+      dispatch({ type: 'GET_WON_HABITS', payload: res.data.list});
+      dispatch({ type: 'GET_WON_HABITS_PAGES', payload: res.data.allPages});
     })
 };
 
@@ -49,12 +56,20 @@ export function fetchHabit(habitID){
     })
 };
 
-export function fetchPosts(habitID){
-  return dispatch =>  axios.get(`https://glf-api.herokuapp.com/api/posts/all?token=${localStorage.getItem("token")}&habitID=${habitID}`)
+export function fetchPosts(habitID, pageNr, objectsNr, type){
+  return dispatch =>  axios.get(`https://glf-api.herokuapp.com/api/posts/type/paging?pageNr=${pageNr}&objectsNr=${objectsNr}&habitID=${habitID}&type=${type}`)
     .then(res => {
-      dispatch({ type: 'GET_POSTS', payload: res.data})
+      if(type === "Task"){
+        dispatch({ type: 'GET_POSTS_TASK', payload: res.data.list})
+        dispatch({ type: 'GET_POSTS_TASK_PAGE', payload: res.data.pageNr})
+        dispatch({ type: 'GET_POSTS_TASK_PAGES_ALL', payload: res.data.allPages})
+      } else if (type === "JustText") {
+        dispatch({ type: 'GET_POSTS_TEXT', payload: res.data.list})
+        dispatch({ type: 'GET_POSTS_TEXT_PAGE', payload: res.data.pageNr})
+        dispatch({ type: 'GET_POSTS_TEXT_PAGES_ALL', payload: res.data.allPages})
+      }
     })
-};
+  }
 
 export function deletePost(id){
     return dispatch => dispatch({ type: 'DELETE_POST', payload: id})
