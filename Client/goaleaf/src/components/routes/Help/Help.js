@@ -34,7 +34,7 @@ class Help extends Component {
           <h3 className="help-step-info"><span className="bold-text">once for each user:</span> you can complete this task only once</h3>
           <h3 className="help-step-info"><span className="bold-text">custom:</span> you can specify the recurrence of this task</h3>
         </section>
-        <section className="help-step">
+        <section className="help-step" style={{marginBottom: "40px"}}>
           <h2 className="help-step-header">Check your position in the Leaderboard 🏆</h2>
           <img className="help-step-gif" src={LeaderboardGif} alt="app step"></img>
         </section>
