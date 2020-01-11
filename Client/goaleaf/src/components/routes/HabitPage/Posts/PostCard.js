@@ -133,7 +133,7 @@ class PostCard extends Component {
             .then(res => {
                 window.location.reload();
             })
-            .catch(err => console.log(err))
+            .catch(err => console.log(err.response))
     }
 
     componentDidMount() {
@@ -155,6 +155,14 @@ class PostCard extends Component {
     }
 
     render() {
+        console.log(this.props.postText);
+        console.log(this.props.id);
+        console.log(this.props.currentUserLogin);
+        console.log(this.props.creatorLogin);
+        console.log(this.props.admin);
+        console.log(this.props.postType);
+
+
 
         let finalCommentsToDisplay = [];
 
@@ -266,7 +274,7 @@ class PostCard extends Component {
                     </div>
                     : null}
 
-                {((this.props.currentUserLogin === this.props.creatorLogin || this.props.currentUserLogin === this.props.admin) && !this.props.postType === "Task") ?
+                {((this.props.currentUserLogin === this.props.creatorLogin || this.props.currentUserLogin === this.props.admin) && !(this.props.postType === "Task")) ?
                     <Dropdown trigger={<a href="#!" className='post-card-more-btn dropdown-trigger' data-target={this.props.id}><img src={MoreIcon}></img></a>}>
                         <a className="dropdown-item dropdown-delete" href="#!" onClick={() => this.props.handlePostCardDeleted(this.props.id)}>Delete</a>
                     </Dropdown>

@@ -8,11 +8,11 @@ export function fetchUsers() {
 };
 
 export function fetchHabits(pageNr, objectsNr, category, sorting){
-  return dispatch => axios.get(`https://glf-api.herokuapp.com/api/habits/all/paging?pageNr=${pageNr}&objectsNr=${objectsNr}&category=${category}&sorting=${sorting}`)
-  //return dispatch => axios.get(`https://glf-api.herokuapp.com/api/habits/all/`)
+  //return dispatch => axios.get(`https://glf-api.herokuapp.com/api/habits/all/paging?pageNr=${pageNr}&objectsNr=${objectsNr}&category=${category}&sorting=${sorting}`)
+  return dispatch => axios.get(`https://glf-api.herokuapp.com/api/habits/all/`)
     .then(res => {
-      //dispatch({ type: 'GET_HABITS', payload: res.data });
-      dispatch({ type: 'GET_HABITS', payload: res.data.list });
+      dispatch({ type: 'GET_HABITS', payload: res.data });
+      //dispatch({ type: 'GET_HABITS', payload: res.data.list });
       dispatch({ type: 'GET_HABITS_ALL_PAGES', payload: res.data.allPages });
       dispatch({ type: 'GET_HABITS_PAGE', payload: res.data.pageNr });
     })
