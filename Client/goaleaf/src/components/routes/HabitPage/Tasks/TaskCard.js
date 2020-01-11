@@ -45,7 +45,7 @@ class TaskCard extends Component {
         let date;
 
         if(this.props.frequency === 'Once') {
-            frequency = <span title="This task can be done once" className="task-card-frequency">🔁 once</span>
+            frequency = <span title="This task can be done once" className="task-card-frequency">🔁 once for all users</span>
         }
         else if(this.props.frequency === 'Once4All') {
             frequency = <span title="This task can be done once for each user" className="task-card-frequency">🔁 once for each user</span>
