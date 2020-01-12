@@ -371,17 +371,26 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public HttpStatus pushBachTaskCompletion(Integer taskID) {
-        Task task = taskRepository.getById(taskID);
+    public HttpStatus pushBachTaskCompletion(Integer postID) {
+
+        Post post = postRepository.findById(postID);
+
+        if (!post.getPostType().equals(PostTypes.Task)) {
+            throw new RuntimeException("This post is not a type of \"Task\"!");
+        }
+
+        Task task = taskRepository.getById(post.getTaskID());
         Member member = memberRepository.getByUserID(task.getExecutorID());
 
         member.decreasePoints(task.getPoints());
 
         memberRepository.save(member);
 
-        taskRepository.delete(taskID);
+        taskRepository.delete(task.getId());
 
-        if (taskRepository.getById(taskID) == null) {
+        postRepository.delete(postID);
+
+        if (taskRepository.getById(task.getId()) == null) {
             return HttpStatus.OK;
         }
         return HttpStatus.EXPECTATION_FAILED;
