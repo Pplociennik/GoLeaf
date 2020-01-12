@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import Popup from "reactjs-popup";
 import M from "materialize-css";
+import EditImg from '../../../../assets/edit.png'
 
 class Options extends Component {
 
@@ -42,6 +43,15 @@ class Options extends Component {
         }
     }
 
+    deleteHabit = id => {
+        axios.delete(`https://glf-api.herokuapp.com/api/habits/habit/remove?habitID=${id}&token=${localStorage.getItem("token")}`)
+            .then(res => {
+                this.props.history.push('/');
+                window.location.reload();
+            }
+            ).catch(err => console.log(err.response.data.message))
+    }
+
     componentDidMount() {
         console.log(this.props.canUsersInvite);
         M.AutoInit();
@@ -49,7 +59,7 @@ class Options extends Component {
 
     render() {
     return (
-        <Popup trigger={<button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" ><span>🧩 options</span></button>} modal closeOnDocumentClick
+        <Popup trigger={<img style={{width: "36px", height: "36px"}} alt="edit" src={ EditImg }></img>} modal closeOnDocumentClick
             contentStyle={{
                 maxWidth: '80%',
                 width: '500px',
@@ -89,7 +99,34 @@ class Options extends Component {
                     <option value="false">Only admin</option>
                     <option value="true">All members</option>
                 </select>
-            </div>           
+            </div>
+            <div className="row" style={{display: "flex", justifyContent: "center"}}>
+                <Popup trigger={
+                    <button className="delete-habit-btn">delete challenge</button>
+                    } modal closeOnDocumentClick
+                            contentStyle={{
+                                maxWidth: '80%',
+                                width: '500px',
+                                backgroundColor: '#f2f2f2',
+                                borderRadius: '30px',
+                                border: "none",
+                                minHeight: '200px'
+                            }}
+                            overlayStyle={{
+                                background: "rgb(0,0,0, 0.4)"
+                            }}
+                        >
+                            {close => (
+                            <div className="habit-popup">
+                                <div className="delete-habit-title">Are you sure you want to delete this challenge?</div>
+                                <div className="delete-habit-buttons">
+                                    <button className="delete-habit-btn" onClick={() => this.deleteHabit(this.props.habitID)}>delete</button>
+                                    <button className="delete-habit-back" onClick={close}>back</button>
+                                </div>
+                            </div>
+                            )}
+                    </Popup> 
+            </div>       
         </div>
     </Popup>
     )

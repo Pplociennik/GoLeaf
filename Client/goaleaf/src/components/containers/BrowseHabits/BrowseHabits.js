@@ -3,8 +3,9 @@ import './BrowseHabits.scss'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import HabitCard from './../../routes/HabitCard/HabitCard'
-import { fetchHabits } from './../../../js/state';
-import ReactPaginate from 'react-paginate';
+import { fetchHabits } from './../../../js/state'
+import ReactPaginate from 'react-paginate'
+import LoaderSmall from '../../routes/LoaderSmall/LoaderSmall'
 
 class BrowseHabits extends Component {
 
@@ -27,7 +28,7 @@ class BrowseHabits extends Component {
 
   handleSort = e => {
     this.setState({habitsSortBy: e.currentTarget.value});
-    this.props.fetchHabits(0, this.state.habitsToShow, e.currentTarget.value, e.currentTarget.value);
+    this.props.fetchHabits(0, this.state.habitsToShow, this.state.category, e.currentTarget.value);
   }
 
 
@@ -79,9 +80,11 @@ class BrowseHabits extends Component {
           <button className={this.state.habitsSortBy === 'Popular' ? "habit-cards-sort-btn active-habit-cards-sort-btn" : "habit-cards-sort-btn inactive-habit-cards-sort-btn"} value="Popular" onClick={ this.handleSort }><i className="fas fa-user-friends"></i> POPULAR</button>
         </div>      
       </div>
-      <div className="habit-cards">
-          { habitsToDisplay }
-      </div>
+      {!this.props.habitsLoading ?
+        <div className="habit-cards">
+            { habitsToDisplay }
+        </div>
+      : <LoaderSmall/>}
       {this.props.habitsAllPages > 1 ? 
       <ReactPaginate
           previousLabel={'previous'}
@@ -107,6 +110,7 @@ const mapStateToProps = state => {
     habits: state.habits,
     habitsAllPages: state.habitsAllPages,
     habitsPage: state.habitsPage,
+    habitsLoading: state.habitsLoading,
     userLogged: state.userLogged
   }
 }

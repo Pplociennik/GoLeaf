@@ -57,15 +57,6 @@ class HabitPage extends Component {
 
     }
 
-    deleteHabit = id => {
-        axios.delete(`https://glf-api.herokuapp.com/api/habits/habit/remove?habitID=${id}&token=${localStorage.getItem("token")}`)
-            .then(res => {
-                this.props.history.push('/');
-                window.location.reload();
-            }
-            ).catch(err => console.log(err.response.data.message))
-    }
-
     handleChange = e => {
         e.preventDefault();
         this.setState({
@@ -135,32 +126,9 @@ class HabitPage extends Component {
                                 </div>
                         </div>
                     {isAdmin ?
-                    <Popup trigger={
-                        <span className="habit-card-delete-btn">❌</span>
-                    } modal closeOnDocumentClick
-                            disabled={habit.finished}
-                            contentStyle={{
-                                maxWidth: '80%',
-                                width: '500px',
-                                backgroundColor: '#f2f2f2',
-                                borderRadius: '30px',
-                                border: "none",
-                                minHeight: '200px'
-                            }}
-                            overlayStyle={{
-                                background: "rgb(0,0,0, 0.4)"
-                            }}
-                        >
-                            {close => (
-                            <div className="habit-popup">
-                                <div className="delete-habit-title">Are you sure you want to delete this challenge?</div>
-                                <div className="delete-habit-buttons">
-                                    <button className="delete-habit-btn" onClick={() => this.deleteHabit(habit.id)}>Delete</button>
-                                    <button className="delete-habit-back" onClick={close}>Back</button>
-                                </div>
-                            </div>
-                            )}
-                        </Popup>
+                    <div className="habit-card-delete-btn">
+                        <Options habitID={habit.id} canUsersInvite={habit.canUsersInvite} private={habit.private} category={habit.category} />
+                    </div>
                     : null} 
                     </div>
                     {this.state.userBanned ? <div style={{marginTop: "100px", fontSize: "1.4em"}}>You were kicked from this challenge 🖐</div> : null}
@@ -173,7 +141,6 @@ class HabitPage extends Component {
                             {habit.pointsToWin !== 1001 ? <AddTask habitID={habit.id} isFinished={habit.finished} isAdmin={isAdmin} pointsToWin={habit.pointsToWin}/> : null}
                             {habit.pointsToWin !== 1001 ? <TasksAll habitID={habit.id} isAdmin={isAdmin} isFinished={habit.finished} pointsToWin={habit.pointsToWin}/> : null}
                             <Leaderboard habitID={habit.id} pointsToWin={habit.pointsToWin}/>
-                            {isAdmin ? <Options habitID={habit.id} canUsersInvite={habit.canUsersInvite} private={habit.private} category={habit.category} /> : null}
                         </div>
                     </section> : null}
                     <section className="habit-page-dashboard">

@@ -57,8 +57,8 @@ class Task extends Component {
                             <div className="task-popup">
                                 <div className="delete-task-title">Are you sure you want to delete this task?</div>
                                 <div className="delete-task-buttons">
-                                    <button className="delete-task-btn" onClick={(e) => this.deleteTask(e, this.props.id)}>Delete</button>
-                                    <button className="delete-task-back" onClick={close}>Back</button>
+                                    <button className="delete-task-btn" onClick={(e) => this.deleteTask(e, this.props.id)}>delete</button>
+                                    <button className="delete-task-back" onClick={close}>back</button>
                                 </div>
                             </div>
                             )}

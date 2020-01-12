@@ -107,7 +107,7 @@
 .habit-card-delete-btn {
     position: absolute;
     top: 1em;
-    right: 1em;
+    right: 1.2em;
     background: none;
     border: none;
     font-size: 1.2em;
@@ -147,10 +147,13 @@
         .delete-habit-btn {
             background: #c40b13;
             color: #fff;
+            font-size: 0.4em;
         }
         .delete-habit-back {
             background: $secondary-color;
             color: #fff;
+            font-size: 0.4em;
+
         }
     }
 }
@@ -182,6 +185,19 @@
         max-width: 100%;
         margin-top: 3em;
     }
+}
+
+.delete-habit-btn {
+    background-color: #c40b13;
+    border-radius: 30px;
+    border: none;
+    color: #fff;
+    padding: 9px 18px;
+    font-size: 0.8em;
+    margin-top: 16px;
+}
+.delete-habit-btn:focus{
+    background-color: #c40b13;
 }
 
 .NONE-category {

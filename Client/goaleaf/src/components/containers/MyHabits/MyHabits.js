@@ -9,6 +9,7 @@ import { fetchFinishedHabits } from './../../../js/state';
 import { fetchUnfinishedHabits } from './../../../js/state';
 import { fetchWonHabits } from './../../../js/state';
 import ReactPaginate from 'react-paginate';
+import LoaderSmall from './../../routes/LoaderSmall/LoaderSmall'
 
 class MyHabits extends Component {
 
@@ -38,7 +39,11 @@ class MyHabits extends Component {
         <div>
         <section className="my-habits">
           <h1 className="my-habits-title" >My active challenges</h1>
-          <Habits habitCards={this.props.unfinishedHabits} status="active" />
+          {!this.props.unfinishedHabitsLoading ?
+            <Habits habitCards={this.props.unfinishedHabits} status="active" />
+          : <LoaderSmall/>}
+
+
           {this.props.unfinishedHabitsPages > 1 ?
                         <ReactPaginate
                             previousLabel={'previous'}
@@ -58,7 +63,9 @@ class MyHabits extends Component {
         { this.props.wonHabits.length > 0 ?
           <section className="my-habits">
             <h1 className="my-habits-title" >My won challenges</h1>
-            <Habits habitCards={this.props.wonHabits} status="won" />
+            {!this.props.wonHabitsLoading ?
+              <Habits habitCards={this.props.wonHabits} status="won" />
+            : <LoaderSmall/>}
             {this.props.wonHabitsPages > 1 ?
                         <ReactPaginate
                             previousLabel={'previous'}
@@ -78,7 +85,9 @@ class MyHabits extends Component {
         { this.props.finishedHabits.length > 0 ?
         <section className="my-habits">
           <h1 className="my-habits-title" >My ended challenges</h1>
-          <Habits habitCards={this.props.finishedHabits} status="ended" />
+          {!this.props.finishedHabitsLoading ?
+            <Habits habitCards={this.props.finishedHabits} status="ended" />
+          : <LoaderSmall/>}
           {this.props.finishedHabitsPages > 1 ?
                         <ReactPaginate
                             previousLabel={'previous'}
@@ -108,9 +117,16 @@ const mapStateToProps = state => {
     finishedHabits: state.finishedHabits,
     unfinishedHabits: state.unfinishedHabits,
     wonHabits: state.wonHabits,
+
     finishedHabitsPages: state.finishedHabitsPages,
     unfinishedHabitsPages: state.unfinishedHabitsPages,
     wonHabitsPages: state.wonHabitsPages,
+
+    finishedHabitsLoading: state.unfinishedHabitsLoading,
+    unfinishedHabitsLoading: state.unfinishedHabitsLoading,
+    wonHabitsLoading: state.unfinishedHabitsLoading,
+
+
     userLogged: state.userLogged
 
   }

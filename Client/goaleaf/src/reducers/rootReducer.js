@@ -4,6 +4,7 @@ const initState = {
     userLoggedLogin: null,
 
     habits: [],
+    habitsLoading: true,
     habitsAllPages: 0,
     habitsPage: 0,
 
@@ -14,6 +15,11 @@ const initState = {
     unfinishedHabitsPages: 0,
     wonHabitsPages: 0,
 
+    finishedHabitsLoading: true,
+    unfinishedHabitsLoading: true,
+    wonHabitsLoading: true,
+
+    
     habit: null,
     members: [],
 
@@ -62,6 +68,7 @@ const rootReducer = (state = initState, action) => {
     if(action.type === 'GET_HABITS'){
         return {
             ...state,
+            habitsLoading: false,
             habits: action.payload
           }
     }
@@ -80,6 +87,7 @@ const rootReducer = (state = initState, action) => {
     if(action.type === 'GET_FINISHED_HABITS'){
         return {
             ...state,
+            finishedHabitsLoading: false,
             finishedHabits: action.payload
           }
     }
@@ -92,6 +100,7 @@ const rootReducer = (state = initState, action) => {
     if(action.type === 'GET_UNFINISHED_HABITS'){
         return {
             ...state,
+            unfinishedHabitsLoading: false,
             unfinishedHabits: action.payload
           }
     }
@@ -104,6 +113,7 @@ const rootReducer = (state = initState, action) => {
     if(action.type === 'GET_WON_HABITS'){
         return {
             ...state,
+            wonHabitsLoading: false,
             wonHabits: action.payload
           }
     }
