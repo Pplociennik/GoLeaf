@@ -17,9 +17,19 @@ class App extends Component {
   componentDidMount() {
     axios.post('https://glf-api.herokuapp.com/validatetoken', {
         "Token": localStorage.getItem('token')
-      }).then(res => { this.props.validateUser() }
+      }).then(res => { 
+        this.props.validateUser() 
+        this.generateDefaultData()
+      }
       ).catch(err => { this.props.invalidateUser()})
   }
+
+  generateDefaultData() {
+    axios.get('https://glf-api.herokuapp.com/')
+    .then(res => { console.log(res.data) }
+    ).catch(err => { console.log(err.response) })
+  }
+
   render() {
     if(this.props.isLoading){
       return(

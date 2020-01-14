@@ -10,7 +10,9 @@ class Options extends Component {
     msg: null,
     prizePoints: 0,
     canUserInvite: this.props.canUsersInvite,
-    private: this.props.private
+    private: this.props.private,
+    title: this.props.title,
+    allowDiscussion: this.props.allowDiscussion
   }
 
   changeInvitationPermissions = (e, id) => {
@@ -18,6 +20,14 @@ class Options extends Component {
         .then(res => {
             window.location.reload();
             //this.setState({canUserInvite: e.target.value});
+        }
+        ).catch(err => console.log(err.response.data.message))
+    }
+
+    changeTitle = (e, id) => {
+        axios.put(`https://glf-api.herokuapp.com/api/habits/name/change?habitID=${id}&newName=${this.state.title}`)
+        .then(res => {
+            window.location.reload();
         }
         ).catch(err => console.log(err.response.data.message))
     }
@@ -43,6 +53,16 @@ class Options extends Component {
         }
     }
 
+    setAllowDiscussion = (e, id) => {
+        if(e.target.value !== this.state.allowDiscussion) {
+            axios.put(`https://glf-api.herokuapp.com/api/habits/discussion/change?habitID=${id}`)
+            .then(res => {
+                window.location.reload();
+            }
+            ).catch(err => console.log(err.response.data.message))
+        }
+    }
+
     deleteHabit = id => {
         axios.delete(`https://glf-api.herokuapp.com/api/habits/habit/remove?habitID=${id}&token=${localStorage.getItem("token")}`)
             .then(res => {
@@ -51,6 +71,12 @@ class Options extends Component {
             }
             ).catch(err => console.log(err.response.data.message))
     }
+
+    handleChange = e => {
+        this.setState({
+          [e.target.id]: e.target.value
+        })
+      }
 
     componentDidMount() {
         console.log(this.props.canUsersInvite);
@@ -72,6 +98,11 @@ class Options extends Component {
             }}
         >
         <div className="add-task-box">
+        <div className="row">
+                <p>Change title</p>
+                <input type="text" id="title" placeholder={this.props.title} className="browser-default" onChange={ this.handleChange } maxLength="49"/>
+                <button className="browser-default" onClick={(e) => this.changeTitle(e, this.props.habitID)}>Change title</button>
+        </div>
         <div className="row">
                 <p>Change category</p>
                 <select defaultValue={this.props.category} className="browser-default" onChange={(e) => this.setHabitCategory(e, this.props.habitID)}>
@@ -98,6 +129,13 @@ class Options extends Component {
                 <select defaultValue={this.props.canUsersInvite} className="browser-default" onChange={(e) => this.changeInvitationPermissions(e, this.props.habitID)}>
                     <option value="false">Only admin</option>
                     <option value="true">All members</option>
+                </select>
+            </div>
+            <div className="row">
+                <p>Is discussion allowed</p>
+                <select defaultValue={this.props.allowDiscussion} className="browser-default" onChange={(e) => this.setAllowDiscussion(e, this.props.habitID)}>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
                 </select>
             </div>
             <div className="row" style={{display: "flex", justifyContent: "center"}}>

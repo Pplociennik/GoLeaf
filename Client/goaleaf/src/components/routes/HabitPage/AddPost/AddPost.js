@@ -93,6 +93,7 @@ class AddPost extends Component {
                     <li className="post-tab tab col s6 l4 offset-s1 offset-l2"><a  href="#post" onClick={ this.showPosts }>discussion</a></li>
                 </ul>
             </div>
+            {this.props.allowDiscussion || this.props.isAdmin ?
             <div id="post" className="col s10 offset-s1 m8 offset-m2">
                 <form className="" onSubmit={ this.handleAddPost }>
                     <div className="">
@@ -110,7 +111,7 @@ class AddPost extends Component {
                         </div>
                     </div>
                 </form>
-            </div>
+            </div> : <div id="post" className="col s10 offset-s1 m8 offset-m2">Adding new posts to this challenge has been locked by challenge administrator</div>}
             <div id="achievement" className="col s10 offset-s1 m8 offset-m2">
                 {tasksToShow}
             </div>
