@@ -43,8 +43,6 @@ const rootReducer = (state = initState, action) => {
     }
     const tokenData = parseJwt(action.token);
 
-
-    console.log(action)
     if(action.type === 'VALIDATE_USER'){
         return {
             ...state,

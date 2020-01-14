@@ -1,5 +1,4 @@
 import React from 'react'
-import TempPic from './../../../../assets/default-profile-pic.png'
 import Popup from "reactjs-popup"
 import './Members.scss'
 

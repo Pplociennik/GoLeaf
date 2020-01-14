@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
-import Popup from "reactjs-popup"
 import TaskCard from './TaskCard'
 import './TaskCard.scss';
 import ReactPaginate from 'react-paginate';
@@ -41,7 +40,6 @@ class Tasks extends Component {
         let tasks = this.state.tasks;
         tasks.reverse();
         tasks.sort((b, a) => (a.active > b.active) ? 1 : ((b.active > a.active) ? -1 : 0));
-        console.log(tasks);
 
 
         let foundTasks = false;
@@ -57,7 +55,7 @@ class Tasks extends Component {
         let tasksToDisplay = taskCards;
 
         if (!foundTasks) {
-            tasksToDisplay = <li style={{display: 'flex', justifyContent: 'center', marginTop: '60px'}}>There are no tasks yet 🤷‍♂️</li>
+            tasksToDisplay = <li style={{display: 'flex', justifyContent: 'center', marginTop: '60px'}}>There are no tasks yet <span role="img" aria-label="icon">🤷‍♂️</span></li>
         } 
 
         if (localStorage.getItem('token')) {

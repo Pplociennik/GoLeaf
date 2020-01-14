@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import './Task.scss';
 import axios from 'axios';
-import { Dropdown } from 'react-materialize';
-import MoreIcon from './../../../../assets/more.png';
 import Popup from "reactjs-popup"
 
 class Task extends Component {
@@ -17,11 +15,11 @@ class Task extends Component {
     render() {
         let frequency;
         if(this.props.frequency === 'Once') {
-            frequency = <span title="This task can be done once" className="task-card-frequency">🔁 once for all users</span>
+            frequency = <span title="This task can be done once" className="task-card-frequency"><span role="img" aria-label="icon">🔁</span> once for all users</span>
         } else if(this.props.frequency === 'Once4All') {
-            frequency = <span title="This task can be done once for each user" className="task-card-frequency">🔁 once for each user</span>
+            frequency = <span title="This task can be done once for each user" className="task-card-frequency"><span role="img" aria-label="icon">🔁</span> once for each user</span>
         } else {
-            frequency = <span title="Task recurrence" className="task-card-frequency">🔁 every {this.props.days} {this.props.days === 1 ? 'day' : 'days'}</span>
+            frequency = <span title="Task recurrence" className="task-card-frequency"><span role="img" aria-label="icon">🔁</span> every {this.props.days} {this.props.days === 1 ? 'day' : 'days'}</span>
         }
 
             return (
@@ -38,7 +36,7 @@ class Task extends Component {
                         <div className="task-points">+{this.props.points}</div> 
                 {this.props.isAdmin ?
                     <Popup trigger={
-                        <button className={!this.props.isFinished ? "task-card-delete-btn" : "hide"}>❌</button>
+                        <button className={!this.props.isFinished ? "task-card-delete-btn" : "hide"}><span role="img" aria-label="icon">❌</span></button>
                     } modal closeOnDocumentClick
                             disabled={this.props.isFinished}
                             contentStyle={{

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { changeDateFormat1 } from '../../../../js/helpers'
 import './PostCard.scss'
-import TempPic from './../../../../assets/default-profile-pic.png'
 import { Dropdown } from 'react-materialize'
 import MoreIcon from './../../../../assets/more.png'
 import ClapIcon from './../../../../assets/clap.png'
@@ -11,6 +10,7 @@ import TtdIcon from './../../../../assets/ttd.png'
 import axios from 'axios';
 import CommentCard from './Comments/CommentCard'
 import ReactPaginate from 'react-paginate';
+import LoaderSmall from '../../LoaderSmall/LoaderSmall'
 
 class PostCard extends Component {
 
@@ -27,7 +27,9 @@ class PostCard extends Component {
         pagesAll: 0,
         showComments: false,
         commentsToShow: 8,
-        comment: ''
+        comment: '',
+
+        commentsLoading: true
     }
 
     handlePageClick = data => {
@@ -47,28 +49,27 @@ class PostCard extends Component {
             this.setState({
                 reactions: res.data
             })
-            console.log(res.data)
         }).catch(err => console.log(err))
     }
 
     handleCommentCardDeleted = (id) => {
         axios.delete(`https://glf-api.herokuapp.com/api/comments/remove?id=${id}`)
             .then(res => {
-                console.log(`Deleted comment ${id}`);
                     let comments = this.state.comments.filter( comment => {
                             return comment.id !== id;
                     })
                     this.setState({
                         comments: comments
                     })
-                if(this.state.pageNr > 0 && this.state.comments.length === 0){
-                    this.showComments(this.state.pageNr - 1, this.state.commentsToShow, this.props.id);
-                }
+                    if(this.state.pageNr > 0 && this.state.comments.length === 0){
+                        this.showComments(this.state.pageNr - 1, this.state.commentsToShow, this.props.id);
+                    }
             }).catch(err => { console.log(err) })
 
     }
 
     addComment = e => {
+
         e.preventDefault();
         this.clearMsg();
         axios.post('https://glf-api.herokuapp.com/api/comments/addcomment', {
@@ -84,12 +85,15 @@ class PostCard extends Component {
     }
 
     showCommentsBtnPress = () => {
+
+        this.setState({commentsLoading: true});
         axios.get(`https://glf-api.herokuapp.com/api/comments/post/paging?pageNr=${0}&objectsNr=${this.state.commentsToShow}&postID=${this.props.id}`)
         .then(res => {
             this.setState({
                 comments: res.data.list,
                 pageNr: res.data.pageNr,
-                pagesAll: res.data.allPages
+                pagesAll: res.data.allPages,
+                commentsLoading: false
             })
             this.showComments(this.state.pagesAll - 1, this.state.commentsToShow, this.props.id);
         }).catch(err => console.log(err))
@@ -101,12 +105,15 @@ class PostCard extends Component {
     }
 
     showComments = (page, objectsNr, postID) => {
+
+        this.setState({commentsLoading: true});
         axios.get(`https://glf-api.herokuapp.com/api/comments/post/paging?pageNr=${page}&objectsNr=${objectsNr}&postID=${postID}`)
             .then(res => {
                 this.setState({
                     comments: res.data.list,
                     pageNr: res.data.pageNr,
-                    pagesAll: res.data.allPages
+                    pagesAll: res.data.allPages,
+                    commentsLoading: false
                 })
             }).catch(err => console.log(err))
 
@@ -128,8 +135,7 @@ class PostCard extends Component {
     }
 
     handleTaskDeleted = (id) => {
-        console.log("Delete task")
-        axios.delete(`https://glf-api.herokuapp.com/api/tasks/task/pushback?taskID=${id}`)
+        axios.delete(`https://glf-api.herokuapp.com/api/tasks/task/pushback?postID=${id}`)
             .then(res => {
                 window.location.reload();
             })
@@ -142,7 +148,7 @@ class PostCard extends Component {
                 res ? this.setState({ userReaction: res.data.type.toUpperCase() })
                     : this.setState({ userReaction: null })
             })
-            .catch(err => console.log(err))
+            .catch(err => {})
 
         this.setState({
             reactions: {
@@ -155,14 +161,6 @@ class PostCard extends Component {
     }
 
     render() {
-        console.log(this.props.postText);
-        console.log(this.props.id);
-        console.log(this.props.currentUserLogin);
-        console.log(this.props.creatorLogin);
-        console.log(this.props.admin);
-        console.log(this.props.postType);
-
-
 
         let finalCommentsToDisplay = [];
 
@@ -246,9 +244,11 @@ class PostCard extends Component {
                 </div>
                 {this.state.showComments ?
                     <div className="comments-con">
-                        <ul className="comments row">
-                            {finalCommentsToDisplay}
-                        </ul>
+                        {!this.state.commentsLoading ?
+                            <ul className="comments row">
+                                {finalCommentsToDisplay}
+                            </ul>
+                        : <LoaderSmall/>}
                         {this.state.pagesAll > 1 ?
                         <ReactPaginate
                             forcePage={this.state.pagesAll - 1}
@@ -275,12 +275,12 @@ class PostCard extends Component {
                     : null}
 
                 {((this.props.currentUserLogin === this.props.creatorLogin || this.props.currentUserLogin === this.props.admin) && !(this.props.postType === "Task")) ?
-                    <Dropdown trigger={<a href="#!" className='post-card-more-btn dropdown-trigger' data-target={this.props.id}><img src={MoreIcon}></img></a>}>
+                    <Dropdown trigger={<a href="#!" className='post-card-more-btn dropdown-trigger' data-target={this.props.id}><img src={MoreIcon} alt="more"></img></a>}>
                         <a className="dropdown-item dropdown-delete" href="#!" onClick={() => this.props.handlePostCardDeleted(this.props.id)}>Delete</a>
                     </Dropdown>
                     : null}
                 {((this.props.currentUserLogin === this.props.creatorLogin || this.props.currentUserLogin === this.props.admin) && this.props.postType === "Task" && !this.props.isFinished) ?
-                <Dropdown trigger={<a href="#!" className='post-card-more-btn dropdown-trigger' data-target={this.props.id}><img src={MoreIcon}></img></a>}>
+                <Dropdown trigger={<a href="#!" className='post-card-more-btn dropdown-trigger' data-target={this.props.id}><img src={MoreIcon} alt="more"></img></a>}>
                     <a className="dropdown-item dropdown-delete" href="#!" onClick={() => this.handleTaskDeleted(this.props.id)}>Delete</a>
                 </Dropdown>
                 : null}

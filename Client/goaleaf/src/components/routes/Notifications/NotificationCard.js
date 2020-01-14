@@ -3,8 +3,6 @@ import { changeDateFormat1 } from '../../../js/helpers'
 
 function NotificationCard(props) {
 
-    console.log(props.url)
-
     return (
         <li className="collection-item">
             <i className="material-icons small">notifications</i>

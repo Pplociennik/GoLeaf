@@ -47,12 +47,12 @@ class TasksAll extends Component {
         let tasksToDisplay = taskCards;
 
         if (!taskCards.length) {
-            tasksToDisplay = <div style={{textAlign: 'center'}}>There are no tasks yet 🤷‍♂️</div>
+            tasksToDisplay = <div style={{textAlign: 'center'}}>There are no tasks yet <span role="img" aria-label="icon">🤷‍♂️</span></div>
         } 
 
         if (localStorage.getItem('token')) {
             return (
-                <Popup trigger={<button className="btn waves-effect waves-light invite-user-btn habit-page-navigation-btn" ><span>✅ tasks</span></button>} modal closeOnDocumentClick
+                <Popup trigger={<button className="btn waves-effect waves-light invite-user-btn habit-page-navigation-btn" ><span role="img" aria-label="icon">✅ tasks</span></button>} modal closeOnDocumentClick
                     contentStyle={{
                         maxWidth: '80%',
                         width: '700px',

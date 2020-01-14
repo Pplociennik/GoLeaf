@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import './Profile.scss'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import TempPic from './../../../assets/default-profile-pic.png'
 import Resizer from 'react-image-file-resizer';
 
 class Profile extends Component {
@@ -109,7 +107,7 @@ class Profile extends Component {
             "token": localStorage.getItem("token"),
             "userID": this.props.userLogged
         })
-            .then(res => { console.log(res);
+            .then(res => { 
                            this.setState({notifications: res.data.notifications})
             }
             ).catch(err => console.log(err.response.data.message))
@@ -118,7 +116,6 @@ class Profile extends Component {
     componentDidMount() {
         axios.get(`https://glf-api.herokuapp.com/api/users/user/${this.props.userLogged}`)
             .then(res => {
-                console.log(res.data)
                 this.setState({
                     username: res.data.username,
                     emailAddress: res.data.emailAddress,

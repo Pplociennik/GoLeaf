@@ -9,12 +9,12 @@ function HabitCard(props) {
           <h2 className="habit-card-title">{props.title}</h2>
           <div className="habit-card-info-con">
             <div className="habit-card-info">
-              <h3 className="habit-card-info started-date">📆 {changeDateFormat(props.startedOn)}</h3>
-              <h3 className="habit-card-info created-by">🙍‍ {props.login}</h3>
-              <h3 className="habit-card-info privacy">🔒 {props.private ? 'Private' : 'Public'}</h3>
+              <h3 className="habit-card-info started-date"><span role="img" aria-label="icon">📆</span>{changeDateFormat(props.startedOn)}</h3>
+              <h3 className="habit-card-info created-by"><span role="img" aria-label="icon">🙍‍</span> {props.login}</h3>
+              <h3 className="habit-card-info privacy"><span role="img" aria-label="icon">🔒</span> {props.private ? 'Private' : 'Public'}</h3>
             </div>
             <div className="habit-card-info-right">
-              <h3 className="habit-card-info members-number">👪 {props.membersNumber}</h3>
+              <h3 className="habit-card-info members-number"><span role="img" aria-label="icon">👪</span> {props.membersNumber}</h3>
             </div>
           </div>
 
