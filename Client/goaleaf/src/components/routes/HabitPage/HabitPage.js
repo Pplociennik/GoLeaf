@@ -127,7 +127,7 @@ class HabitPage extends Component {
                         </div>
                     {isAdmin ?
                     <div className="habit-card-delete-btn">
-                        <Options habitID={habit.id} canUsersInvite={habit.canUsersInvite} private={habit.private} category={habit.category} />
+                        <Options habitID={habit.id} canUsersInvite={habit.canUsersInvite} private={habit.private} category={habit.category} title={habit.title} allowDiscussion={habit.allowDiscussion} />
                     </div>
                     : null} 
                     </div>
@@ -144,7 +144,7 @@ class HabitPage extends Component {
                         </div>
                     </section> : null}
                     <section className="habit-page-dashboard">
-                        {userIsMember ? <AddPost habitID = { habit.id } admin={habit.creatorLogin} user={this.props.userLogged} isFinished={habit.finished} pointsToWin={habit.pointsToWin} winner={habit.winner} isAdmin={isAdmin}/> : null}
+                        {userIsMember ? <AddPost habitID = { habit.id } admin={habit.creatorLogin} isAdmin={isAdmin} user={this.props.userLogged} isFinished={habit.finished} pointsToWin={habit.pointsToWin} winner={habit.winner} isAdmin={isAdmin} allowDiscussion={habit.allowDiscussion}/> : null}
                     </section>
                 </div>
             )
