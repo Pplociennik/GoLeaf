@@ -12,6 +12,7 @@ import com.goaleaf.entities.viewModels.accountsAndAuthorization.LoginViewModel;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.RegisterViewModel;
 import com.goaleaf.entities.viewModels.habitsCreating.HabitViewModel;
 import com.goaleaf.entities.viewModels.habitsManaging.postsCreating.NewPostViewModel;
+import com.goaleaf.repositories.HabitRepository;
 import com.goaleaf.repositories.UserRepository;
 import com.goaleaf.services.HabitService;
 import com.goaleaf.services.PostService;
@@ -45,6 +46,8 @@ public class MainController {
     private PostService postService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private HabitRepository habitRepository;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String generateModel() {
@@ -121,7 +124,7 @@ public class MainController {
         newHabit.setTitle("Let's meet Goaleaf! 🙆‍♂️");
         createdHabit = habitService.createNewHabit(newHabit);
 
-        FIRST_HABIT_ID = habitService.findByTitle(createdHabit.getTitle()).getId();
+        FIRST_HABIT_ID = habitRepository.findByHabitStartDate(newHabit.getStartDate()).getId();
 
         habitService.changeDiscussionPermissions(FIRST_HABIT_ID);
         habitService.setPointsToWin(FIRST_HABIT_ID, 7);
