@@ -93,7 +93,7 @@ public class HabitServiceImpl implements HabitService {
             input = habitRepository.findAll();
         }
 
-        Iterable<HabitDTO> dtos = (List<HabitDTO>) convertManyToDTOs(input, true);
+        Iterable<HabitDTO> dtos = convertManyToDTOs(input, true);
 
         List<HabitDTO> sortedList = new ArrayList<>(0);
 
