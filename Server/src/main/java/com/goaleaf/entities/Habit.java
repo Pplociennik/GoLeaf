@@ -1,13 +1,10 @@
 package com.goaleaf.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.goaleaf.entities.enums.Category;
 import com.goaleaf.entities.enums.Frequency;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "habits")
@@ -17,30 +14,29 @@ public class Habit {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column
     private String habitTitle;
 
-    @Column
     private Date habitStartDate;
 
-    @Column
     private Category category;
 
-    @Column
     private Frequency frequency;
 
-//    @Column
-//    @OneToMany(mappedBy = "habits")
-//    private Set<Member> members;
-
-    @Column
     private Boolean isPrivate;
 
-    @Column
     private Integer creatorID;
 
-    @Column
     private String creatorLogin;
+
+    private Integer pointsToWIn;
+
+    private String winner;
+
+    private Boolean finished;
+
+    private Boolean canUsersInvite;
+
+    private Boolean allowDiscussion;
 
     public Habit() {
     }
@@ -120,5 +116,45 @@ public class Habit {
 
     public void setCreatorLogin(String creatorLogin) {
         this.creatorLogin = creatorLogin;
+    }
+
+    public Integer getPointsToWIn() {
+        return pointsToWIn;
+    }
+
+    public void setPointsToWIn(Integer pointsToWIn) {
+        this.pointsToWIn = pointsToWIn;
+    }
+
+    public String getWinner() {
+        return winner;
+    }
+
+    public void setWinner(String winner) {
+        this.winner = winner;
+    }
+
+    public Boolean getFinished() {
+        return finished;
+    }
+
+    public void setFinished(Boolean finished) {
+        this.finished = finished;
+    }
+
+    public Boolean getCanUsersInvite() {
+        return canUsersInvite;
+    }
+
+    public void setCanUsersInvite(Boolean canUsersInvite) {
+        this.canUsersInvite = canUsersInvite;
+    }
+
+    public Boolean getAllowDiscussion() {
+        return allowDiscussion;
+    }
+
+    public void setAllowDiscussion(Boolean allowDiscussion) {
+        this.allowDiscussion = allowDiscussion;
     }
 }

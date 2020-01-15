@@ -35,7 +35,7 @@
         align-items: center;
         opacity: 0.8;
         .habit-card-info {
-            margin: 0;
+            margin: 3px 0;
             font-size: 1em;
             font-weight: 400;
         }
@@ -122,4 +122,17 @@
 .habit-card:hover {
     box-shadow: 6px 6px 10px 0px rgba(51,51,51,0.2);
     transform: scale(1.07);
+}
+
+.habit-card-ended {
+    opacity: 0.6;
+}
+
+.habit-card-won {
+    border-left: 10px solid #CAC531;
+}
+.habit-card-won:hover {
+    background: #CAC531;
+    background: -webkit-linear-gradient(to right, #CAC531, #F3F9A7);
+    background: linear-gradient(to right, #CAC531, #F3F9A7);
 }

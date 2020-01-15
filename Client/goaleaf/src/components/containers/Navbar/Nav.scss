@@ -19,11 +19,16 @@
     justify-content: center;
     
     .nav-item {
-        margin-bottom: 4em;
+        margin-bottom: 2em;
+    }
+    .nav-item-profile {
+        display: flex;
     }
     a {
         color: $text-color;
         font-size: 2em;
+        font-weight: 500;
+        letter-spacing: 1px;
         text-decoration: none;
     }
     a:hover {
@@ -37,7 +42,7 @@
         flex-direction: row;
 
         .nav-item {
-            margin: 0 2em 0 0;
+            margin: 0 1.2em 0 0;
         }
         a {
             font-size: 1em;

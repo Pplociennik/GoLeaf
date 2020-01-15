@@ -2,51 +2,56 @@ package com.goaleaf.controllers;
 
 import com.goaleaf.entities.Comment;
 import com.goaleaf.entities.DTO.CommentDTO;
+import com.goaleaf.entities.DTO.pagination.CommentPageDto;
+import com.goaleaf.entities.Stats;
 import com.goaleaf.entities.viewModels.habitsManaging.postsManaging.commentsCreating.AddCommentViewModel;
 import com.goaleaf.entities.viewModels.habitsManaging.postsManaging.commentsManaging.EditCommentViewModel;
 import com.goaleaf.services.CommentService;
 import com.goaleaf.services.PostService;
+import com.goaleaf.services.StatsService;
 import com.goaleaf.validators.exceptions.habitsProcessing.postsProcessing.PostNotFoundException;
 import com.goaleaf.validators.exceptions.habitsProcessing.postsProcessing.commentsProcessing.CommentNotFoundException;
 import com.goaleaf.validators.exceptions.habitsProcessing.postsProcessing.commentsProcessing.EmptyCommentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 @RestController
 @RequestMapping(value = "/api/comments")
-@CrossOrigin(origins = "http://localhost:3000")
 public class CommentController {
 
     @Autowired
     private CommentService commentService;
     @Autowired
     private PostService postService;
+    @Autowired
+    private StatsService statsService;
 
     @RequestMapping(value = "/addcomment", method = RequestMethod.POST)
     public CommentDTO addComment(@RequestBody AddCommentViewModel model) {
 
-        if (postService.findOneByID(model.postID) == null)
+        if (postService.findOneByID(model.getPostID()) == null)
             throw new PostNotFoundException("Post not found");
-        if (model.text.isEmpty())
+        if (model.getText().trim().isEmpty())
             throw new EmptyCommentException("Comment cannot be empty!");
 
-        Comment comment = new Comment();
-        comment.setCommentText(model.text);
-        comment.setPostID(model.postID);
-        comment.setUserID(model.creatorID);
+        CommentDTO commentDTO = commentService.addNewComment(model);
 
-        commentService.addNewComment(comment);
-
-        CommentDTO commentDTO = new CommentDTO();
-        commentDTO.creatorID = model.creatorID;
-        commentDTO.postID = model.postID;
-        commentDTO.text = model.text;
+        Stats stats = statsService.findStatsByDate(new Date());
+        if (stats == null) {
+            stats = new Stats();
+        }
+        stats.increaseCommentedPosts();
+        statsService.save(stats);
 
         return commentDTO;
     }
 
     @RequestMapping(value = "/getcomments", method = RequestMethod.GET)
-    public Iterable<Comment> getAllPostComments(@RequestParam Integer postID) {
+    public Iterable<CommentDTO> getAllPostComments(@RequestParam Integer postID) {
+        if (postService.findOneByID(postID) == null)
+            throw new PostNotFoundException("Post not found!");
         return commentService.listAllByPostID(postID);
     }
 
@@ -55,7 +60,7 @@ public class CommentController {
         commentService.removeById(id);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.GET)
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public void updateComment(@RequestBody EditCommentViewModel model) {
 
         if (commentService.getOneByID(model.commentID) == null)
@@ -65,5 +70,10 @@ public class CommentController {
 
         comment.setCommentText(model.text);
         commentService.updateComment(comment);
+    }
+
+    @GetMapping(value = "/post/paging")
+    public CommentPageDto getAllPostCommentsPaging(@RequestParam Integer pageNr, @RequestParam Integer objectsNr, @RequestParam Integer postID) {
+        return commentService.getAllPostCommentsPaging(pageNr, objectsNr, postID);
     }
 }

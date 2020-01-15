@@ -1,6 +1,7 @@
 package com.goaleaf.controllers;
 
-import com.goaleaf.entities.Notification;
+import com.goaleaf.entities.DTO.NotificationDTO;
+import com.goaleaf.entities.DTO.pagination.NotificationPageDTO;
 import com.goaleaf.services.NotificationService;
 import com.goaleaf.services.UserService;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.AccountNotExistsException;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api/notifications")
-@CrossOrigin(origins = "http://localhost:3000")
 public class NotificationController {
 
     @Autowired
@@ -18,7 +18,7 @@ public class NotificationController {
     private UserService userService;
 
     @RequestMapping(value = "/usersntf", method = RequestMethod.GET)
-    public Iterable<Notification> getAllNotificationsByUserID(@RequestParam Integer userID) throws AccountNotExistsException {
+    public Iterable<NotificationDTO> getAllNotificationsByUserID(@RequestParam Integer userID) throws AccountNotExistsException {
         if (userService.findById(userID) == null)
             throw new AccountNotExistsException("Account does not exist!");
 
@@ -26,12 +26,22 @@ public class NotificationController {
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public Iterable<Notification> getAll() {
+    public Iterable<NotificationDTO> getAll() {
         return notificationService.getAll();
     }
 
     @RequestMapping(value = "/ntf/{id}", method = RequestMethod.DELETE)
     public void deleteFromDatabase(@RequestParam Integer ntfID) {
         notificationService.removeFromDatabaseByID(ntfID);
+    }
+
+    @RequestMapping(value = "/clear", method = RequestMethod.DELETE)
+    public Iterable<NotificationDTO> clearAllUserNotifications(@RequestParam Integer userID) {
+        return notificationService.clearNtf(userID);
+    }
+
+    @GetMapping(value = "/user/paging")
+    public NotificationPageDTO getUserNtfPaging(@RequestParam Integer pageNr, @RequestParam Integer objectsNr, @RequestParam String token) {
+        return notificationService.getUserNtfPaging(pageNr, objectsNr, token);
     }
 }

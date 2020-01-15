@@ -16,16 +16,12 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column
     private Integer recipientID;
 
-    @Column
     private String description;
 
-    @Column
     private Date date;
 
-    @Column
     private String url;
 
     public Notification(Integer recipientID, String description, Date date, String url) {

@@ -24,7 +24,7 @@ class ResetPassword extends Component {
       return;
     }
 
-    axios.post('/api/users/setnewpassword', {
+    axios.post('https://glf-api.herokuapp.com/api/users/setnewpassword', {
       
       "matchingPassword": this.state.password,
       "password": this.state.repeat_password, 

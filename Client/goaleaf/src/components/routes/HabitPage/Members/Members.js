@@ -5,73 +5,59 @@ import axios from 'axios'
 import './Members.scss'
 import Popup from "reactjs-popup"
 import MemberCard from './MemberCard'
+import ReactPaginate from 'react-paginate';
 
 class Members extends Component {
 
     state = {
         members: [],
-        search: ''
+        page: 0,
+        membersToShow: 6,
+        pagesAll: 5
+    }
+
+    handlePageClick = data => {
+        this.fetchMembers(this.props.habitID, data.selected, this.state.membersToShow);
+    }
+
+    fetchMembers = (habitID, page, toShow) => {
+        axios.get(`https://glf-api.herokuapp.com/api/members/habit/paging?pageNr=${page}&objectsNr=${toShow}&habitID=${habitID}`)
+        .then(res => {
+            this.setState({
+                members: res.data.list,
+                page: res.data.pageNr,
+                pagesAll: res.data.allPages
+            })
+        }).catch(err => console.log(err.response.data.message))
     }
 
     componentDidMount() {
-        axios.get(`/api/habits/habit/members?habitID=${this.props.habitID}`)
-            .then(res => {
-                this.setState({
-                    members: res.data
-                })
-            }).catch(err => console.log(err.response.data.message))
-
+        this.fetchMembers(this.props.habitID, this.state.page, this.state.membersToShow);
     }
 
-    clearSearch = () => {
-        this.setState({
-            search: ''
-        })
-    }
-
-    handleChange = e => {
-        this.setState({
-            [e.target.id]: e.target.value
-        })
+    banUser = (habitID, userID) => {
+        axios.post(`https://glf-api.herokuapp.com/api/habits/ban?userID=${userID}&habitID=${habitID}`)
+        .then(res => {
+            window.location.reload()
+        }).catch(err => console.log(err.response.data.message))
     }
 
     render() {
 
         let members = this.state.members;
 
-        if (this.state.search !== '') {
-            members = members.filter(member => {
-                if (member.userLogin != null) {
-                    return member.userLogin.startsWith(this.state.search);
-                }
-                else {
-                    return false;
-                }
-            })
-        }
-
-        let foundMembers = false;
         let memberCards = [];
 
         members.forEach(member => {
-
-            foundMembers = true;
-            memberCards.push(<MemberCard key={member.id} userID={member.userID} userLogin={member.userLogin} profilePic={member.imgName} />)
+            memberCards.push(<MemberCard key={member.id} habitID={this.props.habitID} userID={member.userID} userLogin={member.userLogin} isAdmin={this.props.isAdmin} currentUser={this.props.userLogged} profilePic={member.imageCode} banUser={this.banUser} />)
 
         })
 
         let membersToDisplay = memberCards;
 
-        if (!foundMembers && this.state.search === '') {
-            membersToDisplay = <div>There are no members yet</div>
-        } 
-        else if (!foundMembers && this.state.search !== '') {
-            membersToDisplay = <div>There are no members matching that name</div>
-        }
-
         if (localStorage.getItem('token')) {
             return (
-                <Popup trigger={<button className="btn waves-effect waves-light invite-user-btn habit-page-navigation-btn" ><span>Members</span></button>} modal closeOnDocumentClick
+                <Popup trigger={<button className="btn waves-effect waves-light invite-user-btn habit-page-navigation-btn" ><span role="img" aria-label="icon">👬 Members</span></button>} modal closeOnDocumentClick
                     onOpen={this.clearSearch}
                     contentStyle={{
                         maxWidth: '80%',
@@ -86,10 +72,25 @@ class Members extends Component {
                 >
                     <div className="members-section row">
                         <h4>Members</h4>
-                        <input id="search" type="text" placeholder="Search user" onChange={this.handleChange} />
                         <ul className="collection">
                             {membersToDisplay}
                         </ul>
+                        {this.state.pagesAll > 1 ?
+                        <ReactPaginate
+                            forcePage={this.state.page}
+                            previousLabel={'previous'}
+                            nextLabel={'next'}
+                            breakLabel={'...'}
+                            breakClassName={'break-me'}
+                            pageCount={this.state.pagesAll}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={this.handlePageClick}
+                            containerClassName={'pagination'}
+                            subContainerClassName={'pages-pagination'}
+                            activeClassName={'active-pagination'}
+                            pageClassName={'page-pagination'}
+                        /> : null}
                     </div>
                 </Popup>
             )
@@ -101,9 +102,6 @@ class Members extends Component {
 
 const mapStateToProps = state => {
     return {
-        habits: state.habits,
-        users: state.users,
-        members: state.members,
         userLogged: state.userLogged
     }
 }

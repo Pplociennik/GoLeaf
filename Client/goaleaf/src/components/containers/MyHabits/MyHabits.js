@@ -1,74 +1,108 @@
 import React, { Component } from 'react'
 import './MyHabits.scss'
+import Habits from './Habits/Habits'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import HabitCard from './../../routes/HabitCard/HabitCard'
+import { fetchFinishedHabits } from './../../../js/state';
+import { fetchUnfinishedHabits } from './../../../js/state';
+import { fetchWonHabits } from './../../../js/state';
+import ReactPaginate from 'react-paginate';
+import LoaderSmall from './../../routes/LoaderSmall/LoaderSmall'
 
 class MyHabits extends Component {
 
   state = {
-    habitCards: [],
-    habitsToShow: 20,
-    habitsSortBy: 'NEWEST'
+    habitsToShow: 16
   }
 
-  handleHabitCardClicked = id => {
-    this.props.history.push(`/habit/${id}`);
+  handleUnfinishedHabitsPageClick = data => {
+    this.props.fetchUnfinishedHabits(data.selected, this.state.habitsToShow, localStorage.getItem('token'));
   }
-
-  handleFilter = e => {
-    if (this.state.category !== e.currentTarget.value) {
-      this.setState({ category: e.currentTarget.value, habitsToShow: 20 })
-    }
+  handleFinishedHabitsPageClick = data => {
+    this.props.fetchFinishedHabits(data.selected, this.state.habitsToShow, localStorage.getItem('token'));
+  }
+  handleWonHabitsPageClick = data => {
+    this.props.fetchWonHabits(data.selected, this.state.habitsToShow, localStorage.getItem('token'));
   }
 
   componentDidMount() {
-    this.setState({ habitCards: this.props.habits })
+        this.props.fetchFinishedHabits(0, this.state.habitsToShow, localStorage.getItem('token'));
+        this.props.fetchUnfinishedHabits(0, this.state.habitsToShow, localStorage.getItem('token'));
+        this.props.fetchWonHabits(0, this.state.habitsToShow, localStorage.getItem('token'));
   }
 
   render() {
-
-    let habitCards = this.props.habits;
-
-    habitCards = habitCards.filter(habitCard => habitCard.members.includes(this.props.userLogged));
-
-    habitCards.sort(function (a, b) {
-      let keyA = new Date(a.habitStartDate),
-        keyB = new Date(b.habitStartDate);
-      if (keyA > keyB) return -1;
-      if (keyA < keyB) return 1;
-      return 0;
-    });
-
-
-    let foundHabits = false;
-    let habits = []
-    habitCards.forEach(habit => {
-      foundHabits = true;
-      habits.push(<HabitCard key={habit.id} id={habit.id} title={habit.habitTitle} category={habit.category} frequency={habit.frequency} startedOn={habit.habitStartDate} private={habit.private} login={habit.owner.login} membersNumber={habit.members.length} habitCardClicked={this.handleHabitCardClicked} />)
-
-    })
-
-    let habitsToDisplay = habits.slice(0, this.state.habitsToShow);
-
-
-    if (!foundHabits) {
-      habitsToDisplay = <div className="no-habits"> Join some habits to see them here</div>
-    }
-
-    console.log(habitsToDisplay.length);
-    console.log(habits.length);
-
-    if (localStorage.getItem('token') && foundHabits) {
+    if (localStorage.getItem('token')) {
       return (
+        <div>
         <section className="my-habits">
-          <h1 className="my-habits-title" >My habits</h1>
+          <h1 className="my-habits-title" >My active challenges</h1>
+          {!this.props.unfinishedHabitsLoading ?
+            <Habits habitCards={this.props.unfinishedHabits} status="active" />
+          : <LoaderSmall/>}
 
-          <div className="habit-cards">
-            {habitsToDisplay}
-          </div>
-          <button className={habitsToDisplay.length < habits.length ? 'my-habits-show-more-habits-btn' : 'my-habits-hide-show-more-habits-btn'} onClick={() => this.setState({ habitsToShow: this.state.habitsToShow + 20 })}>SHOW MORE</button>
+
+          {this.props.unfinishedHabitsPages > 1 ?
+                        <ReactPaginate
+                            previousLabel={'previous'}
+                            nextLabel={'next'}
+                            breakLabel={'...'}
+                            breakClassName={'break-me'}
+                            pageCount={this.props.unfinishedHabitsPages}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={this.handleUnfinishedHabitsPageClick}
+                            containerClassName={'pagination'}
+                            subContainerClassName={'pages-pagination'}
+                            activeClassName={'active-pagination'}
+                            pageClassName={'page-pagination'}
+                        /> : null}
         </section>
+        { this.props.wonHabits.length > 0 ?
+          <section className="my-habits">
+            <h1 className="my-habits-title" >My won challenges</h1>
+            {!this.props.wonHabitsLoading ?
+              <Habits habitCards={this.props.wonHabits} status="won" />
+            : <LoaderSmall/>}
+            {this.props.wonHabitsPages > 1 ?
+                        <ReactPaginate
+                            previousLabel={'previous'}
+                            nextLabel={'next'}
+                            breakLabel={'...'}
+                            breakClassName={'break-me'}
+                            pageCount={this.props.wonHabitsPages}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={this.handleWonHabitsPageClick}
+                            containerClassName={'pagination'}
+                            subContainerClassName={'pages-pagination'}
+                            activeClassName={'active-pagination'}
+                            pageClassName={'page-pagination'}
+                        /> : null}
+          </section> : null }
+        { this.props.finishedHabits.length > 0 ?
+        <section className="my-habits">
+          <h1 className="my-habits-title" >My ended challenges</h1>
+          {!this.props.finishedHabitsLoading ?
+            <Habits habitCards={this.props.finishedHabits} status="ended" />
+          : <LoaderSmall/>}
+          {this.props.finishedHabitsPages > 1 ?
+                        <ReactPaginate
+                            previousLabel={'previous'}
+                            nextLabel={'next'}
+                            breakLabel={'...'}
+                            breakClassName={'break-me'}
+                            pageCount={this.props.finishedHabitsPages}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={this.handleFinishedHabitsPageClick}
+                            containerClassName={'pagination'}
+                            subContainerClassName={'pages-pagination'}
+                            activeClassName={'active-pagination'}
+                            pageClassName={'page-pagination'}
+                        /> : null}
+        </section> : null }
+        </div>
       )
     } else {
       return null
@@ -78,12 +112,27 @@ class MyHabits extends Component {
 
 const mapStateToProps = state => {
   return {
-    habits: state.habits,
-    users: state.users,
-    members: state.members,
+    finishedHabits: state.finishedHabits,
+    unfinishedHabits: state.unfinishedHabits,
+    wonHabits: state.wonHabits,
+
+    finishedHabitsPages: state.finishedHabitsPages,
+    unfinishedHabitsPages: state.unfinishedHabitsPages,
+    wonHabitsPages: state.wonHabitsPages,
+
+    finishedHabitsLoading: state.unfinishedHabitsLoading,
+    unfinishedHabitsLoading: state.unfinishedHabitsLoading,
+    wonHabitsLoading: state.unfinishedHabitsLoading,
+
+
     userLogged: state.userLogged
 
   }
 }
+const mapDispatchToProps = dispatch => ({
+  fetchFinishedHabits: (page, toShow, token) => dispatch(fetchFinishedHabits(page, toShow, token)),
+  fetchUnfinishedHabits: (page, toShow, token) => dispatch(fetchUnfinishedHabits(page, toShow, token)),
+  fetchWonHabits: (page, toShow, token) => dispatch(fetchWonHabits(page, toShow, token)),
+})
 
-export default withRouter(connect(mapStateToProps)(MyHabits));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MyHabits));

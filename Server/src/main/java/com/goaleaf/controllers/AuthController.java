@@ -1,19 +1,19 @@
 package com.goaleaf.controllers;
 
 import com.auth0.jwt.JWT;
-import com.goaleaf.entities.DTO.UserDto;
-import com.goaleaf.entities.User;
+import com.goaleaf.entities.DTO.UserDTO;
+import com.goaleaf.entities.Stats;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.AuthorizeViewModel;
-import com.goaleaf.security.EmailNotificationsSender;
-import com.goaleaf.services.servicesImpl.JwtServiceImpl;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.LoginViewModel;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.RegisterViewModel;
+import com.goaleaf.services.StatsService;
 import com.goaleaf.services.UserService;
+import com.goaleaf.services.servicesImpl.JwtServiceImpl;
 import com.goaleaf.validators.UserCredentialsValidator;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.AccountNotExistsException;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.BadCredentialsException;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.EmailExistsException;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.LoginExistsException;
-import com.goaleaf.entities.viewModels.accountsAndAuthorization.LoginViewModel;
-import com.goaleaf.entities.viewModels.accountsAndAuthorization.RegisterViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,7 +29,6 @@ import static com.goaleaf.security.SecurityConstants.EXPIRATION_TIME;
 import static com.goaleaf.security.SecurityConstants.SECRET;
 
 @RestController
-@CrossOrigin(maxAge = 3600)
 public class AuthController {
 
     @Autowired
@@ -40,37 +39,14 @@ public class AuthController {
     private UserCredentialsValidator userCredentialsValidator;
     @Autowired
     private JwtServiceImpl jwtService;
+    @Autowired
+    private StatsService statsService;
 
     @PermitAll
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public UserDto registerUserAccount(@RequestBody RegisterViewModel register) throws EmailExistsException, LoginExistsException, BadCredentialsException, MessagingException {
+    public UserDTO registerUserAccount(@RequestBody RegisterViewModel register) throws EmailExistsException, LoginExistsException, BadCredentialsException, MessagingException {
 
-
-        if (!userCredentialsValidator.isValidEmail(register.emailAddress))
-            throw new BadCredentialsException("Wrong email format!");
-        if (userService.findByEmailAddress(register.emailAddress) != null)
-            throw new BadCredentialsException("Account with email " + register.emailAddress + " address already exists!");
-        if (userService.findByLogin(register.login) != null)
-            throw new LoginExistsException("Account with login " + register.emailAddress + " already exists!");
-        if (!userCredentialsValidator.isPasswordFormatValid(register.password))
-            throw new BadCredentialsException("Password must be at least 6 characters long and cannot contain spaces!");
-        if (!userCredentialsValidator.arePasswordsEquals(register))
-            throw new BadCredentialsException("Passwords are not equal!");
-
-        register.password = (bCryptPasswordEncoder.encode(register.password));
-
-        EmailNotificationsSender sender = new EmailNotificationsSender();
-
-        User user = userService.registerNewUserAccount(register);
-        sender.sayHello(register.emailAddress, register.login);
-
-        UserDto userDto = new UserDto();
-        userDto.login = user.getLogin();
-        userDto.emailAddress = user.getEmailAddress();
-        userDto.password = user.getPassword();
-        userDto.userName = user.getUserName();
-        userDto.imageName = user.getImageName();
-        return userDto;
+        return userService.registerNewUserAccount(register);
 
     }
 
@@ -78,24 +54,28 @@ public class AuthController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(@RequestBody LoginViewModel userModel) throws AccountNotExistsException, BadCredentialsException {
 
-        if (userService.findByLogin(userModel.login) == null) {
-            throw new AccountNotExistsException("Account with this login not exists!");
-        }
-        if (!bCryptPasswordEncoder.matches(userModel.password, userService.findByLogin(userModel.login).getPassword())) {
-            throw new BadCredentialsException("Wrong Password!!");
-        }
+        userService.checkUserCredentials(userModel);
+
         String token = JWT.create()
-                .withSubject(String.valueOf(userService.findByLogin(userModel.login).getId()))
+                .withSubject(String.valueOf(userService.findByLogin(userModel.login).getUserID()))
 //                .withSubject(userService.findByLogin(userModel.login).getLogin())
                 .withClaim("Login", userService.findByLogin(userModel.login).getLogin())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(HMAC512(SECRET.getBytes()));
         jwtService.Validate(token, SECRET);
 
+        Stats stats = statsService.findStatsByDate(new Date());
+        if (stats == null) {
+            stats = new Stats();
+        }
+        stats.increaseLoggedUsers();
+        statsService.save(stats);
+
         return token;
     }
 
     @RequestMapping(value = "/validatetoken", method = RequestMethod.POST)
+    @CrossOrigin
     public HttpStatus validateToken(@RequestBody AuthorizeViewModel model) throws TimeoutException {
         String token = model.Token;
 

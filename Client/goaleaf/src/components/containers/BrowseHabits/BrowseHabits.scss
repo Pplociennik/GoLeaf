@@ -239,7 +239,6 @@
         width: 100%;
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
 
         .no-habits {
             margin: 0 auto;
@@ -276,4 +275,22 @@
     .hide-show-more-habits-btn {
         display: none;
     }
+}
+
+.pagination {
+    margin: 60px auto 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.active-pagination {
+    cursor: pointer;
+    a{
+        background-color: $secondary-color;
+    }
+}
+
+.page-pagination {
+    cursor: pointer;
 }

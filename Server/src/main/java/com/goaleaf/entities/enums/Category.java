@@ -9,5 +9,6 @@ public enum Category {
     SPORT(),
     SOCIAL(),
     FAMILY(),
-    MONEY()
+    MONEY(),
+    ALL()
 }

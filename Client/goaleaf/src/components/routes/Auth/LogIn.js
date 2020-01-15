@@ -24,15 +24,15 @@ class LogIn extends Component {
       return;
     }
 
-    axios.post('/login', {
+    axios.post('https://glf-api.herokuapp.com/login', {
       "Token": "",
       "login": this.state.login,
       "password": this.state.password
     })
     .then(res => {
                   localStorage.setItem('token', res.data);
-                  this.props.history.push('/');
                   window.location.reload();
+                  this.props.history.push('/');
                  }
     ).catch(err => this.setState({errorMsg: err.response.data.message}))
   }
@@ -44,8 +44,8 @@ class LogIn extends Component {
       <div className="auth-container">
       <form className="auth-form" onSubmit={ this.handleSubmit } autoComplete="off">
         <h1 className="auth-title" > Log In </h1> 
-          <input className="auth-input" type="text" id="login" placeholder="login" onChange={ this.handleChange } />
-          <input className="auth-input" type="password" id="password" placeholder="password" onChange={ this.handleChange } />
+          <input className="auth-input" maxLength="30" type="text" id="login" placeholder="login" onChange={ this.handleChange } />
+          <input className="auth-input" maxLength="25" type="password" id="password" placeholder="password" onChange={ this.handleChange } />
         { errorMsg }
           <div className="auth-buttons">
             <input className="auth-btn" type="submit" value="Log in" />

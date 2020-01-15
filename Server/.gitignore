@@ -17,6 +17,9 @@ HELP.md
 *.iml
 *.ipr
 
+### Database ###
+*.db
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

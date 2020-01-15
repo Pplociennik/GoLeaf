@@ -18,35 +18,36 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column
     private Integer habitID;
 
-    @Column
     private String creatorLogin;
 
-    @Column
     private PostTypes postType;
 
-    @Column
+    @Lob
     private String postText;
 
-    @Column
-    private String imgName;
+    @Lob
+    private String imageCode;
 
-    @Column
+    @Lob
+    private String creatorImage;
+
     private Integer counter_CLAPPING;
 
-    @Column
     private Integer counter_WOW;
 
-    @Column
     private Integer counter_NS;
 
-    @Column
     private Integer counter_TTD;
 
-    @Column
     private Date dateOfAddition;
+
+    private String userComment;
+
+    private Integer taskPoints;
+
+    private Integer taskID;
 
 
     public Post() {
@@ -120,16 +121,20 @@ public class Post {
         this.counter_TTD = counter_TTD;
     }
 
-    public String getImgName() {
-        return imgName;
+    public String getImageCode() {
+        return imageCode;
     }
 
-    public void setImgName(String imgName) {
-        this.imgName = imgName;
+    public void setImageCode(String imageCode) {
+        this.imageCode = imageCode;
     }
 
     public String getPostText() {
         return postText;
+    }
+
+    public void setPostText(String postText) {
+        this.postText = postText;
     }
 
     public Date getDateOfAddition() {
@@ -140,7 +145,35 @@ public class Post {
         this.dateOfAddition = dateOfAddition;
     }
 
-    public void setPostText(String postText) {
-        this.postText = postText;
+    public String getUserComment() {
+        return userComment;
+    }
+
+    public void setUserComment(String userComment) {
+        this.userComment = userComment;
+    }
+
+    public Integer getTaskPoints() {
+        return taskPoints;
+    }
+
+    public void setTaskPoints(Integer taskPoints) {
+        this.taskPoints = taskPoints;
+    }
+
+    public Integer getTaskID() {
+        return taskID;
+    }
+
+    public void setTaskID(Integer taskID) {
+        this.taskID = taskID;
+    }
+
+    public String getCreatorImage() {
+        return creatorImage;
+    }
+
+    public void setCreatorImage(String creatorImage) {
+        this.creatorImage = creatorImage;
     }
 }

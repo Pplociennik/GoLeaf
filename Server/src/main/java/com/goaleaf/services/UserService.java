@@ -1,21 +1,23 @@
 package com.goaleaf.services;
 
+import com.goaleaf.entities.DTO.HabitDTO;
+import com.goaleaf.entities.DTO.pagination.HabitPageDTO;
+import com.goaleaf.entities.DTO.UserDTO;
 import com.goaleaf.entities.User;
-
-import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditImageViewModel;
-import com.goaleaf.entities.viewModels.accountsAndAuthorization.EditUserViewModel;
+import com.goaleaf.entities.viewModels.accountsAndAuthorization.*;
+import com.goaleaf.validators.exceptions.accountsAndAuthorization.AccountNotExistsException;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.BadCredentialsException;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.EmailExistsException;
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.LoginExistsException;
-import com.goaleaf.entities.viewModels.accountsAndAuthorization.RegisterViewModel;
-import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.multipart.MultipartFile;
 
-@Service
+import javax.mail.MessagingException;
+import java.io.File;
+
 public interface UserService {
 
-    Iterable<User> listAllUsers();
-
-    User getUserById(Integer id);
+    Iterable<UserDTO> listAllUsers();
 
     User saveUser(User user);
 
@@ -23,18 +25,43 @@ public interface UserService {
 
     Boolean checkIfExists(Integer id);
 
-    Iterable<User> listAllUsersPaging(Integer pageNr, Integer howManyOnPage);
+    UserDTO registerNewUserAccount(RegisterViewModel register) throws EmailExistsException, LoginExistsException, BadCredentialsException, MessagingException;
 
-    User registerNewUserAccount(RegisterViewModel register) throws EmailExistsException, LoginExistsException;
+    UserDTO findByLogin(String user);
 
-    User findByLogin(String user);
+    UserDTO findById(Integer id);
 
-    User findById(Integer id);
-
-    void updateUser(EditUserViewModel model) throws BadCredentialsException;
+    UserDTO updateUser(EditUserViewModel model) throws BadCredentialsException;
 
     void updateUserImage(EditImageViewModel model);
 
-    User findByEmailAddress(String email);
+    UserDTO findByEmailAddress(String email);
 
-    }
+    Iterable<HabitDTO> getUserFinishedHabits(Integer userID);
+
+    Iterable<HabitDTO> getAllMyWonHabits(Integer userID);
+
+    Iterable<HabitDTO> getAllMyUnfinishedHabits(Integer userID);
+
+    void setNewPassword(PasswordViewModel newPasswords) throws BadCredentialsException;
+
+    HttpStatus disableNotifications(ChangeNotificationsViewModel model) throws AccountNotExistsException;
+
+    UserDTO setEmailNotifications(SetEmailNotificationsViewModel model);
+
+    void checkUserCredentials(LoginViewModel userModel) throws AccountNotExistsException, BadCredentialsException;
+
+    File uploadProfileImage(MultipartFile multipartFile, String token);
+
+    File getProfilePicture(Integer userID);
+
+    String getUserImageCode(Integer userID);
+
+    void resetPassword(EmailViewModel model) throws AccountNotExistsException, MessagingException;
+
+    HabitPageDTO getFinishedHabitsPaging(Integer pageNr, Integer objectsNr, String token);
+
+    HabitPageDTO getWonHabitsPaging(Integer pageNr, Integer objectsNr, String token);
+
+    HabitPageDTO getUnFinishedHabitsPaging(Integer pageNr, Integer objectsNr, String token);
+}

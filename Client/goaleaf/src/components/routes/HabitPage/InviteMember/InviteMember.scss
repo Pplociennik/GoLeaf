@@ -8,6 +8,11 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    text-transform: lowercase;
+
+    span {
+        color: $text-color;
+    }
 
     @include md {
         width: 200px;
@@ -26,6 +31,7 @@
     form {
         display: flex;
         flex-direction: column;
+        align-items: center;
 
         #userInvited {
             font-size: 1.6em;
@@ -33,14 +39,17 @@
         }
     }
     .btn {
-        height: 50px;
-        background-color: $secondary-color;
+        width: 90px;
+        background-color: $secondary-color; 
         border-radius: 30px;
-        font-weight: 500;
-        font-size: 1.2em;
+        font-weight: 400;
+        font-size: 1em;
+        letter-spacing: 1px;
+        text-transform: lowercase;
         display: flex;
         justify-content: center;
         align-items: center;
+        letter-spacing: 1px;
         i { margin-right: 10px }
     }
     .input-field input[type=text]:focus + label {

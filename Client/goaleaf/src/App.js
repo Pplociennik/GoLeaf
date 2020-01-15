@@ -5,24 +5,29 @@ import Navbar from './components/containers/Navbar/Navbar';
 import Main from './components/containers/Main/Main';
 import Loader from './components/routes/Loader/Loader'
 import { BrowserRouter } from 'react-router-dom';
-import {fetchHabits} from './index';
-import {fetchUsers} from './index';
-import {fetchMembers} from './index';
-import {isLoaded} from './index';
-import store from './index'
+import {fetchHabits} from './js/state';
+import {isLoaded} from './js/state';
 import { connect } from 'react-redux'
+import axios from 'axios';
 
 class App extends Component {
 
   componentDidMount() {
-    Promise.all([
-    store.dispatch(fetchHabits()),
-    store.dispatch(fetchMembers()),
-    store.dispatch(fetchUsers())
-    ]).then(() => store.dispatch(isLoaded()))
+    axios.get('https://glf-api.herokuapp.com/')
+    .then(res => { this.validateUser() }
+    ).catch(err => { this.validateUser() })
   }
-  render() {
 
+  validateUser() {
+    axios.post('https://glf-api.herokuapp.com/validatetoken', {
+      "Token": localStorage.getItem('token')
+    }).then(res => { 
+      this.props.validateUser() 
+    }
+    ).catch(err => { this.props.invalidateUser()})
+  }
+
+  render() {
     if(this.props.isLoading){
       return(
         <BrowserRouter>
@@ -33,26 +38,6 @@ class App extends Component {
       </BrowserRouter>
       )
     }
-
-    this.props.habits.forEach(habit => {
-      habit.members = [];
-      habit.owner = this.props.users.find(user => habit.creatorID === user.id)
-      if(habit.owner === undefined){
-        habit.owner = {login: 'user deleted'}
-      }
-      this.props.members.forEach(member => {
-        if(habit.id === member.habitID){
-          habit.members.push(member.userID)
-        }
-      })
-    })
-
-
-    this.props.habits.forEach(habit => {
-      habit.membersObj = [];
-      habit.members.forEach(memberId => habit.membersObj.push(this.props.users.find(user => memberId === user.id)
-    ))});
-
     
     return (
       <BrowserRouter>
@@ -68,10 +53,16 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     habits: state.habits,
-    users: state.users,
-    members: state.members,
     isLoading: state.isLoading
   }
 }
 
-export default connect(mapStateToProps, null)(App);
+const mapDispatchToProps = dispatch => ({
+  validateUser: () => dispatch({ type: 'VALIDATE_USER', token: localStorage.getItem('token')}),
+  invalidateUser: () => dispatch({ type: 'INVALIDATE_USER' }),
+  fetchHabits: () => dispatch(fetchHabits()),
+  isLoaded: () => dispatch(isLoaded())
+
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

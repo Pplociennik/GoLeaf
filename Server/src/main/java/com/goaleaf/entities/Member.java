@@ -1,8 +1,6 @@
 package com.goaleaf.entities;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "members")
@@ -12,25 +10,18 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column
     private Integer userID;
 
-    @Column
     private Integer habitID;
 
-    @Column
     private String userLogin;
 
-    @Column
-    private String imgName;
+    @Lob
+    private String imageCode;
 
-//    @Column
-//    @ManyToMany
-//    private Set<Habit> habits;
+    private Integer points;
 
-//    @OneToMany(mappedBy = "members")
-//    @Column
-//    private Set<LeafDate> doneDates;
+    private Boolean banned;
 
     public Member(Integer userID /*, Set<LeafDate> doneDates*/) {
         this.userID = userID;
@@ -38,11 +29,13 @@ public class Member {
     }
 
     public Member() {
+        this.banned = false;
     }
 
     public Member(Integer userID, Integer habitID) {
         this.userID = userID;
         this.habitID = habitID;
+        this.banned = false;
     }
 
     public Integer getId() {
@@ -90,11 +83,35 @@ public class Member {
         this.userLogin = userLogin;
     }
 
-    public String getImgName() {
-        return imgName;
+    public String getImageCode() {
+        return imageCode;
     }
 
-    public void setImgName(String imgName) {
-        this.imgName = imgName;
+    public void setImageCode(String imageCode) {
+        this.imageCode = imageCode;
+    }
+
+    public Integer getPoints() {
+        return points;
+    }
+
+    public void setPoints(Integer points) {
+        this.points = points;
+    }
+
+    public void addPoints(Integer increaseNr) {
+        this.points += increaseNr;
+    }
+
+    public void decreasePoints(Integer decreaseNr) {
+        this.points -= decreaseNr;
+    }
+
+    public Boolean getBanned() {
+        return banned;
+    }
+
+    public void setBanned(Boolean banned) {
+        this.banned = banned;
     }
 }

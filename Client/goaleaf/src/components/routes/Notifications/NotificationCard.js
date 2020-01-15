@@ -1,5 +1,5 @@
 import React from 'react'
-import { changeDateFormat1 } from './../../../functions.js'
+import { changeDateFormat1 } from '../../../js/helpers'
 
 function NotificationCard(props) {
 
@@ -11,7 +11,7 @@ function NotificationCard(props) {
             <span className="ntf-card-info-date">{changeDateFormat1(props.date)}</span>
             </div>
             <div className="ntf-card-btn-con">
-                <a className="btn view-ntf-btn" href={props.url}>View</a>
+                {props.url ? <a className="btn view-ntf-btn" href={props.url}>View</a> : null}
                 <button className="btn delete-ntf-btn" onClick={() => props.handleNtfCardDeleted(props.id, props.url)}>Delete</button>
             </div>
         </li>

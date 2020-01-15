@@ -10,19 +10,19 @@ class NewHabit extends Component {
     startsOn: new Date(),
     category: 'NONE',
     invite: [],
-    private: false,
+    private: true,
     recurrence: 'daily',
-    errorMsg: ''
+    errorMsg: '',
+    disableBtn: false
   }
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state);
-    axios.post('/api/habits/new-habit', {
+    axios.post('https://glf-api.herokuapp.com/api/habits/new-habit', {
 
           "category": this.state.category,
           "frequency": "Daily",
-          "isPrivate": this.state.private,
+          "private": this.state.private,
           "members": [
             {
               "userID": this.props.userLogged
@@ -33,11 +33,11 @@ class NewHabit extends Component {
         }
     )
     .then(res => {
-                  console.log(res);
                   this.props.history.push('/');
-                   window.location.reload();
+                  window.location.reload();
                  }
     ).catch(err => {
+                    this.setState({disableBtn: false});
                     this.setState({errorMsg: err.response.data.message});
                     console.log(err.response.data.message)
      } )
@@ -48,11 +48,13 @@ class NewHabit extends Component {
   }
   handleChangeCategory = e => {
     this.setState({category: e.currentTarget.value})
-
-
   }
   handleChangePrivacy = e => {
     e.currentTarget.value === 'private' ? this.setState({private: true}) : this.setState({private: false});
+  }
+
+  handleDisableBtn = () => {
+    this.setState({disableBtn: true});
   }
 
   render() {
@@ -61,7 +63,7 @@ class NewHabit extends Component {
     return (
       <div className="new-habit">
         <form className="new-habit-form" onSubmit={ this.handleSubmit } autoComplete="off" >
-          <h1 className="new-habit-title">New Habit</h1>
+          <h1 className="new-habit-title">New challenge</h1>
           <input className="new-habit-title-input" type="text" id="title" placeholder="title" onChange={ this.handleChange } maxLength="49" autoFocus />
           <div className="new-habit-categories">
             <button className={this.state.category === 'NONE' ? 'new-habit-category none-chosen none' : ' new-habit-category none'} value="NONE" type="button" onClick={ this.handleChangeCategory }><i className="fas fa-minus fa-lg"></i></button>
@@ -75,10 +77,10 @@ class NewHabit extends Component {
             <button className={this.state.category === 'FAMILY' ? 'new-habit-category family-chosen family' : 'new-habit-category family'} value="FAMILY" type="button" onClick={ this.handleChangeCategory }><i className="fas fa-home fa-lg"></i></button>
           </div>
           <div className="privacy-con">
-            <button className={this.state.private === false ? 'privacy-btn privacy-chosen' : 'privacy-btn'} type="button" value="public" onClick={ this.handleChangePrivacy }><i className="fas fa-lock-open fa-sm"></i> Public</button>
             <button className={this.state.private === true ? 'privacy-btn privacy-chosen' : 'privacy-btn'} type="button" value="private" onClick={ this.handleChangePrivacy }><i className="fas fa-lock fa-sm"></i> Private</button>
+            <button className={this.state.private === false ? 'privacy-btn privacy-chosen' : 'privacy-btn'} type="button" value="public" onClick={ this.handleChangePrivacy }><i className="fas fa-lock-open fa-sm"></i> Public</button>
           </div>
-          <input className="new-habit-submit-btn" type="submit" value="Create habit" />
+          <input className={this.state.disableBtn ? "new-habit-submit-btn disable-btn" : "new-habit-submit-btn"} onClick={ this.handleDisableBtn } type="submit" value="submit" />
           { errorMsg }
         </form>
       </div>
