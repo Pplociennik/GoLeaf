@@ -51,7 +51,7 @@ class AddTask extends Component {
 
     addTaskDays = e => {
         e.preventDefault();
-        if(this.state.days < 14) {
+        if(this.state.days < 30) {
             this.setState({days: this.state.days + 1})
         }
     }
@@ -140,6 +140,7 @@ class AddTask extends Component {
                 <div className="input-field inline">
                     <input id="task" maxLength="60" type="text" placeholder="task description" onChange={ this.handleChange } />
                     <div style={{display: 'flex', justifyContent: 'center', marginTop: '30px'}}>
+                        <span className="set-recurrence-title">Set points</span>
                         <button className="task-points-btn task-points-btn-subtract" onClick={ this.subtractTaskPoint }>-</button>
                         <input title="Set task points between 1 and 10" id="taskPoints" maxLength="2" style={{width: '30px', textDecoration: 'none', textAlign: 'center' }} className="task-points" value={this.state.taskPoints} onChange={(e) => {this.handleChange(e)}}/>
                         <button className="task-points-btn task-points-btn-add" onClick={ this.addTaskPoint }>+</button>
