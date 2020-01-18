@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './Auth.scss'
-import { Link, Redirect} from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios'
 
 class ResetPassword extends Component {
