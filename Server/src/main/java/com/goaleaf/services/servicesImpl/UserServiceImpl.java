@@ -84,15 +84,36 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void removeUser(Integer id) {
-        userRepository.delete(id);
+        //userRepository.delete(id);
+        User user = userRepository.findById(id);
+
+        String token = JWT.create()
+                .withSubject(String.valueOf(id))
+//                .withSubject(userService.findByLogin(userModel.login).getLogin())
+                .withClaim("Login", user.getLogin())
+                .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .sign(HMAC512(SECRET.getBytes()));
+        jwtService.Validate(token, SECRET);
 
         Iterable<Habit> userHabits = habitService.findHabitsByCreatorID(id);
 
         for (Habit habit : userHabits) {
-            memberService.removeSpecifiedMember(habit.getId(), habit.getCreatorID());
-            habit.setCreatorID(null);
-            habit.setCreatorLogin(habit.getCreatorLogin() + "(ACCOUNT_NOT_EXISTS)");
+            habitService.deleteHabit(habit.getId(), token);
         }
+
+        Iterable<Member> memberIn = memberRepository.findAllByUserID(id);
+
+        memberRepository.delete(memberIn);
+
+        Iterable<Post> userPosts = postRepository.findAllByCreatorLogin(user.getLogin());
+        postRepository.delete(userPosts);
+
+        Iterable<Comment> usereComments = commentRepository.findAllByUserID(id);
+        commentRepository.delete(usereComments);
+
+        userRepository.delete(user);
+
+
     }
 
     @Override
@@ -150,7 +171,7 @@ public class UserServiceImpl implements UserService {
             Habit h = habitRepository.findByHabitTitle("Let's meet Goaleaf!");
 
             EmailNotificationsSender esender = new EmailNotificationsSender();
-            esender.createInAppNotification(result.getId(), "GLFAdministrator invited you to challenge \"" + h.getHabitTitle() + "\"", "http://www.goaleaf.com/challenge/" + h.getId(), false);
+            esender.createInAppNotification(result.getId(), "GoaleafAdmin invited you to challenge \"" + h.getHabitTitle() + "\"", "http://www.goaleaf.com/challenge/" + h.getId(), false);
         }
 
         return convertToDTO(result);
@@ -413,7 +434,7 @@ public class UserServiceImpl implements UserService {
         sender.addRecipient(model.emailAddress);
         sender.setSubject("GoaLeaf Password Reset Request");
         sender.setBody("Hello " + findByEmailAddress(model.emailAddress).getLogin() + "!\n\n" +
-                "Here's your confirmation link: http://goaleaf.com/resetpassword/" + resetPasswordToken + "\n\n" +
+                "Here's your confirmation link: https://www.goaleaf.com/resetpassword/" + resetPasswordToken + "\n\n" +
                 "If you have not requested a password reset, ignore this message.\n\n" +
                 "Thank you and have a nice day! :)\n\n" +
                 "GoaLeaf group");

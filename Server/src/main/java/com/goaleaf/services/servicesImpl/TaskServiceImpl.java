@@ -378,7 +378,7 @@ public class TaskServiceImpl implements TaskService {
         }
 
         Task task = taskRepository.getById(post.getTaskID());
-        Member member = memberRepository.getByUserID(task.getExecutorID());
+        Member member = memberRepository.findByHabitIDAndUserID(task.getHabitID(), task.getExecutorID());
 
         member.decreasePoints(task.getPoints());
 
@@ -391,6 +391,7 @@ public class TaskServiceImpl implements TaskService {
         if (taskRepository.getById(task.getId()) == null) {
             return HttpStatus.OK;
         }
+
         return HttpStatus.EXPECTATION_FAILED;
     }
 
