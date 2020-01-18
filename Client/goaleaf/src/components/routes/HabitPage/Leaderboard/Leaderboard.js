@@ -36,14 +36,10 @@ class Leaderboard extends Component {
 
     render() {
 
-        let members = this.state.members;
-
-        let foundMembers = false;
         let memberCards = [];
 
-        Object.keys(this.state.members).map(pos => {
+        Object.keys(this.state.members).forEach(pos => {
 
-            foundMembers = true;
             let member = this.state.members[pos];
 
             let scorePercentage = Math.round(member.points / this.props.pointsToWin * 100);
@@ -56,7 +52,7 @@ class Leaderboard extends Component {
 
         if (localStorage.getItem('token')) {
             return (
-                <Popup trigger={<button className="btn waves-effect waves-light invite-user-btn habit-page-navigation-btn" ><span>⚡ Leaderboard</span></button>} modal closeOnDocumentClick
+                <Popup trigger={<button className="btn waves-effect waves-light invite-user-btn habit-page-navigation-btn" ><span role="img" aria-label="icon">⚡ Leaderboard</span></button>} modal closeOnDocumentClick
                     contentStyle={{
                         maxWidth: '80%',
                         width: '600px',
@@ -71,7 +67,7 @@ class Leaderboard extends Component {
                     <div className="members-section row">
                         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                             <h4>Leaderboard</h4>
-                            <span style={{fontSize: '1.6em'}}>{this.props.pointsToWin}pts 🏁</span>
+                            <span role="img" aria-label="icon" style={{fontSize: '1.6em'}}>{this.props.pointsToWin}pts 🏁</span>
                         </div>
                         <ul className="collection">
                             {membersToDisplay}

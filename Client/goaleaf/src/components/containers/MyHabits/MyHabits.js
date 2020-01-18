@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import './MyHabits.scss'
-import axios from 'axios'
 import Habits from './Habits/Habits'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import HabitCard from './../../routes/HabitCard/HabitCard'
 import { fetchFinishedHabits } from './../../../js/state';
 import { fetchUnfinishedHabits } from './../../../js/state';
 import { fetchWonHabits } from './../../../js/state';

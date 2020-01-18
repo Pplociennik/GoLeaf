@@ -63,7 +63,7 @@ class AddPrize extends Component {
     render() {
         let addPrizeBtn;
     if(this.props.isAdmin){
-    addPrizeBtn = this.props.isFinished ? <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" disabled><span>🏆 set goal</span></button> : <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" ><span>🏆 {this.props.pointsToWin === 0 ? 'set' : 'update'} goal</span></button>
+    addPrizeBtn = this.props.isFinished ? <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" disabled><span role="img" aria-label="icon">🏆 set goal</span></button> : <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" ><span role="img" aria-label="icon">🏆 {this.props.pointsToWin === 0 ? 'set' : 'update'} goal</span></button>
     }
     return (
         <Popup trigger={addPrizeBtn} modal closeOnDocumentClick

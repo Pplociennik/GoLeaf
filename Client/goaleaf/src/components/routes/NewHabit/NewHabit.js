@@ -10,7 +10,7 @@ class NewHabit extends Component {
     startsOn: new Date(),
     category: 'NONE',
     invite: [],
-    private: false,
+    private: true,
     recurrence: 'daily',
     errorMsg: '',
     disableBtn: false
@@ -18,8 +18,6 @@ class NewHabit extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state)
-    console.log(localStorage.getItem('token'))
     axios.post('https://glf-api.herokuapp.com/api/habits/new-habit', {
 
           "category": this.state.category,
@@ -79,8 +77,8 @@ class NewHabit extends Component {
             <button className={this.state.category === 'FAMILY' ? 'new-habit-category family-chosen family' : 'new-habit-category family'} value="FAMILY" type="button" onClick={ this.handleChangeCategory }><i className="fas fa-home fa-lg"></i></button>
           </div>
           <div className="privacy-con">
-            <button className={this.state.private === false ? 'privacy-btn privacy-chosen' : 'privacy-btn'} type="button" value="public" onClick={ this.handleChangePrivacy }><i className="fas fa-lock-open fa-sm"></i> Public</button>
             <button className={this.state.private === true ? 'privacy-btn privacy-chosen' : 'privacy-btn'} type="button" value="private" onClick={ this.handleChangePrivacy }><i className="fas fa-lock fa-sm"></i> Private</button>
+            <button className={this.state.private === false ? 'privacy-btn privacy-chosen' : 'privacy-btn'} type="button" value="public" onClick={ this.handleChangePrivacy }><i className="fas fa-lock-open fa-sm"></i> Public</button>
           </div>
           <input className={this.state.disableBtn ? "new-habit-submit-btn disable-btn" : "new-habit-submit-btn"} onClick={ this.handleDisableBtn } type="submit" value="submit" />
           { errorMsg }

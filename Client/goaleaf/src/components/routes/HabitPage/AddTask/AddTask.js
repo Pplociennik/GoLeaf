@@ -18,7 +18,6 @@ class AddTask extends Component {
     addTask = (e, id) => {
         this.handleDisableBtn();
         e.preventDefault();
-        console.log(this.state.task);
         if (this.state.task !== null && (this.state.taskPoints > 0 && this.state.taskPoints < 11)){
             axios.post('https://glf-api.herokuapp.com/api/tasks/add', {
                 "description": this.state.task,
@@ -32,7 +31,6 @@ class AddTask extends Component {
                 window.location.reload();
             }
             ).catch(err => {
-                console.log(err.response.data.message);
                 this.setState({disableBtn: false});
             })
         }   
@@ -119,7 +117,7 @@ class AddTask extends Component {
 
     let addTaskBtn;
     if(this.props.isAdmin){
-        addTaskBtn = (this.props.isFinished || this.props.pointsToWin === 0) ? <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" disabled><span>🔥 New Task</span></button> : <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn"><span>🔥 New Task</span></button>
+        addTaskBtn = (this.props.isFinished || this.props.pointsToWin === 0) ? <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn" disabled><span role="img" aria-label="icon">🔥 New Task</span></button> : <button className="btn waves-effect waves-light add-task-btn habit-page-navigation-btn"><span role="img" aria-label="icon">🔥 New Task</span></button>
     }
     return (
         <Popup trigger={addTaskBtn} modal closeOnDocumentClick

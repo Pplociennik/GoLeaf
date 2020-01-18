@@ -46,11 +46,9 @@ class Members extends Component {
 
         let members = this.state.members;
 
-        let foundMembers = false;
         let memberCards = [];
 
         members.forEach(member => {
-            foundMembers = true;
             memberCards.push(<MemberCard key={member.id} habitID={this.props.habitID} userID={member.userID} userLogin={member.userLogin} isAdmin={this.props.isAdmin} currentUser={this.props.userLogged} profilePic={member.imageCode} banUser={this.banUser} />)
 
         })
@@ -59,7 +57,7 @@ class Members extends Component {
 
         if (localStorage.getItem('token')) {
             return (
-                <Popup trigger={<button className="btn waves-effect waves-light invite-user-btn habit-page-navigation-btn" ><span>👬 Members</span></button>} modal closeOnDocumentClick
+                <Popup trigger={<button className="btn waves-effect waves-light invite-user-btn habit-page-navigation-btn" ><span role="img" aria-label="icon">👬 Members</span></button>} modal closeOnDocumentClick
                     onOpen={this.clearSearch}
                     contentStyle={{
                         maxWidth: '80%',

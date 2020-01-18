@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom'
 import './HabitPage.scss'
 import InviteMember from './InviteMember/InviteMember'
 import AddTask from './AddTask/AddTask'
@@ -10,13 +9,11 @@ import AddPrize from './AddPrize/AddPrize'
 import Options from './Options/Options'
 import { changeDateFormat1 } from '../../../js/helpers'
 import { fetchHabit } from '../../../js/state'
-import Posts from './Posts/Posts'
-import Tasks from './Tasks/Tasks'
 import Members from './Members/Members'
 import Loader from './../Loader/Loader'
 import Leaderboard from './Leaderboard/Leaderboard'
 import TasksAll from './TasksAll/TasksAll'
-import Popup from "reactjs-popup"
+import LoaderSmall from '../LoaderSmall/LoaderSmall';
 
 class HabitPage extends Component {
 
@@ -25,7 +22,8 @@ class HabitPage extends Component {
         errorMsg: '',
         permissions: false,
         userBanned: false,
-        members: []
+        members: [],
+        joinLoading: true
     }
 
     joinHabit = id => {
@@ -79,23 +77,25 @@ class HabitPage extends Component {
 
         this.props.fetchHabit(this.props.match.params.id);
 
+        this.setState({joinLoading: true});
         axios.get(`https://glf-api.herokuapp.com/api/habits/habit/checkPermissions?userID=${this.props.userLogged}&habitID=${parseInt(this.props.match.params.id)}`)
            .then(res => {
                     this.setState({
                         permissions: res.data
                     })
-            }).catch(err => console.log(err.response.data))
+            }).catch(err => {})
 
         axios.get(`https://glf-api.herokuapp.com/api/habits/habit/members?habitID=${this.props.match.params.id}`)
             .then(res => {
                     this.setState({
-                          members: res.data
+                          members: res.data,
+                          joinLoading: false
                     })
-        }).catch(err => console.log(err.response.data))
+        }).catch(err => this.setState({joinLoading: false}))
     }
 
     render() {
-
+        
         let habit = this.props.habit;
 
         let userIsMember;
@@ -114,15 +114,19 @@ class HabitPage extends Component {
                                 <div className="habit-page-text-con">
                                     <h1 className="habit-page-title">{habit.title}</h1>
                                     <div className="habit-page-info-blocks">
-                                        <div className="habit-page-info-block started-date">📆<span className="date-span">  {changeDateFormat1(habit.startDate)}</span></div>
-                                        <div className="habit-page-info-block created-by">🙍‍ <span> {habit.creatorLogin}</span></div>
-                                        <div className="habit-page-info-block privacy">🔒 <span> {habit.private ? 'Private' : 'Public'}</span></div>
-                                        <div className={`habit-page-info-block category-${habit.category}`}>🚩 <span> {habit.category}</span></div>
-                                        <div className="habit-page-info-block members-number">👭 <span> {habit.membersCount}</span></div>
+                                        <div className="habit-page-info-block started-date"><span className="date-span" role="img" aria-label="icon">📆  {changeDateFormat1(habit.startDate)}</span></div>
+                                        <div className="habit-page-info-block created-by"><span role="img" aria-label="icon">🙍‍ {habit.creatorLogin}</span></div>
+                                        <div className="habit-page-info-block privacy"><span role="img" aria-label="icon">🔒 {habit.private ? 'Private' : 'Public'}</span></div>
+                                        <div className={`habit-page-info-block category-${habit.category}`}><span role="img" aria-label="icon">🚩 {habit.category}</span></div>
+                                        <div className="habit-page-info-block members-number"><span role="img" aria-label="icon">👭 {habit.membersCount}</span></div>
                                     </div>
                                 </div>
                                 <div className="habit-page-header-btn-con col s12 l4 center">
-                                    {userIsMember ? <button className="btn-floating btn-large habit-page-header-btn leave-habit-btn" onClick={() => this.leaveHabit(habit.id)}>🏃‍♀️ leave</button> : <button className="btn-floating btn-large pulse habit-page-header-btn join-habit-btn" disabled={this.state.userBanned} onClick={() => this.joinHabit(habit.id)}>🙋‍♂️ join</button>}
+                                    {!this.state.joinLoading ? 
+                                        <div>
+                                            {userIsMember ? <button className=" btn-loading btn-floating btn-large habit-page-header-btn leave-habit-btn" onClick={() => this.leaveHabit(habit.id)}><span role="img" aria-label="icon">🏃‍♀️</span> leave</button> : <button className="btn-floating btn-large pulse habit-page-header-btn join-habit-btn" disabled={this.state.userBanned} onClick={() => this.joinHabit(habit.id)}><span role="img" aria-label="icon">🙋‍♂️</span> join</button>}
+                                        </div>
+                                    : <LoaderSmall/>}
                                 </div>
                         </div>
                     {isAdmin ?
@@ -131,7 +135,7 @@ class HabitPage extends Component {
                     </div>
                     : null} 
                     </div>
-                    {this.state.userBanned ? <div style={{marginTop: "100px", fontSize: "1.4em"}}>You were kicked from this challenge 🖐</div> : null}
+                    {this.state.userBanned ? <div style={{marginTop: "100px", fontSize: "1.4em"}}>You were kicked from this challenge <span role="img" aria-label="icon">🖐</span></div> : null}
                     {userIsMember ?
                     <section className="habit-page-navigation-con">
                         <div className="habit-page-navigation">
@@ -144,7 +148,7 @@ class HabitPage extends Component {
                         </div>
                     </section> : null}
                     <section className="habit-page-dashboard">
-                        {userIsMember ? <AddPost habitID = { habit.id } admin={habit.creatorLogin} isAdmin={isAdmin} user={this.props.userLogged} isFinished={habit.finished} pointsToWin={habit.pointsToWin} winner={habit.winner} isAdmin={isAdmin} allowDiscussion={habit.allowDiscussion}/> : null}
+                        {userIsMember ? <AddPost habitID = { habit.id } admin={habit.creatorLogin} user={this.props.userLogged} isFinished={habit.finished} pointsToWin={habit.pointsToWin} winner={habit.winner} isAdmin={isAdmin} allowDiscussion={habit.allowDiscussion}/> : null}
                     </section>
                 </div>
             )

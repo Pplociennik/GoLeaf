@@ -6,8 +6,6 @@ import Main from './components/containers/Main/Main';
 import Loader from './components/routes/Loader/Loader'
 import { BrowserRouter } from 'react-router-dom';
 import {fetchHabits} from './js/state';
-import {fetchUsers} from './js/state';
-import {fetchMembers} from './js/state';
 import {isLoaded} from './js/state';
 import { connect } from 'react-redux'
 import axios from 'axios';
@@ -15,19 +13,18 @@ import axios from 'axios';
 class App extends Component {
 
   componentDidMount() {
-    axios.post('https://glf-api.herokuapp.com/validatetoken', {
-        "Token": localStorage.getItem('token')
-      }).then(res => { 
-        this.props.validateUser() 
-        this.generateDefaultData()
-      }
-      ).catch(err => { this.props.invalidateUser()})
+    axios.get('https://glf-api.herokuapp.com/')
+    .then(res => { this.validateUser() }
+    ).catch(err => { this.validateUser() })
   }
 
-  generateDefaultData() {
-    axios.get('https://glf-api.herokuapp.com/')
-    .then(res => { console.log(res.data) }
-    ).catch(err => { console.log(err.response) })
+  validateUser() {
+    axios.post('https://glf-api.herokuapp.com/validatetoken', {
+      "Token": localStorage.getItem('token')
+    }).then(res => { 
+      this.props.validateUser() 
+    }
+    ).catch(err => { this.props.invalidateUser()})
   }
 
   render() {

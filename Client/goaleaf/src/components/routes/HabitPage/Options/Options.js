@@ -79,7 +79,7 @@ class Options extends Component {
       }
 
     componentDidMount() {
-        console.log(this.props.canUsersInvite);
+        this.setState({title: this.props.title});
         M.AutoInit();
     }
 
@@ -98,25 +98,25 @@ class Options extends Component {
             }}
         >
         <div className="add-task-box">
-        <div className="row">
-                <p>Change title</p>
-                <input type="text" id="title" placeholder={this.props.title} className="browser-default" onChange={ this.handleChange } maxLength="49"/>
-                <button className="browser-default" onClick={(e) => this.changeTitle(e, this.props.habitID)}>Change title</button>
-        </div>
-        <div className="row">
-                <p>Change category</p>
-                <select defaultValue={this.props.category} className="browser-default" onChange={(e) => this.setHabitCategory(e, this.props.habitID)}>
-                    <option value="NONE">None</option>
-                    <option value="DIET">Diet</option>
-                    <option value="SPORT">Sport</option>
-                    <option value="HEALTH">Health</option>
-                    <option value="STUDY">Study</option>
-                    <option value="WORK">Work</option>
-                    <option value="MONEY">Money</option>
-                    <option value="SOCIAL">Social</option>
-                    <option value="FAMILY">Family</option>
-                </select>
-            </div> 
+            <div className="row update-challenge-title">
+                    <p>Change title</p>
+                    <input type="text" id="title" value={this.state.title} className="browser-default" onChange={ this.handleChange } maxLength="49"/>
+                    <button className="browser-default" onClick={(e) => this.changeTitle(e, this.props.habitID)}>submit</button>
+            </div>
+            <div className="row">
+                    <p>Change category</p>
+                    <select defaultValue={this.props.category} className="browser-default" onChange={(e) => this.setHabitCategory(e, this.props.habitID)}>
+                        <option value="NONE">None</option>
+                        <option value="DIET">Diet</option>
+                        <option value="SPORT">Sport</option>
+                        <option value="HEALTH">Health</option>
+                        <option value="STUDY">Study</option>
+                        <option value="WORK">Work</option>
+                        <option value="MONEY">Money</option>
+                        <option value="SOCIAL">Social</option>
+                        <option value="FAMILY">Family</option>
+                    </select>
+             </div> 
             <div className="row">
                 <p>Change privacy</p>
                 <select defaultValue={this.props.private} className="browser-default" onChange={(e) => this.setHabitPrivacy(e, this.props.habitID)}>
@@ -132,10 +132,10 @@ class Options extends Component {
                 </select>
             </div>
             <div className="row">
-                <p>Is discussion allowed</p>
+                <p>Who can add posts</p>
                 <select defaultValue={this.props.allowDiscussion} className="browser-default" onChange={(e) => this.setAllowDiscussion(e, this.props.habitID)}>
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
+                    <option value="true">All members</option>
+                    <option value="false">Only admin</option>
                 </select>
             </div>
             <div className="row" style={{display: "flex", justifyContent: "center"}}>

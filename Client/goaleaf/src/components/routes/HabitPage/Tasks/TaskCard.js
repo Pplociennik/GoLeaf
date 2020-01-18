@@ -5,10 +5,7 @@ import axios from 'axios'
 import Popup from "reactjs-popup"
 import './TaskCard.scss';
 import {addPost} from './../../../../js/state';
-import M from "materialize-css";
 import {changeDateFormat1} from '../../../../js/helpers';
-import { Dropdown } from 'react-materialize';
-import MoreIcon from './../../../../assets/more.png';
 
 class TaskCard extends Component {
 
@@ -39,26 +36,22 @@ class TaskCard extends Component {
 
     render() {
 
-        console.log("Task: " + this.props.id)
-
         let frequency;
         let date;
 
         if(this.props.frequency === 'Once') {
-            frequency = <span title="This task can be done once" className="task-card-frequency">🔁 once for all users</span>
+            frequency = <span title="This task can be done once" className="task-card-frequency"><span role="img" aria-label="icon">🔁</span> once for all users</span>
         }
         else if(this.props.frequency === 'Once4All') {
-            frequency = <span title="This task can be done once for each user" className="task-card-frequency">🔁 once for each user</span>
+            frequency = <span title="This task can be done once for each user" className="task-card-frequency"><span role="img" aria-label="icon">🔁</span> once for each user</span>
         }
         else {
-        frequency = <span title="Task recurrence" className="task-card-frequency">🔁 every {this.props.days} {this.props.days === 1 ? 'day' : 'days'}</span>
+        frequency = <span title="Task recurrence" className="task-card-frequency"><span role="img" aria-label="icon">🔁</span> every {this.props.days} {this.props.days === 1 ? 'day' : 'days'}</span>
         }
 
         if(this.props.frequency === 'Daily' && !this.props.active) {
-            date = <span title="On this day task will be active again" className="task-card-date">📆 {changeDateFormat1(this.props.refreshDate)}</span>
+            date = <span title="On this day task will be active again" className="task-card-date"><span role="img" aria-label="icon">📆</span> {changeDateFormat1(this.props.refreshDate)}</span>
         }
-
-        let message = this.props.isFinished ? 'Challenge finished, you can\'t complete more tasks!' : ''
 
         if (localStorage.getItem('token')) {
             return (
@@ -97,8 +90,8 @@ class TaskCard extends Component {
                     <div className="task-popup">
                         <form className="task-popup-form" onSubmit={e => {this.completeTask(e, this.props.id); close()}}>
                             <span className="task-popup-title">{this.props.description}</span>
-                            <span className="task-popup-points">🔥 {this.props.points} pts</span>
-                            <button disabled={this.props.active ? '' : 'disabled'} className="btn task-popup-btn" type="submit" value="Complete task">⚡ Task completed</button>
+                            <span className="task-popup-points"><span role="img" aria-label="icon">🔥</span> {this.props.points} pts</span>
+                            <button disabled={this.props.active ? '' : 'disabled'} className="btn task-popup-btn" type="submit" value="Complete task"><span role="img" aria-label="icon">⚡</span> Task completed</button>
                         </form>
                     </div>
                     )}

@@ -49,6 +49,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        letter-spacing: 1px;
         i { margin-right: 10px }
     }
     .input-field input[type=text]:focus + label {

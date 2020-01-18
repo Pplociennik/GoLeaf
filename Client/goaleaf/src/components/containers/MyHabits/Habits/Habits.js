@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import '../MyHabits.scss'
-import axios from 'axios'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import HabitCard from '../../../routes/HabitCard/HabitCard'

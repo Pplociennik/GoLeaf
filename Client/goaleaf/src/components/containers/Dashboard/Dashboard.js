@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import './Dashboard.scss'
 import {Redirect} from 'react-router-dom'
 import { connect } from 'react-redux'
-import BrowseHabits from './../BrowseHabits/BrowseHabits'
 import MyHabits from './../MyHabits/MyHabits'
 
 class Dashboard extends Component {

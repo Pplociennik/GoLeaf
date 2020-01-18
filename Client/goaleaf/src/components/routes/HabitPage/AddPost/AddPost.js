@@ -2,12 +2,10 @@ import React, { Component } from 'react'
 import './AddPost.scss'
 import axios from 'axios';
 import { connect } from 'react-redux';
-import PhotoIcon from './../../../../assets/photo-icon.png';
 import {addPost} from '../../../../js/state';
 import {fetchPosts} from '../../../../js/state';
 import Tasks from '../Tasks/Tasks';
 import Posts from '../Posts/Posts';
-import { string } from 'prop-types';
 class AddPost extends Component {
 
   state = {
@@ -68,11 +66,11 @@ class AddPost extends Component {
 
     let tasksToShow;
     if(!this.props.isAdmin && this.props.pointsToWin === 0){
-        tasksToShow = <div className="noTasksInfo">No tasks to complete 🤷‍♂️</div>  
+        tasksToShow = <div className="noTasksInfo">No tasks to complete <span role="img" aria-label="icon">🤷‍♂️</span></div>  
     } else if (this.props.isFinished) {
-    tasksToShow = <div className="noTasksInfo">🏆 Challenge has ended, {this.props.winner} has won! 🏆</div>
+    tasksToShow = <div className="noTasksInfo"><span role="img" aria-label="icon">🏆</span> Challenge has ended, {this.props.winner} has won! 🏆</div>
     } else if (this.props.pointsToWin === 0) {
-        tasksToShow = <div className="noTasksInfo">Please set the prize before adding tasks 💪</div>
+        tasksToShow = <div className="noTasksInfo">Please set the prize before adding tasks <span role="img" aria-label="icon">💪</span></div>
     }
     else {  
 
@@ -83,8 +81,6 @@ class AddPost extends Component {
                       </div>
     }
 
-
-    
     return (
         <div className="add-post-con row">
             <div className="col s10 m8 offset-s1 offset-m2">
@@ -111,7 +107,7 @@ class AddPost extends Component {
                         </div>
                     </div>
                 </form>
-            </div> : <div id="post" className="col s10 offset-s1 m8 offset-m2">Adding new posts to this challenge has been locked by challenge administrator</div>}
+            </div> : <div id="post" className="col s10 offset-s1 m8 offset-m2"><div className="noTasksInfo">Challenge creator disabled adding posts by other users <span role="img" aria-label="icon">🤷‍♂️</span></div></div>}
             <div id="achievement" className="col s10 offset-s1 m8 offset-m2">
                 {tasksToShow}
             </div>
