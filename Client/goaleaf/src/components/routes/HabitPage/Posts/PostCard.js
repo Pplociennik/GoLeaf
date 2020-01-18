@@ -26,7 +26,7 @@ class PostCard extends Component {
         pageNr: 0,
         pagesAll: 0,
         showComments: false,
-        commentsToShow: 3,
+        commentsToShow: 10,
         comment: '',
 
         commentsLoading: true
