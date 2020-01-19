@@ -137,10 +137,10 @@ class AddTask extends Component {
         <div className="row">
             <form className="col s10 offset-s1  l8 offset-l2 center-align" autoComplete="off">
                 <h4 className="">New Task</h4>
-                <div className="input-field inline">
-                    <input id="task" maxLength="60" type="text" placeholder="task description" onChange={ this.handleChange } />
-                    <div style={{display: 'flex', justifyContent: 'center', marginTop: '30px'}}>
-                        <span className="set-recurrence-title">Set points</span>
+                <div className="input-field inline task-recurrence-con">
+                    <input id="task" style={{marginBottom: '30px'}} maxLength="60" type="text" placeholder="task description" onChange={ this.handleChange } />
+                    <span className="set-recurrence-title">Set points</span>
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
                         <button className="task-points-btn task-points-btn-subtract" onClick={ this.subtractTaskPoint }>-</button>
                         <input title="Set task points between 1 and 10" id="taskPoints" maxLength="2" style={{width: '30px', textDecoration: 'none', textAlign: 'center' }} className="task-points" value={this.state.taskPoints} onChange={(e) => {this.handleChange(e)}}/>
                         <button className="task-points-btn task-points-btn-add" onClick={ this.addTaskPoint }>+</button>
@@ -151,9 +151,9 @@ class AddTask extends Component {
                     <span className="set-recurrence-title">Set recurrence</span>
                     <div>
                         <div>
-                            <button type="button" className={this.state.frequency === 'Once' ? 'new-task-recurrence-active' : 'new-task-recurrence-inactive'} onClick={this.setOnceTrue}>once for all users</button>
-                            <button type="button" className={this.state.frequency === 'Once4All' ? 'new-task-recurrence-active' : 'new-task-recurrence-inactive'} onClick={this.setOnce4All}>once for each user</button>
-                            <button type="button" className={this.state.frequency === 'Daily' ? 'new-task-recurrence-active' : 'new-task-recurrence-inactive'} onClick={this.setOnceFalse}>custom</button>
+                            <button type="button" className={this.state.frequency === 'Once' ? 'new-task-recurrence-active' : 'new-task-recurrence-inactive'} title={"Only one person can complete this task, so you gotta be quick"} onClick={this.setOnceTrue}>once for all users</button>
+                            <button type="button" className={this.state.frequency === 'Once4All' ? 'new-task-recurrence-active' : 'new-task-recurrence-inactive'} title={"You can complete this task only once"} onClick={this.setOnce4All}>once for each user</button>
+                            <button type="button" className={this.state.frequency === 'Daily' ? 'new-task-recurrence-active' : 'new-task-recurrence-inactive'} title={"You can specify the recurrence of this task"} onClick={this.setOnceFalse}>custom</button>
                         </div>
                         {customRecurrence}
                     </div>

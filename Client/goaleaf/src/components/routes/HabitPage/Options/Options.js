@@ -3,7 +3,7 @@ import axios from 'axios';
 import Popup from "reactjs-popup";
 import M from "materialize-css";
 import EditImg from '../../../../assets/edit.png'
-import { Route , withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 class Options extends Component {
 

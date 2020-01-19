@@ -7,17 +7,23 @@ class AddPrize extends Component {
 
   state = {
     msg: null,
-    prizePoints: 0
+    prizePoints: 0,
+    leaderPoints: 0
   }
 
     addPrize = (e, id) => {
         e.preventDefault();
-        if(this.state.prizePoints > 0 && this.state.prizePoints < 1001){
+        if(this.state.prizePoints > 0 && this.state.prizePoints < 1001 && this.state.prizePoints > this.state.leaderPoints){
             axios.post(`https://glf-api.herokuapp.com/api/habits/habit/setPointsToWIn?habitID=${id}&pointsToWin=${this.state.prizePoints}`)
             .then(res => {
                 window.location.reload();
             }
             ).catch(err => console.log(err.response.data.message))
+        }
+        if(this.state.prizePoints <= this.state.leaderPoints) {
+            this.setState({
+                msg: "Prize has to be greater than " + this.state.leaderPoints + ", current leader's points!"
+            })
         }
     }
 
@@ -55,9 +61,15 @@ class AddPrize extends Component {
 
     componentDidMount() {
         M.AutoInit();
-            if(this.props.pointsToWin !== 0){
-                this.setState({prizePoints: this.props.pointsToWin})
-            }
+        if(this.props.pointsToWin !== 0){
+            this.setState({prizePoints: this.props.pointsToWin})
+        }
+        axios.get(`https://glf-api.herokuapp.com/api/members/leader/points?habitID=${this.props.habitID}`)
+        .then(res => {
+            this.setState({
+                leaderPoints: res.data
+            })
+        }).catch(err => { console.log(err) })
     }
 
     render() {
@@ -90,7 +102,7 @@ class AddPrize extends Component {
                         <input title="Set goal between 1 and 1000" id="prizePoints" maxLength="4" style={{width: '50px', textDecoration: 'none', textAlign: 'center' }} className="task-points" value={this.state.prizePoints} onChange={(e) => {this.handleChange(e)}}/>
                         <button className="task-points-btn task-points-btn-add" onClick={ this.addPrizePoint }>+</button>
                     </div>
-                    <span className={this.state.msg === 'Goal set' ? "helper-text green-text" : "helper-text red-text "}>{this.state.msg}</span>
+                    <span style={{marginTop: "10px"}} className={this.state.msg === 'Goal set' ? "helper-text green-text" : "helper-text red-text "}>{this.state.msg}</span>
                 </div>
                 <button className="btn" onClick={(e) => this.addPrize(e, this.props.habitID)} type="submit" value="Set goal">submit</button>
             </form>
