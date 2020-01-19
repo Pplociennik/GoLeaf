@@ -102,7 +102,7 @@ class AddPrize extends Component {
                         <input title="Set goal between 1 and 1000" id="prizePoints" maxLength="4" style={{width: '50px', textDecoration: 'none', textAlign: 'center' }} className="task-points" value={this.state.prizePoints} onChange={(e) => {this.handleChange(e)}}/>
                         <button className="task-points-btn task-points-btn-add" onClick={ this.addPrizePoint }>+</button>
                     </div>
-                    <span className={this.state.msg === 'Goal set' ? "helper-text green-text" : "helper-text red-text "}>{this.state.msg}</span>
+                    <span style={{marginTop: "10px"}} className={this.state.msg === 'Goal set' ? "helper-text green-text" : "helper-text red-text "}>{this.state.msg}</span>
                 </div>
                 <button className="btn" onClick={(e) => this.addPrize(e, this.props.habitID)} type="submit" value="Set goal">submit</button>
             </form>

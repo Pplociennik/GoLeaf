@@ -137,10 +137,10 @@ class AddTask extends Component {
         <div className="row">
             <form className="col s10 offset-s1  l8 offset-l2 center-align" autoComplete="off">
                 <h4 className="">New Task</h4>
-                <div className="input-field inline">
-                    <input id="task" maxLength="60" type="text" placeholder="task description" onChange={ this.handleChange } />
+                <div className="input-field inline task-recurrence-con">
+                    <input id="task" style={{marginBottom: '30px'}} maxLength="60" type="text" placeholder="task description" onChange={ this.handleChange } />
                     <span className="set-recurrence-title">Set points</span>
-                    <div style={{display: 'flex', justifyContent: 'center', marginTop: '30px'}}>
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
                         <button className="task-points-btn task-points-btn-subtract" onClick={ this.subtractTaskPoint }>-</button>
                         <input title="Set task points between 1 and 10" id="taskPoints" maxLength="2" style={{width: '30px', textDecoration: 'none', textAlign: 'center' }} className="task-points" value={this.state.taskPoints} onChange={(e) => {this.handleChange(e)}}/>
                         <button className="task-points-btn task-points-btn-add" onClick={ this.addTaskPoint }>+</button>
