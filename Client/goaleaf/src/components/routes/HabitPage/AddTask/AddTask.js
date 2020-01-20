@@ -142,7 +142,7 @@ class AddTask extends Component {
                     <span className="set-recurrence-title">Set points</span>
                     <div style={{display: 'flex', justifyContent: 'center'}}>
                         <button className="task-points-btn task-points-btn-subtract" onClick={ this.subtractTaskPoint }>-</button>
-                        <input title="Set task points between 1 and 10" id="taskPoints" maxLength="2" style={{width: '30px', textDecoration: 'none', textAlign: 'center' }} className="task-points" value={this.state.taskPoints} onChange={(e) => {this.handleChange(e)}}/>
+                        <input disabled title="Set task points between 1 and 10" id="taskPoints" maxLength="2" style={{width: '30px', textDecoration: 'none', textAlign: 'center' }} className="task-points" value={this.state.taskPoints} onChange={(e) => {this.handleChange(e)}}/>
                         <button className="task-points-btn task-points-btn-add" onClick={ this.addTaskPoint }>+</button>
                     </div>
                     <span className={this.state.msg === 'Task added' ? "helper-text green-text" : "helper-text red-text "}>{this.state.msg}</span>
