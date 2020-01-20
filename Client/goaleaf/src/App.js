@@ -9,6 +9,10 @@ import {fetchHabits} from './js/state';
 import {isLoaded} from './js/state';
 import { connect } from 'react-redux'
 import axios from 'axios';
+import ReactGA from 'react-ga';
+
+ReactGA.initialize('UA-156252320-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 class App extends Component {
 
