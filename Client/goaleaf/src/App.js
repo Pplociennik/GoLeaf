@@ -27,7 +27,7 @@ class App extends Component {
     }).then(res => { 
       this.props.validateUser();
       ReactGA.initialize('UA-156252320-1', {
-        debug: true,
+        debug: false,
         titleCase: false,
         gaOptions: {
           userId: this.props.userLogged
