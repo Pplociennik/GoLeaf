@@ -74,7 +74,7 @@ class MyHabits extends Component {
                     <span className="stats-number">{this.state.usersAll}</span>
                   </div>
                   <div className="stats-label-con">
-                    <span className="stats-label">👨‍👨‍👦‍👦 users</span>
+                    <span className="stats-label"><span role="img" aria-label="icon">👨‍👨‍👦‍👦</span> users</span>
                   </div>
                 </div>
                 <div className="stats-block">
@@ -82,7 +82,7 @@ class MyHabits extends Component {
                     <span className="stats-number">{this.state.publicChallengesAll}</span>
                   </div>
                   <div className="stats-label-con">
-                    <span className="stats-label">🎈 public challenges</span>
+                    <span className="stats-label"><span role="img" aria-label="icon">🎈</span> public challenges</span>
                   </div>
                 </div>
                 <div className="stats-block">
@@ -90,7 +90,7 @@ class MyHabits extends Component {
                     <span className="stats-number">{this.state.privateChallengesAll}</span>
                   </div>
                   <div className="stats-label-con">
-                    <span className="stats-label">⛔ private challenges</span>
+                    <span className="stats-label"><span role="img" aria-label="icon">⛔</span> private challenges</span>
                   </div>
                 </div>
                 <div className="stats-block">
@@ -98,7 +98,7 @@ class MyHabits extends Component {
                     <span className="stats-number">{this.state.endedChallengesAll}</span>
                   </div>
                   <div className="stats-label-con">
-                    <span className="stats-label">🏆 ended challenges</span>
+                    <span className="stats-label"><span role="img" aria-label="icon">🏆</span> ended challenges</span>
                   </div>
                 </div>
                 <div className="stats-block">
@@ -106,7 +106,7 @@ class MyHabits extends Component {
                     <span className="stats-number">{this.state.createdTasksAll}</span>
                   </div>
                   <div className="stats-label-con">
-                    <span className="stats-label">🔥 created tasks</span>
+                    <span className="stats-label"><span role="img" aria-label="icon">🔥</span> created tasks</span>
                   </div>
                 </div>
                 <div className="stats-block">
@@ -114,7 +114,7 @@ class MyHabits extends Component {
                     <span className="stats-number">{this.state.completedTasksAll}</span>
                   </div>
                   <div className="stats-label-con">
-                    <span className="stats-label">✅ completed tasks</span>
+                    <span className="stats-label"><span role="img" aria-label="icon">✅</span> completed tasks</span>
                   </div>
                 </div>
                 <div className="stats-block">
@@ -122,7 +122,7 @@ class MyHabits extends Component {
                     <span className="stats-number">{this.state.createdPostsAll}</span>
                   </div>
                   <div className="stats-label-con">
-                    <span className="stats-label">📘 created posts</span>
+                    <span className="stats-label"><span role="img" aria-label="icon">📘</span> created posts</span>
                   </div>
                 </div>
                 <div className="stats-block">
@@ -130,7 +130,7 @@ class MyHabits extends Component {
                     <span className="stats-number">{this.state.createdCommentsAll}</span>
                   </div>
                   <div className="stats-label-con">
-                    <span className="stats-label">📝 created comments</span>
+                    <span className="stats-label"><span role="img" aria-label="icon">📝</span> created comments</span>
                   </div>
                 </div>
               </div>
