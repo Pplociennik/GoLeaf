@@ -9,10 +9,13 @@ import {fetchHabits} from './js/state';
 import {isLoaded} from './js/state';
 import { connect } from 'react-redux'
 import axios from 'axios';
+import ReactGA from 'react-ga';
 
 class App extends Component {
 
   componentDidMount() {
+
+
     axios.get('https://glf-api.herokuapp.com/')
     .then(res => { this.validateUser() }
     ).catch(err => { this.validateUser() })
@@ -22,9 +25,21 @@ class App extends Component {
     axios.post('https://glf-api.herokuapp.com/validatetoken', {
       "Token": localStorage.getItem('token')
     }).then(res => { 
-      this.props.validateUser() 
+      this.props.validateUser();
+      ReactGA.initialize('UA-156252320-1', {
+        debug: false,
+        titleCase: false,
+        gaOptions: {
+          userId: this.props.userLogged
+        }
+      });
+      ReactGA.pageview(window.location.pathname + window.location.search);
     }
-    ).catch(err => { this.props.invalidateUser()})
+    ).catch(err => { 
+      this.props.invalidateUser();
+      ReactGA.initialize('UA-156252320-1');
+      ReactGA.pageview(window.location.pathname + window.location.search);
+    })
   }
 
   render() {
@@ -53,7 +68,8 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     habits: state.habits,
-    isLoading: state.isLoading
+    isLoading: state.isLoading,
+    userLogged: state.userLogged
   }
 }
 

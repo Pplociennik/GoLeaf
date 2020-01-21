@@ -13,6 +13,7 @@
     "react-avatar-editor": "^11.0.7",
     "react-dom": "^16.8.4",
     "react-dropzone": "^10.1.3",
+    "react-ga": "^2.7.0",
     "react-image-file-resizer": "^0.2.1",
     "react-images-upload": "^1.2.6",
     "react-images-uploader": "^1.2.0-rc1",

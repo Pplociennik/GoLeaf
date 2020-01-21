@@ -47,10 +47,7 @@
             letter-spacing: 1px;      
             caret-color: $text-color;
             outline: 0;
-        }
-        .auth-input::-webkit-input-placeholder {
-            opacity: 0.6;
-        }
+        }   
         .error-msg {
             color: $error-color;
             font-size: 0.8em;
