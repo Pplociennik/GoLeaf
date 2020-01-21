@@ -129,7 +129,7 @@ class HabitPage extends Component {
                                     : <LoaderSmall/>}
                                 </div>
                         </div>
-                    {isAdmin ?
+                    {isAdmin || this.props.userLoggedLogin === "GoaleafAdmin" ?
                     <div className="habit-card-delete-btn">
                         <Options habitID={habit.id} canUsersInvite={habit.canUsersInvite} private={habit.private} category={habit.category} title={habit.title} allowDiscussion={habit.allowDiscussion} />
                     </div>
@@ -161,6 +161,7 @@ class HabitPage extends Component {
 
 const mapStateToProps = state => ({
     userLogged: state.userLogged,
+    userLoggedLogin: state.userLoggedLogin,
     habit: state.habit
 })
 const mapDispatchToProps = dispatch => ({

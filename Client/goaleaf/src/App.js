@@ -26,13 +26,8 @@ class App extends Component {
       "Token": localStorage.getItem('token')
     }).then(res => { 
       this.props.validateUser();
-      ReactGA.initialize('UA-156252320-1', {
-        debug: false,
-        titleCase: false,
-        gaOptions: {
-          userId: this.props.userLogged
-        }
-      });
+      ReactGA.initialize('UA-156252320-1');
+      ReactGA.set({ userId: this.props.userLogged });
       ReactGA.pageview(window.location.pathname + window.location.search);
     }
     ).catch(err => { 
