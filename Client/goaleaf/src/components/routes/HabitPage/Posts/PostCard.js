@@ -69,8 +69,6 @@ class PostCard extends Component {
     }
 
     addComment = e => {
-        console.log(this.state.pageNr);
-        console.log(this.state.pagesAll);
         e.preventDefault();
         this.clearMsg();
         axios.post('https://glf-api.herokuapp.com/api/comments/addcomment', {
