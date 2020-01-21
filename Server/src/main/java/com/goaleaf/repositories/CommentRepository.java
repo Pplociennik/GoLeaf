@@ -1,7 +1,6 @@
 package com.goaleaf.repositories;
 
 import com.goaleaf.entities.Comment;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +19,8 @@ public interface CommentRepository extends CrudRepository<Comment, Integer> {
     Iterable<Comment> findAllByUserID(Integer userID);
 
     Iterable<Comment> findAllByPostIDOrderByCreationDateAsc(Integer postID);
+
+    Iterable<Comment> findAllByPostID(Integer postID);
 
     //    Comment save(Comment comment);
 }

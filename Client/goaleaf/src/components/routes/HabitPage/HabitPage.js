@@ -13,6 +13,7 @@ import Members from './Members/Members'
 import Loader from './../Loader/Loader'
 import Leaderboard from './Leaderboard/Leaderboard'
 import TasksAll from './TasksAll/TasksAll'
+import LoaderSmall from '../LoaderSmall/LoaderSmall';
 
 class HabitPage extends Component {
 
@@ -21,7 +22,8 @@ class HabitPage extends Component {
         errorMsg: '',
         permissions: false,
         userBanned: false,
-        members: []
+        members: [],
+        joinLoading: true
     }
 
     joinHabit = id => {
@@ -75,23 +77,25 @@ class HabitPage extends Component {
 
         this.props.fetchHabit(this.props.match.params.id);
 
+        this.setState({joinLoading: true});
         axios.get(`https://glf-api.herokuapp.com/api/habits/habit/checkPermissions?userID=${this.props.userLogged}&habitID=${parseInt(this.props.match.params.id)}`)
            .then(res => {
                     this.setState({
                         permissions: res.data
                     })
-            }).catch(err => console.log(err.response.data))
+            }).catch(err => {})
 
         axios.get(`https://glf-api.herokuapp.com/api/habits/habit/members?habitID=${this.props.match.params.id}`)
             .then(res => {
                     this.setState({
-                          members: res.data
+                          members: res.data,
+                          joinLoading: false
                     })
-        }).catch(err => console.log(err.response.data))
+        }).catch(err => this.setState({joinLoading: false}))
     }
 
     render() {
-
+        
         let habit = this.props.habit;
 
         let userIsMember;
@@ -118,10 +122,14 @@ class HabitPage extends Component {
                                     </div>
                                 </div>
                                 <div className="habit-page-header-btn-con col s12 l4 center">
-                                    {userIsMember ? <button className="btn-floating btn-large habit-page-header-btn leave-habit-btn" onClick={() => this.leaveHabit(habit.id)}><span role="img" aria-label="icon">🏃‍♀️</span> leave</button> : <button className="btn-floating btn-large pulse habit-page-header-btn join-habit-btn" disabled={this.state.userBanned} onClick={() => this.joinHabit(habit.id)}><span role="img" aria-label="icon">🙋‍♂️</span> join</button>}
+                                    {!this.state.joinLoading ? 
+                                        <div>
+                                            {userIsMember ? <button className=" btn-loading btn-floating btn-large habit-page-header-btn leave-habit-btn" onClick={() => this.leaveHabit(habit.id)}><span role="img" aria-label="icon">🏃‍♀️</span> leave</button> : <button className="btn-floating btn-large pulse habit-page-header-btn join-habit-btn" disabled={this.state.userBanned} onClick={() => this.joinHabit(habit.id)}><span role="img" aria-label="icon">🙋‍♂️</span> join</button>}
+                                        </div>
+                                    : <LoaderSmall/>}
                                 </div>
                         </div>
-                    {isAdmin ?
+                    {isAdmin || this.props.userLoggedLogin === "GoaleafAdmin" ?
                     <div className="habit-card-delete-btn">
                         <Options habitID={habit.id} canUsersInvite={habit.canUsersInvite} private={habit.private} category={habit.category} title={habit.title} allowDiscussion={habit.allowDiscussion} />
                     </div>
@@ -153,6 +161,7 @@ class HabitPage extends Component {
 
 const mapStateToProps = state => ({
     userLogged: state.userLogged,
+    userLoggedLogin: state.userLoggedLogin,
     habit: state.habit
 })
 const mapDispatchToProps = dispatch => ({

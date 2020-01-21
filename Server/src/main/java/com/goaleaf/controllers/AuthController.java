@@ -6,6 +6,7 @@ import com.goaleaf.entities.Stats;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.AuthorizeViewModel;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.LoginViewModel;
 import com.goaleaf.entities.viewModels.accountsAndAuthorization.RegisterViewModel;
+import com.goaleaf.security.SecurityConstants;
 import com.goaleaf.services.StatsService;
 import com.goaleaf.services.UserService;
 import com.goaleaf.services.servicesImpl.JwtServiceImpl;
@@ -16,7 +17,6 @@ import com.goaleaf.validators.exceptions.accountsAndAuthorization.EmailExistsExc
 import com.goaleaf.validators.exceptions.accountsAndAuthorization.LoginExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
@@ -29,12 +29,11 @@ import static com.goaleaf.security.SecurityConstants.EXPIRATION_TIME;
 import static com.goaleaf.security.SecurityConstants.SECRET;
 
 @RestController
+@CrossOrigin(value = SecurityConstants.CLIENT_URL, maxAge = 3600)
 public class AuthController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private UserCredentialsValidator userCredentialsValidator;
     @Autowired

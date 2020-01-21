@@ -26,7 +26,7 @@ class PostCard extends Component {
         pageNr: 0,
         pagesAll: 0,
         showComments: false,
-        commentsToShow: 8,
+        commentsToShow: 10,
         comment: '',
 
         commentsLoading: true
@@ -69,7 +69,6 @@ class PostCard extends Component {
     }
 
     addComment = e => {
-
         e.preventDefault();
         this.clearMsg();
         axios.post('https://glf-api.herokuapp.com/api/comments/addcomment', {
@@ -77,8 +76,8 @@ class PostCard extends Component {
             "postID": this.props.id,
             "text": this.state.comment
         }).then(res => {
-            this.setState({ comments: [res.data, ...this.state.comments] })
-            this.showComments(this.state.pagesAll - 1, this.state.commentsToShow, this.props.id);
+            //this.showComments(this.state.pagesAll, this.state.commentsToShow, this.props.id);
+            this.showCommentsBtnPress();
         }
         )
             .catch(err => console.log(err))
@@ -95,7 +94,11 @@ class PostCard extends Component {
                 pagesAll: res.data.allPages,
                 commentsLoading: false
             })
-            this.showComments(this.state.pagesAll - 1, this.state.commentsToShow, this.props.id);
+            let pagesAllNew = this.state.pagesAll;
+            if(this.state.pagesAll > 0){
+                pagesAllNew = this.state.pagesAll - 1;
+            }
+            this.showComments(pagesAllNew, this.state.commentsToShow, this.props.id);
         }).catch(err => console.log(err))
 
     this.setState({
@@ -109,6 +112,8 @@ class PostCard extends Component {
         this.setState({commentsLoading: true});
         axios.get(`https://glf-api.herokuapp.com/api/comments/post/paging?pageNr=${page}&objectsNr=${objectsNr}&postID=${postID}`)
             .then(res => {
+                console.log(res.data.pageNr);
+                console.log(res.data.allPages);
                 this.setState({
                     comments: res.data.list,
                     pageNr: res.data.pageNr,

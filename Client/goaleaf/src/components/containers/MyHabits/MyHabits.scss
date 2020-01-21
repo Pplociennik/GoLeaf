@@ -63,3 +63,53 @@
         display: none;
     }
 }
+
+
+.stats-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    width: 100%;
+    height: auto;
+
+    .stats-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 300px;
+        height: 136px;
+        background-color: #fff;
+        margin: 10px;
+        border-radius: 10px;
+        box-shadow: 2px 2px 10px 0px rgba(51,51,51,0.2);
+
+        .stats-number-con {
+            width: 80%;
+            height: 45%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .stats-number {
+                font-size: 3em;
+                font-weight: 600;
+                letter-spacing: 2px;
+            }
+        }
+        .stats-label-con {
+            width: 90%;
+            height: 30%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .stats-label {
+                font-size: 1.3em;
+                font-weight: 600;
+                letter-spacing: 1px;
+            }
+        }
+    }
+}

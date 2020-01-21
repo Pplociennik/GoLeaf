@@ -188,7 +188,7 @@ public class TaskServiceImpl implements TaskService {
 
         Iterable<Member> members = memberRepository.findAllByHabitID(returned.getHabitID());
 
-        String ntfDesc = "New task is available in habit \"" + habit.getHabitTitle() + "\"";
+        String ntfDesc = "New task is available in challenge \"" + habit.getHabitTitle() + "\"";
         EmailNotificationsSender sender = new EmailNotificationsSender();
         for (Member m : members) {
             User user = userRepository.findById(m.getUserID());
@@ -378,19 +378,21 @@ public class TaskServiceImpl implements TaskService {
         }
 
         Task task = taskRepository.getById(post.getTaskID());
-        Member member = memberRepository.getByUserID(task.getExecutorID());
+        Member member = memberRepository.findByHabitIDAndUserID(task.getHabitID(), task.getExecutorID());
 
         member.decreasePoints(task.getPoints());
 
         memberRepository.save(member);
 
-        taskRepository.delete(task.getId());
+        //taskRepository.delete(task.getId());
+        //should delete TaskHistoryEntity but Post has not id included
 
         postRepository.delete(postID);
 
         if (taskRepository.getById(task.getId()) == null) {
             return HttpStatus.OK;
         }
+
         return HttpStatus.EXPECTATION_FAILED;
     }
 

@@ -38,7 +38,7 @@ class Notifications extends Component {
     clearNotifications = e => {
         axios.delete(`https://glf-api.herokuapp.com/api/notifications/clear?userID=${this.props.userLogged}`)
         .then(res => {
-            this.setState({notifications: []})
+            this.setState({notifications: [], pagesAll: 0})
         }).catch(err => console.log(err))
     }
 

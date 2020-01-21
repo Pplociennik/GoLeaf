@@ -10,6 +10,7 @@ import com.goaleaf.entities.viewModels.accountsAndAuthorization.*;
 import com.goaleaf.repositories.*;
 import com.goaleaf.security.EmailNotificationsSender;
 import com.goaleaf.security.EmailSender;
+import com.goaleaf.security.PBKDF2WithHmacSHA1Encrypter;
 import com.goaleaf.services.*;
 import com.goaleaf.validators.FileConverter;
 import com.goaleaf.validators.UserCredentialsValidator;
@@ -26,7 +27,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -69,9 +69,6 @@ public class UserServiceImpl implements UserService {
 
     private UserCredentialsValidator userCredentialsValidator = new UserCredentialsValidator();
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
     @Override
     public Iterable<UserDTO> listAllUsers() {
         return convertManyToDTOs(userRepository.findAll());
@@ -84,15 +81,36 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void removeUser(Integer id) {
-        userRepository.delete(id);
+        //userRepository.delete(id);
+        User user = userRepository.findById(id);
+
+        String token = JWT.create()
+                .withSubject(String.valueOf(id))
+//                .withSubject(userService.findByLogin(userModel.login).getLogin())
+                .withClaim("Login", user.getLogin())
+                .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .sign(HMAC512(SECRET.getBytes()));
+        jwtService.Validate(token, SECRET);
 
         Iterable<Habit> userHabits = habitService.findHabitsByCreatorID(id);
 
         for (Habit habit : userHabits) {
-            memberService.removeSpecifiedMember(habit.getId(), habit.getCreatorID());
-            habit.setCreatorID(null);
-            habit.setCreatorLogin(habit.getCreatorLogin() + "(ACCOUNT_NOT_EXISTS)");
+            habitService.deleteHabit(habit.getId(), token);
         }
+
+        Iterable<Member> memberIn = memberRepository.findAllByUserID(id);
+
+        memberRepository.delete(memberIn);
+
+        Iterable<Post> userPosts = postRepository.findAllByCreatorLogin(user.getLogin());
+        postRepository.delete(userPosts);
+
+        Iterable<Comment> usereComments = commentRepository.findAllByUserID(id);
+        commentRepository.delete(usereComments);
+
+        userRepository.delete(user);
+
+
     }
 
     @Override
@@ -121,7 +139,7 @@ public class UserServiceImpl implements UserService {
         if (!userCredentialsValidator.arePasswordsEquals(register))
             throw new BadCredentialsException("Passwords are not equal!");
 
-        register.password = (bCryptPasswordEncoder.encode(register.password));
+        register.password = PBKDF2WithHmacSHA1Encrypter.hash(register.password);
 
         EmailNotificationsSender sender = new EmailNotificationsSender();
 
@@ -150,7 +168,7 @@ public class UserServiceImpl implements UserService {
             Habit h = habitRepository.findByHabitTitle("Let's meet Goaleaf!");
 
             EmailNotificationsSender esender = new EmailNotificationsSender();
-            esender.createInAppNotification(result.getId(), "GLFAdministrator invited you to challenge \"" + h.getHabitTitle() + "\"", "http://www.goaleaf.com/challenge/" + h.getId(), false);
+            esender.createInAppNotification(result.getId(), "GoaleafAdmin invited you to challenge \"" + h.getHabitTitle() + "\"", "http://www.goaleaf.com/challenge/" + h.getId(), false);
         }
 
         return convertToDTO(result);
@@ -168,7 +186,7 @@ public class UserServiceImpl implements UserService {
             User updatingUser = userRepository.findById(Integer.parseInt(claims.getSubject()));
 
 
-            if (bCryptPasswordEncoder.matches(model.oldPassword, userRepository.findById(Integer.parseInt(claims.getSubject())).getPassword())) {
+            if (PBKDF2WithHmacSHA1Encrypter.matches(model.oldPassword, userRepository.findById(Integer.parseInt(claims.getSubject())).getPassword())) {
 //                if (!model.emailAddress.isEmpty()) {
 //                    if (!userCredentialsValidator.isValidEmail(model.emailAddress)) {
 //                        throw new BadCredentialsException("Wrong email format!");
@@ -180,7 +198,7 @@ public class UserServiceImpl implements UserService {
                     if (!userCredentialsValidator.isPasswordFormatValid(model.newPassword)) {
                         throw new BadCredentialsException("Password must be at least 6 characters long and cannot contain spaces!");
                     } else {
-                        updatingUser.setPassword(bCryptPasswordEncoder.encode(model.newPassword));
+                        updatingUser.setPassword(PBKDF2WithHmacSHA1Encrypter.hash(model.newPassword));
                     }
                 } else
                     throw new BadCredentialsException("Passwords are not equal!");
@@ -289,7 +307,7 @@ public class UserServiceImpl implements UserService {
         if (!(newPasswords.password.equals(newPasswords.matchingPassword)))
             throw new BadCredentialsException("Passwords are not equal!");
 
-        user.setPassword(bCryptPasswordEncoder.encode(newPasswords.password));
+        user.setPassword(PBKDF2WithHmacSHA1Encrypter.hash(newPasswords.password));
         saveUser(user);
     }
 
@@ -315,7 +333,7 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findByLogin(userModel.login) == null) {
             throw new AccountNotExistsException("Account with this login does not exists");
         }
-        if (!bCryptPasswordEncoder.matches(userModel.password, userRepository.findByLogin(userModel.login).getPassword())) {
+        if (!PBKDF2WithHmacSHA1Encrypter.matches(userModel.password, userRepository.findByLogin(userModel.login).getPassword())) {
             throw new BadCredentialsException("Wrong password");
         }
     }
@@ -413,7 +431,7 @@ public class UserServiceImpl implements UserService {
         sender.addRecipient(model.emailAddress);
         sender.setSubject("GoaLeaf Password Reset Request");
         sender.setBody("Hello " + findByEmailAddress(model.emailAddress).getLogin() + "!\n\n" +
-                "Here's your confirmation link: http://goaleaf.com/resetpassword/" + resetPasswordToken + "\n\n" +
+                "Here's your confirmation link: https://www.goaleaf.com/resetpassword/" + resetPasswordToken + "\n\n" +
                 "If you have not requested a password reset, ignore this message.\n\n" +
                 "Thank you and have a nice day! :)\n\n" +
                 "GoaLeaf group");
