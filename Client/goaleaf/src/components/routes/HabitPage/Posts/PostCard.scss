@@ -134,9 +134,16 @@
                 .comment-content {
                     display: flex;
                     justify-content: space-between;
+                    align-items: flex-start;
+                    overflow: hidden;
+                    margin-right: auto;
                     margin-left: 30px;
+                    text-align: left;
                     span {
                         font-size: 1.2em;
+                        overflow: hidden;
+                        margin-right: auto;
+
                     }
                 }
                 .comment-nav {

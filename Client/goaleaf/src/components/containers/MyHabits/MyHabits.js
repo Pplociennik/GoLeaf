@@ -8,11 +8,22 @@ import { fetchUnfinishedHabits } from './../../../js/state';
 import { fetchWonHabits } from './../../../js/state';
 import ReactPaginate from 'react-paginate';
 import LoaderSmall from './../../routes/LoaderSmall/LoaderSmall'
+import axios from 'axios'
 
 class MyHabits extends Component {
 
   state = {
-    habitsToShow: 16
+    habitsToShow: 16,
+
+    usersAll: 0,
+    publicChallengesAll: 0,
+    privateChallengesAll: 0,
+    endedChallengesAll: 0,
+    createdTasksAll: 0,
+    completedTasksAll: 0,
+    createdPostsAll: 0,
+    createdCommentsAll: 0,
+    statsLoading: true
   }
 
   handleUnfinishedHabitsPageClick = data => {
@@ -29,12 +40,103 @@ class MyHabits extends Component {
         this.props.fetchFinishedHabits(0, this.state.habitsToShow, localStorage.getItem('token'));
         this.props.fetchUnfinishedHabits(0, this.state.habitsToShow, localStorage.getItem('token'));
         this.props.fetchWonHabits(0, this.state.habitsToShow, localStorage.getItem('token'));
+
+        if(this.props.userLoggedLogin === "GoaleafAdmin"){
+          axios.get("https://glf-api.herokuapp.com/api/stats/counts")
+          .then(res => {
+              this.setState({
+                  usersAll: res.data.users,
+                  publicChallengesAll: res.data.publicHabits,
+                  privateChallengesAll: res.data.privateHabits,
+                  endedChallengesAll: res.data.stats.finishedChallenges,
+                  createdTasksAll: res.data.stats.createdTasks,
+                  completedTasksAll: res.data.stats.completedTasks,
+                  createdPostsAll: res.data.stats.createdPosts,
+                  createdCommentsAll: res.data.stats.commentedPosts,
+                  statsLoading: false
+              })
+          }
+          ).catch(err => {console.log("Stats couldn't be loaded");})
+        }
   }
 
   render() {
     if (localStorage.getItem('token')) {
       return (
         <div>
+          { this.props.userLoggedLogin === "GoaleafAdmin" ?
+          <section className="my-habits">
+            <h1 className="my-habits-title" >Stats</h1>
+            {!this.state.statsLoading ?
+              <div className="stats-grid">
+                <div className="stats-block">
+                  <div className="stats-number-con">
+                    <span className="stats-number">{this.state.usersAll}</span>
+                  </div>
+                  <div className="stats-label-con">
+                    <span className="stats-label">👨‍👨‍👦‍👦 users</span>
+                  </div>
+                </div>
+                <div className="stats-block">
+                  <div className="stats-number-con">
+                    <span className="stats-number">{this.state.publicChallengesAll}</span>
+                  </div>
+                  <div className="stats-label-con">
+                    <span className="stats-label">🎈 public challenges</span>
+                  </div>
+                </div>
+                <div className="stats-block">
+                  <div className="stats-number-con">
+                    <span className="stats-number">{this.state.privateChallengesAll}</span>
+                  </div>
+                  <div className="stats-label-con">
+                    <span className="stats-label">⛔ private challenges</span>
+                  </div>
+                </div>
+                <div className="stats-block">
+                  <div className="stats-number-con">
+                    <span className="stats-number">{this.state.endedChallengesAll}</span>
+                  </div>
+                  <div className="stats-label-con">
+                    <span className="stats-label">🏆 ended challenges</span>
+                  </div>
+                </div>
+                <div className="stats-block">
+                  <div className="stats-number-con">
+                    <span className="stats-number">{this.state.createdTasksAll}</span>
+                  </div>
+                  <div className="stats-label-con">
+                    <span className="stats-label">🔥 created tasks</span>
+                  </div>
+                </div>
+                <div className="stats-block">
+                  <div className="stats-number-con">
+                    <span className="stats-number">{this.state.completedTasksAll}</span>
+                  </div>
+                  <div className="stats-label-con">
+                    <span className="stats-label">✅ completed tasks</span>
+                  </div>
+                </div>
+                <div className="stats-block">
+                  <div className="stats-number-con">
+                    <span className="stats-number">{this.state.createdPostsAll}</span>
+                  </div>
+                  <div className="stats-label-con">
+                    <span className="stats-label">📘 created posts</span>
+                  </div>
+                </div>
+                <div className="stats-block">
+                  <div className="stats-number-con">
+                    <span className="stats-number">{this.state.createdCommentsAll}</span>
+                  </div>
+                  <div className="stats-label-con">
+                    <span className="stats-label">📝 created comments</span>
+                  </div>
+                </div>
+              </div>
+            : <LoaderSmall/>}
+          </section> : null }
+
         <section className="my-habits">
           <h1 className="my-habits-title" >My active challenges</h1>
           {!this.props.unfinishedHabitsLoading ?
@@ -125,7 +227,8 @@ const mapStateToProps = state => {
     wonHabitsLoading: state.unfinishedHabitsLoading,
 
 
-    userLogged: state.userLogged
+    userLogged: state.userLogged,
+    userLoggedLogin: state.userLoggedLogin
 
   }
 }
