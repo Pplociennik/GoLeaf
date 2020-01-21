@@ -1,8 +1,13 @@
 package com.goaleaf.services.servicesImpl;
 
+import com.goaleaf.entities.DTO.CountsDTO;
 import com.goaleaf.entities.DTO.StatsDTO;
+import com.goaleaf.entities.Habit;
 import com.goaleaf.entities.Stats;
+import com.goaleaf.entities.User;
+import com.goaleaf.repositories.HabitRepository;
 import com.goaleaf.repositories.StatsRepository;
+import com.goaleaf.repositories.UserRepository;
 import com.goaleaf.services.StatsService;
 import org.joda.time.DateTimeComparator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +22,10 @@ public class StatsServiceImpl implements StatsService {
 
     @Autowired
     private StatsRepository statsRepository;
+    @Autowired
+    private HabitRepository habitRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public Stats findStatsByDate(Date date) {
@@ -44,6 +53,54 @@ public class StatsServiceImpl implements StatsService {
     @Override
     public Iterable<StatsDTO> findAllStats() {
         return convertManyToDTOs(statsRepository.findAll());
+    }
+
+    @Override
+    public StatsDTO sumAllStats() {
+        Iterable<Stats> days = statsRepository.findAll();
+        Iterable<StatsDTO> dtos = convertManyToDTOs(days);
+
+        StatsDTO result = new StatsDTO.StatsBuilder()
+                .setDay(new Date())
+                .setCommentedPosts(0)
+                .setCompletedTasks(0)
+                .setCreatedAccounts(0)
+                .setCreatedChallenges(0)
+                .setCreatedPosts(0)
+                .setCreatedTasks(0)
+                .setFinishedChallenges(0)
+                .setInvitedMembers(0)
+                .setInvitedMembers(0)
+                .setLoggedUsers(0)
+                .setSetGoals(0)
+                .gainStats();
+
+        for (StatsDTO dto : dtos) {
+            result.add(dto);
+        }
+
+        return result;
+    }
+
+    @Override
+    public CountsDTO getAllCounts() {
+        StatsDTO statsDTO = sumAllStats();
+
+        Integer publicNr = 0;
+        Integer privateNr = 0;
+
+        Iterable<Habit> habits = habitRepository.findAll();
+        List<User> users = (List<User>) userRepository.findAll();
+
+        for (Habit h : habits) {
+            if (h.getPrivate()) {
+                privateNr++;
+            } else {
+                publicNr++;
+            }
+        }
+
+        return new CountsDTO(statsDTO, privateNr, publicNr, users.size());
     }
 
     private StatsDTO convertToDTO(Stats stats) {
