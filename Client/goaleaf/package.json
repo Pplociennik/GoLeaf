@@ -5,7 +5,7 @@
   "proxy": "https://glf-api.herokuapp.com",
   "dependencies": {
     "@material-ui/core": "^3.9.3",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "materialize-css": "^1.0.0",
     "node-sass": "^4.13.0",
     "react": "^16.8.4",
