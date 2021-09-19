@@ -20,7 +20,7 @@ class Tasks extends Component {
     }
 
     fetchTasks = (page, toShow, habitID, userID) => {
-        axios.get(`https://glf-api.herokuapp.com/api/tasks/available/paging?pageNr=${page}&objectsNr=${toShow}&habitID=${habitID}&userID=${userID}`)
+        axios.get(`http://localhost:8080/api/tasks/available/paging?pageNr=${page}&objectsNr=${toShow}&habitID=${habitID}&userID=${userID}`)
 
             .then(res => {
                 this.setState({

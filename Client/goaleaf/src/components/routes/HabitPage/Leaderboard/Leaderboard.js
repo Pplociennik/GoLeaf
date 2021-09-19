@@ -20,7 +20,7 @@ class Leaderboard extends Component {
     }
 
     fetchMembers = (habitID, page, toShow) => {
-        axios.get(`https://glf-api.herokuapp.com/api/habits/rank/paging?pageNr=${page}&objectsNr=${toShow}&habitID=${habitID}`)
+        axios.get(`http://localhost:8080/api/habits/rank/paging?pageNr=${page}&objectsNr=${toShow}&habitID=${habitID}`)
         .then(res => {
             this.setState({
                 members: res.data.list,

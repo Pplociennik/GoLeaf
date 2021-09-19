@@ -24,7 +24,7 @@ class LogIn extends Component {
       return;
     }
 
-    axios.post('https://glf-api.herokuapp.com/login', {
+    axios.post('http://localhost:8080/login', {
       "Token": "",
       "login": this.state.login,
       "password": this.state.password

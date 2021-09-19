@@ -17,7 +17,7 @@ class Options extends Component {
   }
 
   changeInvitationPermissions = (e, id) => {
-    axios.post(`https://glf-api.herokuapp.com/api/habits/habit/setInvitingPermissions?allowed=${e.target.value}&habitID=${id}`)
+    axios.post(`http://localhost:8080/api/habits/habit/setInvitingPermissions?allowed=${e.target.value}&habitID=${id}`)
         .then(res => {
             window.location.reload();
             //this.setState({canUserInvite: e.target.value});
@@ -26,7 +26,7 @@ class Options extends Component {
     }
 
     changeTitle = (e, id) => {
-        axios.put(`https://glf-api.herokuapp.com/api/habits/name/change?habitID=${id}&newName=${this.state.title}`)
+        axios.put(`http://localhost:8080/api/habits/name/change?habitID=${id}&newName=${this.state.title}`)
         .then(res => {
             window.location.reload();
         }
@@ -35,7 +35,7 @@ class Options extends Component {
     
     setHabitPrivacy = (e, id) => {
         if(e.target.value !== this.state.private){
-            axios.post(`https://glf-api.herokuapp.com/api/habits/privacy/change?habitID=${id}`)
+            axios.post(`http://localhost:8080/api/habits/privacy/change?habitID=${id}`)
                 .then(res => {
                     window.location.reload();
                     //this.setState({canUserInvite: e.target.value});
@@ -45,7 +45,7 @@ class Options extends Component {
     }
     setHabitCategory = (e, id) => {
         if(e.target.value !== this.state.category){
-            axios.post(`https://glf-api.herokuapp.com/api/habits/category/change?habitID=${id}&category=${e.target.value}`)
+            axios.post(`http://localhost:8080/api/habits/category/change?habitID=${id}&category=${e.target.value}`)
                 .then(res => {
                     window.location.reload();
                     //this.setState({canUserInvite: e.target.value});
@@ -56,7 +56,7 @@ class Options extends Component {
 
     setAllowDiscussion = (e, id) => {
         if(e.target.value !== this.state.allowDiscussion) {
-            axios.put(`https://glf-api.herokuapp.com/api/habits/discussion/change?habitID=${id}`)
+            axios.put(`http://localhost:8080/api/habits/discussion/change?habitID=${id}`)
             .then(res => {
                 window.location.reload();
             }
@@ -65,7 +65,7 @@ class Options extends Component {
     }
 
     deleteHabit = id => {
-        axios.delete(`https://glf-api.herokuapp.com/api/habits/habit/remove?habitID=${id}&token=${localStorage.getItem("token")}`)
+        axios.delete(`http://localhost:8080/api/habits/habit/remove?habitID=${id}&token=${localStorage.getItem("token")}`)
             .then(res => {
                 this.props.history.push('/');
                 window.location.reload();

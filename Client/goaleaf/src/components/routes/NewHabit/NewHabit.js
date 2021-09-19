@@ -18,7 +18,7 @@ class NewHabit extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    axios.post('https://glf-api.herokuapp.com/api/habits/new-habit', {
+    axios.post('http://localhost:8080/api/habits/new-habit', {
 
           "category": this.state.category,
           "frequency": "Daily",

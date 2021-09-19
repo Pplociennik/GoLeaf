@@ -32,7 +32,7 @@ class Posts extends Component {
     }
 
     handlePostCardDeleted = id => {
-        axios.delete(`https://glf-api.herokuapp.com/api/posts/delete/{id}`, {
+        axios.delete(`http://localhost:8080/api/posts/delete/{id}`, {
             data: {
                 "habitID": this.props.habitID,
                 "postID": id,

@@ -42,7 +42,7 @@ class MyHabits extends Component {
         this.props.fetchWonHabits(0, this.state.habitsToShow, localStorage.getItem('token'));
 
         if(this.props.userLoggedLogin === "GoaleafAdmin"){
-          axios.get("https://glf-api.herokuapp.com/api/stats/counts")
+          axios.get("http://localhost:8080/api/stats/counts")
           .then(res => {
               this.setState({
                   usersAll: res.data.users,

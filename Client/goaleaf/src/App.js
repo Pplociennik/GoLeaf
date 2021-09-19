@@ -16,13 +16,13 @@ class App extends Component {
   componentDidMount() {
 
 
-    axios.get('https://glf-api.herokuapp.com/')
+    axios.get('http://localhost:8080/')
     .then(res => { this.validateUser() }
     ).catch(err => { this.validateUser() })
   }
 
   validateUser() {
-    axios.post('https://glf-api.herokuapp.com/validatetoken', {
+    axios.post('http://localhost:8080/validatetoken', {
       "Token": localStorage.getItem('token')
     }).then(res => { 
       this.props.validateUser();

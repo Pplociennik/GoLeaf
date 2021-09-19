@@ -27,7 +27,7 @@ class SignIn extends Component {
 
     this.setState({errorMsg: 'waiting'})
 
-    axios.post(`https://glf-api.herokuapp.com/register`, {
+    axios.post(`http://localhost:8080/register`, {
         "emailAddress": this.state.email,
         "login": this.state.login,
         "matchingPassword": this.state.repeat_password,
@@ -35,7 +35,7 @@ class SignIn extends Component {
         "userName": ""
       })
       .then(res => {
-        axios.post('https://glf-api.herokuapp.com/login', {
+        axios.post('http://localhost:8080/login', {
           "Token": "",
           "login": this.state.login,
           "password": this.state.password

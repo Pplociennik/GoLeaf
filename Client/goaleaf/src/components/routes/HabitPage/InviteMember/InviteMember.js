@@ -19,7 +19,7 @@ class InviteMember extends Component {
         msg: <i className="fas fa-spinner fa-spin grey-text"></i>
     })
 
-    axios.post('https://glf-api.herokuapp.com/api/habits/invitemember', {
+    axios.post('http://localhost:8080/api/habits/invitemember', {
         "habitID": id,
         "token": localStorage.getItem('token'),
         "url": window.location.href,

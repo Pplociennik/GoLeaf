@@ -24,7 +24,7 @@ class ResetPassword extends Component {
 
     this.setState({errorMsg: 'waiting'})
 
-    axios.post('https://glf-api.herokuapp.com/api/users/resetpassword', {
+    axios.post('http://localhost:8080/api/users/resetpassword', {
       
         "emailAddress": this.state.email
     })
