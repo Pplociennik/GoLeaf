@@ -57,7 +57,7 @@ class Profile extends Component {
                 const formData = new FormData();
                 formData.append('file', blob);
 
-                axios.post(`http://localhost:8080/uploadImage?token=${localStorage.getItem("token")}`, formData, {
+                axios.post(`http://localhost:8081/uploadImage?token=${localStorage.getItem("token")}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -72,7 +72,7 @@ class Profile extends Component {
 
     handlePasswordChange = e => {
         e.preventDefault();
-        axios.put('http://localhost:8080/api/users/edit', {
+        axios.put('http://localhost:8081/api/users/edit', {
             "token": localStorage.getItem("token"),
             "emailAddress": '',
             "id": this.state.id,
@@ -94,7 +94,7 @@ class Profile extends Component {
     }
 
     handleDelete = event => {
-        axios.delete(`http://localhost:8080/api/users/user/${this.props.userLogged}`)
+        axios.delete(`http://localhost:8081/api/users/user/${this.props.userLogged}`)
             .then(res => window.location.reload()
             ).catch(err => { })
     }
@@ -102,7 +102,7 @@ class Profile extends Component {
     setNotifications = () => {
         let notificationsStatus;
         this.state.notifications ? notificationsStatus = false : notificationsStatus = true
-        axios.post('http://localhost:8080/api/users/setntf', {
+        axios.post('http://localhost:8081/api/users/setntf', {
             "newNotificationsStatus": notificationsStatus,
             "token": localStorage.getItem("token"),
             "userID": this.props.userLogged
@@ -114,7 +114,7 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:8080/api/users/user/${this.props.userLogged}`)
+        axios.get(`http://localhost:8081/api/users/user/${this.props.userLogged}`)
             .then(res => {
                 this.setState({
                     username: res.data.username,

@@ -37,7 +37,7 @@ class PostCard extends Component {
     }
 
     addReaction = reaction => {
-        axios.post('http://localhost:8080/api/posts/post/addreaction', {
+        axios.post('http://localhost:8081/api/posts/post/addreaction', {
             "postID": this.props.id,
             "token": localStorage.getItem('token'),
             "type": reaction
@@ -53,7 +53,7 @@ class PostCard extends Component {
     }
 
     handleCommentCardDeleted = (id) => {
-        axios.delete(`http://localhost:8080/api/comments/remove?id=${id}`)
+        axios.delete(`http://localhost:8081/api/comments/remove?id=${id}`)
             .then(res => {
                     let comments = this.state.comments.filter( comment => {
                             return comment.id !== id;
@@ -71,7 +71,7 @@ class PostCard extends Component {
     addComment = e => {
         e.preventDefault();
         this.clearMsg();
-        axios.post('http://localhost:8080/api/comments/addcomment', {
+        axios.post('http://localhost:8081/api/comments/addcomment', {
             "creatorID": this.props.userLogged,
             "postID": this.props.id,
             "text": this.state.comment
@@ -86,7 +86,7 @@ class PostCard extends Component {
     showCommentsBtnPress = () => {
 
         this.setState({commentsLoading: true});
-        axios.get(`http://localhost:8080/api/comments/post/paging?pageNr=${0}&objectsNr=${this.state.commentsToShow}&postID=${this.props.id}`)
+        axios.get(`http://localhost:8081/api/comments/post/paging?pageNr=${0}&objectsNr=${this.state.commentsToShow}&postID=${this.props.id}`)
         .then(res => {
             this.setState({
                 comments: res.data.list,
@@ -110,7 +110,7 @@ class PostCard extends Component {
     showComments = (page, objectsNr, postID) => {
 
         this.setState({commentsLoading: true});
-        axios.get(`http://localhost:8080/api/comments/post/paging?pageNr=${page}&objectsNr=${objectsNr}&postID=${postID}`)
+        axios.get(`http://localhost:8081/api/comments/post/paging?pageNr=${page}&objectsNr=${objectsNr}&postID=${postID}`)
             .then(res => {
                 console.log(res.data.pageNr);
                 console.log(res.data.allPages);
@@ -140,7 +140,7 @@ class PostCard extends Component {
     }
 
     handleTaskDeleted = (id) => {
-        axios.delete(`http://localhost:8080/api/tasks/task/pushback?postID=${id}`)
+        axios.delete(`http://localhost:8081/api/tasks/task/pushback?postID=${id}`)
             .then(res => {
                 window.location.reload();
             })
@@ -148,7 +148,7 @@ class PostCard extends Component {
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:8080/api/posts/presentreaction?postID=${this.props.id}&userLogin=${this.props.currentUserLogin}`)
+        axios.get(`http://localhost:8081/api/posts/presentreaction?postID=${this.props.id}&userLogin=${this.props.currentUserLogin}`)
             .then(res => {
                 res ? this.setState({ userReaction: res.data.type.toUpperCase() })
                     : this.setState({ userReaction: null })

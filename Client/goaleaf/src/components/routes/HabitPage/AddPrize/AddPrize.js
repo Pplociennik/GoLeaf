@@ -14,7 +14,7 @@ class AddPrize extends Component {
     addPrize = (e, id) => {
         e.preventDefault();
         if(this.state.prizePoints > 0 && this.state.prizePoints < 1001 && this.state.prizePoints > this.state.leaderPoints){
-            axios.post(`http://localhost:8080/api/habits/habit/setPointsToWIn?habitID=${id}&pointsToWin=${this.state.prizePoints}`)
+            axios.post(`http://localhost:8081/api/habits/habit/setPointsToWIn?habitID=${id}&pointsToWin=${this.state.prizePoints}`)
             .then(res => {
                 window.location.reload();
             }
@@ -64,7 +64,7 @@ class AddPrize extends Component {
         if(this.props.pointsToWin !== 0){
             this.setState({prizePoints: this.props.pointsToWin})
         }
-        axios.get(`http://localhost:8080/api/members/leader/points?habitID=${this.props.habitID}`)
+        axios.get(`http://localhost:8081/api/members/leader/points?habitID=${this.props.habitID}`)
         .then(res => {
             this.setState({
                 leaderPoints: res.data

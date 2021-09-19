@@ -25,7 +25,7 @@ class AddPost extends Component {
 
   handleAddPost = e => {
       e.preventDefault();   
-      axios.post('http://localhost:8080/api/posts/addpost', {
+      axios.post('http://localhost:8081/api/posts/addpost', {
             "habitID": this.props.habitID,
             "postText": this.state.postText.replace(/\n\s*\n/g, '\n'),
             "token": localStorage.getItem('token'),
@@ -50,7 +50,7 @@ class AddPost extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:8080/api/members/member/points?habitsID=${this.props.habitID}&userID=${this.props.user}`)
+    axios.get(`http://localhost:8081/api/members/member/points?habitsID=${this.props.habitID}&userID=${this.props.user}`)
     .then(res => {
         this.setState({userPoints: res.data});
     }

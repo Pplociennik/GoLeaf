@@ -21,7 +21,7 @@ class TasksAll extends Component {
     }
 
     fetchTasks = (habitID, page, objectsNr) => {
-        axios.get(`http://localhost:8080/api/tasks/habit/paging?pageNr=${page}&objectsNr=${objectsNr}&habitID=${habitID}`)
+        axios.get(`http://localhost:8081/api/tasks/habit/paging?pageNr=${page}&objectsNr=${objectsNr}&habitID=${habitID}`)
         .then(res => {
             this.setState({
                 tasks: res.data.list,

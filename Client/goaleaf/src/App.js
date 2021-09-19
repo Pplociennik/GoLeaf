@@ -16,13 +16,13 @@ class App extends Component {
   componentDidMount() {
 
 
-    axios.get('http://localhost:8080/')
+    axios.get('http://localhost:8081/')
     .then(res => { this.validateUser() }
     ).catch(err => { this.validateUser() })
   }
 
   validateUser() {
-    axios.post('http://localhost:8080/validatetoken', {
+    axios.post('http://localhost:8081/validatetoken', {
       "Token": localStorage.getItem('token')
     }).then(res => { 
       this.props.validateUser();

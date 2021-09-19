@@ -27,7 +27,7 @@ class SignIn extends Component {
 
     this.setState({errorMsg: 'waiting'})
 
-    axios.post(`http://localhost:8080/register`, {
+    axios.post(`http://localhost:8081/register`, {
         "emailAddress": this.state.email,
         "login": this.state.login,
         "matchingPassword": this.state.repeat_password,
@@ -35,7 +35,7 @@ class SignIn extends Component {
         "userName": ""
       })
       .then(res => {
-        axios.post('http://localhost:8080/login', {
+        axios.post('http://localhost:8081/login', {
           "Token": "",
           "login": this.state.login,
           "password": this.state.password

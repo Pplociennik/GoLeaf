@@ -21,7 +21,7 @@ class Members extends Component {
     }
 
     fetchMembers = (habitID, page, toShow) => {
-        axios.get(`http://localhost:8080/api/members/habit/paging?pageNr=${page}&objectsNr=${toShow}&habitID=${habitID}`)
+        axios.get(`http://localhost:8081/api/members/habit/paging?pageNr=${page}&objectsNr=${toShow}&habitID=${habitID}`)
         .then(res => {
             this.setState({
                 members: res.data.list,
@@ -36,7 +36,7 @@ class Members extends Component {
     }
 
     banUser = (habitID, userID) => {
-        axios.post(`http://localhost:8080/api/habits/ban?userID=${userID}&habitID=${habitID}`)
+        axios.post(`http://localhost:8081/api/habits/ban?userID=${userID}&habitID=${habitID}`)
         .then(res => {
             window.location.reload()
         }).catch(err => console.log(err.response.data.message))

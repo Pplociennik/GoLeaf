@@ -1,7 +1,7 @@
 README  
 ======
 
-http://localhost:8080/login -> logowanie. Obsługuję TYLKO requesty POST i przyjmuje TYLKO pliki JSON z loginem i haslem  
+http://localhost:8081/login -> logowanie. Obsługuję TYLKO requesty POST i przyjmuje TYLKO pliki JSON z loginem i haslem  
   
 Przyklad:  
   
@@ -10,7 +10,7 @@ Przyklad:
 "password": "def"  
 }  
   
-http://localhost:8080/register -> rejestracja. TYLKO POST i TYLKO JSON (login, password, matchingPassword, email, userName) (POST)  
+http://localhost:8081/register -> rejestracja. TYLKO POST i TYLKO JSON (login, password, matchingPassword, email, userName) (POST)  
   
   Przyklad:  
     
@@ -23,19 +23,19 @@ http://localhost:8080/register -> rejestracja. TYLKO POST i TYLKO JSON (login, p
 }      
     
   
-http://localhost:8080/api/users/all -> zwraca liste zarejestrowanych uzytkownikow (GET)  
+http://localhost:8081/api/users/all -> zwraca liste zarejestrowanych uzytkownikow (GET)  
   
-http://localhost:8080/swagger-ui.html#/ -> swagger  
+http://localhost:8081/swagger-ui.html#/ -> swagger  
   
-http://localhost:8080/api/users/{page} -> zwraca liste zarejestrowanych uzytkownikow podzielona na strony (argumenty: pageNr, size) (GET)  
+http://localhost:8081/api/users/{page} -> zwraca liste zarejestrowanych uzytkownikow podzielona na strony (argumenty: pageNr, size) (GET)  
   
-http://localhost:8080/api/users/user/{id} -> zwraca uzytkownika po id (GET)    
+http://localhost:8081/api/users/user/{id} -> zwraca uzytkownika po id (GET)    
   
-http://localhost:8080/api/users/resetpassword -> przyjmuje JSON z emailem, zwraca wyjątek jeśli konto o podanym emailu nie istnieje. Jeśli istnieje, wysyła email z linkiem potwierdzającym na podany email (POST)
+http://localhost:8081/api/users/resetpassword -> przyjmuje JSON z emailem, zwraca wyjątek jeśli konto o podanym emailu nie istnieje. Jeśli istnieje, wysyła email z linkiem potwierdzającym na podany email (POST)
   
-http://localhost:8080/api/users/requestpasswordvalidate?token={token} -> przyjmuje token z linku potwierdzającego jako parametr. Sprawdza czy token jest ważny (tokeny do resetu haseł mają ważność 15 minut), jeśli nie - wyrzuca wyjątek, jeśli tak - zwraca HttpStatus "OK" (POST)
+http://localhost:8081/api/users/requestpasswordvalidate?token={token} -> przyjmuje token z linku potwierdzającego jako parametr. Sprawdza czy token jest ważny (tokeny do resetu haseł mają ważność 15 minut), jeśli nie - wyrzuca wyjątek, jeśli tak - zwraca HttpStatus "OK" (POST)
   
-http://localhost:8080/api/users/setnewpassword -> przyjmuje JSON:
+http://localhost:8081/api/users/setnewpassword -> przyjmuje JSON:
   
   {    
     "matchingPassword": "string",    
@@ -45,14 +45,14 @@ http://localhost:8080/api/users/setnewpassword -> przyjmuje JSON:
     
 -> ustawia nowe hasło dla użytkownika. Wyrzuca wyjątek jeśli hasła są różne lub jeśli hasło jest niepoprawne (hasło musi mieć co najmniej 6 znaków i nie może zawierać spacji) (POST)
   
-http://localhost:8080/api/users/user/{id} (PUT) -> edycja użytkownika
+http://localhost:8081/api/users/user/{id} (PUT) -> edycja użytkownika
   
     
       
 Habits
 ======
     
-http://localhost:8080/api/habits/new-habit -> 
+http://localhost:8081/api/habits/new-habit -> 
   
   
   {    
@@ -86,7 +86,7 @@ http://localhost:8080/api/habits/new-habit ->
   }    
         
    
-http://localhost:8080/api/habits/all -> zwraca wszystkie habity
+http://localhost:8081/api/habits/all -> zwraca wszystkie habity
   
   
 ----------------------------------------------------------------------------------------------
