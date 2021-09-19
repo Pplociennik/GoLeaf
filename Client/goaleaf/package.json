@@ -2,7 +2,7 @@
   "name": "goaleaf",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8081",
+  "proxy": "http://95.108.36.173:8081",
   "dependencies": {
     "@material-ui/core": "^3.9.3",
     "axios": "^0.18.0",

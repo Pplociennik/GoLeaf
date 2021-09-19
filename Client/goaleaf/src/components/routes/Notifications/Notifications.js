@@ -25,7 +25,7 @@ class Notifications extends Component {
     }
 
     handleNtfCardDeleted = (id, url) => {
-        axios.delete(`http://localhost:8081/api/notifications/ntf/{id}?ntfID=${id}`)
+        axios.delete(`http://95.108.36.173:8081/api/notifications/ntf/{id}?ntfID=${id}`)
             .then(res => {
                 this.setState({notifications: this.state.notifications.filter(ntf => ntf.id !== id)})
                 if(this.state.page > 0 && this.state.notifications.length === 0){
@@ -36,14 +36,14 @@ class Notifications extends Component {
     }
 
     clearNotifications = e => {
-        axios.delete(`http://localhost:8081/api/notifications/clear?userID=${this.props.userLogged}`)
+        axios.delete(`http://95.108.36.173:8081/api/notifications/clear?userID=${this.props.userLogged}`)
         .then(res => {
             this.setState({notifications: [], pagesAll: 0})
         }).catch(err => console.log(err))
     }
 
     fetchNotifications(page, toShow, token){
-        axios.get(`http://localhost:8081/api/notifications/user/paging?pageNr=${page}&objectsNr=${toShow}&token=${token}`)
+        axios.get(`http://95.108.36.173:8081/api/notifications/user/paging?pageNr=${page}&objectsNr=${toShow}&token=${token}`)
         .then(res => {
                 this.setState({
                     notifications: res.data.list,

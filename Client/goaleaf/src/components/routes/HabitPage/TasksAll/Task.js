@@ -6,7 +6,7 @@ import Popup from "reactjs-popup"
 class Task extends Component {
 
     deleteTask = (e, id) => {
-        axios.delete(`http://localhost:8081/api/tasks/task/remove?taskID=${id}`)
+        axios.delete(`http://95.108.36.173:8081/api/tasks/task/remove?taskID=${id}`)
         .then(res => {
             window.location.reload();
         }).catch(err => { console.log(err) })

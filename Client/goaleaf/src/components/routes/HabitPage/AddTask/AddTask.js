@@ -19,7 +19,7 @@ class AddTask extends Component {
         this.handleDisableBtn();
         e.preventDefault();
         if (this.state.task !== null && (this.state.taskPoints > 0 && this.state.taskPoints < 11)){
-            axios.post('http://localhost:8081/api/tasks/add', {
+            axios.post('http://95.108.36.173:8081/api/tasks/add', {
                 "description": this.state.task,
                 "frequency": this.state.frequency,
                 "daysInterval": this.state.days,

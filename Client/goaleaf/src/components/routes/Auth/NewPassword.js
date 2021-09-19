@@ -24,7 +24,7 @@ class ResetPassword extends Component {
       return;
     }
 
-    axios.post('http://localhost:8081/api/users/setnewpassword', {
+    axios.post('http://95.108.36.173:8081/api/users/setnewpassword', {
       
       "matchingPassword": this.state.password,
       "password": this.state.repeat_password, 

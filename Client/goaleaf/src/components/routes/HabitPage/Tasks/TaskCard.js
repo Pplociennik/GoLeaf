@@ -21,7 +21,7 @@ class TaskCard extends Component {
 
     completeTask = (e, id) => {
         e.preventDefault();
-        axios.post('http://localhost:8081/api/tasks/complete', {
+        axios.post('http://95.108.36.173:8081/api/tasks/complete', {
             "comment": this.state.taskComment,
             "habitID": this.props.habitID,
             "taskID": id,

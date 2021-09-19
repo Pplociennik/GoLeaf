@@ -20,7 +20,7 @@ class Leaderboard extends Component {
     }
 
     fetchMembers = (habitID, page, toShow) => {
-        axios.get(`http://localhost:8081/api/habits/rank/paging?pageNr=${page}&objectsNr=${toShow}&habitID=${habitID}`)
+        axios.get(`http://95.108.36.173:8081/api/habits/rank/paging?pageNr=${page}&objectsNr=${toShow}&habitID=${habitID}`)
         .then(res => {
             this.setState({
                 members: res.data.list,

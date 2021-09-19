@@ -32,7 +32,7 @@ class Posts extends Component {
     }
 
     handlePostCardDeleted = id => {
-        axios.delete(`http://localhost:8081/api/posts/delete/{id}`, {
+        axios.delete(`http://95.108.36.173:8081/api/posts/delete/{id}`, {
             data: {
                 "habitID": this.props.habitID,
                 "postID": id,

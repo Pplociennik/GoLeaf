@@ -24,7 +24,7 @@ class LogIn extends Component {
       return;
     }
 
-    axios.post('http://localhost:8081/login', {
+    axios.post('http://95.108.36.173:8081/login', {
       "Token": "",
       "login": this.state.login,
       "password": this.state.password
